@@ -4,7 +4,7 @@
 
 Production: https://everythingai.club
 
-Latest Dev Updates: https://dev.everythingai.club
+Latest Dev Updates: https://everything-ai.vercel.app
 
 
 ## Instructions
