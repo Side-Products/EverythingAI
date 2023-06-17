@@ -10,6 +10,7 @@ import Layout from "@/layout/Layout";
 import { wrapper } from "@/redux/redux-store";
 import StatusContextProvider from "@/store/StatusContextProvider";
 import LoadingContextProvider from "@/store/LoadingContextProvider";
+import AuthModalContextProvider from "@/store/AuthModalContextProvider";
 
 function App({ Component, pageProps, session, router }) {
 	// Google Analytics
@@ -47,13 +48,15 @@ function App({ Component, pageProps, session, router }) {
 
 			<SessionProvider session={session}>
 				<LoadingContextProvider>
-					<StatusContextProvider>
-						<Layout>
-							<ScrollToPageTop />
-							<DefaultSeo {...SEO} />
-							<Component {...pageProps} />
-						</Layout>
-					</StatusContextProvider>
+					<AuthModalContextProvider>
+						<StatusContextProvider>
+							<Layout>
+								<ScrollToPageTop />
+								<DefaultSeo {...SEO} />
+								<Component {...pageProps} />
+							</Layout>
+						</StatusContextProvider>
+					</AuthModalContextProvider>
 				</LoadingContextProvider>
 			</SessionProvider>
 		</>

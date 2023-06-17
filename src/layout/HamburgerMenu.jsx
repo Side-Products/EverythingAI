@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/logo_removedbg.png";
+import { AuthModalContext } from "@/store/AuthModalContextProvider";
 import { twitter_url, linkedin_url } from "@/config/constants";
 
 export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 	const { data: session, status } = useSession();
+	const { setAuthModalOpen } = useContext(AuthModalContext);
 	const router = useRouter();
 
 	const closeNavbar = () => {
@@ -60,6 +63,7 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 											<div
 												onClick={() => {
 													closeNavbar();
+													setAuthModalOpen(true);
 												}}
 												className="quick_hamburger_nav flex items-center justify-center px-6 py-2 text-base font-semibold rounded-full text-white bg-search-200"
 											>
@@ -113,6 +117,7 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 															className="ham_menu_link ham_menu_hover_effect text-center"
 															onClick={() => {
 																closeNavbar();
+																setAuthModalOpen(true);
 															}}
 														>
 															Profile
@@ -131,6 +136,7 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 															className="ham_menu_link ham_menu_hover_effect text-center"
 															onClick={() => {
 																closeNavbar();
+																setAuthModalOpen(true);
 															}}
 														>
 															Past Searches
