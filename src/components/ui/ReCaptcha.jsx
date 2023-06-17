@@ -23,7 +23,7 @@ export default function ReCaptcha({ recaptchaRef }) {
 			ref={recaptchaRef}
 			size="normal"
 			badge="inline"
-			theme={"dark"}
+			theme={"light"}
 			sitekey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY}
 			onExpired={() => {
 				setError({

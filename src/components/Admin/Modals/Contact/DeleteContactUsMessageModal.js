@@ -66,18 +66,18 @@ const DeleteContactUsMessageModal = ({ isOpen, setOpen, messageToDelete }) => {
 					>
 						<div className="flex flex-col justify-center">
 							<div className="flex justify-center items-center gap-x-4">
-								<p className="text-xl font-semibold text-light-300">{messageToDelete.name}</p>
+								<p className="text-xl font-semibold text-dark-300">{messageToDelete.name}</p>
 							</div>
-							<p className="text-sm text-light-600 mt-1">{messageToDelete.email}</p>
+							<p className="text-sm text-dark-600 mt-1">{messageToDelete.email}</p>
 
 							<div className="text-start text-base mt-4">
-								<span className="font-medium text-gradient-secondary-tr">Subject</span>
-								<p className="text-light-400">{messageToDelete.subject}</p>
+								<span className="font-medium text-gradient-primary-tr">Subject</span>
+								<p className="text-dark-600">{messageToDelete.subject}</p>
 							</div>
 
 							<div className="text-start text-base mt-4">
-								<span className="font-medium text-gradient-secondary-tr">Message</span>&nbsp;
-								<p className="text-light-500 pr-2 max-h-[400px] overflow-scroll">{messageToDelete.message}</p>
+								<span className="font-medium text-gradient-primary-tr">Message</span>&nbsp;
+								<p className="text-dark-600 pr-2 max-h-[400px] overflow-scroll">{messageToDelete.message}</p>
 							</div>
 						</div>
 

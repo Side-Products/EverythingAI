@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { authReducer, userReducer, loadedUserReducer, forgotPasswordReducer, adminGetAllUsersReducer, adminGetUserDetailsReducer } from "./userReducers";
 import { createCategoryReducer, getAllCategoriesReducer, updateCategoryReducer, deleteCategoryReducer, getCategoryReducer } from "./categoryReducers";
+import { newContactUsMessageReducer, adminGetContactUsMessagesReducer, adminDeleteContactUsMessageReducer } from "./contactUsReducers";
 
 const reducer = combineReducers({
 	auth: authReducer,
@@ -14,6 +15,9 @@ const reducer = combineReducers({
 	updateCategory: updateCategoryReducer,
 	deleteCategory: deleteCategoryReducer,
 	category: getCategoryReducer,
+	newContactUsMessage: newContactUsMessageReducer,
+	adminGetContactUsMessages: adminGetContactUsMessagesReducer,
+	adminDeleteContactUsMessage: adminDeleteContactUsMessageReducer,
 });
 
 export default reducer;
