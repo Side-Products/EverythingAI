@@ -7,8 +7,8 @@ import onError from "@/backend/middlewares/errors";
 const handler = nc({ onError });
 dbConnect();
 
+handler.get(getCategory);
 handler.use(isAuthenticatedUser, authorizeRoles("admin")).post(updateCategory);
 handler.use(isAuthenticatedUser, authorizeRoles("admin")).delete(deleteCategory);
-handler.get(getCategory);
 
 export default handler;

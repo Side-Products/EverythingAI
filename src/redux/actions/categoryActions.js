@@ -1,4 +1,5 @@
 import axios from "axios";
+import absoluteUrl from "next-absolute-url";
 import {
 	CREATE_CATEGORY_REQUEST,
 	CREATE_CATEGORY_SUCCESS,
@@ -95,11 +96,12 @@ export const deleteCategory = (id) => async (dispatch) => {
 };
 
 // get category
-export const getCategory = (id) => async (dispatch) => {
+export const getCategory = (req, id) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_CATEGORY_REQUEST });
 
-		const { data } = await axios.get(`/api/categories/${id}`);
+		const { origin } = absoluteUrl(req);
+		const { data } = await axios.get(`${origin}/api/categories/${id}`);
 
 		dispatch({
 			type: GET_CATEGORY_SUCCESS,
