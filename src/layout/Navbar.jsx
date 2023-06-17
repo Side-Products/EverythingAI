@@ -178,6 +178,48 @@ const Navbar = ({ setAuthModalOpen }) => {
 															</li>
 														)}
 
+														{status === "authenticated" && session.user && session.user.role == "admin" && (
+															<>
+																<li>
+																	<div className="block w-full text-center px-4 pb-2 pt-3 border-t border-zinc-300 bg-transparent dropdown-item whitespace-nowrap text-light-700">
+																		Admin Routes
+																	</div>
+																</li>
+
+																<li>
+																	<Link href={`/admin/users`} passHref={true}>
+																		<div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
+																			All Users
+																		</div>
+																	</Link>
+																</li>
+
+																<li>
+																	<Link href={`/admin/categories`} passHref={true}>
+																		<div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
+																			All Categories
+																		</div>
+																	</Link>
+																</li>
+
+																<li>
+																	<Link href={`/admin/tools`} passHref={true}>
+																		<div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
+																			All Tools
+																		</div>
+																	</Link>
+																</li>
+
+																<li>
+																	<Link href={`/admin/contact-us`} passHref={true}>
+																		<div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
+																			All Contact Messages
+																		</div>
+																	</Link>
+																</li>
+															</>
+														)}
+
 														{/* Logout Button */}
 														<li>
 															{status === "authenticated" ? (

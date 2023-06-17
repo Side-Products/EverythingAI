@@ -117,19 +117,19 @@ const getAdminAllUsers = catchAsyncErrors(async (req, res) => {
 	const users = await User.find().sort({ createdAt: "desc" });
 	const usersCount = await User.countDocuments();
 	const admins = await User.find({ role: "admin" }).sort({ createdAt: "desc" });
-	const allAccessUsers = await User.find({ role: "allAccess" }).sort({ createdAt: "desc" });
+	const maintainerUsers = await User.find({ role: "maintainer" }).sort({ createdAt: "desc" });
 
 	res.status(200).json({
 		success: true,
 		users,
 		usersCount,
 		admins,
-		allAccessUsers,
+		maintainerUsers,
 	});
 });
 
 // get user details => /api/admin/users/:id
-const getAdminUserDetails = catchAsyncErrors(async (req, res) => {
+const getAdminUserDetails = catchAsyncErrors(async (req, res, next) => {
 	const user = await User.findById(req.query.id);
 
 	if (!user) {
@@ -143,7 +143,7 @@ const getAdminUserDetails = catchAsyncErrors(async (req, res) => {
 });
 
 // update user details => /api/admin/users/:id
-const updateAdminUserDetails = catchAsyncErrors(async (req, res) => {
+const updateAdminUserDetails = catchAsyncErrors(async (req, res, next) => {
 	const newUserData = {
 		name: req.body.name,
 		email: req.body.email,
@@ -166,18 +166,16 @@ const updateAdminUserDetails = catchAsyncErrors(async (req, res) => {
 });
 
 // delete user => /api/admin/users/:id
-const deleteAdminUser = catchAsyncErrors(async (req, res) => {
+const deleteAdminUser = catchAsyncErrors(async (req, res, next) => {
 	const user = await User.findById(req.query.id);
 
 	if (!user) {
 		return next(new ErrorHandler("User not found with this ID", 400));
 	}
 
-	// Delete all searched ideas related to the user
-	await IdeaSearch.deleteMany({ user: user._id });
-
-	// Delete all generated responses related to the user
-	await GenerateResponse.deleteMany({ user: user._id });
+	if (user.role === "admin") {
+		return next(new ErrorHandler("Cannot delete admin user", 400));
+	}
 
 	await user.remove();
 

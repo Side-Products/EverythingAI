@@ -18,10 +18,12 @@ const createCategory = catchAsyncErrors(async (req, res) => {
 // get all categories => /api/categories
 const allCategories = catchAsyncErrors(async (req, res) => {
 	const categories = await Category.find().sort({ createdAt: "desc" });
+	const categoriesCount = await Category.countDocuments();
 
 	res.status(200).json({
 		success: true,
 		categories,
+		categoriesCount,
 	});
 });
 

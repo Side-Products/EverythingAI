@@ -700,18 +700,18 @@ tr th:nth-child(1) {
 	border-radius: 0.625rem 0 0 0.625rem;
 }
 
-.allusers-table tr td:nth-child(n + 8),
-.allusers-table tr th:nth-child(n + 8) {
+.allUsers-table tr td:nth-child(n + 7),
+.allUsers-table tr th:nth-child(n + 7) {
+	border-radius: 0 0.625rem 0.625rem 0;
+}
+
+.allCategories-table tr td:nth-child(n + 5),
+.allCategories-table tr th:nth-child(n + 5) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 
 .allContactUsMessages-table tr td:nth-child(n + 5),
 .allContactUsMessages-table tr th:nth-child(n + 5) {
-	border-radius: 0 0.625rem 0.625rem 0;
-}
-
-.allBugReports-table tr td:nth-child(n + 4),
-.allBugReports-table tr th:nth-child(n + 4) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 

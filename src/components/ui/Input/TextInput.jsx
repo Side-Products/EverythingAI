@@ -1,11 +1,14 @@
-export default function TextInput({ label, type = "text", value = "", name, onFieldChange, placeholder = "", required = true }) {
+export default function TextInput({ label, type = "text", value = "", id = "", name, onFieldChange, placeholder = "", required = true }) {
 	return (
 		<div className="w-full flex flex-col justify-end">
-			<p className="text-dark-400 text-sm font-medium mb-1 text-start">{label}</p>
+			<label htmlFor={id} className="text-dark-400 text-sm font-medium mb-1 text-start">
+				{label}
+			</label>
 			<input
 				type={type}
 				name={name}
 				value={value}
+				id={id}
 				onChange={onFieldChange}
 				placeholder={placeholder}
 				required={required}

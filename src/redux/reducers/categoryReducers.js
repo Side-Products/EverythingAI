@@ -58,6 +58,7 @@ export const getAllCategoriesReducer = (state = { categories: [] }, action) => {
 			return {
 				loading: false,
 				categories: action.payload.categories,
+				categoriesCount: action.payload.categoriesCount,
 			};
 		case GET_CATEGORIES_FAIL:
 			return {

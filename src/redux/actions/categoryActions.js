@@ -22,7 +22,7 @@ import {
 } from "../constants/categoryConstants";
 
 // create category
-export const createCategory = (categoryInfo) => async (dispatch) => {
+export const createCategory = (categoryData) => async (dispatch) => {
 	try {
 		dispatch({ type: CREATE_CATEGORY_REQUEST });
 
@@ -31,7 +31,7 @@ export const createCategory = (categoryInfo) => async (dispatch) => {
 				"Content-Type": "application/json",
 			},
 		};
-		const { data } = await axios.post(`/api/categories`, categoryInfo, config);
+		const { data } = await axios.post(`/api/categories`, categoryData, config);
 
 		dispatch({ type: CREATE_CATEGORY_SUCCESS, payload: data });
 	} catch (error) {
@@ -59,7 +59,7 @@ export const getAllCategories = () => async (dispatch) => {
 };
 
 // update category
-export const updateCategory = (id, categoryInfo) => async (dispatch) => {
+export const updateCategory = (id, categoryData) => async (dispatch) => {
 	try {
 		dispatch({ type: UPDATE_CATEGORY_REQUEST });
 
@@ -68,7 +68,7 @@ export const updateCategory = (id, categoryInfo) => async (dispatch) => {
 				"Content-Type": "application/json",
 			},
 		};
-		const { data } = await axios.post(`/api/categories/${id}`, categoryInfo, config);
+		const { data } = await axios.post(`/api/categories/${id}`, categoryData, config);
 
 		dispatch({ type: UPDATE_CATEGORY_SUCCESS, payload: data });
 	} catch (error) {
@@ -110,6 +110,27 @@ export const getCategory = (req, id) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: GET_CATEGORY_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+export const adminGetAllCategories = (req) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_CATEGORIES_REQUEST });
+
+		const { origin } = absoluteUrl(req);
+		const config = {
+			headers: {
+				cookie: req.headers.cookie,
+			},
+		};
+		const { data } = await axios.get(`${origin}/api/categories`, config);
+
+		dispatch({ type: GET_CATEGORIES_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: GET_CATEGORIES_FAIL,
 			payload: error.response.data.message,
 		});
 	}

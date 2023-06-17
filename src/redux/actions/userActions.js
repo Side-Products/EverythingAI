@@ -164,7 +164,7 @@ export const adminGetAllUsers = (req) => async (dispatch) => {
 
 		dispatch({
 			type: ADMIN_GET_ALL_USERS_SUCCESS,
-			payload: { users: data.users, usersCount: data.usersCount, admins: data.admins, allAccessUsers: data.allAccessUsers },
+			payload: { users: data.users, usersCount: data.usersCount, admins: data.admins, maintainerUsers: data.maintainerUsers },
 		});
 	} catch (error) {
 		dispatch({
