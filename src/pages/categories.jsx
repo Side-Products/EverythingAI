@@ -1,10 +1,10 @@
 import PageWrapper from "@/layout/PageWrapper";
-import CategoriesComponent from "@/components/Categories";
+import AllCategories from "@/components/Categories/AllCategories";
 
 export default function Categories() {
 	return (
 		<PageWrapper>
-			<CategoriesComponent />
+			<AllCategories />
 		</PageWrapper>
 	);
 }
