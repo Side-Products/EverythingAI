@@ -96,12 +96,31 @@ export const deleteCategory = (id) => async (dispatch) => {
 };
 
 // get category
-export const getCategory = (req, id) => async (dispatch) => {
+export const getCategory = (id) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_CATEGORY_REQUEST });
+
+		const { data } = await axios.get(`/api/categories/${id}`);
+
+		dispatch({
+			type: GET_CATEGORY_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: GET_CATEGORY_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+// get category
+export const getCategoryByName = (req, name) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_CATEGORY_REQUEST });
 
 		const { origin } = absoluteUrl(req);
-		const { data } = await axios.get(`${origin}/api/categories/${id}`);
+		const { data } = await axios.get(`${origin}/api/categories/find/${name}`);
 
 		dispatch({
 			type: GET_CATEGORY_SUCCESS,

@@ -25,3 +25,13 @@ export const privacy_meta_description =
 	"This Privacy Policy is meant to help you understand what information we collect, why we collect it, and how you can update, manage, export, and delete your information.";
 export const cancellation_and_refund_meta_description =
 	"This Cancellation and Refund Policy is meant to help you understand the procedure for refunds and cancellation of subscriptions.";
+
+export const pricingOptions = [
+	"Free",
+	"Freemium (Pay as you go)",
+	"Free trial (without credit card)",
+	"Free trial (with credit card)",
+	"Premium (Pay upfront)",
+	"Subscription",
+	"Custom",
+];

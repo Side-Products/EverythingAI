@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import { wrapper } from "@/redux/redux-store";
-import { getCategory } from "@/redux/actions/categoryActions";
+import { getCategoryByName } from "@/redux/actions/categoryActions";
 import { useSelector } from "react-redux";
 import PageWrapper from "@/layout/PageWrapper";
 import CategoryComponent from "@/components/Categories/Category";
@@ -15,7 +15,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 			},
 		};
 	}
-	await store.dispatch(getCategory(req, query.id));
+	await store.dispatch(getCategoryByName(req, query.name));
 
 	return {
 		props: {},

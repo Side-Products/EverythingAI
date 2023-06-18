@@ -89,7 +89,13 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 							<div className="relative flex gap-x-4">
 								<div
-									onClick={() => setAuthModalOpen(true)}
+									onClick={() => {
+										if (session && session.user && session.user.email) {
+											router.push("/submit-tool");
+										} else {
+											setAuthModalOpen(true);
+										}
+									}}
 									className="flex items-center justify-center px-10 py-2 text-sm font-semibold rounded-full bg-primary-500 hover:bg-primary-600 text-light-100 transition duration-300 cursor-pointer"
 								>
 									Submit Tool

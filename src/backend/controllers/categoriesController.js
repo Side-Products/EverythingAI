@@ -66,4 +66,18 @@ const getCategory = catchAsyncErrors(async (req, res, next) => {
 	res.status(200).json({ success: true, category: { ...category._doc, subcategories } });
 });
 
-export { createCategory, allCategories, updateCategory, deleteCategory, getCategory };
+// get category => /api/categories/:name
+const getCategoryByName = catchAsyncErrors(async (req, res, next) => {
+	const categoryName = req.query.name;
+	const category = await Category.findOne({ name: { $regex: new RegExp(categoryName, "i") } });
+	const categoryId = category._id;
+	if (!category) {
+		return next(new ErrorHandler("No category found with this name", 404));
+	}
+
+	// Find all subcategories that have the same categoryId as the category
+	const subcategories = await SubCategory.find({ categoryId });
+	res.status(200).json({ success: true, category: { ...category._doc, subcategories } });
+});
+
+export { createCategory, allCategories, updateCategory, deleteCategory, getCategory, getCategoryByName };

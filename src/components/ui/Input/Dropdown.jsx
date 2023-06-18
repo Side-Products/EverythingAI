@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function Dropdown({ label = "", id, options = [], objKey, setChoice, classes }) {
+export default function Dropdown({ label = "", id, name = "", options = [], objKey, setChoice, classes, defaultOption }) {
 	const [dropdownOptions, setDropdownOptions] = useState(options);
 
 	useEffect(() => {
@@ -17,12 +17,14 @@ export default function Dropdown({ label = "", id, options = [], objKey, setChoi
 			<div className="w-full border border-[#D1D5DB] rounded-md">
 				<select
 					id={id}
+					name={name}
 					className={
 						"w-full focus:ring-primary-500 transition duration-300 text-dark-300 text-sm font-medium rounded-md cursor-pointer py-[0.5rem] px-[0.75rem] border-transparent border-r-[10px] outline-none " +
 						classes
 					}
 					onChange={(e) => setChoice && setChoice(e)}
 				>
+					{defaultOption && <option className="text-light-200">{defaultOption}</option>}
 					{dropdownOptions.map((option, index) => {
 						return (
 							<option key={objKey ? option[objKey] : option} data-index={index} value={objKey ? option[objKey] : option}>
