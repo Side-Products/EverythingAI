@@ -1,12 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories, getCategory } from "@/redux/actions/categoryActions";
 import { getAllPricings } from "@/redux/actions/pricingActions";
 import TextInput from "@/components/ui/Input/TextInput";
 import Dropdown from "@/components/ui/Input/Dropdown";
 import Button from "@/components/ui/Button";
+import ImageUploadInput from "@/components/ui/Input/ImageUploadInput";
+import axios from "axios";
+import { LoadingContext } from "@/store/LoadingContextProvider";
+import { StatusContext } from "@/store/StatusContextProvider";
+import { getObjectByName, dataURLtoFile } from "@/utils/Helpers";
 
 const SubmitTool = () => {
+	const { setLoading } = useContext(LoadingContext);
+	const { setError } = useContext(StatusContext);
+
 	const [toolData, setToolData] = useState({
 		name: "",
 		url: "",
@@ -19,14 +28,12 @@ const SubmitTool = () => {
 		linkedin: "",
 		youtube: "",
 	});
+	const [image, setImage] = useState("");
+	const [imageName, setImageName] = useState("");
+
 	const categoryDefaultOption = "Select a category";
 	const subCategoryDefaultOption = "Select a sub-category";
 	const pricingDefaultOption = "Select a pricing option";
-
-	function getObjectByName(categoryName, categoryArray) {
-		const lowerCaseName = categoryName.toLowerCase();
-		return categoryArray.find((category) => category.name.toLowerCase() === lowerCaseName);
-	}
 
 	const onToolDataChange = (e) => {
 		if (e.target.name === "category") {
@@ -68,8 +75,72 @@ const SubmitTool = () => {
 	}, [categories, toolData.category]);
 	const { category } = useSelector((state) => state.category);
 
+	const submitForm = async () => {
+		if (!image) {
+			setError({
+				title: "Something went wrong",
+				message: "Please upload an image",
+				showErrorBox: true,
+			});
+			return;
+		}
+
+		let imageUrl = "";
+		try {
+			const file = dataURLtoFile(image, imageName);
+			const formData = new FormData();
+			formData.append("file", file);
+
+			const response = await axios.post(`/api/upload-image`, formData, {
+				maxContentLength: Infinity,
+				maxBodyLength: Infinity,
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+				onUploadProgress: (progressEvent) => {
+					var _percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+					setLoading((prevState) => ({
+						...prevState,
+						status: true,
+						showProgressBar: true,
+						progress: _percentage,
+					}));
+				},
+			});
+
+			if (response.status === 200) {
+				console.log("Image uploaded successfully at:", response.data.Location);
+				imageUrl = response.data.Location;
+			} else {
+				setError({
+					title: "Something went wrong",
+					message: "Error uploading image. Please retry.",
+					showErrorBox: true,
+				});
+			}
+			setLoading({ status: false, showProgressBar: false, progress: 0 });
+		} catch (error) {
+			console.log("Error uploading image:", error);
+			setError({
+				title: "Something went wrong",
+				message: "Error uploading image. Please retry.",
+				showErrorBox: true,
+			});
+			return;
+		}
+
+		imageUrl;
+	};
+
 	return (
-		<form className="w-full flex flex-col items-center justify-center gap-y-10">
+		<form
+			onSubmit={(e) => {
+				e.preventDefault();
+				submitForm();
+			}}
+			className="w-full flex flex-col items-center justify-center gap-y-10"
+			encType="multipart/form-data"
+		>
 			<div className="w-full grid grid-cols-2 mt-20 gap-x-16 items-end">
 				<div className="flex flex-col gap-y-8">
 					<TextInput
@@ -136,8 +207,29 @@ const SubmitTool = () => {
 					/>
 				</div>
 
-				<div className="flex flex-col gap-y-32">
-					<div>Product Image</div>
+				<div className="flex flex-col gap-y-6">
+					<div className="flex flex-col">
+						<div className="relative mb-16">
+							<div className="absolute right-0 w-[160px] h-[90px] rounded-lg">
+								{image ? (
+									<Image src={image} alt="image" objectFit="cover" layout="fill" className="rounded-lg" priority />
+								) : (
+									<div
+										className={`bg-primary-300 opacity-40 w-full h-full flex items-center justify-center rounded-lg text-light-100 text-4xl`}
+									>
+										<i className="fa-solid fa-image"></i>
+									</div>
+								)}
+							</div>
+						</div>
+						<ImageUploadInput
+							image={image}
+							setImage={setImage}
+							setImageName={setImageName}
+							label={"Product Image (Ratio 16 : 9)"}
+							required={true}
+						/>
+					</div>
 
 					<div>
 						<div className="mb-6 font-semibold">Social Links</div>
@@ -184,7 +276,7 @@ const SubmitTool = () => {
 				</div>
 			</div>
 
-			<div className="w-1/2">
+			<div className="md:w-1/3">
 				<Button variant={"primary"} classes="text-md px-4 py-3 group mt-4">
 					<span className="transition-all duration-500 group-hover:pr-6">
 						Submit

@@ -4,7 +4,7 @@ export default function Dropdown({ label = "", id, name = "", options = [], objK
 	const [dropdownOptions, setDropdownOptions] = useState(options);
 
 	useEffect(() => {
-		setDropdownOptions(options);
+		if (options && options.length > 0) setDropdownOptions(options);
 	}, [options]);
 
 	return (
