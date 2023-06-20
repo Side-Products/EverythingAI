@@ -57,7 +57,6 @@ const getSubCategory = catchAsyncErrors(async (req, res, next) => {
 		return next(new ErrorHandler("No sub-category found with this id", 404));
 	}
 
-	await subCategory.remove();
 	res.status(200).json({ success: true, subCategory });
 });
 

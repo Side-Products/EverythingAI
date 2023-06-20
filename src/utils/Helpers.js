@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const getUTCTimestamp = (blockTimestamp) => {
 	const pad = (n, s = 2) => `${new Array(s).fill(0)}${n}`.slice(-s);
 	const d = new Date(blockTimestamp);
@@ -24,6 +26,59 @@ export const dataURLtoFile = (dataurl, filename) => {
 		u8arr[n] = bstr.charCodeAt(n);
 	}
 	return new File([u8arr], filename, { type: mime });
+};
+
+export const uploadImage = async (image, imageName, setLoading, setError) => {
+	try {
+		if (!image) {
+			setError({
+				title: "Something went wrong",
+				message: "Please upload an image",
+				showErrorBox: true,
+			});
+			return;
+		}
+
+		const file = dataURLtoFile(image, imageName);
+		const formData = new FormData();
+		formData.append("file", file);
+
+		const response = await axios.post(`/api/upload-image`, formData, {
+			maxContentLength: Infinity,
+			maxBodyLength: Infinity,
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+			onUploadProgress: (progressEvent) => {
+				var _percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+				setLoading((prevState) => ({
+					...prevState,
+					status: true,
+					showProgressBar: true,
+					progress: _percentage,
+				}));
+			},
+		});
+
+		if (response.status === 200) {
+			console.log("Image uploaded successfully at:", response.data.Location);
+			return response.data.Location;
+		} else {
+			setError({
+				title: "Something went wrong",
+				message: "Error uploading image. Please retry.",
+				showErrorBox: true,
+			});
+			return null;
+		}
+	} catch (error) {
+		console.log("Error uploading image:", error);
+		setError({
+			title: "Something went wrong",
+			message: "Error uploading image. Please retry.",
+			showErrorBox: true,
+		});
+	}
 };
 
 export const getObjectByName = (categoryName, categoryArray) => {

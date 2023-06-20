@@ -8,7 +8,7 @@ const withPWA = require("next-pwa")({
 
 module.exports = withPWA({
 	images: {
-		domains: ["lh3.googleusercontent.com", "miro.medium.com"],
+		domains: ["lh3.googleusercontent.com", "miro.medium.com", "everythingai.s3.amazonaws.com", "everythingai.s3.ap-south-1.amazonaws.com"],
 	},
 	webpack: (config, { isServer }) => {
 		if (!isServer) {

@@ -3,6 +3,7 @@ import { authReducer, userReducer, loadedUserReducer, forgotPasswordReducer, adm
 import { createCategoryReducer, getAllCategoriesReducer, updateCategoryReducer, deleteCategoryReducer, getCategoryReducer } from "./categoryReducers";
 import { newContactUsMessageReducer, adminGetContactUsMessagesReducer, adminDeleteContactUsMessageReducer } from "./contactUsReducers";
 import { createPricingReducer, getAllPricingsReducer, updatePricingReducer, deletePricingReducer } from "./pricingReducers";
+import { createToolReducer, getAllToolsReducer, getToolReducer, updateToolReducer, deleteToolReducer } from "./toolReducers";
 
 const reducer = combineReducers({
 	auth: authReducer,
@@ -26,6 +27,12 @@ const reducer = combineReducers({
 	allPricings: getAllPricingsReducer,
 	updatePricing: updatePricingReducer,
 	deletePricing: deletePricingReducer,
+	// tool
+	createTool: createToolReducer,
+	allTools: getAllToolsReducer,
+	tool: getToolReducer,
+	updateTool: updateToolReducer,
+	deleteTool: deleteToolReducer,
 });
 
 export default reducer;

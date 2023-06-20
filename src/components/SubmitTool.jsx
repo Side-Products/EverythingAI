@@ -1,20 +1,22 @@
 import { useState, useEffect, useContext } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories, getCategory } from "@/redux/actions/categoryActions";
 import { getAllPricings } from "@/redux/actions/pricingActions";
+import { createTool, clearErrors } from "@/redux/actions/toolActions";
+import { LoadingContext } from "@/store/LoadingContextProvider";
+import { StatusContext } from "@/store/StatusContextProvider";
 import TextInput from "@/components/ui/Input/TextInput";
 import Dropdown from "@/components/ui/Input/Dropdown";
 import Button from "@/components/ui/Button";
 import ImageUploadInput from "@/components/ui/Input/ImageUploadInput";
-import axios from "axios";
-import { LoadingContext } from "@/store/LoadingContextProvider";
-import { StatusContext } from "@/store/StatusContextProvider";
-import { getObjectByName, dataURLtoFile } from "@/utils/Helpers";
+import { getObjectByName, uploadImage } from "@/utils/Helpers";
+import { sleep } from "@/utils/Sleep";
 
 const SubmitTool = () => {
 	const { setLoading } = useContext(LoadingContext);
-	const { setError } = useContext(StatusContext);
+	const { setError, setSuccess } = useContext(StatusContext);
 
 	const [toolData, setToolData] = useState({
 		name: "",
@@ -76,61 +78,49 @@ const SubmitTool = () => {
 	const { category } = useSelector((state) => state.category);
 
 	const submitForm = async () => {
-		if (!image) {
-			setError({
-				title: "Something went wrong",
-				message: "Please upload an image",
-				showErrorBox: true,
-			});
-			return;
-		}
-
-		let imageUrl = "";
 		try {
-			const file = dataURLtoFile(image, imageName);
-			const formData = new FormData();
-			formData.append("file", file);
-
-			const response = await axios.post(`/api/upload-image`, formData, {
-				maxContentLength: Infinity,
-				maxBodyLength: Infinity,
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
-				onUploadProgress: (progressEvent) => {
-					var _percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-					setLoading((prevState) => ({
-						...prevState,
-						status: true,
-						showProgressBar: true,
-						progress: _percentage,
-					}));
-				},
-			});
-
-			if (response.status === 200) {
-				console.log("Image uploaded successfully at:", response.data.Location);
-				imageUrl = response.data.Location;
-			} else {
-				setError({
-					title: "Something went wrong",
-					message: "Error uploading image. Please retry.",
-					showErrorBox: true,
-				});
+			const imageUrl = await uploadImage(image, imageName, setLoading, setError);
+			if (!imageUrl) {
+				setLoading({ status: false, showProgressBar: false, progress: 0 });
+				return;
 			}
-			setLoading({ status: false, showProgressBar: false, progress: 0 });
+
+			const tool = {
+				...toolData,
+				image: imageUrl,
+			};
+			dispatch(createTool(tool));
 		} catch (error) {
-			console.log("Error uploading image:", error);
-			setError({
-				title: "Something went wrong",
-				message: "Error uploading image. Please retry.",
-				showErrorBox: true,
+			return;
+		}
+	};
+
+	const { success, tool, error } = useSelector((state) => state.createTool);
+	const router = useRouter();
+	useEffect(() => {
+		if (success && tool) {
+			setLoading({ status: false });
+			setSuccess((prevState) => ({
+				...prevState,
+				title: "Tool submitted",
+				message: "Your tool has been submitted successfully. Please wait for the admin to approve it.",
+				showSuccessBox: true,
+			}));
+			sleep(2000).then(() => {
+				router.reload();
 			});
 			return;
 		}
-
-		imageUrl;
-	};
+		if (error) {
+			setLoading({ status: false });
+			setError({
+				title: "Something went wrong",
+				message: error,
+				showErrorBox: true,
+			});
+			dispatch(clearErrors());
+		}
+	}, [dispatch, error, success]);
 
 	return (
 		<form
@@ -242,7 +232,7 @@ const SubmitTool = () => {
 								name={"twitter"}
 								onFieldChange={onToolDataChange}
 								placeholder="Eg. https://twitter.com/{username}"
-								required={true}
+								required={false}
 							/>
 							<TextInput
 								label={"Instagram"}
@@ -251,7 +241,7 @@ const SubmitTool = () => {
 								name={"instagram"}
 								onFieldChange={onToolDataChange}
 								placeholder="Eg. https://instagram.com/{username}"
-								required={true}
+								required={false}
 							/>
 							<TextInput
 								label={"LinkedIn"}
@@ -260,7 +250,7 @@ const SubmitTool = () => {
 								name={"linkedin"}
 								onFieldChange={onToolDataChange}
 								placeholder="Eg. https://linkedin.com/company/{username}"
-								required={true}
+								required={false}
 							/>
 							<TextInput
 								label={"YouTube"}
@@ -269,7 +259,7 @@ const SubmitTool = () => {
 								name={"youtube"}
 								onFieldChange={onToolDataChange}
 								placeholder="Eg. https://youtube.com/{username}"
-								required={true}
+								required={false}
 							/>
 						</div>
 					</div>
