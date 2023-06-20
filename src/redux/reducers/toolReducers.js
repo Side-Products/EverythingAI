@@ -13,6 +13,14 @@ import {
 	DELETE_TOOL_SUCCESS,
 	DELETE_TOOL_RESET,
 	DELETE_TOOL_FAIL,
+	VERIFY_TOOL_REQUEST,
+	VERIFY_TOOL_SUCCESS,
+	VERIFY_TOOL_RESET,
+	VERIFY_TOOL_FAIL,
+	UNVERIFY_TOOL_REQUEST,
+	UNVERIFY_TOOL_SUCCESS,
+	UNVERIFY_TOOL_RESET,
+	UNVERIFY_TOOL_FAIL,
 	GET_TOOL_REQUEST,
 	GET_TOOL_SUCCESS,
 	GET_TOOL_FAIL,
@@ -58,6 +66,8 @@ export const getAllToolsReducer = (state = { tools: [] }, action) => {
 			return {
 				loading: false,
 				tools: action.payload.tools,
+				verifiedTools: action.payload.verifiedTools,
+				unverifiedTools: action.payload.unverifiedTools,
 				toolsCount: action.payload.toolsCount,
 			};
 		case GET_TOOLS_FAIL:
@@ -152,6 +162,70 @@ export const getToolReducer = (state = { tool: {} }, action) => {
 				tool: action.payload.tool,
 			};
 		case GET_TOOL_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			};
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				error: null,
+			};
+		default:
+			return state;
+	}
+};
+
+// verify tool reducer
+export const verifyToolReducer = (state = {}, action) => {
+	switch (action.type) {
+		case VERIFY_TOOL_REQUEST:
+			return {
+				loading: true,
+			};
+		case VERIFY_TOOL_SUCCESS:
+			return {
+				loading: false,
+				isVerified: action.payload,
+			};
+		case VERIFY_TOOL_RESET:
+			return {
+				loading: false,
+				isVerified: false,
+			};
+		case VERIFY_TOOL_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			};
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				error: null,
+			};
+		default:
+			return state;
+	}
+};
+
+// unverify tool reducer
+export const unverifyToolReducer = (state = {}, action) => {
+	switch (action.type) {
+		case UNVERIFY_TOOL_REQUEST:
+			return {
+				loading: true,
+			};
+		case UNVERIFY_TOOL_SUCCESS:
+			return {
+				loading: false,
+				isUnverified: action.payload,
+			};
+		case UNVERIFY_TOOL_RESET:
+			return {
+				loading: false,
+				isUnverified: false,
+			};
+		case UNVERIFY_TOOL_FAIL:
 			return {
 				loading: false,
 				error: action.payload,

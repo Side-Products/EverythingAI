@@ -59,4 +59,21 @@ const categories = {
 	],
 };
 
+const tools = [
+	{
+		name: "BeachAI",
+		url: "https://beachai.com",
+		oneLiner: "BeachAI is a tool that helps you create a beach landing page in seconds.",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg",
+		category: "",
+		subCategory: "",
+		pricing: "",
+		twitter: "",
+		instagram: "",
+		linkedin: "",
+		youtube: "",
+		verified: false,
+	},
+];
+
 module.exports = { categories };

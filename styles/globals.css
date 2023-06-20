@@ -715,13 +715,18 @@ tr th:nth-child(1) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 
-.allFeatureRequests-table tr td:nth-child(n + 5),
-.allFeatureRequests-table tr th:nth-child(n + 5) {
+.allTools-table tr td:nth-child(n + 11),
+.allTools-table tr th:nth-child(n + 11) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 
-.example-table tr td:nth-child(n + 2),
-.example-table tr th:nth-child(n + 2) {
+.verifiedTools-table tr td:nth-child(n + 12),
+.verifiedTools-table tr th:nth-child(n + 12) {
+	border-radius: 0 0.625rem 0.625rem 0;
+}
+
+.unverifiedTools-table tr td:nth-child(n + 12),
+.unverifiedTools-table tr th:nth-child(n + 12) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 
