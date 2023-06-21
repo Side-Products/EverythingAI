@@ -88,7 +88,7 @@ const getCategoryByName = catchAsyncErrors(async (req, res, next) => {
 		})
 		.populate({
 			path: "pricing",
-			select: "name",
+			select: "name meta",
 		})
 		.sort({ createdAt: "desc" });
 
