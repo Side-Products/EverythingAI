@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { categories, tools } = require("./data.js");
+const { categories, tools, pricingOptions } = require("./data.js");
 
 // GET latest schemas and data from constants.js
 
@@ -55,7 +55,11 @@ const pricingSchema = new mongoose.Schema({
 		required: [true, "Please enter a name"],
 		trim: true,
 		maxLength: [100, "Name cannot exceed 100 characters"],
-		unique: true,
+	},
+	meta: {
+		type: String,
+		trim: true,
+		maxLength: [100, "Meta cannot exceed 100 characters"],
 	},
 	createdAt: {
 		type: Date,
@@ -142,16 +146,6 @@ const toolSchema = new mongoose.Schema({
 	},
 });
 
-const pricingOptions = [
-	"Free",
-	"Freemium (Pay as you go)",
-	"Free trial (without credit card)",
-	"Free trial (with credit card)",
-	"Premium (Pay upfront)",
-	"Subscription",
-	"Custom",
-];
-
 // Category model
 const Category = mongoose.model("Category", categorySchema);
 // Subcategory model
@@ -191,13 +185,9 @@ async function populateCategoriesAndSubCategories() {
 		console.log("Subcategories inserted successfully:", subCategoryInsertResult);
 
 		// Populate pricing collection
-		const pricingInsertResult = await Pricing.insertMany(
-			pricingOptions.map((pricing) => ({
-				name: pricing,
-			}))
-		);
+		const pricingInsertResult = await Pricing.insertMany(pricingOptions);
 		const pricingIds = pricingInsertResult.map((pricing) => pricing._id);
-		console.log("Pricing inserted successfully:", pricingIds);
+		console.log("Pricing options inserted successfully:", pricingIds);
 
 		// Assign random pricing values to each tool
 		tools.forEach((tool) => {

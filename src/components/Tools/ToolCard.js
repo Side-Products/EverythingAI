@@ -2,6 +2,7 @@ import Image from "next/image";
 import MarqueeText from "../ui/MarqueeText";
 import styles from "@/styles/ToolCard/ToolCard.module.css"
 
+<<<<<<< HEAD
 export default function ToolCard({ tool, onClick }) {
 	/**
 	 * @returns background and text color tw-classes w.r.t pricing name
@@ -35,6 +36,19 @@ export default function ToolCard({ tool, onClick }) {
 
 				<p className={"mt-5 text-sm "+styles['oneLiner']}>{tool.oneLiner}</p>
 			</div>
+=======
+export default function ToolCard({ tool, onClick, showSubcategory = false }) {
+	return (
+		<div onClick={() => onClick()} className="p-6 rounded-lg bg-light-100 cursor-pointer shadow-md hover:shadow-lg transition duration-500">
+			<Image src={tool.image} width={300} height={300} alt="tool image" className="rounded-md" />
+			<p className="mt-4 text-lg font-semibold">{tool.name}</p>
+			<div className="flex justify-between items-end">
+				<div className="mt-2 w-fit text-sm px-4 py-1 bg-primary-200 rounded-full">{showSubcategory ? tool.subCategory?.name : tool.category?.name}</div>
+				<div className="mt-1 text-xs">{tool.pricing?.name}</div>
+			</div>
+
+			<div className="mt-6">{tool.oneLiner}</div>
+>>>>>>> e46c74f6591cf0d3d8d071c821b7c72d93eebc67
 		</div>
 	);
 }
