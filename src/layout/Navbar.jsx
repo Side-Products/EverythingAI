@@ -42,8 +42,8 @@ const Navbar = ({ setAuthModalOpen }) => {
 								<ul className="flex flex-row items-center font-medium md:text-sm md:space-x-3 xl:space-x-4 md:mt-0 sm:text-sm">
 									<li
 										className={
-											"font-semibold block py-2 px-4 text-dark-800 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
-											(router.pathname == "/tools" ? "text-gradient-primary-tr" : "")
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
+											(router.pathname == "/tools" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
 										<Link href="/tools">Tools</Link>
@@ -51,8 +51,8 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-semibold block py-2 px-4 text-dark-800 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
-											(router.pathname == "/categories" ? "text-gradient-primary-tr" : "")
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
+											(router.pathname == "/categories" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
 										<Link href="/categories">Categories</Link>
@@ -60,8 +60,8 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-semibold block py-2 px-4 text-dark-800 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
-											(router.pathname == "/collections" ? "text-gradient-primary-tr" : "")
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
+											(router.pathname == "/collections" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
 										<Link href="/collections">Collections</Link>
@@ -69,8 +69,8 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-semibold block py-2 px-4 text-dark-800 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
-											(router.pathname == "/blog" ? "text-gradient-primary-tr" : "")
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
+											(router.pathname == "/blog" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
 										<Link href="/blog">Blog</Link>
@@ -78,8 +78,8 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-semibold block py-2 px-4 text-dark-800 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
-											(router.pathname == "/contact" ? "text-gradient-primary-tr" : "")
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
+											(router.pathname == "/contact" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
 										<Link href="/contact">Contact</Link>

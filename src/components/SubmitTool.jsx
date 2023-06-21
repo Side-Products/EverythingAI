@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories, getCategory } from "@/redux/actions/categoryActions";
 import { getAllPricings } from "@/redux/actions/pricingActions";
-import { createTool, clearErrors } from "@/redux/actions/toolActions";
+import { createTool, updateTool, clearErrors } from "@/redux/actions/toolActions";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import { StatusContext } from "@/store/StatusContextProvider";
 import TextInput from "@/components/ui/Input/TextInput";
@@ -14,7 +14,7 @@ import ImageUploadInput from "@/components/ui/Input/ImageUploadInput";
 import { getObjectByName, uploadImage } from "@/utils/Helpers";
 import { sleep } from "@/utils/Sleep";
 
-const SubmitTool = () => {
+const SubmitTool = ({ toolToEdit = null }) => {
 	const { setLoading } = useContext(LoadingContext);
 	const { setError, setSuccess } = useContext(StatusContext);
 
@@ -42,22 +42,23 @@ const SubmitTool = () => {
 			if (e.target.value === categoryDefaultOption) e.target.value = "";
 			else {
 				setToolData({ ...toolData, [e.target.name]: getObjectByName(e.target.value, categories) });
-				return;
 			}
+			if (toolToEdit) toolToEdit.subCategory.name = subCategoryDefaultOption;
+			return;
 		}
 		if (e.target.name === "subCategory") {
 			if (e.target.value === subCategoryDefaultOption) e.target.value = "";
 			else {
 				setToolData({ ...toolData, [e.target.name]: getObjectByName(e.target.value, category.subcategories) });
-				return;
 			}
+			return;
 		}
 		if (e.target.name === "pricing") {
 			if (e.target.value === pricingDefaultOption) e.target.value = "";
 			else {
 				setToolData({ ...toolData, [e.target.name]: getObjectByName(e.target.value, pricings) });
-				return;
 			}
+			return;
 		}
 		setToolData({ ...toolData, [e.target.name]: e.target.value });
 	};
@@ -77,23 +78,78 @@ const SubmitTool = () => {
 	}, [categories, toolData.category]);
 	const { category } = useSelector((state) => state.category);
 
+	useEffect(() => {
+		if (toolToEdit) {
+			setToolData({
+				name: toolToEdit.name,
+				url: toolToEdit.url,
+				oneLiner: toolToEdit.oneLiner,
+				category: toolToEdit.category,
+				subCategory: toolToEdit.subCategory,
+				pricing: toolToEdit.pricing,
+				twitter: toolToEdit.twitter,
+				instagram: toolToEdit.instagram,
+				linkedin: toolToEdit.linkedin,
+				youtube: toolToEdit.youtube,
+			});
+			setImage(toolToEdit.image);
+		}
+	}, []);
+
 	const submitForm = async () => {
 		try {
-			const imageUrl = await uploadImage(image, imageName, setLoading, setError);
-			if (!imageUrl) {
-				setLoading({ status: false, showProgressBar: false, progress: 0 });
-				return;
-			}
+			if (image && imageName) {
+				const imageUrl = await uploadImage(image, imageName, setLoading, setError);
+				if (!imageUrl) {
+					setLoading({ status: false, showProgressBar: false, progress: 0 });
+					return;
+				}
 
-			const tool = {
-				...toolData,
-				image: imageUrl,
-			};
-			dispatch(createTool(tool));
+				const tool = {
+					...toolData,
+					image: imageUrl,
+				};
+				console.log("tool", tool);
+				if (toolToEdit) {
+					dispatch(updateTool(toolToEdit._id, tool));
+					return;
+				} else {
+					dispatch(createTool(tool));
+				}
+			} else {
+				console.log("toolData", toolData);
+				dispatch(updateTool(toolToEdit._id, toolData));
+			}
 		} catch (error) {
 			return;
 		}
 	};
+
+	const { isUpdated, error: updateError } = useSelector((state) => state.updateTool);
+	useEffect(() => {
+		if (isUpdated) {
+			setLoading({ status: false });
+			setSuccess((prevState) => ({
+				...prevState,
+				title: "Tool Updated",
+				message: "Tool has been updated successfully",
+				showSuccessBox: true,
+			}));
+			sleep(2000).then(() => {
+				router.reload();
+			});
+			return;
+		}
+		if (updateError) {
+			setLoading({ status: false });
+			setError({
+				title: "Something went wrong",
+				message: updateError,
+				showErrorBox: true,
+			});
+			dispatch(clearErrors());
+		}
+	}, [dispatch, updateError, isUpdated]);
 
 	const { success, tool, error } = useSelector((state) => state.createTool);
 	const router = useRouter();
@@ -169,7 +225,7 @@ const SubmitTool = () => {
 						name="category"
 						options={categories}
 						objKey={"name"}
-						defaultOption={categoryDefaultOption}
+						defaultOption={toolToEdit?.category?.name || categoryDefaultOption}
 						setChoice={onToolDataChange}
 						classes={"w-full"}
 					/>
@@ -180,7 +236,7 @@ const SubmitTool = () => {
 						name="subCategory"
 						options={category?.subcategories}
 						objKey={"name"}
-						defaultOption={subCategoryDefaultOption}
+						defaultOption={toolToEdit?.subCategory?.name || subCategoryDefaultOption}
 						setChoice={onToolDataChange}
 						classes={"w-full"}
 					/>
@@ -191,7 +247,7 @@ const SubmitTool = () => {
 						name="pricing"
 						options={pricings}
 						objKey={"name"}
-						defaultOption={pricingDefaultOption}
+						defaultOption={toolToEdit?.pricing?.name || pricingDefaultOption}
 						setChoice={onToolDataChange}
 						classes={"w-full"}
 					/>
@@ -217,7 +273,7 @@ const SubmitTool = () => {
 							setImage={setImage}
 							setImageName={setImageName}
 							label={"Product Image (Ratio 16 : 9)"}
-							required={true}
+							required={toolToEdit && toolToEdit.image == image ? false : true}
 						/>
 					</div>
 

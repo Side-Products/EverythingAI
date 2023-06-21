@@ -20,6 +20,8 @@ const allCategories = catchAsyncErrors(async (req, res) => {
 	const categories = await Category.find().sort({ createdAt: "desc" });
 	const categoriesCount = await Category.countDocuments();
 
+	console.log("categories:::::::::", categories);
+
 	res.status(200).json({
 		success: true,
 		categories,

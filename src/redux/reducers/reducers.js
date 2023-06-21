@@ -3,7 +3,15 @@ import { authReducer, userReducer, loadedUserReducer, forgotPasswordReducer, adm
 import { createCategoryReducer, getAllCategoriesReducer, updateCategoryReducer, deleteCategoryReducer, getCategoryReducer } from "./categoryReducers";
 import { newContactUsMessageReducer, adminGetContactUsMessagesReducer, adminDeleteContactUsMessageReducer } from "./contactUsReducers";
 import { createPricingReducer, getAllPricingsReducer, updatePricingReducer, deletePricingReducer } from "./pricingReducers";
-import { createToolReducer, getAllToolsReducer, getToolReducer, updateToolReducer, deleteToolReducer } from "./toolReducers";
+import {
+	createToolReducer,
+	getAllToolsReducer,
+	getToolReducer,
+	updateToolReducer,
+	deleteToolReducer,
+	verifyToolReducer,
+	unverifyToolReducer,
+} from "./toolReducers";
 
 const reducer = combineReducers({
 	auth: authReducer,
@@ -33,6 +41,8 @@ const reducer = combineReducers({
 	tool: getToolReducer,
 	updateTool: updateToolReducer,
 	deleteTool: deleteToolReducer,
+	verifyTool: verifyToolReducer,
+	unverifyTool: unverifyToolReducer,
 });
 
 export default reducer;

@@ -7,7 +7,7 @@ import onError from "@/backend/middlewares/errors";
 const handler = nc({ onError });
 dbConnect();
 
-handler.use(isAuthenticatedUser).post(createTool);
 handler.get(allTools);
+handler.use(isAuthenticatedUser).post(createTool);
 
 export default handler;

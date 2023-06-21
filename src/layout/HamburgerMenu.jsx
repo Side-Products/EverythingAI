@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../public/logo_removedbg.png";
+import logo from "../../public/icon.png";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
 import { twitter_url, linkedin_url } from "@/config/constants";
 

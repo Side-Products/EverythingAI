@@ -15,6 +15,14 @@ import {
 	DELETE_TOOL_SUCCESS,
 	DELETE_TOOL_RESET,
 	DELETE_TOOL_FAIL,
+	VERIFY_TOOL_REQUEST,
+	VERIFY_TOOL_SUCCESS,
+	VERIFY_TOOL_RESET,
+	VERIFY_TOOL_FAIL,
+	UNVERIFY_TOOL_REQUEST,
+	UNVERIFY_TOOL_SUCCESS,
+	UNVERIFY_TOOL_RESET,
+	UNVERIFY_TOOL_FAIL,
 	GET_TOOL_REQUEST,
 	GET_TOOL_SUCCESS,
 	GET_TOOL_FAIL,
@@ -96,11 +104,17 @@ export const deleteTool = (id) => async (dispatch) => {
 };
 
 // get tool
-export const getTool = (id) => async (dispatch) => {
+export const getTool = (req, id) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_TOOL_REQUEST });
 
-		const { data } = await axios.get(`/api/tools/${id}`);
+		const { origin } = absoluteUrl(req);
+		const config = {
+			headers: {
+				cookie: req.headers.cookie,
+			},
+		};
+		const { data } = await axios.get(`${origin}/api/tools/${id}`, config);
 
 		dispatch({
 			type: GET_TOOL_SUCCESS,
@@ -124,12 +138,44 @@ export const adminGetAllTools = (req) => async (dispatch) => {
 				cookie: req.headers.cookie,
 			},
 		};
-		const { data } = await axios.get(`${origin}/api/tools`, config);
+		const { data } = await axios.get(`${origin}/api/admin/tools`, config);
 
 		dispatch({ type: GET_TOOLS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({
 			type: GET_TOOLS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+// verify tool
+export const verifyTool = (id) => async (dispatch) => {
+	try {
+		dispatch({ type: VERIFY_TOOL_REQUEST });
+
+		const { data } = await axios.post(`/api/admin/tools/${id}/verify`);
+
+		dispatch({ type: VERIFY_TOOL_SUCCESS, payload: data.success });
+	} catch (error) {
+		dispatch({
+			type: VERIFY_TOOL_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+// unverify tool
+export const unverifyTool = (id) => async (dispatch) => {
+	try {
+		dispatch({ type: UNVERIFY_TOOL_REQUEST });
+
+		const { data } = await axios.post(`/api/admin/tools/${id}/unverify`);
+
+		dispatch({ type: UNVERIFY_TOOL_SUCCESS, payload: data.success });
+	} catch (error) {
+		dispatch({
+			type: UNVERIFY_TOOL_FAIL,
 			payload: error.response.data.message,
 		});
 	}

@@ -61,6 +61,10 @@ const toolSchema = new mongoose.Schema({
 		trim: true,
 		validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 	},
+	verified: {
+		type: Boolean,
+		default: false,
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now,
