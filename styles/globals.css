@@ -58,7 +58,7 @@ a {
 /**************************************************************************/
 
 .bg-gradient-primary-tr {
-	@apply bg-gradient-to-tr from-primary-400 to-primary-600 animate-bg opacity-100 hover:opacity-90 transition duration-300;
+	@apply transition duration-300 opacity-100 bg-gradient-to-tr from-primary-400 to-primary-600 animate-bg hover:opacity-90;
 }
 .bg-gradient-primary-tr-loading {
 	@apply bg-gradient-to-tr from-primary-700 to-primary-900 animate-bg;
@@ -68,7 +68,7 @@ a {
 }
 
 .bg-gradient-secondary-tr {
-	@apply bg-gradient-to-tr from-orange-500 to-rose-500 animate-bg opacity-100 hover:opacity-90 transition duration-300;
+	@apply transition duration-300 opacity-100 bg-gradient-to-tr from-orange-500 to-rose-500 animate-bg hover:opacity-90;
 }
 .bg-gradient-secondary-tr-loading {
 	@apply bg-gradient-to-tr from-orange-600 to-rose-500 animate-bg;
@@ -88,7 +88,7 @@ a {
 }
 
 .bg-gradient-error-tr {
-	@apply bg-gradient-to-tr from-error-500 to-error-800 animate-bg opacity-100 hover:opacity-90 transition duration-300;
+	@apply transition duration-300 opacity-100 bg-gradient-to-tr from-error-500 to-error-800 animate-bg hover:opacity-90;
 }
 .bg-gradient-error-tr-loading {
 	@apply bg-gradient-to-tr from-error-700 to-error-900 animate-bg;
@@ -98,7 +98,7 @@ a {
 }
 
 .bg-gradient-default-tr {
-	@apply bg-gradient-to-tr from-neutral-950 via-gray-800 to-black animate-bg opacity-100 hover:opacity-90 transition duration-300;
+	@apply transition duration-300 opacity-100 bg-gradient-to-tr from-neutral-950 via-gray-800 to-black animate-bg hover:opacity-90;
 }
 .bg-gradient-default-tr-loading {
 	@apply bg-gradient-to-tr from-gray-600 via-gray-600 to-gray-600 animate-bg;
@@ -1104,6 +1104,7 @@ input[type="radio"] + label > span {
 .swiper-container .swiper {
 	padding-left: 70px;
 	padding-right: 70px;
+	bottom: 0px;
 }
 
 .swiper-button-next,
