@@ -48,7 +48,7 @@ const allTools = catchAsyncErrors(async (req, res) => {
 		})
 		.populate({
 			path: "pricing",
-			select: "name",
+			select: "name meta",
 		})
 		.sort({ createdAt: "desc" });
 
