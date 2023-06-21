@@ -7,7 +7,7 @@ import onError from "@/backend/middlewares/errors";
 const handler = nc({ onError });
 dbConnect();
 
-handler.use(isAuthenticatedUser, authorizeRoles("admin")).post(createPricing);
 handler.get(allPricings);
+handler.use(isAuthenticatedUser, authorizeRoles("admin")).post(createPricing);
 
 export default handler;

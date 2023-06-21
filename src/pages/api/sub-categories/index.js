@@ -7,7 +7,7 @@ import onError from "@/backend/middlewares/errors";
 const handler = nc({ onError });
 dbConnect();
 
-handler.use(isAuthenticatedUser, authorizeRoles("admin")).post(createSubCategory);
 handler.get(allSubCategories);
+handler.use(isAuthenticatedUser, authorizeRoles("admin")).post(createSubCategory);
 
 export default handler;
