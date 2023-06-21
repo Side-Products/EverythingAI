@@ -1,3 +1,13 @@
+const pricingOptions = [
+	{ name: "Free", meta: "" },
+	{ name: "Freemium", meta: "Pay as you go" },
+	{ name: "Free trial", meta: "without credit card" },
+	{ name: "Free trial", meta: "with credit card" },
+	{ name: "Premium", meta: "Pay upfront" },
+	{ name: "Subscription", meta: "" },
+	{ name: "Custom", meta: "" },
+];
+
 const categories = {
 	Marketing: [
 		"Branding",
@@ -1770,4 +1780,4 @@ const tools = [
 	},
 ];
 
-module.exports = { categories, tools };
+module.exports = { categories, tools, pricingOptions };

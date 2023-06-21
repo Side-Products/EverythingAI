@@ -6,7 +6,11 @@ const pricingSchema = new mongoose.Schema({
 		required: [true, "Please enter a name"],
 		trim: true,
 		maxLength: [100, "Name cannot exceed 100 characters"],
-		unique: true,
+	},
+	meta: {
+		type: String,
+		trim: true,
+		maxLength: [100, "Meta cannot exceed 100 characters"],
 	},
 	createdAt: {
 		type: Date,

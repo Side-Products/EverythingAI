@@ -2,6 +2,7 @@ import Category from "@/backend/models/category";
 import SubCategory from "@/backend/models/subCategory";
 import ErrorHandler from "@/backend/utils/errorHandler";
 import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
+import Tool from "@/backend/models/tool";
 
 // add to db => /api/categories
 const createCategory = catchAsyncErrors(async (req, res) => {
@@ -76,10 +77,24 @@ const getCategoryByName = catchAsyncErrors(async (req, res, next) => {
 	if (!category) {
 		return next(new ErrorHandler("No category found with this name", 404));
 	}
+	const tools = await Tool.find({ category: categoryId, verified: true })
+		.populate({
+			path: "category",
+			select: "name",
+		})
+		.populate({
+			path: "subCategory",
+			select: "name",
+		})
+		.populate({
+			path: "pricing",
+			select: "name",
+		})
+		.sort({ createdAt: "desc" });
 
 	// Find all subcategories that have the same categoryId as the category
 	const subcategories = await SubCategory.find({ categoryId });
-	res.status(200).json({ success: true, category: { ...category._doc, subcategories } });
+	res.status(200).json({ success: true, category: { ...category._doc, subcategories, tools } });
 });
 
 export { createCategory, allCategories, updateCategory, deleteCategory, getCategory, getCategoryByName };

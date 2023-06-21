@@ -5,8 +5,8 @@ import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
 // add to db => /api/pricings
 const createPricing = catchAsyncErrors(async (req, res) => {
 	// save to db
-	const { name } = req.body;
-	const pricing = await Pricing.create({ name });
+	const { name, meta } = req.body;
+	const pricing = await Pricing.create({ name, meta });
 
 	res.status(200).json({
 		success: true,
