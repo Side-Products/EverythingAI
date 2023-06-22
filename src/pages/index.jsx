@@ -2,13 +2,11 @@ import PageWrapper from "@/layout/PageWrapper";
 import HeroSection from "@/components/Home/HeroSection";
 import ToolsCarousel from "@/components/ui/Carousel/ToolsCarousel";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTools } from "@/redux/actions/toolActions";
 
 export default function HomePage() {
 	const dispatch = useDispatch();
-	const router = useRouter();
 
 	useEffect(() => {
 		dispatch(getAllTools());
@@ -19,7 +17,8 @@ export default function HomePage() {
 	return (
 		<PageWrapper>
 			<HeroSection />
-			{/* {tools && tools.length > 0 && <ToolsCarousel heading={"Marketing"} tools={tools} />} */}
+			{tools && tools.length > 0 && <ToolsCarousel heading={"Marketing"} tools={tools} />}
+			Explore Categories (Categories Carousel)
 		</PageWrapper>
 	);
 }
