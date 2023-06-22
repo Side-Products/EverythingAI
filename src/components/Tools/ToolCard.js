@@ -1,11 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import MarqueeText from "../ui/MarqueeText";
 import styles from "@/styles/ToolCard/ToolCard.module.css";
 import Tooltip from "../ui/Tooltip";
 import Button from "@/components/ui/Button";
 
 export default function ToolCard({ tool }) {
+	const router = useRouter();
+
 	/**
 	 * @returns background and text color tw-classes w.r.t pricing name
 	 */
@@ -21,15 +24,15 @@ export default function ToolCard({ tool }) {
 	};
 
 	return (
-		<div className="group transition duration-300 cursor-pointer max-w-fit bg-light-100 rounded-lg shadow-md hover:shadow-2xl">
-			<div>
-				<div className="relative w-full h-48 overflow-hidden rounded-t-lg">
+		<div className="group transition duration-300 cursor-pointer max-w-fit bg-light-100 rounded-xl shadow-md hover:shadow-2xl">
+			<div onClick={() => router.push(`/tools/${tool._id}`)}>
+				<div className="relative w-full h-44 overflow-hidden rounded-t-xl">
 					<Image
 						src={tool.image}
 						width={533}
 						height={300}
 						alt="tool image"
-						className="group-hover:scale-110 group-hover:duration-500 duration-500 rounded-t-lg"
+						className="group-hover:scale-110 group-hover:duration-500 duration-500 rounded-t-xl"
 					/>
 				</div>
 
@@ -56,7 +59,7 @@ export default function ToolCard({ tool }) {
 				<p className={"text-sm " + styles["oneLiner"]}>{tool.oneLiner}</p>
 			</div>
 
-			<div className="w-full grid grid-cols-2 items-center justify-between gap-x-6 px-5 pb-5 mt-4">
+			<div className="w-full grid grid-cols-2 items-center justify-between gap-x-6 px-5 pb-5 mt-2">
 				<Link href={tool?.url} target="_blank" rel="noopener noreferrer">
 					<Button type="button">
 						<i className="fa-solid fa-arrow-up-right-from-square text-light-100 text-lg"></i>
