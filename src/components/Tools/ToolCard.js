@@ -1,10 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import MarqueeText from "../ui/MarqueeText";
 import styles from "@/styles/ToolCard/ToolCard.module.css";
 import Tooltip from "../ui/Tooltip";
 import Button from "@/components/ui/Button";
 
-export default function ToolCard({ tool, onClick }) {
+export default function ToolCard({ tool }) {
 	/**
 	 * @returns background and text color tw-classes w.r.t pricing name
 	 */
@@ -55,13 +56,15 @@ export default function ToolCard({ tool, onClick }) {
 				<p className={"text-sm " + styles["oneLiner"]}>{tool.oneLiner}</p>
 			</div>
 
-			<div className="w-full flex items-center justify-between gap-x-6 px-5 pb-5 mt-4">
-				<Button>
-					<i className="fa-solid fa-arrow-up-right-from-square text-light-100"></i>
-				</Button>
+			<div className="w-full grid grid-cols-2 items-center justify-between gap-x-6 px-5 pb-5 mt-4">
+				<Link href={tool?.url} target="_blank" rel="noopener noreferrer">
+					<Button type="button">
+						<i className="fa-solid fa-arrow-up-right-from-square text-light-100 text-lg"></i>
+					</Button>
+				</Link>
 
-				<Button variant="default" classes="relative group/like-btn">
-					<i className="fa-solid fa-thumbs-up text-light-100 group-hover/like-btn:text-primary-400"></i>
+				<Button type="button" variant="default" classes="relative group/like-btn">
+					<i className="fa-solid fa-thumbs-up text-light-100 text-lg group-hover/like-btn:text-primary-400"></i>
 				</Button>
 			</div>
 		</div>
