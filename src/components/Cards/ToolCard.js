@@ -1,13 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import MarqueeText from "../ui/MarqueeText";
 import styles from "@/styles/ToolCard/ToolCard.module.css";
-import Tooltip from "../ui/Tooltip";
+import MarqueeText from "@/components/ui/MarqueeText";
 import Button from "@/components/ui/Button";
+import Tooltip from "@/components/ui/Tooltip";
+import { useDispatch, useSelector } from "react-redux";
+import { likeTool, deleteLikedTool } from "@/redux/actions/likedToolActions";
+import { useEffect } from "react";
 
 export default function ToolCard({ tool }) {
 	const router = useRouter();
+	const dispatch = useDispatch();
 
 	/**
 	 * @returns background and text color tw-classes w.r.t pricing name
@@ -22,6 +26,15 @@ export default function ToolCard({ tool }) {
 				return "text-purple-800 bg-purple-300";
 		}
 	};
+
+	const { likedTool } = useSelector((state) => state.createLikedTool);
+	useEffect(() => {
+		if (likedTool) {
+			if (likedTool._id === tool._id) {
+				tool.liked = true;
+			}
+		}
+	}, [likedTool]);
 
 	return (
 		<div className="group transition duration-300 cursor-pointer max-w-fit bg-light-100 rounded-xl shadow-md hover:shadow-2xl">
@@ -48,7 +61,7 @@ export default function ToolCard({ tool }) {
 						<div className={"flex items-center px-4 py-[2px] text-xs font-semibold rounded-2xl min-h-[28px] " + getPricingChipClass()}>
 							<p>{tool.pricing?.name}</p>
 							{tool.pricing.meta?.length > 0 && (
-								<Tooltip labelText={<span class="ml-1 material-symbols-outlined text-sm">info</span>} message={tool.pricing.meta} />
+								<Tooltip labelText={<span className="ml-1 material-symbols-outlined text-sm">info</span>} message={tool.pricing.meta} />
 							)}
 						</div>
 					</div>
@@ -66,8 +79,26 @@ export default function ToolCard({ tool }) {
 					</Button>
 				</Link>
 
-				<Button type="button" variant="default" classes="relative group/like-btn">
-					<i className="fa-solid fa-thumbs-up text-light-100 text-lg group-hover/like-btn:text-primary-400"></i>
+				<Button
+					onClick={() => {
+						if (tool.liked) {
+							dispatch(deleteLikedTool(tool._id));
+							tool.liked = false;
+						} else {
+							dispatch(likeTool(tool._id));
+							tool.liked = true;
+						}
+					}}
+					type="button"
+					variant="default"
+					classes="relative group/like-btn"
+				>
+					<i
+						className={
+							"fa-solid fa-thumbs-up text-lg " +
+							(tool.liked ? "text-primary-400 group-hover/like-btn:text-error-400" : "text-light-100 group-hover/like-btn:text-primary-400")
+						}
+					></i>
 				</Button>
 			</div>
 		</div>

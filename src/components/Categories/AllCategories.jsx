@@ -1,12 +1,10 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories } from "@/redux/actions/categoryActions";
-import Card from "./Card";
+import CategoryCard from "@/components/Cards/CategoryCard";
 
 export default function AllCategories() {
 	const dispatch = useDispatch();
-	const router = useRouter();
 
 	useEffect(() => {
 		dispatch(getAllCategories());
@@ -20,9 +18,9 @@ export default function AllCategories() {
 				Categories
 			</h1>
 			{categories && categories.length > 0 && (
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 mt-12">
 					{categories.map((category) => (
-						<Card key={category._id} category={category} onClick={() => router.push(`/categories/${category.name.toLowerCase()}`)} />
+						<CategoryCard key={category._id} category={category} />
 					))}
 				</div>
 			)}

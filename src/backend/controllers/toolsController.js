@@ -2,6 +2,7 @@ import Tool from "@/backend/models/tool";
 import Category from "@/backend/models/category";
 import SubCategory from "@/backend/models/subCategory";
 import Pricing from "@/backend/models/pricing";
+import LikedTool from "@/backend/models/likedTool";
 import ErrorHandler from "@/backend/utils/errorHandler";
 import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
 
@@ -51,6 +52,27 @@ const allTools = catchAsyncErrors(async (req, res) => {
 			select: "name meta",
 		})
 		.sort({ createdAt: "desc" });
+
+	if (req.user) {
+		const userId = req.user._id || req.user.id;
+		const likedTools = await LikedTool.find({ userId: userId });
+		const updatedTools = [];
+		tools.forEach((tool) => {
+			const updatedTool = { ...tool._doc, liked: false };
+			likedTools.forEach((likedTool) => {
+				if (likedTool.tool.toString() === tool._id.toString()) {
+					updatedTool.liked = true;
+				}
+			});
+			updatedTools.push(updatedTool);
+		});
+
+		res.status(200).json({
+			success: true,
+			tools: updatedTools,
+		});
+		return;
+	}
 
 	res.status(200).json({
 		success: true,

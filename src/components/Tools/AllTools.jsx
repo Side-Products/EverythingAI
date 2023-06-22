@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTools } from "@/redux/actions/toolActions";
-import ToolCard from "./ToolCard";
+import ToolCard from "@/components/Cards/ToolCard";
 
 export default function AllTools() {
 	const dispatch = useDispatch();
