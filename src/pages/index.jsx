@@ -17,8 +17,8 @@ export default function HomePage() {
 	return (
 		<PageWrapper>
 			<HeroSection />
-			{tools && tools.length > 0 && <ToolsCarousel heading={"Marketing"} tools={tools} />}
-			Explore Categories (Categories Carousel)
+			{/* {tools && tools.length > 0 && <ToolsCarousel heading={"Marketing"} tools={tools} />} */}
+			{/* Explore Categories (Categories Carousel) */}
 		</PageWrapper>
 	);
 }
