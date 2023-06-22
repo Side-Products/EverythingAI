@@ -247,7 +247,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						name="pricing"
 						options={pricings}
 						objKey={"name"}
-						defaultOption={toolToEdit?.pricing?.name || pricingDefaultOption}
+						defaultOption={toolToEdit?.pricing?.name + " " + toolToEdit?.pricing?.meta || pricingDefaultOption}
 						setChoice={onToolDataChange}
 						classes={"w-full"}
 					/>

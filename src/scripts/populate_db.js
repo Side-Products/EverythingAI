@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 const { categories, tools, pricingOptions } = require("./data.js");
 
 // GET latest schemas and data from constants.js
@@ -14,6 +15,11 @@ const categorySchema = new mongoose.Schema({
 		trim: true,
 		maxLength: [100, "Name cannot exceed 100 characters"],
 		unique: true,
+	},
+	image: {
+		type: String,
+		trim: true,
+		validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 	},
 	createdAt: {
 		type: Date,
@@ -97,6 +103,10 @@ const toolSchema = new mongoose.Schema({
 		trim: true,
 		maxLength: [250, "One liner cannot exceed 250 characters"],
 	},
+	description: {
+		type: String,
+		trim: true,
+	},
 	category: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Category",
@@ -165,6 +175,7 @@ async function populateCategoriesAndSubCategories() {
 		const categoryInsertResult = await Category.insertMany(
 			Object.keys(categories).map((category) => ({
 				name: category,
+				image: "https://everythingai.s3.amazonaws.com/171ebe4a-2f9b-42cc-aa5f-7e4652705f3f.jpg",
 			}))
 		);
 		const categoryIds = categoryInsertResult.map((category) => category._id);

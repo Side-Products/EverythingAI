@@ -28,7 +28,7 @@ const newContactUsMessage = catchAsyncErrors(async (req, res) => {
 const deleteContactUsMessage = catchAsyncErrors(async (req, res, next) => {
 	const contactUsMessage = await ContactUs.findById(req.query.id);
 	if (!contactUsMessage) {
-		return next(new ErrorHandler("No contact request with this ID", 404));
+		return next(new ErrorHandler("No contact request with this id", 404));
 	}
 
 	await contactUsMessage.remove();

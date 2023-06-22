@@ -28,7 +28,9 @@ export default function Dropdown({ label = "", id, name = "", options = [], objK
 					{dropdownOptions.map((option, index) => {
 						return (
 							<option key={objKey ? option[objKey] : option} data-index={index} value={objKey ? option[objKey] : option}>
-								{objKey ? option[objKey] : option}
+								<>
+									{objKey ? option[objKey] : option} {name == "pricing" && option.meta && <>({option.meta})</>}
+								</>
 							</option>
 						);
 					})}

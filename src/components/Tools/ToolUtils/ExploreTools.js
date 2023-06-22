@@ -1,4 +1,4 @@
-import ToolsCarousel from "@/components/ui/Carousel/ToolsCarousel";
+import ToolsCarousel from "../ToolsCarousel";
 
 export default function ExploreTools({tools}){
     return (

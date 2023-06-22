@@ -8,6 +8,7 @@ export default function Tool({}) {
         linkedin: '#',
         youtube: '#',
         twitter: '#',
+        url:'#',
         image: 'https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg',
         oneLiner: 'An AI Saas to take your ideas to a full scale Business model along with tips on Go to market strategy, pitchdecks and many more',
         category: {

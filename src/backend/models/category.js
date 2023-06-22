@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import validator from "validator";
 import SubCategory from "./subCategory";
 
 const categorySchema = new mongoose.Schema({
@@ -8,6 +9,11 @@ const categorySchema = new mongoose.Schema({
 		trim: true,
 		maxLength: [100, "Name cannot exceed 100 characters"],
 		unique: true,
+	},
+	image: {
+		type: String,
+		trim: true,
+		validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 	},
 	createdAt: {
 		type: Date,

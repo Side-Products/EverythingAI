@@ -1099,16 +1099,26 @@ input[type="radio"] + label > span {
 /**************************    Swiper Carousel   **************************/
 /**************************************************************************/
 .swiper-container .swiper {
-	padding-left: 70px;
-	padding-right: 70px;
+	padding-left: 40px;
+	padding-right: 40px;
 	bottom: 0px;
+	margin-left: -40px;
+}
+
+.swiper-container .swiper .swiper-wrapper {
+	padding-bottom: 60px;
+	padding-top: 40px;
 }
 
 .swiper-button-next,
 .swiper-button-prev {
-	@apply bg-dark-800 border border-[#30363d] p-4 rounded-full;
+	@apply bg-light-200 p-4 rounded-full shadow-xl;
 	width: 48px !important;
 	height: 48px !important;
+}
+
+.swiper-button-disabled {
+	opacity: 0 !important;
 }
 
 .swiper-button-next {
@@ -1123,7 +1133,7 @@ input[type="radio"] + label > span {
 .swiper-button-next:after {
 	font-size: 18px !important;
 	font-weight: 700 !important;
-	@apply text-transparent bg-clip-text bg-gradient-to-tr animate-text from-green-400 via-teal-400 to-blue-500;
+	@apply text-dark-800;
 }
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
