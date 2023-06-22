@@ -1105,11 +1105,20 @@ input[type="radio"] + label > span {
 	margin-left: -40px;
 }
 
+.swiper-container .swiper .swiper-wrapper {
+	padding-bottom: 60px;
+	padding-top: 40px;
+}
+
 .swiper-button-next,
 .swiper-button-prev {
 	@apply bg-light-200 p-4 rounded-full shadow-xl;
 	width: 48px !important;
 	height: 48px !important;
+}
+
+.swiper-button-disabled {
+	opacity: 0 !important;
 }
 
 .swiper-button-next {

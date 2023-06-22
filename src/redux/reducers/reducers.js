@@ -12,6 +12,7 @@ import {
 	verifyToolReducer,
 	unverifyToolReducer,
 } from "./toolReducers";
+import { createLikedToolReducer, deleteLikedToolReducer } from "./likedToolReducers";
 
 const reducer = combineReducers({
 	auth: authReducer,
@@ -43,6 +44,9 @@ const reducer = combineReducers({
 	deleteTool: deleteToolReducer,
 	verifyTool: verifyToolReducer,
 	unverifyTool: unverifyToolReducer,
+	// liked tool
+	createLikedTool: createLikedToolReducer,
+	deleteLikedTool: deleteLikedToolReducer,
 });
 
 export default reducer;

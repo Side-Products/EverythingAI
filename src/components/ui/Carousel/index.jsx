@@ -1,13 +1,12 @@
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Mousewheel, Keyboard } from "swiper";
-import ToolCard from "@/components/Tools/ToolCard";
 
-export default function ToolsCarousel({ heading, tools }) {
+export default function Carousel({ heading, children }) {
 	return (
-		<>
-			{heading && <h1 className="text-3xl font-semibold mb-8">{heading}</h1>}
+		<div>
+			{heading && <h1 className="text-3xl font-semibold -mb-2">{heading}</h1>}
 			<div className="swiper-container">
 				<Swiper
 					breakpoints={{
@@ -49,15 +48,10 @@ export default function ToolsCarousel({ heading, tools }) {
 					mousewheel={true}
 					keyboard={true}
 					modules={[Navigation, Mousewheel, Keyboard]}
-					className="absolute mx-10 bottom-32"
 				>
-					{tools.map((tool) => (
-						<SwiperSlide key={tool._id}>
-							<ToolCard tool={tool} onClick={() => router.push(`/tools/${tool._id}`)} />
-						</SwiperSlide>
-					))}
+					{children}
 				</Swiper>
 			</div>
-		</>
+		</div>
 	);
 }

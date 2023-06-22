@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import LikedTool from "./likedTool";
 
 const toolSchema = new mongoose.Schema({
 	name: {
@@ -73,6 +74,22 @@ const toolSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
+});
+
+// Define the pre "remove" middleware on the tool schema
+toolSchema.pre("remove", async function (next) {
+	try {
+		// Find all tools with the toolId of the current tool
+		const tools = await LikedTool.find({ tool: this._id });
+
+		// Remove each tool
+		for (const tool of tools) {
+			await tool.remove();
+		}
+		next();
+	} catch (error) {
+		next(error);
+	}
 });
 
 export default mongoose.models.Tool || mongoose.model("Tool", toolSchema);

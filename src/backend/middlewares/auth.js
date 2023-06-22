@@ -13,6 +13,17 @@ const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
 	next();
 });
 
+const maybeAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
+	const session = await getSession({ req });
+
+	if (!session) {
+		next();
+	}
+
+	req.user = session.user;
+	next();
+});
+
 // Handling user roles
 const authorizeRoles = (...roles) => {
 	return (req, res, next) => {
@@ -23,4 +34,4 @@ const authorizeRoles = (...roles) => {
 	};
 };
 
-export { isAuthenticatedUser, authorizeRoles };
+export { isAuthenticatedUser, maybeAuthenticatedUser, authorizeRoles };

@@ -1,5 +1,5 @@
-import SubCategoryCard from "./SubCategoryCard";
-import ToolCard from "@/components/Tools/ToolCard";
+import SubCategoryCard from "@/components/Cards/SubCategoryCard";
+import ToolCard from "@/components/Cards/ToolCard";
 
 export default function Category({ category }) {
 	return (
