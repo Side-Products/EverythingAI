@@ -103,6 +103,10 @@ const toolSchema = new mongoose.Schema({
 		trim: true,
 		maxLength: [250, "One liner cannot exceed 250 characters"],
 	},
+	description: {
+		type: String,
+		trim: true,
+	},
 	category: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Category",
