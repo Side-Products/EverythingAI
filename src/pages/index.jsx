@@ -12,7 +12,8 @@ export default function HomePage() {
 
 	useEffect(() => {
 		dispatch(getAllTools());
-		dispatch(getAllCategories());
+		dispatch(getAllCategories(10));
+		// dispatch(getToolsByCategory("marketing"));
 	}, [dispatch]);
 
 	const { tools } = useSelector((state) => state.allTools);

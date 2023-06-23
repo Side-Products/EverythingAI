@@ -18,10 +18,8 @@ const createCategory = catchAsyncErrors(async (req, res) => {
 
 // get all categories => /api/categories
 const allCategories = catchAsyncErrors(async (req, res) => {
-	const categories = await Category.find().sort({ createdAt: "desc" });
+	const categories = await Category.find().sort({ createdAt: "desc" }).limit(req.query.limit);
 	const categoriesCount = await Category.countDocuments();
-
-	console.log("categories:::::::::", categories);
 
 	res.status(200).json({
 		success: true,

@@ -43,13 +43,22 @@ export const createCategory = (categoryData) => async (dispatch) => {
 };
 
 // get all categories
-export const getAllCategories = () => async (dispatch) => {
+export const getAllCategories = (limit) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_CATEGORIES_REQUEST });
 
-		const { data } = await axios.get(`/api/categories`);
+		if (limit) {
+			const { data } = await axios.get(`/api/categories`, {
+				params: {
+					limit: limit,
+				},
+			});
+			dispatch({ type: GET_CATEGORIES_SUCCESS, payload: data });
+		} else {
+			const { data } = await axios.get(`/api/categories`);
 
-		dispatch({ type: GET_CATEGORIES_SUCCESS, payload: data });
+			dispatch({ type: GET_CATEGORIES_SUCCESS, payload: data });
+		}
 	} catch (error) {
 		dispatch({
 			type: GET_CATEGORIES_FAIL,
@@ -121,6 +130,25 @@ export const getCategoryByName = (req, name) => async (dispatch) => {
 
 		const { origin } = absoluteUrl(req);
 		const { data } = await axios.get(`${origin}/api/categories/find/${name}`);
+
+		dispatch({
+			type: GET_CATEGORY_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: GET_CATEGORY_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+// get category
+export const getCategoryByNameClientSide = (name) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_CATEGORY_REQUEST });
+
+		const { data } = await axios.get(`/api/categories/find/${name}`);
 
 		dispatch({
 			type: GET_CATEGORY_SUCCESS,
