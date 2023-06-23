@@ -5,6 +5,7 @@ import Pricing from "@/backend/models/pricing";
 import LikedTool from "@/backend/models/likedTool";
 import ErrorHandler from "@/backend/utils/errorHandler";
 import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
+import APIFeatures from "@/backend/utils/apiFeatures";
 
 // add to db => /api/tools
 const createTool = catchAsyncErrors(async (req, res) => {
@@ -200,4 +201,47 @@ const unverifyTool = catchAsyncErrors(async (req, res, next) => {
 	res.status(200).json({ success: true, tool });
 });
 
-export { createTool, allTools, updateTool, deleteTool, getTool, adminGetAllTools, verifyTool, unverifyTool };
+// get liked tools => /api/tools/liked
+const getMyLikedTools = catchAsyncErrors(async (req, res, next) => {
+	const userId = req.user._id || req.user.id;
+	const resultsPerPage = 4;
+	const likedToolsCount = await LikedTool.countDocuments({ user: userId });
+
+	const apiFeatures = new APIFeatures(LikedTool.find({ user: userId }).sort({ createdAt: "desc" }), req.query).search().filter();
+	let likedTools = await apiFeatures.query;
+	let filteredToolsCount = likedTools.length;
+
+	apiFeatures.pagination(resultsPerPage);
+	likedTools = await apiFeatures.query.clone();
+
+	likedTools = await Tool.populate(likedTools, {
+		path: "tool",
+		populate: {
+			path: "category",
+			select: "name",
+		},
+		populate: {
+			path: "subCategory",
+			select: "name",
+		},
+		populate: {
+			path: "pricing",
+			select: "name",
+		},
+	});
+
+	const tools = likedTools.map((item) => ({
+		...item.tool._doc,
+		liked: true,
+	}));
+
+	res.status(200).json({
+		success: true,
+		likedToolsCount,
+		resultsPerPage,
+		filteredToolsCount,
+		likedTools: tools,
+	});
+});
+
+export { createTool, allTools, updateTool, deleteTool, getTool, adminGetAllTools, verifyTool, unverifyTool, getMyLikedTools };

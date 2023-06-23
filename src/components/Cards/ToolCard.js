@@ -29,7 +29,7 @@ export default function ToolCard({ tool }) {
 			<div onClick={() => router.push(`/tools/${tool._id}`)}>
 				<div className="relative w-full overflow-hidden h-44 rounded-t-xl">
 					<Image
-						src={tool.image}
+						src={tool?.image}
 						width={533}
 						height={300}
 						alt="tool image"
@@ -38,10 +38,10 @@ export default function ToolCard({ tool }) {
 				</div>
 
 				<div className="p-5 pb-0">
-					{tool.name.length < 10 ? (
-						<p className="text-lg font-semibold">{tool.name}</p>
+					{tool?.name.length < 10 ? (
+						<p className="text-lg font-semibold">{tool?.name}</p>
 					) : (
-						<MarqueeText text={tool.name} classes={"text-lg font-semibold"} marqueeWidth={"w-[125px]"} />
+						<MarqueeText text={tool?.name} classes={"text-lg font-semibold"} marqueeWidth={"w-[125px]"} />
 					)}
 
 					<div className="flex items-center justify-between text-sm font-medium">
@@ -57,7 +57,7 @@ export default function ToolCard({ tool }) {
 			</div>
 
 			<div className="px-5 pb-5 mt-3">
-				<p className={"text-sm " + styles["oneLiner"]}>{tool.oneLiner}</p>
+				<p className={"text-sm " + styles["oneLiner"]}>{tool?.oneLiner}</p>
 			</div>
 
 			<div className="grid items-center justify-between w-full grid-cols-2 px-5 pb-5 mt-2 gap-x-6">
@@ -84,7 +84,7 @@ export default function ToolCard({ tool }) {
 					<i
 						className={
 							"fa-solid fa-thumbs-up text-lg " +
-							(tool.liked ? "text-primary-400 group-hover/like-btn:text-error-400" : "text-light-100 group-hover/like-btn:text-primary-400")
+							(tool?.liked ? "text-primary-400 group-hover/like-btn:text-error-400" : "text-light-100 group-hover/like-btn:text-primary-400")
 						}
 					></i>
 				</Button>

@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllTools } from "@/redux/actions/toolActions";
 import ToolCard from "@/components/Cards/ToolCard";
 import { getAllCategories, getCategory } from "@/redux/actions/categoryActions";
-import Dropdown from "../ui/Dropdown";
+import Dropdown from "../ui/Dropdowns/Dropdown";
+import MultiDropdown from "../ui/Dropdowns/MultiDropdown";
+import { useMemo } from "react";
 
 export default function AllTools() {
 	const dispatch = useDispatch();
 
 	const initFilterState = {
 		subcategory: {
-			_id: null,
-			name: null,
+			selectedSubcategories: [],
 		},
 		category: {
 			_id: null,
@@ -34,8 +35,7 @@ export default function AllTools() {
 				return {
 					...state,
 					subcategory: {
-						_id: action._id,
-						name: action.name
+						selectedSubcategories: action.selectedSubcategories
 					}
 				}
 		}
@@ -50,15 +50,25 @@ export default function AllTools() {
 	const { tools } = useSelector((state) => state.allTools);
 	const { categories } = useSelector((state) => state.allCategories);
 	const { category } = useSelector(state => state.category);
-	const [filter, setFilter] = useReducer(reducerFn, initFilterState)
+	const [filter, setFilter] = useReducer(reducerFn, initFilterState);
+
+	const subcategoriesOptions = useMemo(() => {
+		return category?.subcategories?.map(item => {
+			return {
+				...item,
+				label: item.name,
+				value: item._id
+			}
+		})
+	},[category])
 
 	return (
 		<div>
 			<h1 className="text-[40px] sm:text-[60px] md:text-[70px] lg:text-[70px] leading-[120px] font-bold text-center tracking-[-1px] text-gradient-primary-tr">
 				Tools
 			</h1>
-			<div className="flex my-8 space-x-5">
-				<div className="flex items-center px-5 py-2 border border-gray-300 rounded-xl hover:border-primary-600">
+			<div className="sticky z-50 flex my-8 space-x-5 top-24">
+				<div className="flex items-center px-5 py-2 bg-white border border-gray-300 rounded-xl hover:border-primary-600">
 					<span className="text-sm cursor-default">Category: </span>
 					<Dropdown 
 						placeholder={'Select a Category'}
@@ -68,14 +78,14 @@ export default function AllTools() {
 						options={categories}
 					/>
 				</div>
-				{category?.subcategories?.length > 0 && <div className="flex items-center px-5 py-2 border border-gray-300 rounded-xl hover:border-primary-600">
+				{subcategoriesOptions?.length > 0 && <div className="flex items-center px-5 py-0 pr-2 bg-white border border-gray-300 rounded-xl hover:border-primary-600">
 					<span className="text-sm cursor-default">Subcategory: </span>
-					<Dropdown 
+					<MultiDropdown
 						placeholder={'Select a Subcategory'}
-						selectedValue={filter.subcategory.name}
+						selectedValue={filter.subcategory.selectedSubcategories}
 						type={'SUBCATEGORY'}
 						setSelectedValue={setFilter}
-						options={category.subcategories}
+						options={subcategoriesOptions}
 					/>
 				</div>}
 			</div>
