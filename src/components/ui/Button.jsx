@@ -1,11 +1,23 @@
-export default function Button({ variant = "primary", outline = false, rounded, type, disabled, onClick, children, classes, innerClasses, isLoading = false }) {
+export default function Button({
+	variant = "primary",
+	outline = false,
+	rounded,
+	type,
+	disabled,
+	onClick,
+	children,
+	classes,
+	innerClasses,
+	isLoading = false,
+	active = false,
+}) {
 	return (
 		<button
 			type={type ? type : "submit"}
 			disabled={disabled || isLoading ? disabled : false}
 			onClick={() => (!isLoading && !disabled && onClick ? onClick() : {})}
 			className={
-				`w-full flex items-center justify-center font-primary font-medium transition duration-300 text-[14px] ` +
+				`h-full w-full flex items-center justify-center font-primary font-medium transition duration-300 text-[14px] ` +
 				(isLoading ? `cursor-default ` : `cursor-pointer `) +
 				(outline ? `px-[2px] py-[2px] ` : `px-6 py-2 `) +
 				(variant == "primary"
@@ -29,11 +41,12 @@ export default function Button({ variant = "primary", outline = false, rounded, 
 					: variant == "classic"
 					? outline
 						? isLoading
-							? `bg-gradient-error-tr-outline `
-							: `bg-gradient-error-tr-outline `
+							? `bg-zinc-300 `
+							: `bg-zinc-300 `
 						: isLoading
-						? `bg-gradient-error-tr-loading `
-						: `py-2 px-7 font-semibold rounded-md bg-light-100 hover:bg-light-200 text-dark-600 text-base  `
+						? `bg-zinc-300`
+						: `py-2 px-7 font-semibold rounded-md text-base ` +
+						  (active ? `bg-primary-500 hover:bg-error-700 ` : `bg-zinc-100 hover:bg-zinc-200 text-dark-600 `)
 					: variant == "classic-dark"
 					? outline
 						? isLoading

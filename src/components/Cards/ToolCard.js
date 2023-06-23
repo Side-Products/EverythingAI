@@ -14,7 +14,6 @@ export default function ToolCard({ tool }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-
 	const { likedTool } = useSelector((state) => state.createLikedTool);
 	useEffect(() => {
 		if (likedTool) {
@@ -44,12 +43,21 @@ export default function ToolCard({ tool }) {
 						<MarqueeText text={tool?.name} classes={"text-lg font-semibold"} marqueeWidth={"w-[125px]"} />
 					)}
 
-					<div className="flex items-center justify-between text-sm font-medium">
-						<p>{tool.category?.name}</p>
-						<div className={"flex items-center px-4 py-[2px] text-xs font-semibold rounded-2xl min-h-[28px] " + getPricingChipClass(tool.pricing?.name)}>
+					<div className="flex items-end justify-between font-medium mt-1">
+						<p className="px-4 py-1 rounded-md bg-dark-700 text-light-100 text-[12px]">{tool.category?.name}</p>
+						<div
+							className={
+								"flex items-center px-4 py-[2px] text-xs font-semibold rounded-2xl min-h-[28px] " + getPricingChipClass(tool.pricing?.name)
+							}
+						>
 							<p>{tool.pricing?.name}</p>
 							{tool.pricing.meta?.length > 0 && (
-								<Tooltip labelText={<span className={"ml-1 text-sm material-symbols-outlined "+getPricingChipClass(tool.pricing?.name)}>info</span>} message={tool.pricing.meta} />
+								<Tooltip
+									labelText={
+										<span className={"ml-1 text-[14px] material-symbols-outlined " + getPricingChipClass(tool.pricing?.name)}>info</span>
+									}
+									message={tool.pricing.meta}
+								/>
 							)}
 						</div>
 					</div>
@@ -61,9 +69,9 @@ export default function ToolCard({ tool }) {
 			</div>
 
 			<div className="grid items-center justify-between w-full grid-cols-2 px-5 pb-5 mt-2 gap-x-6">
-				<Link href={tool?.url} target="_blank" rel="noopener noreferrer">
-					<Button type="button">
-						<i className="text-lg fa-solid fa-arrow-up-right-from-square text-light-100"></i>
+				<Link href={tool?.url} target="_blank" rel="noopener noreferrer" className="h-full">
+					<Button type="button" variant="classic" classes="relative group/link-btn">
+						<i className="text-base fa-solid fa-arrow-up-right-from-square text-dark-200 group-hover/link-btn:text-primary-400"></i>
 					</Button>
 				</Link>
 
@@ -78,14 +86,12 @@ export default function ToolCard({ tool }) {
 						}
 					}}
 					type="button"
-					variant="default"
+					variant="classic"
+					active={tool?.liked}
 					classes="relative group/like-btn"
 				>
 					<i
-						className={
-							"fa-solid fa-thumbs-up text-lg " +
-							(tool?.liked ? "text-primary-400 group-hover/like-btn:text-error-400" : "text-light-100 group-hover/like-btn:text-primary-400")
-						}
+						className={"fa-solid fa-thumbs-up text-lg " + (tool?.liked ? "text-light-100" : "text-dark-200 group-hover/like-btn:text-primary-400")}
 					></i>
 				</Button>
 			</div>

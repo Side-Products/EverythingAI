@@ -1,7 +1,6 @@
 import { SwiperSlide } from "swiper/react";
 import Carousel from "@/components/ui/Carousel";
-// import ToolCard from "@/components/Cards/ToolCard";
-import ToolCard from "../Cards/ToolCard";
+import ToolCard from "@/components/Cards/ToolCard";
 
 export default function ToolsCarousel({ heading, tools }) {
 	return (
