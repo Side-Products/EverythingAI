@@ -2,28 +2,23 @@ import mongoose from "mongoose";
 import validator from "validator";
 import SubCategory from "./subCategory";
 
-const categorySchema = new mongoose.Schema({
-	name: {
-		type: String,
-		required: [true, "Please enter a name"],
-		trim: true,
-		maxLength: [100, "Name cannot exceed 100 characters"],
-		unique: true,
+const categorySchema = new mongoose.Schema(
+	{
+		name: {
+			type: String,
+			required: [true, "Please enter a name"],
+			trim: true,
+			maxLength: [100, "Name cannot exceed 100 characters"],
+			unique: true,
+		},
+		image: {
+			type: String,
+			trim: true,
+			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
+		},
 	},
-	image: {
-		type: String,
-		trim: true,
-		validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
-	},
-	createdAt: {
-		type: Date,
-		default: Date.now,
-	},
-	updatedAt: {
-		type: Date,
-		default: Date.now,
-	},
-});
+	{ timestamps: true }
+);
 
 // Define the pre "remove" middleware on the Category schema
 categorySchema.pre("remove", async function (next) {

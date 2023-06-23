@@ -6,6 +6,8 @@ import {
 	DELETE_LIKED_TOOL_SUCCESS,
 	DELETE_LIKED_TOOL_RESET,
 	DELETE_LIKED_TOOL_FAIL,
+	MY_LIKED_TOOLS_SUCCESS,
+	MY_LIKED_TOOLS_FAIL,
 	CLEAR_ERRORS,
 } from "../constants/likedToolConstants";
 
@@ -57,6 +59,30 @@ export const deleteLikedToolReducer = (state = {}, action) => {
 		case DELETE_LIKED_TOOL_FAIL:
 			return {
 				loading: false,
+				error: action.payload,
+			};
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				error: null,
+			};
+		default:
+			return state;
+	}
+};
+
+// My liked tools reducer
+export const myLikedToolsReducer = (state = { ideas: [] }, action) => {
+	switch (action.type) {
+		case MY_LIKED_TOOLS_SUCCESS:
+			return {
+				likedToolsCount: action.payload.likedToolsCount,
+				resultsPerPage: action.payload.resultsPerPage,
+				filteredToolsCount: action.payload.filteredToolsCount,
+				likedTools: action.payload.likedTools,
+			};
+		case MY_LIKED_TOOLS_FAIL:
+			return {
 				error: action.payload,
 			};
 		case CLEAR_ERRORS:

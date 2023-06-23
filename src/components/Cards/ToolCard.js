@@ -17,7 +17,7 @@ export default function ToolCard({ tool }) {
 	 * @returns background and text color tw-classes w.r.t pricing name
 	 */
 	const getPricingChipClass = () => {
-		switch (tool.pricing.name.split(" ")[0]) {
+		switch (tool?.pricing.name.split(" ")[0]) {
 			case "Free":
 				return "text-green-800 bg-green-300";
 			case "Premium":
@@ -38,10 +38,10 @@ export default function ToolCard({ tool }) {
 
 	return (
 		<div className="group transition duration-300 cursor-pointer max-w-fit bg-light-100 rounded-xl shadow-md hover:shadow-2xl">
-			<div onClick={() => router.push(`/tools/${tool._id}`)}>
+			<div onClick={() => router.push(`/tools/${tool?._id}`)}>
 				<div className="relative w-full h-44 overflow-hidden rounded-t-xl">
 					<Image
-						src={tool.image}
+						src={tool?.image}
 						width={533}
 						height={300}
 						alt="tool image"
@@ -50,18 +50,18 @@ export default function ToolCard({ tool }) {
 				</div>
 
 				<div className="p-5 pb-0">
-					{tool.name.length < 10 ? (
-						<p className="text-lg font-semibold">{tool.name}</p>
+					{tool?.name.length < 10 ? (
+						<p className="text-lg font-semibold">{tool?.name}</p>
 					) : (
-						<MarqueeText text={tool.name} classes={"text-lg font-semibold"} marqueeWidth={"w-[125px]"} />
+						<MarqueeText text={tool?.name} classes={"text-lg font-semibold"} marqueeWidth={"w-[125px]"} />
 					)}
 
 					<div className="flex items-center justify-between text-sm font-medium">
-						<p>{tool.category?.name}</p>
+						<p>{tool?.category?.name}</p>
 						<div className={"flex items-center px-4 py-[2px] text-xs font-semibold rounded-2xl min-h-[28px] " + getPricingChipClass()}>
-							<p>{tool.pricing?.name}</p>
-							{tool.pricing.meta?.length > 0 && (
-								<Tooltip labelText={<span className="ml-1 material-symbols-outlined text-sm">info</span>} message={tool.pricing.meta} />
+							<p>{tool?.pricing?.name}</p>
+							{tool?.pricing.meta?.length > 0 && (
+								<Tooltip labelText={<span className="ml-1 material-symbols-outlined text-sm">info</span>} message={tool?.pricing.meta} />
 							)}
 						</div>
 					</div>
@@ -69,7 +69,7 @@ export default function ToolCard({ tool }) {
 			</div>
 
 			<div className="px-5 pb-5 mt-3">
-				<p className={"text-sm " + styles["oneLiner"]}>{tool.oneLiner}</p>
+				<p className={"text-sm " + styles["oneLiner"]}>{tool?.oneLiner}</p>
 			</div>
 
 			<div className="w-full grid grid-cols-2 items-center justify-between gap-x-6 px-5 pb-5 mt-2">
@@ -96,7 +96,7 @@ export default function ToolCard({ tool }) {
 					<i
 						className={
 							"fa-solid fa-thumbs-up text-lg " +
-							(tool.liked ? "text-primary-400 group-hover/like-btn:text-error-400" : "text-light-100 group-hover/like-btn:text-primary-400")
+							(tool?.liked ? "text-primary-400 group-hover/like-btn:text-error-400" : "text-light-100 group-hover/like-btn:text-primary-400")
 						}
 					></i>
 				</Button>

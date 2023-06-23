@@ -11,10 +11,6 @@ class APIFeatures {
 						$regex: this.queryString.search,
 						$options: "i",
 					},
-					identifier: {
-						$regex: this.queryString.search,
-						$options: "i",
-					},
 			  }
 			: {};
 

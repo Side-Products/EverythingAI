@@ -18,7 +18,7 @@ export default function Category({ category }) {
 			{category.tools && category.tools.length > 0 && (
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
 					{category.tools.map((tool) => (
-						<ToolCard key={tool._id} tool={tool} onClick={() => router.push(`/tools/${tool._id}`)} showSubcategory={true} />
+						<ToolCard key={tool._id} tool={tool} />
 					))}
 				</div>
 			)}

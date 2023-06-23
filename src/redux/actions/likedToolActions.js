@@ -1,4 +1,5 @@
 import axios from "axios";
+import absoluteUrl from "next-absolute-url";
 import {
 	CREATE_LIKED_TOOL_REQUEST,
 	CREATE_LIKED_TOOL_SUCCESS,
@@ -7,6 +8,8 @@ import {
 	DELETE_LIKED_TOOL_SUCCESS,
 	DELETE_LIKED_TOOL_RESET,
 	DELETE_LIKED_TOOL_FAIL,
+	MY_LIKED_TOOLS_SUCCESS,
+	MY_LIKED_TOOLS_FAIL,
 	CLEAR_ERRORS,
 } from "../constants/likedToolConstants";
 
@@ -41,6 +44,31 @@ export const deleteLikedTool = (id) => async (dispatch) => {
 		});
 	}
 };
+
+// Get my liked tools
+export const getMyLikedTools =
+	(req, currentPage = 1, search = "") =>
+	async (dispatch) => {
+		try {
+			const { origin } = absoluteUrl(req);
+			const config = {
+				headers: {
+					cookie: req.headers.cookie,
+				},
+			};
+			const { data } = await axios.get(`${origin}/api/tools/liked?page=${currentPage}&search=${search}`, config);
+
+			dispatch({
+				type: MY_LIKED_TOOLS_SUCCESS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: MY_LIKED_TOOLS_FAIL,
+				payload: error.response.data.message,
+			});
+		}
+	};
 
 // Clear errors
 export const clearErrors = () => async (dispatch) => {
