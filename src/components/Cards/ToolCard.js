@@ -8,24 +8,12 @@ import Tooltip from "@/components/ui/Tooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { likeTool, deleteLikedTool } from "@/redux/actions/likedToolActions";
 import { useEffect } from "react";
+import { getPricingChipClass } from "@/utils/Helpers";
 
 export default function ToolCard({ tool }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	/**
-	 * @returns background and text color tw-classes w.r.t pricing name
-	 */
-	const getPricingChipClass = () => {
-		switch (tool?.pricing.name.split(" ")[0]) {
-			case "Free":
-				return "text-green-800 bg-green-300";
-			case "Premium":
-				return "text-yellow-800 bg-yellow-300";
-			default:
-				return "text-purple-800 bg-purple-300";
-		}
-	};
 
 	const { likedTool } = useSelector((state) => state.createLikedTool);
 	useEffect(() => {
@@ -37,15 +25,15 @@ export default function ToolCard({ tool }) {
 	}, [likedTool]);
 
 	return (
-		<div className="group transition duration-300 cursor-pointer max-w-fit bg-light-100 rounded-xl shadow-md hover:shadow-2xl">
-			<div onClick={() => router.push(`/tools/${tool?._id}`)}>
-				<div className="relative w-full h-44 overflow-hidden rounded-t-xl">
+		<div className="transition duration-300 shadow-md cursor-pointer group max-w-fit bg-light-100 rounded-xl hover:shadow-2xl">
+			<div onClick={() => router.push(`/tools/${tool._id}`)}>
+				<div className="relative w-full overflow-hidden h-44 rounded-t-xl">
 					<Image
 						src={tool?.image}
 						width={533}
 						height={300}
 						alt="tool image"
-						className="group-hover:scale-110 group-hover:duration-500 duration-500 rounded-t-xl"
+						className="duration-500 group-hover:scale-110 group-hover:duration-500 rounded-t-xl"
 					/>
 				</div>
 
@@ -57,11 +45,11 @@ export default function ToolCard({ tool }) {
 					)}
 
 					<div className="flex items-center justify-between text-sm font-medium">
-						<p>{tool?.category?.name}</p>
-						<div className={"flex items-center px-4 py-[2px] text-xs font-semibold rounded-2xl min-h-[28px] " + getPricingChipClass()}>
-							<p>{tool?.pricing?.name}</p>
-							{tool?.pricing.meta?.length > 0 && (
-								<Tooltip labelText={<span className="ml-1 material-symbols-outlined text-sm">info</span>} message={tool?.pricing.meta} />
+						<p>{tool.category?.name}</p>
+						<div className={"flex items-center px-4 py-[2px] text-xs font-semibold rounded-2xl min-h-[28px] " + getPricingChipClass(tool.pricing?.name)}>
+							<p>{tool.pricing?.name}</p>
+							{tool.pricing.meta?.length > 0 && (
+								<Tooltip labelText={<span className={"ml-1 text-sm material-symbols-outlined "+getPricingChipClass(tool.pricing?.name)}>info</span>} message={tool.pricing.meta} />
 							)}
 						</div>
 					</div>
@@ -72,10 +60,10 @@ export default function ToolCard({ tool }) {
 				<p className={"text-sm " + styles["oneLiner"]}>{tool?.oneLiner}</p>
 			</div>
 
-			<div className="w-full grid grid-cols-2 items-center justify-between gap-x-6 px-5 pb-5 mt-2">
+			<div className="grid items-center justify-between w-full grid-cols-2 px-5 pb-5 mt-2 gap-x-6">
 				<Link href={tool?.url} target="_blank" rel="noopener noreferrer">
 					<Button type="button">
-						<i className="fa-solid fa-arrow-up-right-from-square text-light-100 text-lg"></i>
+						<i className="text-lg fa-solid fa-arrow-up-right-from-square text-light-100"></i>
 					</Button>
 				</Link>
 

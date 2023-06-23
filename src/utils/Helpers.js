@@ -85,3 +85,17 @@ export const getObjectByName = (categoryName, categoryArray) => {
 	const lowerCaseName = categoryName.toLowerCase();
 	return categoryArray.find((category) => category.name.toLowerCase() === lowerCaseName);
 };
+/**
+ * @params pricingName, the price name whose chip bg color and text color is required
+ * @returns background and text color tw-classes w.r.t pricing name
+ */
+export const getPricingChipClass = (pricingName) => {
+	switch (pricingName.split(" ")[0]){
+		case 'Free':
+			return 'text-green-800 bg-green-300';
+		case 'Premium':
+			return 'text-yellow-800 bg-yellow-300';
+		default:
+			return 'text-purple-800 bg-purple-300';
+	}
+}
