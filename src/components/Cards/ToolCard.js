@@ -49,7 +49,7 @@ export default function ToolCard({ tool }) {
 						<div className={"flex items-center px-4 py-[2px] text-xs font-semibold rounded-2xl min-h-[28px] " + getPricingChipClass(tool.pricing?.name)}>
 							<p>{tool.pricing?.name}</p>
 							{tool.pricing.meta?.length > 0 && (
-								<Tooltip labelText={<span className="ml-1 text-sm material-symbols-outlined">info</span>} message={tool.pricing.meta} />
+								<Tooltip labelText={<span className={"ml-1 text-sm material-symbols-outlined "+getPricingChipClass(tool.pricing?.name)}>info</span>} message={tool.pricing.meta} />
 							)}
 						</div>
 					</div>
