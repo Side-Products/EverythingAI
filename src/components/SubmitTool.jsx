@@ -109,7 +109,6 @@ const SubmitTool = ({ toolToEdit = null }) => {
 					...toolData,
 					image: imageUrl,
 				};
-				console.log("tool", tool);
 				if (toolToEdit) {
 					dispatch(updateTool(toolToEdit._id, tool));
 					return;
@@ -117,7 +116,6 @@ const SubmitTool = ({ toolToEdit = null }) => {
 					dispatch(createTool(tool));
 				}
 			} else {
-				console.log("toolData", toolData);
 				dispatch(updateTool(toolToEdit._id, toolData));
 			}
 		} catch (error) {

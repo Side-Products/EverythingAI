@@ -6,6 +6,7 @@ import { createPricingReducer, getAllPricingsReducer, updatePricingReducer, dele
 import {
 	createToolReducer,
 	getAllToolsReducer,
+	getToolsForHomepageReducer,
 	getToolReducer,
 	updateToolReducer,
 	deleteToolReducer,
@@ -39,6 +40,7 @@ const reducer = combineReducers({
 	// tool
 	createTool: createToolReducer,
 	allTools: getAllToolsReducer,
+	toolsForHomepage: getToolsForHomepageReducer,
 	tool: getToolReducer,
 	updateTool: updateToolReducer,
 	deleteTool: deleteToolReducer,

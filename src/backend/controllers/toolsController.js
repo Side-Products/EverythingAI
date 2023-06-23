@@ -81,6 +81,203 @@ const allTools = catchAsyncErrors(async (req, res) => {
 	});
 });
 
+const getToolsByCategory = async (categoryName) => {
+	const category = await Category.findOne({ name: { $regex: new RegExp(categoryName, "i") } });
+	const categoryId = category._id;
+	const tools = await Tool.aggregate([
+		{ $match: { category: categoryId, verified: true } },
+		{
+			$lookup: {
+				from: "likedtools",
+				localField: "_id",
+				foreignField: "tool",
+				as: "likes",
+			},
+		},
+		{
+			$addFields: {
+				likeCount: { $size: "$likes" },
+			},
+		},
+		{
+			$sort: { likeCount: -1, createdAt: -1 },
+		},
+		{
+			$limit: 10,
+		},
+		{
+			$lookup: {
+				from: "categories",
+				localField: "category",
+				foreignField: "_id",
+				as: "category",
+			},
+		},
+		{
+			$lookup: {
+				from: "subcategories",
+				localField: "subCategory",
+				foreignField: "_id",
+				as: "subCategory",
+			},
+		},
+		{
+			$lookup: {
+				from: "pricings",
+				localField: "pricing",
+				foreignField: "_id",
+				as: "pricing",
+			},
+		},
+		{
+			$project: {
+				name: 1,
+				url: 1,
+				image: 1,
+				oneLiner: 1,
+				category: { $arrayElemAt: ["$category", 0] },
+				subCategory: { $arrayElemAt: ["$subCategory", 0] },
+				pricing: { $arrayElemAt: ["$pricing", 0] },
+				createdAt: 1,
+				likeCount: 1,
+			},
+		},
+	]);
+	return tools;
+};
+
+const getTrendingTools = async (timeframe) => {
+	const tools = await Tool.aggregate([
+		{ $match: { verified: true, createdAt: { $gte: new Date(Date.now() - timeframe) } } },
+		{
+			$lookup: {
+				from: "likedtools",
+				localField: "_id",
+				foreignField: "tool",
+				as: "likes",
+			},
+		},
+		{
+			$addFields: {
+				likeCount: { $size: "$likes" },
+			},
+		},
+		{
+			$sort: { likeCount: -1, createdAt: -1 },
+		},
+		{
+			$limit: 10,
+		},
+		{
+			$lookup: {
+				from: "categories",
+				localField: "category",
+				foreignField: "_id",
+				as: "category",
+			},
+		},
+		{
+			$lookup: {
+				from: "subcategories",
+				localField: "subCategory",
+				foreignField: "_id",
+				as: "subCategory",
+			},
+		},
+		{
+			$lookup: {
+				from: "pricings",
+				localField: "pricing",
+				foreignField: "_id",
+				as: "pricing",
+			},
+		},
+		{
+			$project: {
+				name: 1,
+				url: 1,
+				image: 1,
+				oneLiner: 1,
+				category: { $arrayElemAt: ["$category", 0] },
+				subCategory: { $arrayElemAt: ["$subCategory", 0] },
+				pricing: { $arrayElemAt: ["$pricing", 0] },
+				createdAt: 1,
+				likeCount: 1,
+			},
+		},
+	]);
+	return tools;
+};
+
+const maybeAddLikedTools = async (req, tools) => {
+	if (req.user) {
+		const userId = req.user._id || req.user.id;
+		const likedTools = await LikedTool.find({ userId: userId });
+		const updatedTools = [];
+		tools.forEach((tool) => {
+			const updatedTool = { ...tool, liked: false };
+			likedTools.forEach((likedTool) => {
+				if (likedTool.tool.toString() === tool._id.toString()) {
+					updatedTool.liked = true;
+				}
+			});
+			updatedTools.push(updatedTool);
+		});
+
+		return updatedTools;
+	}
+	return tools;
+};
+
+// get all tools for homepage => /api/tools/homepage
+const allToolsForHomepage = catchAsyncErrors(async (req, res) => {
+	const promises = [
+		getTrendingTools(7 * 24 * 60 * 60 * 1000),
+		getTrendingTools(30 * 24 * 60 * 60 * 1000),
+		getToolsByCategory("Marketing"),
+		getToolsByCategory("Design"),
+		getToolsByCategory("Developer"),
+		getToolsByCategory("Productivity"),
+		getToolsByCategory("Images"),
+		getToolsByCategory("Prompts"),
+		getToolsByCategory("Video"),
+		getToolsByCategory("Product"),
+		getToolsByCategory("Sales"),
+	].map(async (categoryPromise) => {
+		const tools = await maybeAddLikedTools(req, await categoryPromise);
+		return tools;
+	});
+
+	const [
+		trendingToolsOfTheWeek,
+		topToolsOfTheMonth,
+		marketingTools,
+		designTools,
+		developerTools,
+		productivityTools,
+		imagesTools,
+		promptsTools,
+		videoTools,
+		productTools,
+		salesTools,
+	] = await Promise.all(promises);
+
+	res.status(200).json({
+		success: true,
+		trendingToolsOfTheWeek,
+		topToolsOfTheMonth,
+		marketingTools,
+		designTools,
+		developerTools,
+		productivityTools,
+		imagesTools,
+		promptsTools,
+		videoTools,
+		productTools,
+		salesTools,
+	});
+});
+
 // update tool => /api/tools/:id
 const updateTool = catchAsyncErrors(async (req, res, next) => {
 	let tool = await Tool.findById(req.query.id);
@@ -214,21 +411,25 @@ const getMyLikedTools = catchAsyncErrors(async (req, res, next) => {
 	apiFeatures.pagination(resultsPerPage);
 	likedTools = await apiFeatures.query.clone();
 
-	likedTools = await Tool.populate(likedTools, {
-		path: "tool",
-		populate: {
-			path: "category",
-			select: "name",
+	likedTools = await Tool.populate(likedTools, [
+		{
+			path: "tool",
+			populate: [
+				{
+					path: "category",
+					select: "name",
+				},
+				{
+					path: "subCategory",
+					select: "name",
+				},
+				{
+					path: "pricing",
+					select: "name meta",
+				},
+			],
 		},
-		populate: {
-			path: "subCategory",
-			select: "name",
-		},
-		populate: {
-			path: "pricing",
-			select: "name",
-		},
-	});
+	]);
 
 	const tools = likedTools.map((item) => ({
 		...item.tool._doc,
@@ -244,4 +445,4 @@ const getMyLikedTools = catchAsyncErrors(async (req, res, next) => {
 	});
 });
 
-export { createTool, allTools, updateTool, deleteTool, getTool, adminGetAllTools, verifyTool, unverifyTool, getMyLikedTools };
+export { createTool, allTools, allToolsForHomepage, updateTool, deleteTool, getTool, adminGetAllTools, verifyTool, unverifyTool, getMyLikedTools };

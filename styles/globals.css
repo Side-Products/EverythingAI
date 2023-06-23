@@ -1106,8 +1106,8 @@ input[type="radio"] + label > span {
 }
 
 .swiper-container .swiper .swiper-wrapper {
-	padding-bottom: 60px;
-	padding-top: 40px;
+	padding-bottom: 80px;
+	padding-top: 60px;
 }
 
 .swiper-button-next,

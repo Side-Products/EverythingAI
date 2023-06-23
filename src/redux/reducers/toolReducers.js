@@ -5,6 +5,9 @@ import {
 	GET_TOOLS_REQUEST,
 	GET_TOOLS_SUCCESS,
 	GET_TOOLS_FAIL,
+	GET_TOOLS_FOR_HOMEPAGE_REQUEST,
+	GET_TOOLS_FOR_HOMEPAGE_SUCCESS,
+	GET_TOOLS_FOR_HOMEPAGE_FAIL,
 	UPDATE_TOOL_REQUEST,
 	UPDATE_TOOL_SUCCESS,
 	UPDATE_TOOL_RESET,
@@ -71,6 +74,43 @@ export const getAllToolsReducer = (state = { tools: [] }, action) => {
 				toolsCount: action.payload.toolsCount,
 			};
 		case GET_TOOLS_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			};
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				error: null,
+			};
+		default:
+			return state;
+	}
+};
+
+// get tools for homepage reducer
+export const getToolsForHomepageReducer = (state = { tools: [] }, action) => {
+	switch (action.type) {
+		case GET_TOOLS_FOR_HOMEPAGE_REQUEST:
+			return {
+				loading: true,
+			};
+		case GET_TOOLS_FOR_HOMEPAGE_SUCCESS:
+			return {
+				loading: false,
+				trendingToolsOfTheWeek: action.payload.trendingToolsOfTheWeek,
+				topToolsOfTheMonth: action.payload.topToolsOfTheMonth,
+				marketingTools: action.payload.marketingTools,
+				designTools: action.payload.designTools,
+				developerTools: action.payload.developerTools,
+				productivityTools: action.payload.productivityTools,
+				imagesTools: action.payload.imagesTools,
+				promptsTools: action.payload.promptsTools,
+				videoTools: action.payload.videoTools,
+				productTools: action.payload.productTools,
+				salesTools: action.payload.salesTools,
+			};
+		case GET_TOOLS_FOR_HOMEPAGE_FAIL:
 			return {
 				loading: false,
 				error: action.payload,

@@ -7,6 +7,9 @@ import {
 	GET_TOOLS_REQUEST,
 	GET_TOOLS_SUCCESS,
 	GET_TOOLS_FAIL,
+	GET_TOOLS_FOR_HOMEPAGE_REQUEST,
+	GET_TOOLS_FOR_HOMEPAGE_SUCCESS,
+	GET_TOOLS_FOR_HOMEPAGE_FAIL,
 	UPDATE_TOOL_REQUEST,
 	UPDATE_TOOL_SUCCESS,
 	UPDATE_TOOL_RESET,
@@ -61,6 +64,21 @@ export const getAllTools = () => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: GET_TOOLS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+export const getToolsForHomepage = () => async (dispatch) => {
+	try {
+		dispatch({ type: GET_TOOLS_FOR_HOMEPAGE_REQUEST });
+
+		const { data } = await axios.get(`/api/tools/homepage`);
+
+		dispatch({ type: GET_TOOLS_FOR_HOMEPAGE_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: GET_TOOLS_FOR_HOMEPAGE_FAIL,
 			payload: error.response.data.message,
 		});
 	}
