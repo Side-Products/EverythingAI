@@ -6,6 +6,7 @@ import LikedTool from "@/backend/models/likedTool";
 import ErrorHandler from "@/backend/utils/errorHandler";
 import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
 import APIFeatures from "@/backend/utils/apiFeatures";
+import { generateSlug } from "@/utils/Helpers";
 
 // add to db => /api/tools
 const createTool = catchAsyncErrors(async (req, res) => {
@@ -19,6 +20,7 @@ const createTool = catchAsyncErrors(async (req, res) => {
 
 	const tool = await Tool.create({
 		name,
+		slug: generateSlug(name),
 		url,
 		image,
 		oneLiner,

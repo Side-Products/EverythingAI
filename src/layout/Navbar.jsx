@@ -75,15 +75,6 @@ const Navbar = ({ setAuthModalOpen }) => {
 									>
 										<Link href="/blog">Blog</Link>
 									</li>
-
-									<li
-										className={
-											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
-											(router.pathname == "/contact" ? "text-dark-800 bg-gray-200" : "")
-										}
-									>
-										<Link href="/contact">Contact</Link>
-									</li>
 								</ul>
 							</div>
 

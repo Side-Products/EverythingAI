@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const { categories, tools, pricingOptions } = require("./data.js");
+const { generateSlug } = require("../utils/Helpers.js");
 
 // GET latest schemas and data from constants.js
 
@@ -70,6 +71,13 @@ const toolSchema = new mongoose.Schema(
 			required: [true, "Please enter a name"],
 			trim: true,
 			maxLength: [100, "Name cannot exceed 100 characters"],
+		},
+		slug: {
+			type: String,
+			required: [true, "Please enter a slug"],
+			trim: true,
+			maxLength: [100, "Slug cannot exceed 100 characters"],
+			unique: true,
 		},
 		url: {
 			type: String,
@@ -180,14 +188,13 @@ async function populateCategoriesAndSubCategories() {
 		const pricingIds = pricingInsertResult.map((pricing) => pricing._id);
 		console.log("Pricing options inserted successfully:", pricingIds);
 
-		// Assign random pricing values to each tool
 		tools.forEach((tool) => {
-			const randomIndex = Math.floor(Math.random() * pricingIds.length);
-			tool.pricing = mongoose.Types.ObjectId(pricingIds[randomIndex].toString());
+			tool.slug = generateSlug(tool.name);
+			// Assign random pricing values to each tool
+			const pricingRandomIndex = Math.floor(Math.random() * pricingIds.length);
+			tool.pricing = mongoose.Types.ObjectId(pricingIds[pricingRandomIndex].toString());
 			console.log("Tool pricing:", tool.pricing);
-		});
-		// Assign random category and subCategory values to each tool
-		tools.forEach((tool) => {
+			// Assign random category and subCategory values to each tool
 			const randomIndex = Math.floor(Math.random() * subCategoryInsertResult.length);
 			const { categoryId, _id } = subCategoryInsertResult[randomIndex];
 			tool.category = mongoose.Types.ObjectId(categoryId.toString());

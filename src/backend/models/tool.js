@@ -10,6 +10,13 @@ const toolSchema = new mongoose.Schema(
 			trim: true,
 			maxLength: [100, "Name cannot exceed 100 characters"],
 		},
+		slug: {
+			type: String,
+			required: [true, "Please enter a slug"],
+			trim: true,
+			maxLength: [100, "Slug cannot exceed 100 characters"],
+			unique: true,
+		},
 		url: {
 			type: String,
 			required: [true, "Please enter a url"],

@@ -26,7 +26,7 @@ export default function ToolCard({ tool }) {
 	return (
 		<div className="transition duration-300 shadow-md cursor-pointer group max-w-fit flex flex-col justify-between bg-light-100 rounded-xl hover:shadow-2xl">
 			<div>
-				<div onClick={() => router.push(`/tools/${tool._id}`)}>
+				<div onClick={() => router.push(`/tools/${tool.slug}`)}>
 					<div className="relative w-full overflow-hidden h-44 rounded-t-xl">
 						<Image
 							src={tool?.image}

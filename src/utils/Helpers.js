@@ -101,3 +101,5 @@ export const getPricingChipClass = (pricingName) => {
 		}
 	}
 };
+
+export const generateSlug = (name) => name.replace(/[^a-zA-Z0-9]+/g, "-").toLowerCase();
