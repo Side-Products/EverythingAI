@@ -754,12 +754,12 @@ html {
 /* Handle */
 ::-webkit-scrollbar-thumb {
 	border-radius: 50px;
-	background: #4db6ac;
+	background: #a487fe;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: #4db6ac;
+	background: #a487fe;
 }
 
 /**************************************************************************/

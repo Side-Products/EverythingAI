@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Tool from "@/backend/models/tool";
 import Category from "@/backend/models/category";
 import SubCategory from "@/backend/models/subCategory";
@@ -39,29 +40,13 @@ const createTool = catchAsyncErrors(async (req, res) => {
 	});
 });
 
-// get all tools => /api/tools
-const allTools = catchAsyncErrors(async (req, res) => {
-	const tools = await Tool.find({ verified: true })
-		.populate({
-			path: "category",
-			select: "name",
-		})
-		.populate({
-			path: "subCategory",
-			select: "name",
-		})
-		.populate({
-			path: "pricing",
-			select: "name meta",
-		})
-		.sort({ createdAt: "desc" });
-
+const maybeAddLikedTools = async (req, tools) => {
 	if (req.user) {
 		const userId = req.user._id || req.user.id;
 		const likedTools = await LikedTool.find({ userId: userId });
 		const updatedTools = [];
 		tools.forEach((tool) => {
-			const updatedTool = { ...tool._doc, liked: false };
+			const updatedTool = { ...tool, liked: false };
 			likedTools.forEach((likedTool) => {
 				if (likedTool.tool.toString() === tool._id.toString()) {
 					updatedTool.liked = true;
@@ -70,16 +55,135 @@ const allTools = catchAsyncErrors(async (req, res) => {
 			updatedTools.push(updatedTool);
 		});
 
-		res.status(200).json({
-			success: true,
-			tools: updatedTools,
-		});
-		return;
+		return updatedTools;
 	}
+	return tools;
+};
+
+// get all tools => /api/tools
+const allTools = catchAsyncErrors(async (req, res) => {
+	const { sortingFilter, category, subcategories } = req.body;
+
+	const pipeline = [];
+	if (req.query.type === "trending") {
+		pipeline.push({ $match: { verified: true } });
+	} else if (req.query.type === "new-tools") {
+		const oneWeekAgo = new Date();
+		oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+		pipeline.push({
+			$match: {
+				verified: true,
+				createdAt: {
+					$gte: oneWeekAgo,
+				},
+			},
+		});
+	} else {
+		pipeline.push({
+			$match: {
+				verified: true,
+			},
+		});
+	}
+
+	pipeline.push(
+		{
+			$lookup: {
+				from: "categories",
+				localField: "category",
+				foreignField: "_id",
+				as: "category",
+			},
+		},
+		{
+			$lookup: {
+				from: "subcategories",
+				localField: "subCategory",
+				foreignField: "_id",
+				as: "subCategory",
+			},
+		},
+		{
+			$lookup: {
+				from: "pricings",
+				localField: "pricing",
+				foreignField: "_id",
+				as: "pricing",
+			},
+		}
+	);
+
+	if (category?._id) {
+		pipeline.push({
+			$match: {
+				"category._id": mongoose.Types.ObjectId(category._id),
+			},
+		});
+	}
+
+	if (subcategories?.length > 0) {
+		const subCategoryIds = subcategories.map((subCategory) => mongoose.Types.ObjectId(subCategory._id));
+		pipeline.push({
+			$match: {
+				"subCategory._id": { $in: subCategoryIds },
+			},
+		});
+	}
+
+	// Sort based on conditions
+	let sorting_condition = { createdAt: -1 };
+	if (sortingFilter) {
+		if (sortingFilter === "Newest") {
+			sorting_condition = { createdAt: -1 };
+		} else if (sortingFilter === "Oldest") {
+			sorting_condition = { createdAt: 1 };
+		}
+	}
+	if (req.query.type === "trending" || (sortingFilter && sortingFilter === "Most Popular")) {
+		pipeline.push(
+			{
+				$lookup: {
+					from: "likedtools",
+					localField: "_id",
+					foreignField: "tool",
+					as: "likes",
+				},
+			},
+			{
+				$addFields: {
+					likeCount: { $size: "$likes" },
+				},
+			}
+		);
+		sorting_condition = { likeCount: -1, createdAt: -1 };
+	}
+
+	pipeline.push({ $sort: sorting_condition });
+
+	pipeline.push({
+		$project: {
+			name: 1,
+			slug: 1,
+			url: 1,
+			image: 1,
+			oneLiner: 1,
+			category: { $arrayElemAt: ["$category", 0] },
+			subCategory: { $arrayElemAt: ["$subCategory", 0] },
+			pricing: { $arrayElemAt: ["$pricing", 0] },
+			createdAt: 1,
+			likeCount: 1,
+		},
+	});
+
+	// console.log("pipeline::", pipeline);
+
+	const tools = await Tool.aggregate(pipeline);
+	const toolsWithLike = await maybeAddLikedTools(req, tools);
 
 	res.status(200).json({
 		success: true,
-		tools,
+		tools: toolsWithLike,
 	});
 });
 
@@ -134,6 +238,7 @@ const getToolsByCategory = async (categoryName) => {
 		{
 			$project: {
 				name: 1,
+				slug: 1,
 				url: 1,
 				image: 1,
 				oneLiner: 1,
@@ -197,6 +302,7 @@ const getTrendingTools = async (timeframe) => {
 		{
 			$project: {
 				name: 1,
+				slug: 1,
 				url: 1,
 				image: 1,
 				oneLiner: 1,
@@ -208,26 +314,6 @@ const getTrendingTools = async (timeframe) => {
 			},
 		},
 	]);
-	return tools;
-};
-
-const maybeAddLikedTools = async (req, tools) => {
-	if (req.user) {
-		const userId = req.user._id || req.user.id;
-		const likedTools = await LikedTool.find({ userId: userId });
-		const updatedTools = [];
-		tools.forEach((tool) => {
-			const updatedTool = { ...tool, liked: false };
-			likedTools.forEach((likedTool) => {
-				if (likedTool.tool.toString() === tool._id.toString()) {
-					updatedTool.liked = true;
-				}
-			});
-			updatedTools.push(updatedTool);
-		});
-
-		return updatedTools;
-	}
 	return tools;
 };
 

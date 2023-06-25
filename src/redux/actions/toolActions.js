@@ -69,6 +69,28 @@ export const getAllTools = () => async (dispatch) => {
 	}
 };
 
+// get all tools server side
+export const getAllToolsServerSide = (req, type) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_TOOLS_REQUEST });
+
+		const { origin } = absoluteUrl(req);
+		const config = {
+			headers: {
+				cookie: req.headers.cookie,
+			},
+		};
+		const { data } = await axios.get(`${origin}/api/tools` + (type ? `?type=${type}` : ""), config);
+
+		dispatch({ type: GET_TOOLS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: GET_TOOLS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
 export const getToolsForHomepage = () => async (dispatch) => {
 	try {
 		dispatch({ type: GET_TOOLS_FOR_HOMEPAGE_REQUEST });

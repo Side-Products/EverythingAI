@@ -69,9 +69,9 @@ export const getAllToolsReducer = (state = { tools: [] }, action) => {
 			return {
 				loading: false,
 				tools: action.payload.tools,
-				verifiedTools: action.payload.verifiedTools,
-				unverifiedTools: action.payload.unverifiedTools,
-				toolsCount: action.payload.toolsCount,
+				verifiedTools: action.payload.verifiedTools ?? [],
+				unverifiedTools: action.payload.unverifiedTools ?? [],
+				toolsCount: action.payload.toolsCount ?? null,
 			};
 		case GET_TOOLS_FAIL:
 			return {
@@ -81,6 +81,7 @@ export const getAllToolsReducer = (state = { tools: [] }, action) => {
 		case CLEAR_ERRORS:
 			return {
 				...state,
+				loading: false,
 				error: null,
 			};
 		default:
