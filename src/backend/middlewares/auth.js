@@ -16,12 +16,12 @@ const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
 const maybeAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
 	const session = await getSession({ req });
 
-	if (!session) {
+	if (session) {
+		req.user = session.user;
+		next();
+	} else {
 		next();
 	}
-
-	req.user = session.user;
-	next();
 });
 
 // Handling user roles
