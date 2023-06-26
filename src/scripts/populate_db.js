@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const { categories, tools, pricingOptions } = require("./data.js");
-const { generateSlug } = require("../utils/Helpers.js");
 
 // GET latest schemas and data from constants.js
 
 // MongoDB connection URL
 const MONGODB_URI = "mongodb://0.0.0.0:27017/everythingai";
+
+const generateSlug = (name) => name.replace(/[^a-zA-Z0-9]+/g, "-").toLowerCase();
 
 // Category schema
 const categorySchema = new mongoose.Schema(
