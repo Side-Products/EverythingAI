@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,13 +8,16 @@ import Button from "@/components/ui/Button";
 import Tooltip from "@/components/ui/Tooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { likeTool, deleteLikedTool } from "@/redux/actions/likedToolActions";
-import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { AuthModalContext } from "@/store/AuthModalContextProvider";
 import { getPricingChipClass } from "@/utils/Helpers";
 import ShinyLoader from "@/components/ui/ShinyLoader";
 
 export default function ToolCard({ tool }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const { data: session } = useSession();
+	const { setAuthModalOpen } = useContext(AuthModalContext);
 
 	const { likedTool } = useSelector((state) => state.createLikedTool);
 	useEffect(() => {
@@ -106,12 +110,16 @@ export default function ToolCard({ tool }) {
 
 						<Button
 							onClick={() => {
-								if (tool?.liked) {
-									dispatch(deleteLikedTool(tool?._id));
-									tool.liked = false;
+								if (session && session.user) {
+									if (tool?.liked) {
+										dispatch(deleteLikedTool(tool?._id));
+										tool.liked = false;
+									} else {
+										dispatch(likeTool(tool?._id));
+										tool.liked = true;
+									}
 								} else {
-									dispatch(likeTool(tool?._id));
-									tool.liked = true;
+									setAuthModalOpen(true);
 								}
 							}}
 							type="button"
