@@ -11,6 +11,7 @@ const dbConnect = async () => {
 				keepAlive: true,
 				useNewUrlParser: true,
 				useUnifiedTopology: true,
+				serverSelectionTimeoutMS: 60000,
 			})
 			.then((conn) => {
 				console.log("Connected to MongoDB");
