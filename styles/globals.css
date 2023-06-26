@@ -115,6 +115,38 @@ a {
 	@apply bg-[rgba(243,243,243,0.9)] backdrop-blur-[24px] w-full backdrop-brightness-105;
 }
 
+.search-box {
+	@apply h-[36px] bg-search-100 rounded-full p-1;
+}
+
+.search-li:hover .search-text {
+	@apply w-[275px] px-4;
+}
+
+.search-box:hover > .search-btn {
+	@apply text-black bg-white;
+}
+
+.search-btn {
+	@apply flex items-center justify-center float-right p-2 duration-300 rounded-full cursor-pointer w-7 h-7 bg-search-100 hover:bg-dark-800;
+	text-decoration: none;
+}
+
+.search-text {
+	border: none;
+	background: none;
+	outline: none;
+	float: left;
+	padding: 0;
+	color: white;
+	font-size: 12px;
+	font-weight: normal;
+	transition: 0.4s;
+	line-height: 28px;
+	width: 0px;
+	@apply text-black;
+}
+
 /**************************************************************************/
 /*****************************    Hamburger Menu  *************************/
 /**************************************************************************/

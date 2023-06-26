@@ -70,7 +70,7 @@ export const getAllTools = () => async (dispatch) => {
 };
 
 // get all tools server side
-export const getAllToolsServerSide = (req, type) => async (dispatch) => {
+export const getAllToolsServerSide = (req, type, search) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_TOOLS_REQUEST });
 
@@ -80,7 +80,17 @@ export const getAllToolsServerSide = (req, type) => async (dispatch) => {
 				cookie: req.headers.cookie,
 			},
 		};
-		const { data } = await axios.get(`${origin}/api/tools` + (type ? `?type=${type}` : ""), config);
+		const params = {};
+		if (type) {
+			params.type = type;
+		}
+		if (search) {
+			params.search = search;
+		}
+		const { data } = await axios.get(`${origin}/api/tools`, {
+			params: params,
+			headers: config.headers,
+		});
 
 		dispatch({ type: GET_TOOLS_SUCCESS, payload: data });
 	} catch (error) {

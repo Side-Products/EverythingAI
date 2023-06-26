@@ -1,9 +1,11 @@
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import logo from "../../public/logo.png";
 import HamburgerMenu from "./HamburgerMenu";
+import TextInput from "@/components/ui/Input/TextInput";
 
 const Navbar = ({ setAuthModalOpen }) => {
 	const { data: session, status } = useSession();
@@ -25,6 +27,8 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 	const router = useRouter();
 
+	const [searchText, setSearchText] = useState("");
+
 	return (
 		<div className="flex justify-center w-screen">
 			<div className={"w-full fixed z-40 max-w-[1920px]"}>
@@ -40,6 +44,37 @@ const Navbar = ({ setAuthModalOpen }) => {
 							{/* Internal links */}
 							<div className="hidden lg:block">
 								<ul className="flex flex-row items-center font-medium md:text-sm md:space-x-3 xl:space-x-4 md:mt-0 sm:text-sm">
+									<li
+										className="block group relative search-li"
+										onMouseEnter={() => {
+											document.getElementById("search-input").focus();
+										}}
+										onMouseLeave={() => {
+											document.getElementById("search-input").blur();
+										}}
+									>
+										<form
+											onSubmit={(e) => {
+												e.preventDefault();
+												router.push(`/tools?search=${searchText}`);
+											}}
+											className="search-box"
+										>
+											<input
+												className="search-text"
+												id="search-input"
+												type="text"
+												placeholder="Search tools"
+												value={searchText}
+												onChange={(e) => {
+													setSearchText(e.target.value);
+												}}
+											/>
+											<span className="search-btn">
+												<i className="fas fa-search"></i>
+											</span>
+										</form>
+									</li>
 									<li
 										className={
 											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +

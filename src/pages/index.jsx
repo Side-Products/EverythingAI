@@ -33,19 +33,17 @@ export default function HomePage() {
 	return (
 		<PageWrapper>
 			<HeroSection />
-			{trendingToolsOfTheWeek && trendingToolsOfTheWeek.length > 0 && (
-				<ToolsCarousel heading={"Trending Tools of the Week"} tools={trendingToolsOfTheWeek} />
-			)}
-			{topToolsOfTheMonth && topToolsOfTheMonth.length > 0 && <ToolsCarousel heading={"Top Tools of the Month"} tools={topToolsOfTheMonth} />}
-			{marketingTools && marketingTools.length > 0 && <ToolsCarousel heading={"Top Tools in Marketing"} tools={marketingTools} />}
-			{imagesTools && imagesTools.length > 0 && <ToolsCarousel heading={"Trending in Images"} tools={imagesTools} />}
-			{designTools && designTools.length > 0 && <ToolsCarousel heading={"Trending in Design"} tools={designTools} />}
-			{productTools && productTools.length > 0 && <ToolsCarousel heading={"Trending in Product"} tools={productTools} />}
-			{developerTools && developerTools.length > 0 && <ToolsCarousel heading={"Trending in Developer"} tools={developerTools} />}
-			{videoTools && videoTools.length > 0 && <ToolsCarousel heading={"Trending in Video"} tools={videoTools} />}
-			{productivityTools && productivityTools.length > 0 && <ToolsCarousel heading={"Trending in Productivity"} tools={productivityTools} />}
-			{salesTools && salesTools.length > 0 && <ToolsCarousel heading={"Trending in Sales"} tools={salesTools} />}
-			{promptsTools && promptsTools.length > 0 && <ToolsCarousel heading={"Trending in Prompts"} tools={promptsTools} />}
+			<ToolsCarousel heading={"Trending Tools of the Week"} tools={trendingToolsOfTheWeek} />
+			<ToolsCarousel heading={"Top Tools of the Month"} tools={topToolsOfTheMonth} />
+			<ToolsCarousel heading={"Top Tools in Marketing"} tools={marketingTools} />
+			<ToolsCarousel heading={"Trending in Images"} tools={imagesTools} />
+			<ToolsCarousel heading={"Trending in Design"} tools={designTools} />
+			<ToolsCarousel heading={"Trending in Product"} tools={productTools} />
+			<ToolsCarousel heading={"Trending in Developer"} tools={developerTools} />
+			<ToolsCarousel heading={"Trending in Video"} tools={videoTools} />
+			<ToolsCarousel heading={"Trending in Productivity"} tools={productivityTools} />
+			<ToolsCarousel heading={"Trending in Sales"} tools={salesTools} />
+			<ToolsCarousel heading={"Trending in Prompts"} tools={promptsTools} />
 			{categories && categories.length > 0 && <CategoriesCarousel heading={"Explore Categories"} categories={categories} />}
 		</PageWrapper>
 	);

@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { getAllToolsServerSide } from "@/redux/actions/toolActions";
 import Marketplace from "@/components/Marketplace";
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-	await store.dispatch(getAllToolsServerSide(req, "explore"));
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
+	await store.dispatch(getAllToolsServerSide(req, "explore", query?.search));
 
 	return {
 		props: {},

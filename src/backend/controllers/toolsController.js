@@ -87,6 +87,14 @@ const allTools = catchAsyncErrors(async (req, res) => {
 		});
 	}
 
+	if (req.query.search) {
+		pipeline.push({
+			$match: {
+				name: { $regex: `^${req.query.search}`, $options: "-i" },
+			},
+		});
+	}
+
 	pipeline.push(
 		{
 			$lookup: {
