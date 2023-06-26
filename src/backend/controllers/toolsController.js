@@ -62,7 +62,9 @@ const maybeAddLikedTools = async (req, tools) => {
 
 // get all tools => /api/tools
 const allTools = catchAsyncErrors(async (req, res) => {
-	const { sortingFilter, category, subcategories } = req.body;
+	const { category, subcategories, sortby, pricing, meta } = req.query;
+	let subcategoriesArray = [];
+	if (subcategories) subcategoriesArray = subcategories.split(",");
 
 	const pipeline = [];
 	if (req.query.type === "trending") {
@@ -122,33 +124,44 @@ const allTools = catchAsyncErrors(async (req, res) => {
 		}
 	);
 
-	if (category?._id) {
+	if (category && category !== "null") {
+		const categoryObj = await Category.findOne({ name: { $regex: new RegExp(category, "i") } });
+		const categoryId = categoryObj._id;
 		pipeline.push({
 			$match: {
-				"category._id": mongoose.Types.ObjectId(category._id),
+				"category._id": mongoose.Types.ObjectId(categoryId),
 			},
 		});
 	}
 
-	if (subcategories?.length > 0) {
-		const subCategoryIds = subcategories.map((subCategory) => mongoose.Types.ObjectId(subCategory._id));
+	if (pricing) {
 		pipeline.push({
 			$match: {
-				"subCategory._id": { $in: subCategoryIds },
+				"pricing.name": pricing,
+				"pricing.meta": meta,
+			},
+		});
+	}
+
+	if (subcategoriesArray?.length > 0) {
+		// const subCategoryIds = subcategories.map((subCategory) => mongoose.Types.ObjectId(subCategory._id));
+		pipeline.push({
+			$match: {
+				"subCategory.name": { $in: subcategoriesArray },
 			},
 		});
 	}
 
 	// Sort based on conditions
 	let sorting_condition = { createdAt: -1 };
-	if (sortingFilter) {
-		if (sortingFilter === "Newest") {
+	if (sortby) {
+		if (sortby === "Newest") {
 			sorting_condition = { createdAt: -1 };
-		} else if (sortingFilter === "Oldest") {
+		} else if (sortby === "Oldest") {
 			sorting_condition = { createdAt: 1 };
 		}
 	}
-	if (req.query.type === "trending" || (sortingFilter && sortingFilter === "Most Popular")) {
+	if (req.query.type === "trending" || (sortby && sortby === "Most Popular")) {
 		pipeline.push(
 			{
 				$lookup: {

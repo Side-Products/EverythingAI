@@ -8,7 +8,7 @@ function classNames(...classes) {
 
 export default function Dropdown({ selectedValue, setSelectedValue, placeholder, type, options }) {
 	const handleOptionSelection = (item) => {
-		setSelectedValue({ type, _id: item._id, name: item.name });
+		setSelectedValue({ type, _id: item._id, name: item.name, meta: item.meta });
 	};
 
 	const menuItemsArr = options?.map((item, idx) => {
@@ -19,7 +19,7 @@ export default function Dropdown({ selectedValue, setSelectedValue, placeholder,
 						className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "block px-4 py-2 text-sm cursor-pointer")}
 						onClick={() => handleOptionSelection(item)}
 					>
-						{item.name}
+						{item.name} {item.meta ? `(${item.meta})` : null}
 					</a>
 				)}
 			</Menu.Item>

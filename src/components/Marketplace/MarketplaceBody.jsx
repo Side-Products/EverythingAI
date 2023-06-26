@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext, useEffect } from "react";
 import dynamic from "next/dynamic";
 const ExploreTools = dynamic(() => import("./ExploreTools"));
 const NewTools = dynamic(() => import("./NewTools"));
@@ -7,13 +7,17 @@ import Filter from "./Filter";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import LoadingToolCards from "@/components/Cards/LoadingToolCards";
 import NoResultsFound from "@/components/Marketplace/NoResultsFound";
+import { ToolContext } from "@/store/ToolContextProvider";
 
 export default function MarketplaceBody({ currentSelection, filter, setFilter, tools }) {
 	let marketplaceType = "EXPLORE ALL TOOLS";
 	if (currentSelection === 2) marketplaceType = "TRENDING TOOLS";
 	else if (currentSelection === 3) marketplaceType = "NEW TOOLS";
 
-	const [filteredTools, setFilteredTools] = useState(tools);
+	const { filteredTools, setFilteredTools } = useContext(ToolContext);
+	useEffect(() => {
+		setFilteredTools(tools);
+	}, [tools]);
 
 	const { loading } = useContext(LoadingContext);
 

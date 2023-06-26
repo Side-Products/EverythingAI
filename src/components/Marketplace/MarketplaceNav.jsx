@@ -22,16 +22,22 @@ export default function MarketplaceNav({ currentSelection, setCurrentSelection }
 			</h3>
 			<p className="sm:my-2 mt-4 sm:text-sm text-xs text-center px-8">Discover AI tools that fit like a glove: handpicked for your industry and goals.</p>
 			<ul className="flex mt-8 space-x-12 font-semibold">
-				<li className={(currentSelection === 1 ? "text-light-100" : "text-gray-400 hover:text-gray-300 ") + " cursor-pointer"}>
-					<Link href="/tools">Explore</Link>
+				<li className={(currentSelection === 1 ? "text-light-100" : "text-zinc-400 hover:text-gray-300 ") + " cursor-pointer"}>
+					<Link href="/tools" className={(currentSelection === 1 ? "bg-zinc-800" : "bg-zinc-900") + " px-5 py-3 rounded-lg"}>
+						Explore
+					</Link>
 				</li>
 
-				<li className={(currentSelection === 2 ? "text-light-100" : "text-gray-400 hover:text-gray-300 ") + " cursor-pointer"}>
-					<Link href="/tools/trending">Trending</Link>
+				<li className={(currentSelection === 2 ? "text-light-100" : "text-zinc-400 hover:text-gray-300 ") + " cursor-pointer"}>
+					<Link href="/tools/trending" className={(currentSelection === 2 ? "bg-zinc-800" : "bg-zinc-900") + " px-5 py-3 rounded-lg"}>
+						Trending
+					</Link>
 				</li>
 
-				<li className={(currentSelection === 3 ? "text-light-100" : "text-gray-400 hover:text-gray-300 ") + " cursor-pointer"}>
-					<Link href="/tools/new-tools">New Tools</Link>
+				<li className={(currentSelection === 3 ? "text-light-100" : "text-zinc-400 hover:text-gray-300 ") + " cursor-pointer"}>
+					<Link href="/tools/new-tools" className={(currentSelection === 3 ? "bg-zinc-800" : "bg-zinc-900") + " px-5 py-3 rounded-lg"}>
+						New Tools
+					</Link>
 				</li>
 			</ul>
 		</div>

@@ -9,6 +9,11 @@ const initFilterState = {
 		name: null,
 	},
 	sortingFilter: "Newest",
+	pricing: {
+		_id: null,
+		name: null,
+		meta: null,
+	},
 };
 
 const reducerFn = (state, action) => {
@@ -25,6 +30,15 @@ const reducerFn = (state, action) => {
 			return {
 				...state,
 				subcategories: action.selectedSubcategories,
+			};
+		case "PRICING":
+			return {
+				...state,
+				pricing: {
+					_id: action._id,
+					name: action.name,
+					meta: action.meta,
+				},
 			};
 		case "SORTINGFILTER":
 			return { ...state, sortingFilter: action.name };

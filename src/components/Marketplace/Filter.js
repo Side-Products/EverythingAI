@@ -1,17 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import Dropdown from "@/components/ui/Dropdowns/Dropdown";
 import MultiDropdown from "../ui/Dropdowns/MultiDropdown";
-import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategories, getCategory } from "@/redux/actions/categoryActions";
+import { getCategory } from "@/redux/actions/categoryActions";
 
 export default function Filter({ filter, setFilter }) {
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(getAllCategories());
-	}, [dispatch]);
 	const { categories } = useSelector((state) => state.allCategories);
+	const { subcategories } = useSelector((state) => state.allSubCategories);
+	const { pricings } = useSelector((state) => state.allPricings);
 
 	useEffect(() => {
 		if (categories && categories.length > 0 && filter.category) {
@@ -29,6 +27,16 @@ export default function Filter({ filter, setFilter }) {
 			};
 		});
 	}, [category]);
+
+	const defaultSubcategories = useMemo(() => {
+		return subcategories?.map((item) => {
+			return {
+				...item,
+				label: item.name,
+				value: item._id,
+			};
+		});
+	}, [subcategories]);
 
 	const sortingOptions = [
 		{ _id: 1, name: "Newest" },
@@ -50,18 +58,27 @@ export default function Filter({ filter, setFilter }) {
 					/>
 				</div>
 
-				{subcategoriesOptions?.length > 0 && (
-					<div className="flex items-center px-5 py-0 pr-2 bg-white border border-gray-300 rounded-lg hover:border-primary-600">
-						<span className="text-sm cursor-default">Subcategory: </span>
-						<MultiDropdown
-							placeholder={"Select a Subcategory"}
-							selectedValue={filter.subcategories}
-							type={"SUBCATEGORY"}
-							setSelectedValue={setFilter}
-							options={subcategoriesOptions}
-						/>
-					</div>
-				)}
+				<div className="flex items-center px-5 py-0 pr-2 bg-white border border-gray-300 rounded-lg hover:border-primary-600">
+					<span className="text-sm cursor-default">Subcategory: </span>
+					<MultiDropdown
+						placeholder={"Select a Subcategory"}
+						selectedValue={filter.subcategories}
+						type={"SUBCATEGORY"}
+						setSelectedValue={setFilter}
+						options={subcategoriesOptions?.length > 0 ? subcategoriesOptions : defaultSubcategories}
+					/>
+				</div>
+
+				<div className="flex items-center px-5 py-2 bg-white border border-gray-300 rounded-lg hover:border-primary-600">
+					<span className="text-sm cursor-default">Pricing: </span>
+					<Dropdown
+						placeholder={"Select Pricing"}
+						selectedValue={filter.pricing.name}
+						type={"PRICING"}
+						setSelectedValue={setFilter}
+						options={pricings}
+					/>
+				</div>
 			</div>
 
 			<div className="flex space-x-5">
@@ -78,6 +95,7 @@ export default function Filter({ filter, setFilter }) {
 				<button
 					className="bg-dark-800 text-light-200 text-sm px-6 rounded-lg"
 					onClick={() => {
+						window.location.href = "/tools";
 						setFilter({ type: "reset" });
 					}}
 				>

@@ -70,7 +70,7 @@ export const getAllTools = () => async (dispatch) => {
 };
 
 // get all tools server side
-export const getAllToolsServerSide = (req, type, search) => async (dispatch) => {
+export const getAllToolsServerSide = (req, type, query) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_TOOLS_REQUEST });
 
@@ -84,9 +84,20 @@ export const getAllToolsServerSide = (req, type, search) => async (dispatch) => 
 		if (type) {
 			params.type = type;
 		}
-		if (search) {
-			params.search = search;
+		if (query) {
+			params.search = query.search;
+			params.category = query.category;
+			params.subcategories = query.subcategories;
+			params.sortby = query.sortby;
+			params.pricing = query.pricing;
+			params.meta = query.meta;
 		}
+		// Remove null or undefined values from params
+		Object.keys(params).forEach((key) => {
+			if (params[key] === null || params[key] === undefined || params[key] === "") {
+				delete params[key];
+			}
+		});
 		const { data } = await axios.get(`${origin}/api/tools`, {
 			params: params,
 			headers: config.headers,

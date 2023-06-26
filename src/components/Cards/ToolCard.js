@@ -78,7 +78,7 @@ export default function ToolCard({ tool }) {
 										<span className="mt-[3px]">
 											<Tooltip
 												labelText={
-													<span className={"ml-1 text-[10px] material-symbols-outlined " + getPricingChipClass(tool?.pricing?.name)}>
+													<span className={"ml-1 text-[12px] material-symbols-outlined " + getPricingChipClass(tool?.pricing?.name)}>
 														info
 													</span>
 												}

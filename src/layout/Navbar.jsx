@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
+import axios from "axios";
 import logo from "../../public/logo.png";
 import HamburgerMenu from "./HamburgerMenu";
-import TextInput from "@/components/ui/Input/TextInput";
+import { ToolContext } from "@/store/ToolContextProvider";
 
 const Navbar = ({ setAuthModalOpen }) => {
 	const { data: session, status } = useSession();
@@ -28,6 +29,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 	const router = useRouter();
 
 	const [searchText, setSearchText] = useState("");
+	const { setFilteredTools } = useContext(ToolContext);
 
 	return (
 		<div className="flex justify-center w-screen">
@@ -54,9 +56,21 @@ const Navbar = ({ setAuthModalOpen }) => {
 										}}
 									>
 										<form
-											onSubmit={(e) => {
+											onSubmit={async (e) => {
 												e.preventDefault();
-												router.push(`/tools?search=${searchText}`);
+												const queryParams = {
+													search: searchText,
+												};
+												// Merge the new query parameters with the existing ones
+												const updatedQuery = { ...router.query, ...queryParams };
+												// Convert the updated query object to a search string
+												const search = new URLSearchParams(updatedQuery).toString();
+												// Push the updated search string to the router
+												router.push(`/tools?${search}`, undefined, { shallow: true });
+												const { data } = await axios.get(`/api/tools`, {
+													params: updatedQuery,
+												});
+												setFilteredTools(data?.tools);
 											}}
 											className="search-box"
 										>
