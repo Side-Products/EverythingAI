@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
 import { getPricingChipClass } from "@/utils/Helpers";
 import ShinyLoader from "@/components/ui/ShinyLoader";
+import InfoTip from "@/components/ui/InfoTip";
 
 export default function ToolCard({ tool }) {
 	const router = useRouter();
@@ -75,13 +76,9 @@ export default function ToolCard({ tool }) {
 								>
 									<p>{tool?.pricing?.name}</p>
 									{tool?.pricing?.meta?.length > 0 && (
-										<span className="mt-[3px]">
+										<span className="-mt-[3px] cursor-info">
 											<Tooltip
-												labelText={
-													<span className={"ml-1 text-[12px] material-symbols-outlined " + getPricingChipClass(tool?.pricing?.name)}>
-														info
-													</span>
-												}
+												labelText={<InfoTip classes={" ml-1 text-[8px] " + getPricingChipClass(tool?.pricing?.name)} />}
 												message={tool?.pricing?.meta}
 											/>
 										</span>

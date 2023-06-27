@@ -242,6 +242,31 @@ export const unverifyTool = (id) => async (dispatch) => {
 	}
 };
 
+// get tool by slug
+export const getToolBySlug = (req, slug) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_TOOL_REQUEST });
+
+		const { origin } = absoluteUrl(req);
+		const config = {
+			headers: {
+				cookie: req.headers.cookie,
+			},
+		};
+		const { data } = await axios.get(`${origin}/api/tools/find/${slug}`, config);
+
+		dispatch({
+			type: GET_TOOL_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: GET_TOOL_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
 // Clear errors
 export const clearErrors = () => async (dispatch) => {
 	dispatch({

@@ -43,7 +43,7 @@ const createTool = catchAsyncErrors(async (req, res) => {
 const maybeAddLikedTools = async (req, tools) => {
 	if (req.user) {
 		const userId = req.user._id || req.user.id;
-		const likedTools = await LikedTool.find({ userId: userId });
+		const likedTools = await LikedTool.find({ user: userId });
 		const updatedTools = [];
 		tools.forEach((tool) => {
 			const updatedTool = { ...tool, liked: false };
@@ -554,4 +554,98 @@ const getMyLikedTools = catchAsyncErrors(async (req, res, next) => {
 	});
 });
 
-export { createTool, allTools, allToolsForHomepage, updateTool, deleteTool, getTool, adminGetAllTools, verifyTool, unverifyTool, getMyLikedTools };
+// get tool by slug => /api/tools/find/:slug
+const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
+	const tool = await Tool.findOne({ slug: req.query.slug })
+		.populate({
+			path: "category",
+		})
+		.populate({
+			path: "subCategory",
+		})
+		.populate({
+			path: "pricing",
+		});
+	if (!tool) {
+		return next(new ErrorHandler("No tool found with this name", 404));
+	}
+
+	const categoryId = tool.category._id;
+	const similarTools = await Tool.aggregate([
+		{ $match: { category: categoryId, verified: true } },
+		{
+			$lookup: {
+				from: "likedtools",
+				localField: "_id",
+				foreignField: "tool",
+				as: "likes",
+			},
+		},
+		{
+			$addFields: {
+				likeCount: { $size: "$likes" },
+			},
+		},
+		{
+			$sort: { likeCount: -1, createdAt: -1 },
+		},
+		{
+			$limit: 10,
+		},
+		{
+			$lookup: {
+				from: "categories",
+				localField: "category",
+				foreignField: "_id",
+				as: "category",
+			},
+		},
+		{
+			$lookup: {
+				from: "subcategories",
+				localField: "subCategory",
+				foreignField: "_id",
+				as: "subCategory",
+			},
+		},
+		{
+			$lookup: {
+				from: "pricings",
+				localField: "pricing",
+				foreignField: "_id",
+				as: "pricing",
+			},
+		},
+		{
+			$project: {
+				name: 1,
+				slug: 1,
+				url: 1,
+				image: 1,
+				oneLiner: 1,
+				category: { $arrayElemAt: ["$category", 0] },
+				subCategory: { $arrayElemAt: ["$subCategory", 0] },
+				pricing: { $arrayElemAt: ["$pricing", 0] },
+				createdAt: 1,
+				likeCount: 1,
+			},
+		},
+	]);
+	const similarToolsWithLikes = await maybeAddLikedTools(req, similarTools);
+
+	res.status(200).json({ success: true, tool: { ...tool._doc, similarTools: similarToolsWithLikes } });
+});
+
+export {
+	createTool,
+	allTools,
+	allToolsForHomepage,
+	updateTool,
+	deleteTool,
+	getTool,
+	adminGetAllTools,
+	verifyTool,
+	unverifyTool,
+	getMyLikedTools,
+	getToolBySlug,
+};

@@ -112,7 +112,7 @@ a {
 /**************************************************************************/
 
 .navbar {
-	@apply bg-[rgba(243,243,243,0.9)] backdrop-blur-[24px] w-full backdrop-brightness-105;
+	@apply bg-[rgba(243,243,243)] backdrop-blur-[24px] w-full backdrop-brightness-105;
 }
 
 .search-box {
