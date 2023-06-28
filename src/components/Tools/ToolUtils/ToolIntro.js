@@ -6,7 +6,7 @@ import ToolSocials from "./ToolIntroUtils/ToolSocials";
 import ToolPill from "./ToolIntroUtils/ToolPill";
 import { convertTimestampToNormalDate } from "@/utils/Helpers";
 
-export default function ToolIntro({ tool }) {
+export default function ToolIntro({ tool, setShareModalOpen }) {
 	const createdDate = new Date(tool?.createdAt);
 	const hasSocials = () => {
 		return (tool?.instagram || tool?.twitter || tool?.linkedin || tool?.youtube)?.length > 0;
@@ -16,7 +16,7 @@ export default function ToolIntro({ tool }) {
 		<>
 			<div className="flex mt-8">
 				<Image className="rounded-xl" width={640} height={360} src={tool?.image} priority alt="tool image" />
-				<div className="flex flex-col flex-1 pb-5 ml-12">
+				<div className="flex flex-col flex-1 ml-12">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center space-x-3">
 							<a
@@ -49,12 +49,21 @@ export default function ToolIntro({ tool }) {
 						</span>
 					</div>
 
-					<ToolPill pillText={tool?.pricing?.name} chipStyle={getPricingChipClass(tool?.pricing?.name)} tooltip={tool?.pricing?.meta} />
-					{hasSocials() && (
-						<div className="mt-auto">
-							<ToolSocials tool={tool} />
+					<div className="flex mt-4">
+						<ToolPill pillText={tool?.pricing?.name} chipStyle={getPricingChipClass(tool?.pricing?.name)} tooltip={tool?.pricing?.meta} />
+					</div>
+
+					<div className="w-full flex justify-between items-end mt-auto">
+						<div className="mt-auto">{hasSocials() && <ToolSocials tool={tool} />}</div>
+						<div>
+							<Button type="button" onClick={() => setShareModalOpen(true)}>
+								<div className="flex justify-center items-center space-x-2">
+									<i className="fa-solid fa-share-nodes text-lg"></i>
+									<span>Share</span>
+								</div>
+							</Button>
 						</div>
-					)}
+					</div>
 				</div>
 			</div>
 		</>
