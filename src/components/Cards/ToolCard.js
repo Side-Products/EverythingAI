@@ -70,14 +70,15 @@ export default function ToolCard({ tool }) {
 							{tool?.pricing ? (
 								<div
 									className={
-										"flex items-center px-4 py-[2px] text-xs font-semibold rounded-2xl min-h-[28px] " +
+										"flex items-center pl-4 py-[2px] text-xs font-semibold rounded-2xl min-h-[28px] " +
 										getPricingChipClass(tool?.pricing?.name)
 									}
 								>
 									<p>{tool?.pricing?.name}</p>
 									{tool?.pricing?.meta?.length > 0 && (
-										<span className="-mt-[3px] cursor-info">
+										<span className="-mt-[1px] cursor-info">
 											<Tooltip
+												// labelText={<InfoTip classes={" ml-1 text-[8px] " + getPricingChipClass(tool?.pricing?.name)} />}
 												labelText={<InfoTip classes={" ml-1 text-[8px] " + getPricingChipClass(tool?.pricing?.name)} />}
 												message={tool?.pricing?.meta}
 											/>
