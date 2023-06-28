@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import BackToTopButton from "@/components/ui/BackToTopButton";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
 import ErrorBox from "@/components/ui/Toast/ErrorBox";
@@ -47,6 +48,7 @@ const Layout = ({ children }) => {
 			<Loading />
 			<ErrorBox style={3} />
 			<SuccessBox style={3} />
+			<BackToTopButton />
 			{router.pathname !== "/404" && router.pathname !== "/_offline" && <Footer />}
 		</>
 	);

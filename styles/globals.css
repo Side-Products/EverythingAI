@@ -1178,3 +1178,49 @@ input[type="radio"] + label > span {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 }
+
+/**************************************************************************/
+/***********************    Filter Swiper Carousel   **********************/
+/**************************************************************************/
+.filter-swiper-container .swiper {
+	padding-left: 40px;
+	padding-right: 40px;
+	bottom: 0px;
+	margin-left: -40px;
+	@apply relative;
+}
+
+.filter-swiper-container .swiper .swiper-wrapper {
+	padding-bottom: 40px;
+	padding-top: 10px;
+}
+
+.filter-swiper-container .swiper-button-next,
+.filter-swiper-container .swiper-button-prev {
+	@apply bg-light-200 p-2 -mt-[30px] rounded-full shadow-xl border border-dark-700;
+	width: 32px !important;
+	height: 32px !important;
+}
+
+.filter-swiper-container .swiper-button-disabled {
+	opacity: 0 !important;
+}
+
+.filter-swiper-container .swiper-button-next {
+	@apply pr-[8px];
+}
+
+.filter-swiper-container .swiper-button-prev {
+	@apply pl-[8px];
+}
+
+.filter-swiper-container .swiper-button-prev:after,
+.filter-swiper-container .swiper-button-next:after {
+	font-size: 12px !important;
+	font-weight: 700 !important;
+	@apply text-dark-800;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}

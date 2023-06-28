@@ -21,7 +21,8 @@ const BackToTopButton = () => {
 	return (
 		<button
 			className={
-				"bg-dark-800 border border-[#30363d] p-4 rounded-full w-[48px] h-[48px] flex items-center justify-center fixed bottom-6 end-6 " + "hidden"
+				"bg-dark-800 border border-[#30363d] text-light-100 p-4 rounded-full w-[48px] h-[48px] flex items-center justify-center fixed bottom-6 end-6 " +
+				"hidden"
 			}
 			onClick={() => scrollToTop()}
 			id="back-to-up"
