@@ -29,10 +29,10 @@ const SubmitTool = ({ toolToEdit = null }) => {
 		category: "",
 		subCategory: "",
 		pricing: "",
-		twitter: "https://twitter.com/Pushpit07",
-		instagram: "https://www.instagram.com/pushpit._.07",
-		linkedin: "https://www.linkedin.com/in/pushpit-bhardwaj",
-		youtube: "https://www.youtube.com/@pushpit07",
+		twitter: "",
+		instagram: "",
+		linkedin: "",
+		youtube: "",
 	});
 	const [image, setImage] = useState("");
 	const [imageName, setImageName] = useState("");
