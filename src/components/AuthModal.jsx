@@ -196,7 +196,8 @@ export default function AuthModal({ isOpen = "", onClose = "" }) {
 										<div className="w-full space-y-4">
 											<div className="w-full flex gap-x-4 justify-center items-center">
 												<button
-													onClick={() => {
+													onClick={(e) => {
+														e.preventDefault();
 														setLoading({ status: true });
 														signIn("google");
 													}}

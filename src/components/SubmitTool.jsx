@@ -8,6 +8,7 @@ import { createTool, updateTool, clearErrors } from "@/redux/actions/toolActions
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import { StatusContext } from "@/store/StatusContextProvider";
 import TextInput from "@/components/ui/Input/TextInput";
+import Textarea from "@/components/ui/Input/Textarea";
 import Dropdown from "@/components/ui/Input/Dropdown";
 import Button from "@/components/ui/Button";
 import ImageUploadInput from "@/components/ui/Input/ImageUploadInput";
@@ -22,13 +23,16 @@ const SubmitTool = ({ toolToEdit = null }) => {
 		name: "",
 		url: "",
 		oneLiner: "",
+		youtubeDemoVideoLink: "",
+		features: "",
+		useCases: "",
 		category: "",
 		subCategory: "",
 		pricing: "",
-		twitter: "",
-		instagram: "",
-		linkedin: "",
-		youtube: "",
+		twitter: "https://twitter.com/Pushpit07",
+		instagram: "https://www.instagram.com/pushpit._.07",
+		linkedin: "https://www.linkedin.com/in/pushpit-bhardwaj",
+		youtube: "https://www.youtube.com/@pushpit07",
 	});
 	const [image, setImage] = useState("");
 	const [imageName, setImageName] = useState("");
@@ -84,6 +88,9 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				name: toolToEdit.name,
 				url: toolToEdit.url,
 				oneLiner: toolToEdit.oneLiner,
+				youtubeDemoVideoLink: toolToEdit.oneLiner,
+				features: toolToEdit.features,
+				useCases: toolToEdit.useCases,
 				category: toolToEdit.category,
 				subCategory: toolToEdit.subCategory,
 				pricing: toolToEdit.pricing,
@@ -217,6 +224,25 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						required={true}
 					/>
 
+					<TextInput
+						label={"YouTube Demo Video Link"}
+						type={"url"}
+						value={toolData.youtubeDemoVideoLink}
+						name={"youtubeDemoVideoLink"}
+						onFieldChange={onToolDataChange}
+						placeholder="A YouTube video link to your product demo"
+						required={false}
+					/>
+
+					<Textarea
+						label={"Features"}
+						value={toolData.features}
+						name={"features"}
+						onFieldChange={onToolDataChange}
+						placeholder="Your product features"
+						required={false}
+					/>
+
 					<Dropdown
 						id={"selectCategory"}
 						label={"Select Category"}
@@ -226,6 +252,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						defaultOption={toolToEdit?.category?.name || categoryDefaultOption}
 						setChoice={onToolDataChange}
 						classes={"w-full"}
+						required={true}
 					/>
 
 					<Dropdown
@@ -237,6 +264,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						defaultOption={toolToEdit?.subCategory?.name || subCategoryDefaultOption}
 						setChoice={onToolDataChange}
 						classes={"w-full"}
+						required={true}
 					/>
 
 					<Dropdown
@@ -245,9 +273,10 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						name="pricing"
 						options={pricings}
 						objKey={"name"}
-						defaultOption={toolToEdit?.pricing?.name + " " + toolToEdit?.pricing?.meta || pricingDefaultOption}
+						defaultOption={toolToEdit ? toolToEdit?.pricing?.name + " " + toolToEdit?.pricing?.meta : pricingDefaultOption}
 						setChoice={onToolDataChange}
 						classes={"w-full"}
+						required={true}
 					/>
 				</div>
 
@@ -274,6 +303,15 @@ const SubmitTool = ({ toolToEdit = null }) => {
 							required={toolToEdit && toolToEdit.image == image ? false : true}
 						/>
 					</div>
+
+					<Textarea
+						label={"Use Cases"}
+						value={toolData.useCases}
+						name={"useCases"}
+						onFieldChange={onToolDataChange}
+						placeholder="Some use cases of your product"
+						required={false}
+					/>
 
 					<div>
 						<div className="mb-6 font-semibold">Social Links</div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import RequiredAsterisk from "@/components/ui/RequiredAsterisk";
 
-export default function Dropdown({ label = "", id, name = "", options = [], objKey, setChoice, classes, defaultOption }) {
+export default function Dropdown({ label = "", id, name = "", options = [], objKey, setChoice, classes, defaultOption, required }) {
 	const [dropdownOptions, setDropdownOptions] = useState(options);
 
 	useEffect(() => {
@@ -11,7 +12,7 @@ export default function Dropdown({ label = "", id, name = "", options = [], objK
 		<div className={"flex flex-col items-start justify-start w-full " + classes}>
 			{label && (
 				<label htmlFor={id} className="text-dark-400 text-sm font-medium mb-1">
-					{label}
+					{label} {required && <RequiredAsterisk />}
 				</label>
 			)}
 			<div className="w-full border border-[#D1D5DB] rounded-md">

@@ -9,10 +9,10 @@ for (let i = 0; i < 100; i++) {
 		category: "",
 		subCategory: "",
 		pricing: "",
-		twitter: "",
-		instagram: "",
-		linkedin: "",
-		youtube: "",
+		twitter: "https://twitter.com/Pushpit07",
+		instagram: "https://www.instagram.com/pushpit._.07",
+		linkedin: "https://www.linkedin.com/in/pushpit-bhardwaj",
+		youtube: "https://www.youtube.com/@pushpit07",
 		verified: true,
 	};
 
