@@ -1,35 +1,29 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import ToolIntro from "./ToolUtils/ToolIntro";
-import ExploreTools from "./ToolUtils/ExploreTools";
+import ToolsCarousel from "@/components/Tools/ToolsCarousel";
+import ShareModal from "@/components/ui/ShareModal";
+import Cta from "@/components/Tools/Cta";
 
 export default function Tool({}) {
-    const tool = {
-        name: 'Idea2Business',
-        instagram: '#',
-        linkedin: '#',
-        youtube: '#',
-        twitter: '#',
-        url:'#',
-        image: 'https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg',
-        oneLiner: 'An AI Saas to take your ideas to a full scale Business model along with tips on Go to market strategy, pitchdecks and many more',
-        category: {
-            name: 'Marketing'
-        },
-        subcategory: {
-            name: 'Branding',
-        },
-        createdAt: '2023-06-21T16:49:29.422+00:00',
-        pricing: {
-            name: 'Freemium',
-            meta: 'pay on the go'
-        }
-    }
-    const toolsArr = [];
-    for(let i = 0; i < 12; i++)
-        toolsArr.push(tool);
-    return (
-        <>
-            <ToolIntro tool={tool}/>
-            <ExploreTools tools={toolsArr}/>
-        </>
-    );
+	const { tool } = useSelector((state) => state.tool);
+	/*******************************
+	 *******  SHARE BUTTON  ********
+	 *******************************/
+	const [isShareModalOpen, setShareModalOpen] = useState(false);
+
+	return (
+		<>
+			<div className="flex flex-col space-y-20">
+				<ToolIntro tool={tool} setShareModalOpen={setShareModalOpen} />
+				<div className="text-xl font-semibold">Embed</div>
+				<div className="text-xl font-semibold">Demo Video</div>
+				<div className="text-xl font-semibold">Features</div>
+				<div className="text-xl font-semibold">Use Cases</div>
+				<Cta tool={tool} />
+				<ToolsCarousel tools={tool.similarTools} heading={"Explore Similar Tools"} />
+			</div>
+			<ShareModal isOpen={isShareModalOpen} setOpen={setShareModalOpen} tool={tool} />
+		</>
+	);
 }

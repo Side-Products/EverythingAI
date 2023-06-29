@@ -112,7 +112,39 @@ a {
 /**************************************************************************/
 
 .navbar {
-	@apply bg-[rgba(243,243,243,0.9)] backdrop-blur-[24px] w-full backdrop-brightness-105;
+	@apply bg-[rgba(243,243,243)] backdrop-blur-[24px] w-full backdrop-brightness-105;
+}
+
+.search-box {
+	@apply h-[36px] bg-search-100 rounded-full p-1;
+}
+
+.search-li:hover .search-text {
+	@apply w-[275px] px-4;
+}
+
+.search-box:hover > .search-btn {
+	@apply text-black bg-white;
+}
+
+.search-btn {
+	@apply flex items-center justify-center float-right p-2 duration-300 rounded-full cursor-pointer w-7 h-7 bg-search-100 hover:bg-dark-800;
+	text-decoration: none;
+}
+
+.search-text {
+	border: none;
+	background: none;
+	outline: none;
+	float: left;
+	padding: 0;
+	color: white;
+	font-size: 12px;
+	font-weight: normal;
+	transition: 0.4s;
+	line-height: 28px;
+	width: 0px;
+	@apply text-black;
 }
 
 /**************************************************************************/
@@ -754,12 +786,12 @@ html {
 /* Handle */
 ::-webkit-scrollbar-thumb {
 	border-radius: 50px;
-	background: #4db6ac;
+	background: #a487fe;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: #4db6ac;
+	background: #a487fe;
 }
 
 /**************************************************************************/
@@ -1145,4 +1177,50 @@ input[type="radio"] + label > span {
 .scrollbar-hide {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
+}
+
+/**************************************************************************/
+/***********************    Filter Swiper Carousel   **********************/
+/**************************************************************************/
+.filter-swiper-container .swiper {
+	padding-left: 40px;
+	padding-right: 40px;
+	bottom: 0px;
+	margin-left: -40px;
+	@apply relative;
+}
+
+.filter-swiper-container .swiper .swiper-wrapper {
+	padding-bottom: 40px;
+	padding-top: 10px;
+}
+
+.filter-swiper-container .swiper-button-next,
+.filter-swiper-container .swiper-button-prev {
+	@apply bg-light-200 p-2 -mt-[30px] rounded-full shadow-xl border border-dark-700;
+	width: 32px !important;
+	height: 32px !important;
+}
+
+.filter-swiper-container .swiper-button-disabled {
+	opacity: 0 !important;
+}
+
+.filter-swiper-container .swiper-button-next {
+	@apply pr-[8px];
+}
+
+.filter-swiper-container .swiper-button-prev {
+	@apply pl-[8px];
+}
+
+.filter-swiper-container .swiper-button-prev:after,
+.filter-swiper-container .swiper-button-next:after {
+	font-size: 12px !important;
+	font-weight: 700 !important;
+	@apply text-dark-800;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }

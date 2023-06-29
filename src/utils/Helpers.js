@@ -16,6 +16,15 @@ export const getTimestamp = (blockTimestamp) => {
 	return getUTCTimestamp(new Date(now_utc).toUTCString().toString().slice(0, 25));
 };
 
+export const convertTimestampToNormalDate = (timestamp) => {
+	const date = new Date(timestamp);
+	const month = date.toLocaleString("en-US", { month: "long" });
+	const day = date.getDate();
+	const normalDate = `${month} ${day}`;
+
+	return normalDate;
+};
+
 export const dataURLtoFile = (dataurl, filename) => {
 	const arr = dataurl.split(",");
 	const mime = arr[0].match(/:(.*?);/)[1];
@@ -93,11 +102,13 @@ export const getPricingChipClass = (pricingName) => {
 	if (pricingName) {
 		switch (pricingName.split(" ")[0]) {
 			case "Free":
-				return "text-green-700 bg-green-300";
+				return " text-green-700 border-green-700 ";
 			case "Premium":
-				return "text-yellow-800 bg-yellow-300";
+				return " text-yellow-800 border-yellow-800 ";
+			case "Freemium":
+				return " text-purple-800 border-purple-800 ";
 			default:
-				return "text-purple-800 bg-purple-300";
+				return " text-purple-800 border-purple-800 ";
 		}
 	}
 };

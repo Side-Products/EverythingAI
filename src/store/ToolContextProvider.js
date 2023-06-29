@@ -1,4 +1,4 @@
-import { useContext, useEffect, createContext } from "react";
+import { useState, useContext, useEffect, createContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors } from "@/redux/actions/likedToolActions";
 import { StatusContext } from "@/store/StatusContextProvider";
@@ -59,7 +59,10 @@ function ToolContextProvider({ children }) {
 		}
 	}, [createLikedToolError, deleteLikedToolError]);
 
-	return <ToolContext.Provider value={{}}>{children}</ToolContext.Provider>;
+	// Filtering on marketplace
+	const [filteredTools, setFilteredTools] = useState([]);
+
+	return <ToolContext.Provider value={{ filteredTools, setFilteredTools }}>{children}</ToolContext.Provider>;
 }
 
 export default ToolContextProvider;

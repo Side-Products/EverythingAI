@@ -14,6 +14,7 @@ import {
 	unverifyToolReducer,
 } from "./toolReducers";
 import { createLikedToolReducer, deleteLikedToolReducer, myLikedToolsReducer } from "./likedToolReducers";
+import { getAllSubCategoriesReducer } from "./subCategoryReducers";
 
 const reducer = combineReducers({
 	auth: authReducer,
@@ -50,6 +51,8 @@ const reducer = combineReducers({
 	createLikedTool: createLikedToolReducer,
 	deleteLikedTool: deleteLikedToolReducer,
 	myLikedTools: myLikedToolsReducer,
+	// subcategory
+	allSubCategories: getAllSubCategoriesReducer,
 });
 
 export default reducer;

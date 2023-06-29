@@ -18,7 +18,7 @@ const createCategory = catchAsyncErrors(async (req, res) => {
 
 // get all categories => /api/categories
 const allCategories = catchAsyncErrors(async (req, res) => {
-	const categories = await Category.find().sort({ createdAt: "desc" }).limit(req.query.limit);
+	const categories = await Category.find().sort({ name: 1, createdAt: "desc" }).limit(req.query.limit);
 	const categoriesCount = await Category.countDocuments();
 
 	res.status(200).json({
@@ -63,7 +63,7 @@ const getCategory = catchAsyncErrors(async (req, res, next) => {
 	}
 
 	// Find all subcategories that have the same categoryId as the category
-	const subcategories = await SubCategory.find({ categoryId });
+	const subcategories = await SubCategory.find({ categoryId }).sort({ name: 1 });
 	res.status(200).json({ success: true, category: { ...category._doc, subcategories } });
 });
 

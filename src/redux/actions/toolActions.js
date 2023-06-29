@@ -69,6 +69,49 @@ export const getAllTools = () => async (dispatch) => {
 	}
 };
 
+// get all tools server side
+export const getAllToolsServerSide = (req, type, query) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_TOOLS_REQUEST });
+
+		const { origin } = absoluteUrl(req);
+		const config = {
+			headers: {
+				cookie: req.headers.cookie,
+			},
+		};
+		const params = {};
+		if (type) {
+			params.type = type;
+		}
+		if (query) {
+			params.search = query.search;
+			params.category = query.category;
+			params.subcategories = query.subcategories;
+			params.sortby = query.sortby;
+			params.pricing = query.pricing;
+			params.meta = query.meta;
+		}
+		// Remove null or undefined values from params
+		Object.keys(params).forEach((key) => {
+			if (params[key] === null || params[key] === undefined || params[key] === "") {
+				delete params[key];
+			}
+		});
+		const { data } = await axios.get(`${origin}/api/tools`, {
+			params: params,
+			headers: config.headers,
+		});
+
+		dispatch({ type: GET_TOOLS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: GET_TOOLS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
 export const getToolsForHomepage = () => async (dispatch) => {
 	try {
 		dispatch({ type: GET_TOOLS_FOR_HOMEPAGE_REQUEST });
@@ -194,6 +237,31 @@ export const unverifyTool = (id) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: UNVERIFY_TOOL_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+// get tool by slug
+export const getToolBySlug = (req, slug) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_TOOL_REQUEST });
+
+		const { origin } = absoluteUrl(req);
+		const config = {
+			headers: {
+				cookie: req.headers.cookie,
+			},
+		};
+		const { data } = await axios.get(`${origin}/api/tools/find/${slug}`, config);
+
+		dispatch({
+			type: GET_TOOL_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: GET_TOOL_FAIL,
 			payload: error.response.data.message,
 		});
 	}

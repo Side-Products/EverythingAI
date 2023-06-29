@@ -1,9 +1,12 @@
+import { useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
+import axios from "axios";
 import logo from "../../public/logo.png";
 import HamburgerMenu from "./HamburgerMenu";
+import { ToolContext } from "@/store/ToolContextProvider";
 
 const Navbar = ({ setAuthModalOpen }) => {
 	const { data: session, status } = useSession();
@@ -25,6 +28,9 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 	const router = useRouter();
 
+	const [searchText, setSearchText] = useState("");
+	const { setFilteredTools } = useContext(ToolContext);
+
 	return (
 		<div className="flex justify-center w-screen">
 			<div className={"w-full fixed z-40 max-w-[1920px]"}>
@@ -41,9 +47,52 @@ const Navbar = ({ setAuthModalOpen }) => {
 							<div className="hidden lg:block">
 								<ul className="flex flex-row items-center font-medium md:text-sm md:space-x-3 xl:space-x-4 md:mt-0 sm:text-sm">
 									<li
+										className="block group relative search-li"
+										onMouseEnter={() => {
+											document.getElementById("search-input").focus();
+										}}
+										onMouseLeave={() => {
+											document.getElementById("search-input").blur();
+										}}
+									>
+										<form
+											onSubmit={async (e) => {
+												e.preventDefault();
+												const queryParams = {
+													search: searchText,
+												};
+												// Merge the new query parameters with the existing ones
+												const updatedQuery = { ...router.query, ...queryParams };
+												// Convert the updated query object to a search string
+												const search = new URLSearchParams(updatedQuery).toString();
+												// Push the updated search string to the router
+												router.push(`/tools?${search}`, undefined, { shallow: true });
+												const { data } = await axios.get(`/api/tools`, {
+													params: updatedQuery,
+												});
+												setFilteredTools(data?.tools);
+											}}
+											className="search-box"
+										>
+											<input
+												className="search-text"
+												id="search-input"
+												type="text"
+												placeholder="Search tools"
+												value={searchText}
+												onChange={(e) => {
+													setSearchText(e.target.value);
+												}}
+											/>
+											<span className="search-btn">
+												<i className="fas fa-search"></i>
+											</span>
+										</form>
+									</li>
+									<li
 										className={
-											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
-											(router.pathname == "/tools" ? "text-dark-800 bg-gray-200" : "")
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
+											(router.pathname.startsWith("/tools") ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
 										<Link href="/tools">Tools</Link>
@@ -51,7 +100,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
 											(router.pathname == "/categories" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
@@ -60,7 +109,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
 											(router.pathname == "/collections" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
@@ -69,7 +118,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded transition duration-300 " +
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
 											(router.pathname == "/blog" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>

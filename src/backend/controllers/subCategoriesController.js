@@ -16,11 +16,11 @@ const createSubCategory = catchAsyncErrors(async (req, res) => {
 
 // get all sub-categories => /api/sub-categories
 const allSubCategories = catchAsyncErrors(async (req, res) => {
-	const subCategories = await SubCategory.find().sort({ createdAt: "desc" });
+	const subcategories = await SubCategory.find().sort({ name: 1, createdAt: "desc" });
 
 	res.status(200).json({
 		success: true,
-		subCategories,
+		subcategories,
 	});
 });
 
