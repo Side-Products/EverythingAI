@@ -46,8 +46,9 @@ const Layout = ({ children }) => {
 	}, [router.query, isAuthenticated]);
 
 	useEffect(()=>{
+		//If on home do not render
 		if(asPath.length === 1)
-			setCrumb([''])
+			setCrumb(null)
 		else
 			setCrumb(asPath.split("/"))
 	},[asPath])
@@ -55,7 +56,7 @@ const Layout = ({ children }) => {
 	return (
 		<>
 			<Navbar setAuthModalOpen={setAuthModalOpen} />
-			<Breadcrumb crumb={crumb}/>
+			{crumb && <Breadcrumb crumb={crumb}/>}
 			<AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
 			{children}
 			<Loading />

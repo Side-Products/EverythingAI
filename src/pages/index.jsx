@@ -31,7 +31,7 @@ export default function HomePage() {
 	const { categories } = useSelector((state) => state.allCategories);
 
 	return (
-		<PageWrapper>
+		<PageWrapper classes="w-full max-w-[1920px] pt-32 pb-32 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-20">
 			<HeroSection />
 			<ToolsCarousel heading={"Trending Tools of the Week"} tools={trendingToolsOfTheWeek} />
 			<ToolsCarousel heading={"Top Tools of the Month"} tools={topToolsOfTheMonth} />
