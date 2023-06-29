@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { likeTool, deleteLikedTool } from "@/redux/actions/likedToolActions";
 import { useSession } from "next-auth/react";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
-import { getPricingChipClass } from "@/utils/Helpers";
 import ShinyLoader from "@/components/ui/ShinyLoader";
 import InfoTip from "@/components/ui/InfoTip";
 
@@ -29,8 +28,23 @@ export default function ToolCard({ tool }) {
 		}
 	}, [likedTool]);
 
+	const getPricingChipClass = (pricingName) => {
+		if (pricingName) {
+			switch (pricingName.split(" ")[0]) {
+				case "Free":
+					return " text-green-700 bg-green-300 ";
+				case "Premium":
+					return " text-yellow-700 bg-yellow-300 ";
+				case "Freemium":
+					return " text-purple-700 bg-purple-300 ";
+				default:
+					return " text-purple-700 bg-purple-300 ";
+			}
+		}
+	};
+
 	return (
-		<div className="transition duration-300 shadow-md cursor-pointer group max-w-fit flex flex-col justify-between bg-light-100 rounded-xl hover:shadow-2xl">
+		<div className="flex flex-col justify-between transition duration-300 shadow-md cursor-pointer group max-w-fit bg-light-100 rounded-xl hover:shadow-2xl">
 			<div>
 				<div
 					onClick={() => {
@@ -60,7 +74,7 @@ export default function ToolCard({ tool }) {
 							<ShinyLoader classes={"w-24 h-5 rounded-md"} />
 						)}
 
-						<div className="flex items-end justify-between font-medium mt-1">
+						<div className="flex items-end justify-between mt-1 font-medium">
 							{tool?.category ? (
 								<p className="px-4 py-1 rounded-md bg-dark-700 text-light-100 text-[12px]">{tool?.category?.name}</p>
 							) : (
@@ -79,7 +93,7 @@ export default function ToolCard({ tool }) {
 										<span className="-mt-[1px] cursor-info">
 											<Tooltip
 												// labelText={<InfoTip classes={" ml-1 text-[8px] " + getPricingChipClass(tool?.pricing?.name)} />}
-												labelText={<InfoTip classes={" ml-1 text-[8px] " + getPricingChipClass(tool?.pricing?.name)} />}
+												labelText={<InfoTip classes={" ml-1 " + getPricingChipClass(tool?.pricing?.name)} />}
 												message={tool?.pricing?.meta}
 											/>
 										</span>
