@@ -9,12 +9,17 @@ import ErrorBox from "@/components/ui/Toast/ErrorBox";
 import SuccessBox from "@/components/ui/Toast/SuccessBox";
 import Loading from "@/components/ui/Loading";
 import AuthModal from "@/components/AuthModal";
+import { Breadcrumb } from "./Breadcrumb";
+import { useState } from "react";
 
 const Layout = ({ children }) => {
 	const { setLoading } = useContext(LoadingContext);
 	const { authModalOpen, setAuthModalOpen } = useContext(AuthModalContext);
 
 	const router = useRouter();
+	const {asPath} = router;
+	const [crumb, setCrumb] = useState([''])
+
 	// Loading on page change
 	useEffect(() => {
 		if (router && router.events) {
@@ -39,9 +44,17 @@ const Layout = ({ children }) => {
 		}
 	}, [router.query, isAuthenticated]);
 
+	useEffect(()=>{
+		if(asPath.length === 1)
+			setCrumb([''])
+		else
+			setCrumb(asPath.split("/"))
+	},[asPath])
+
 	return (
 		<>
 			<Navbar setAuthModalOpen={setAuthModalOpen} />
+			<Breadcrumb crumb={crumb}/>
 			<AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
 			{children}
 			<Loading />
