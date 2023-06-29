@@ -4,6 +4,7 @@ import ToolIntro from "./ToolUtils/ToolIntro";
 import ToolsCarousel from "@/components/Tools/ToolsCarousel";
 import ShareModal from "@/components/ui/ShareModal";
 import Cta from "@/components/Tools/Cta";
+import DemoVideo from "@/components/Tools/DemoVideo";
 
 export default function Tool({}) {
 	const { tool } = useSelector((state) => state.tool);
@@ -17,7 +18,7 @@ export default function Tool({}) {
 			<div className="flex flex-col space-y-20">
 				<ToolIntro tool={tool} setShareModalOpen={setShareModalOpen} />
 				<div className="text-xl font-semibold">Embed</div>
-				<div className="text-xl font-semibold">Demo Video</div>
+				<DemoVideo link={"https://www.youtube.com/watch?v=Xn8tufsbSz0"} />
 				<div className="text-xl font-semibold">Features</div>
 				<div className="text-xl font-semibold">Use Cases</div>
 				<Cta tool={tool} />
