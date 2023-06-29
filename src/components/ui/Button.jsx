@@ -49,6 +49,15 @@ export default function Button({
 						? `bg-zinc-300`
 						: `py-2 px-7 font-semibold text-base ` +
 						  (active ? `bg-primary-500 hover:bg-error-700 ` : `bg-zinc-100 hover:bg-zinc-200 text-dark-600 `)
+					: variant == "classic-100"
+					? outline
+						? isLoading
+							? `bg-zinc-300 `
+							: `bg-zinc-300 `
+						: isLoading
+						? `bg-zinc-300`
+						: `py-2 px-7 font-semibold text-base ` +
+						  (active ? `bg-primary-500 hover:bg-error-700 ` : `bg-zinc-200 hover:bg-zinc-300 text-dark-600 `)
 					: variant == "classic-dark"
 					? outline
 						? isLoading

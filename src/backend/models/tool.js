@@ -35,7 +35,16 @@ const toolSchema = new mongoose.Schema(
 			trim: true,
 			maxLength: [250, "One liner cannot exceed 250 characters"],
 		},
-		description: {
+		youtubeDemoVideoLink: {
+			type: String,
+			trim: true,
+			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
+		},
+		features: {
+			type: String,
+			trim: true,
+		},
+		useCases: {
 			type: String,
 			trim: true,
 		},

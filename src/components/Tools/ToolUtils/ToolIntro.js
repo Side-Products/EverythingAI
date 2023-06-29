@@ -56,7 +56,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 					<div className="w-full flex justify-between items-end mt-auto">
 						<div className="mt-auto">{hasSocials() && <ToolSocials tool={tool} />}</div>
 						<div>
-							<Button type="button" onClick={() => setShareModalOpen(true)}>
+							<Button type="button" variant="classic-100" onClick={() => setShareModalOpen(true)}>
 								<div className="flex justify-center items-center space-x-2">
 									<i className="fa-solid fa-share-nodes text-lg"></i>
 									<span>Share</span>

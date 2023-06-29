@@ -636,6 +636,27 @@ const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
 	res.status(200).json({ success: true, tool: { ...tool._doc, similarTools: similarToolsWithLikes } });
 });
 
+// get like count by slug => /api/tools/get-likes/:slug
+const getLikeCountBySlug = catchAsyncErrors(async (req, res, next) => {
+	const tool = await Tool.findOne({ slug: req.query.slug })
+		.populate({
+			path: "category",
+		})
+		.populate({
+			path: "subCategory",
+		})
+		.populate({
+			path: "pricing",
+		});
+	if (!tool) {
+		return next(new ErrorHandler("No tool found with this name", 404));
+	}
+
+	const likeCount = await LikedTool.countDocuments({ tool: tool._id });
+
+	res.status(200).json({ likes: likeCount });
+});
+
 export {
 	createTool,
 	allTools,
@@ -648,4 +669,5 @@ export {
 	unverifyTool,
 	getMyLikedTools,
 	getToolBySlug,
+	getLikeCountBySlug,
 };
