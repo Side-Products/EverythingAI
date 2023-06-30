@@ -12,14 +12,14 @@ export default function PageWrapper({ title = "", description = "", useDefaultCo
 			</Head>
 
 			{useDefaultContainer ? (
-				<div className="w-full flex flex-col items-center min-h-screen bg-light-200">
+				<div className="flex flex-col items-center w-full min-h-screen bg-light-200">
 					<div
 						className={
 							blog
 								? "w-full max-w-[768px] px-6 md:px-8 lg:px-0 py-40"
 								: classes
 								? classes
-								: "w-full max-w-[1920px] pt-32 pb-32 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-20"
+								: "w-full max-w-[1920px] pt-12 pb-32 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-20"
 						}
 					>
 						{children}

@@ -7,9 +7,12 @@ import Cta from "@/components/Tools/Cta";
 import DemoVideo from "@/components/Tools/DemoVideo";
 import Features from "@/components/Tools/Features";
 import UseCases from "@/components/Tools/UseCases";
+import EmbedTag from "./ToolUtils/EmbedTag";
+import { useRouter } from "next/router";
 
 export default function Tool({}) {
 	const { tool } = useSelector((state) => state.tool);
+    const {query} = useRouter();
 	/*******************************
 	 *******  SHARE BUTTON  ********
 	 *******************************/
@@ -19,7 +22,7 @@ export default function Tool({}) {
 		<>
 			<div className="flex flex-col space-y-20">
 				<ToolIntro tool={tool} setShareModalOpen={setShareModalOpen} />
-				<div className="text-2xl font-semibold">Embed</div>
+                <EmbedTag toolName={query.tool}/>
 				<DemoVideo link={tool?.youtubeDemoVideoLink} />
 				<Features features={tool?.features} />
 				<UseCases useCases={tool?.useCases} />
