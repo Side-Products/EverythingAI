@@ -18,8 +18,8 @@ const Layout = ({ children }) => {
 	const { authModalOpen, setAuthModalOpen } = useContext(AuthModalContext);
 
 	const router = useRouter();
-	const {asPath} = router;
-	const [crumb, setCrumb] = useState([''])
+	const { asPath } = router;
+	const [crumb, setCrumb] = useState([""]);
 
 	// Loading on page change
 	useEffect(() => {
@@ -45,18 +45,16 @@ const Layout = ({ children }) => {
 		}
 	}, [router.query, isAuthenticated]);
 
-	useEffect(()=>{
+	useEffect(() => {
 		//If on home do not render
-		if(asPath.length === 1)
-			setCrumb(null)
-		else
-			setCrumb(asPath.split("/"))
-	},[asPath])
+		if (asPath.length === 1) setCrumb(null);
+		else setCrumb(asPath.split("/"));
+	}, [asPath]);
 
 	return (
 		<>
 			<Navbar setAuthModalOpen={setAuthModalOpen} />
-			{crumb && <Breadcrumb crumb={crumb}/>}
+			{router.pathname !== "/tools" && crumb && <Breadcrumb crumb={crumb} />}
 			<AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
 			{children}
 			<Loading />
