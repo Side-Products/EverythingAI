@@ -129,7 +129,12 @@ export const getCategoryByName = (req, name) => async (dispatch) => {
 		dispatch({ type: GET_CATEGORY_REQUEST });
 
 		const { origin } = absoluteUrl(req);
-		const { data } = await axios.get(`${origin}/api/categories/find/${name}`);
+		const config = {
+			headers: {
+				cookie: req.headers.cookie,
+			},
+		};
+		const { data } = await axios.get(`${origin}/api/categories/find/${name}`, config);
 
 		dispatch({
 			type: GET_CATEGORY_SUCCESS,

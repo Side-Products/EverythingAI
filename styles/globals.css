@@ -77,6 +77,9 @@ a {
 	@apply bg-gradient-to-tr from-orange-500 to-rose-500 animate-bg;
 }
 
+.bg-gradient-tertiary-tr {
+	@apply bg-gradient-to-tr from-purple-600 via-violet-600 to-indigo-600 animate-bg;
+}
 .bg-gradient-tertiary-r {
 	@apply bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 animate-bg;
 }
@@ -739,6 +742,11 @@ tr th:nth-child(1) {
 
 .allCategories-table tr td:nth-child(n + 5),
 .allCategories-table tr th:nth-child(n + 5) {
+	border-radius: 0 0.625rem 0.625rem 0;
+}
+
+.allCollections-table tr td:nth-child(n + 6),
+.allCollections-table tr th:nth-child(n + 6) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 

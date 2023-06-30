@@ -2,12 +2,12 @@ import Button from "@/components/ui/Button";
 import { useContext } from "react";
 import { StatusContext } from "@/store/StatusContextProvider";
 
-export default function EmbedTag({ toolSlug, hostURL = "https://everything-ai.vercel.app/" }) {
+export default function EmbedTag({ toolSlug, hostURL = "https://everything-ai.vercel.app" }) {
 	const { setSuccess } = useContext(StatusContext);
 
 	const copyToClipboard = async () => {
-		const htmlToCopy = `<a href='${hostURL}${toolSlug}' target="_blank">
-        <img src='${hostURL}api/tools/image/${toolSlug}' alt="sometign" width="200" height="50"></img>
+		const htmlToCopy = `<a href='${hostURL}/tools/${toolSlug}' target="_blank">
+        <img src='${hostURL}/api/tools/image/${toolSlug}' alt="everythingai tool" width="200" height="50"></img>
         </a>`;
 
 		await navigator.clipboard.writeText(htmlToCopy);
@@ -26,7 +26,7 @@ export default function EmbedTag({ toolSlug, hostURL = "https://everything-ai.ve
 				<img src={`/api/tools/image/${toolSlug}`} alt="sometign" width="200" height="50"></img>
 				<Button onClick={copyToClipboard} classes={"max-w-fit"}>
 					<span className="material-symbols-outlined">content_copy</span>
-					<span>Copy Embed Code</span>
+					<span className="ml-2">Copy Embed Code</span>
 				</Button>
 			</div>
 		</div>

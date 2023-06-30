@@ -257,6 +257,14 @@ const Navbar = ({ setAuthModalOpen }) => {
 																</li>
 
 																<li>
+																	<Link href={`/admin/collections`} passHref={true}>
+																		<div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
+																			All Collections
+																		</div>
+																	</Link>
+																</li>
+
+																<li>
 																	<Link href={`/admin/contact`} passHref={true}>
 																		<div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
 																			All Contact Messages

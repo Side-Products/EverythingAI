@@ -15,6 +15,13 @@ import {
 } from "./toolReducers";
 import { createLikedToolReducer, deleteLikedToolReducer, myLikedToolsReducer } from "./likedToolReducers";
 import { getAllSubCategoriesReducer } from "./subCategoryReducers";
+import {
+	createCollectionReducer,
+	getAllCollectionsReducer,
+	getCollectionReducer,
+	updateCollectionReducer,
+	deleteCollectionReducer,
+} from "./collectionReducers";
 
 const reducer = combineReducers({
 	auth: authReducer,
@@ -53,6 +60,12 @@ const reducer = combineReducers({
 	myLikedTools: myLikedToolsReducer,
 	// subcategory
 	allSubCategories: getAllSubCategoriesReducer,
+	// collection
+	createCollection: createCollectionReducer,
+	allCollections: getAllCollectionsReducer,
+	collection: getCollectionReducer,
+	updateCollection: updateCollectionReducer,
+	deleteCollection: deleteCollectionReducer,
 });
 
 export default reducer;

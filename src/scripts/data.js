@@ -69,6 +69,18 @@ const categories = {
 	],
 };
 
+const collections = [
+	{ name: "For Digital Nomads", description: "Make the best of your time while travelling" },
+	{ name: "For SaaS Entrepreneurs", description: "Grow your SaaS business using these tools" },
+	{ name: "For Social Media Managers", description: "Manage and generate quality content quickly" },
+	{ name: "For Building Following on Linkedin", description: "Tools to scale your influence on Linkedin" },
+	{ name: "For E-Commerce Entrepreneurs", description: "Tools for scaling your D2C business" },
+	{ name: "For Improving Mental Health", description: "Tools to create balance and positivity" },
+	{ name: "For Creators & Influencers", description: "Tools to build influence & create content" },
+	{ name: "For Content Writers", description: "Tools to write better copy & long form content" },
+	{ name: "Our Top 25 AI Tools Collection", description: "Tools we love across all categories" },
+];
+
 const tools = [
 	{
 		name: "BeachAI",
@@ -2756,4 +2768,4 @@ const tools = [
 	},
 ];
 
-module.exports = { categories, tools, pricingOptions };
+module.exports = { categories, tools, pricingOptions, collections };

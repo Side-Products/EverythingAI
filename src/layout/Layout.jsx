@@ -54,7 +54,7 @@ const Layout = ({ children }) => {
 	return (
 		<>
 			<Navbar setAuthModalOpen={setAuthModalOpen} />
-			{router.pathname !== "/tools" && crumb && <Breadcrumb crumb={crumb} />}
+			{router.pathname !== "/tools" && crumb && !router.pathname.startsWith("/admin") && <Breadcrumb crumb={crumb} />}
 			<AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
 			{children}
 			<Loading />

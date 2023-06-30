@@ -3,6 +3,7 @@ import SubCategory from "@/backend/models/subCategory";
 import ErrorHandler from "@/backend/utils/errorHandler";
 import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
 import Tool from "@/backend/models/tool";
+import { maybeAddLikedTools } from "@/backend/controllers/toolsController";
 
 // add to db => /api/categories
 const createCategory = catchAsyncErrors(async (req, res) => {
@@ -75,24 +76,70 @@ const getCategoryByName = catchAsyncErrors(async (req, res, next) => {
 	if (!category) {
 		return next(new ErrorHandler("No category found with this name", 404));
 	}
-	const tools = await Tool.find({ category: categoryId, verified: true })
-		.populate({
-			path: "category",
-			select: "name",
-		})
-		.populate({
-			path: "subCategory",
-			select: "name",
-		})
-		.populate({
-			path: "pricing",
-			select: "name meta",
-		})
-		.sort({ createdAt: "desc" });
+
+	const tools = await Tool.aggregate([
+		{ $match: { category: categoryId, verified: true } },
+		{
+			$lookup: {
+				from: "likedtools",
+				localField: "_id",
+				foreignField: "tool",
+				as: "likes",
+			},
+		},
+		{
+			$addFields: {
+				likeCount: { $size: "$likes" },
+			},
+		},
+		{
+			$sort: { likeCount: -1, createdAt: -1 },
+		},
+		{
+			$lookup: {
+				from: "categories",
+				localField: "category",
+				foreignField: "_id",
+				as: "category",
+			},
+		},
+		{
+			$lookup: {
+				from: "subcategories",
+				localField: "subCategory",
+				foreignField: "_id",
+				as: "subCategory",
+			},
+		},
+		{
+			$lookup: {
+				from: "pricings",
+				localField: "pricing",
+				foreignField: "_id",
+				as: "pricing",
+			},
+		},
+		{
+			$project: {
+				name: 1,
+				slug: 1,
+				url: 1,
+				image: 1,
+				oneLiner: 1,
+				category: { $arrayElemAt: ["$category", 0] },
+				subCategory: { $arrayElemAt: ["$subCategory", 0] },
+				pricing: { $arrayElemAt: ["$pricing", 0] },
+				createdAt: 1,
+				likeCount: 1,
+			},
+		},
+	]);
+
+	const toolsWithLike = await maybeAddLikedTools(req, tools);
 
 	// Find all subcategories that have the same categoryId as the category
 	const subcategories = await SubCategory.find({ categoryId });
-	res.status(200).json({ success: true, category: { ...category._doc, subcategories, tools } });
+	res.status(200).json({ success: true, category: { ...category._doc, subcategories, tools: toolsWithLike } });
 });
 
 export { createCategory, allCategories, updateCategory, deleteCategory, getCategory, getCategoryByName };

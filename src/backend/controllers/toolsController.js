@@ -556,21 +556,76 @@ const getMyLikedTools = catchAsyncErrors(async (req, res, next) => {
 
 // get tool by slug => /api/tools/find/:slug
 const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
-	const tool = await Tool.findOne({ slug: req.query.slug })
-		.populate({
-			path: "category",
-		})
-		.populate({
-			path: "subCategory",
-		})
-		.populate({
-			path: "pricing",
-		});
-	if (!tool) {
+	const tool = await Tool.aggregate([
+		{ $match: { slug: req.query.slug } },
+		{
+			$lookup: {
+				from: "likedtools",
+				localField: "_id",
+				foreignField: "tool",
+				as: "likes",
+			},
+		},
+		{
+			$addFields: {
+				likeCount: { $size: "$likes" },
+			},
+		},
+		{
+			$lookup: {
+				from: "categories",
+				localField: "category",
+				foreignField: "_id",
+				as: "category",
+			},
+		},
+		{
+			$lookup: {
+				from: "subcategories",
+				localField: "subCategory",
+				foreignField: "_id",
+				as: "subCategory",
+			},
+		},
+		{
+			$lookup: {
+				from: "pricings",
+				localField: "pricing",
+				foreignField: "_id",
+				as: "pricing",
+			},
+		},
+		{
+			$project: {
+				name: 1,
+				slug: 1,
+				url: 1,
+				image: 1,
+				oneLiner: 1,
+				youtubeDemoVideoLink: 1,
+				features: 1,
+				useCases: 1,
+				twitter: 1,
+				instagram: 1,
+				linkedin: 1,
+				youtube: 1,
+				verified: 1,
+				category: { $arrayElemAt: ["$category", 0] },
+				subCategory: { $arrayElemAt: ["$subCategory", 0] },
+				pricing: { $arrayElemAt: ["$pricing", 0] },
+				createdAt: 1,
+				likeCount: 1,
+			},
+		},
+	]);
+	if (!tool || tool.length === 0) {
 		return next(new ErrorHandler("No tool found with this name", 404));
 	}
 
-	const categoryId = tool.category._id;
+	const tools = await maybeAddLikedTools(req, tool);
+	const toolWithLike = tools[0];
+
+	const categoryId = toolWithLike.category._id;
 	const similarTools = await Tool.aggregate([
 		{ $match: { category: categoryId, verified: true } },
 		{
@@ -633,7 +688,7 @@ const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
 	]);
 	const similarToolsWithLikes = await maybeAddLikedTools(req, similarTools);
 
-	res.status(200).json({ success: true, tool: { ...tool._doc, similarTools: similarToolsWithLikes } });
+	res.status(200).json({ success: true, tool: { ...toolWithLike, similarTools: similarToolsWithLikes } });
 });
 
 // get like count by slug => /api/tools/get-likes/:slug
@@ -670,4 +725,5 @@ export {
 	getMyLikedTools,
 	getToolBySlug,
 	getLikeCountBySlug,
+	maybeAddLikedTools,
 };

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const { categories, tools, pricingOptions } = require("./data.js");
+const { categories, tools, pricingOptions, collections } = require("./data.js");
 
 // GET latest schemas and data from constants.js
 
@@ -154,6 +154,33 @@ const toolSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
+// Collection schema
+const collectionSchema = new mongoose.Schema(
+	{
+		name: {
+			type: String,
+			required: [true, "Please enter a name"],
+			trim: true,
+			maxLength: [100, "Name cannot exceed 100 characters"],
+			unique: true,
+		},
+		slug: {
+			type: String,
+			required: [true, "Please enter a slug"],
+			trim: true,
+			maxLength: [100, "Slug cannot exceed 100 characters"],
+			unique: true,
+		},
+		description: {
+			type: String,
+			required: [true, "Please enter a description"],
+			trim: true,
+			maxLength: [500, "Description cannot exceed 500 characters"],
+		},
+	},
+	{ timestamps: true }
+);
+
 // Category model
 const Category = mongoose.model("Category", categorySchema);
 // Subcategory model
@@ -162,6 +189,8 @@ const SubCategory = mongoose.model("SubCategory", subCategorySchema);
 const Pricing = mongoose.model("Pricing", pricingSchema);
 // Tool model
 const Tool = mongoose.model("Tool", toolSchema);
+// Collection model
+const Collection = mongoose.model("Collection", collectionSchema);
 
 async function populateCategoriesAndSubCategories() {
 	try {
@@ -197,6 +226,15 @@ async function populateCategoriesAndSubCategories() {
 		const pricingInsertResult = await Pricing.insertMany(pricingOptions);
 		const pricingIds = pricingInsertResult.map((pricing) => pricing._id);
 		console.log("Pricing options inserted successfully:", pricingIds);
+
+		// Populate collections collection
+		collections.forEach((collection) => {
+			collection.slug = generateSlug(collection.name);
+		});
+		// Insert the collections into the database
+		const collectionInsertResult = await Collection.insertMany(collections);
+		const collectionIds = collectionInsertResult.map((collection) => collection._id);
+		console.log("Collections inserted successfully:", collectionIds);
 
 		tools.forEach((tool) => {
 			tool.slug = generateSlug(tool.name);
