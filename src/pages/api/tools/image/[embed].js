@@ -11,7 +11,8 @@ export default async function handler(req) {
 	const iconData = await iconImage;
 	const logoData = await logoImage;
 	const splittedPath = req.nextUrl.pathname.split("/");
-	const getLikesUrl = `http://localhost:3000/api/tools/get-likes/${splittedPath[splittedPath.length - 1]}`;
+	const baseUrl = process.env.NODE_ENV === "production" ? "https://everything-ai.vercel.app" : "http://localhost:3000";
+	const getLikesUrl = `${baseUrl}/api/tools/get-likes/${splittedPath[splittedPath.length - 1]}`;
 	const likeCountFetch = await fetch(getLikesUrl).then((res) => res);
 	const likeCount = await likeCountFetch.json().then((data) => data);
 
