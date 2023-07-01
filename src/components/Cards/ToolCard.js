@@ -12,8 +12,9 @@ import { useSession } from "next-auth/react";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
 import ShinyLoader from "@/components/ui/ShinyLoader";
 import InfoTip from "@/components/ui/InfoTip";
+import { ToolContext } from "@/store/ToolContextProvider";
 
-export default function ToolCard({ tool }) {
+export default function ToolCard({ tool, adminRemoveFromCollectionView, collection }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const { data: session } = useSession();
@@ -43,13 +44,16 @@ export default function ToolCard({ tool }) {
 		}
 	};
 
+	const { setToolToRemoveFromCollection, setIsRemoveToolFromCollectionModalOpen, setCollectionToRemoveFrom } = useContext(ToolContext);
+
 	return (
-		<div className="flex flex-col justify-between transition duration-300 shadow-md cursor-pointer group max-w-fit bg-light-100 rounded-xl hover:shadow-2xl">
+		<div className="flex flex-col justify-between transition duration-300 shadow-md group max-w-fit bg-light-100 rounded-xl hover:shadow-2xl">
 			<div>
 				<div
 					onClick={() => {
 						if (tool?.slug) router.push(`/tools/${tool?.slug}`);
 					}}
+					className="cursor-pointer"
 				>
 					<div className="relative w-full overflow-hidden h-44 rounded-t-xl">
 						{tool?.image ? (
@@ -106,8 +110,20 @@ export default function ToolCard({ tool }) {
 					</div>
 				</div>
 
-				<div className="px-5 pb-5 mt-3">
+				<div className="relative flex justify-between px-5 pb-5 mt-3">
 					<p className={"text-sm " + styles["oneLiner"]}>{tool?.oneLiner}</p>
+					{adminRemoveFromCollectionView && session && session.user && session.user.role == "admin" && (
+						<span
+							className="absolute group-hover:block hidden right-6 bottom-4 text-lg cursor-pointer text-gray-400 hover:text-error-400 transition duration-300"
+							onClick={() => {
+								setToolToRemoveFromCollection(tool);
+								setCollectionToRemoveFrom(collection);
+								setIsRemoveToolFromCollectionModalOpen(true);
+							}}
+						>
+							<i className="fa-solid fa-trash"></i>
+						</span>
+					)}
 				</div>
 			</div>
 

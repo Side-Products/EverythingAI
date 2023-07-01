@@ -21,6 +21,8 @@ import {
 	getCollectionReducer,
 	updateCollectionReducer,
 	deleteCollectionReducer,
+	addToolToCollectionReducer,
+	removeToolFromCollectionReducer,
 } from "./collectionReducers";
 
 const reducer = combineReducers({
@@ -66,6 +68,8 @@ const reducer = combineReducers({
 	collection: getCollectionReducer,
 	updateCollection: updateCollectionReducer,
 	deleteCollection: deleteCollectionReducer,
+	addToolToCollection: addToolToCollectionReducer,
+	removeToolFromCollection: removeToolFromCollectionReducer,
 });
 
 export default reducer;

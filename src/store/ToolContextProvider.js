@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors } from "@/redux/actions/likedToolActions";
 import { StatusContext } from "@/store/StatusContextProvider";
 import { LoadingContext } from "@/store/LoadingContextProvider";
+import RemoveFromCollectionModal from "@/components/Admin/Modals/Tool/RemoveFromCollectionModal";
 
 const defaultContext = {};
 export const ToolContext = createContext(defaultContext);
@@ -62,7 +63,29 @@ function ToolContextProvider({ children }) {
 	// Filtering on marketplace
 	const [filteredTools, setFilteredTools] = useState([]);
 
-	return <ToolContext.Provider value={{ filteredTools, setFilteredTools }}>{children}</ToolContext.Provider>;
+	const [toolToRemoveFromCollection, setToolToRemoveFromCollection] = useState(null);
+	const [collectionToRemoveFrom, setCollectionToRemoveFrom] = useState(null);
+	const [isRemoveToolFromCollectionModalOpen, setIsRemoveToolFromCollectionModalOpen] = useState(false);
+
+	return (
+		<ToolContext.Provider
+			value={{
+				filteredTools,
+				setFilteredTools,
+				setToolToRemoveFromCollection,
+				setIsRemoveToolFromCollectionModalOpen,
+				setCollectionToRemoveFrom,
+			}}
+		>
+			{children}
+			<RemoveFromCollectionModal
+				isOpen={isRemoveToolFromCollectionModalOpen}
+				setOpen={setIsRemoveToolFromCollectionModalOpen}
+				tool={toolToRemoveFromCollection}
+				collection={collectionToRemoveFrom}
+			/>
+		</ToolContext.Provider>
+	);
 }
 
 export default ToolContextProvider;

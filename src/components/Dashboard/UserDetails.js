@@ -9,7 +9,7 @@ import { StatusContext } from "@/store/StatusContextProvider";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import UpdateUserProfileModal from "./UpdateUserProfileModal";
 
-export default function UserDetails({}) {
+export default function UserDetails({ count }) {
 	const { data: session } = useSession();
 	const { setError } = useContext(StatusContext);
 	const { setLoading } = useContext(LoadingContext);
@@ -86,7 +86,7 @@ export default function UserDetails({}) {
 						<div className="flex flex-col items-end"></div>
 						<div className="flex flex-col items-end">
 							<p className="text-3xl font-semibold text-primary-700">Liked Tools</p>
-							<p className="mt-[2px] text-3xl font-bold text-gradient-primary-tr">0</p>
+							<p className="mt-[2px] text-3xl font-bold text-gradient-primary-tr">{count || 0}</p>
 						</div>
 					</div>
 				</div>

@@ -2,6 +2,7 @@ import Collection from "@/backend/models/collection";
 import ErrorHandler from "@/backend/utils/errorHandler";
 import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
 import Tool from "@/backend/models/tool";
+import CollectionToolRelation from "@/backend/models/collectionToolRelation";
 import { maybeAddLikedTools } from "@/backend/controllers/toolsController";
 import { generateSlug } from "@/utils/Helpers";
 
@@ -55,7 +56,7 @@ const deleteCollection = catchAsyncErrors(async (req, res, next) => {
 	res.status(200).json({ success: true, message: "Collection deleted successfully" });
 });
 
-// get collection => /api/collections/:slug
+// get collection => /api/collections/find/:slug
 const getCollectionBySlug = catchAsyncErrors(async (req, res, next) => {
 	const { slug } = req.query;
 	const collection = await Collection.findOne({ slug });
@@ -64,69 +65,149 @@ const getCollectionBySlug = catchAsyncErrors(async (req, res, next) => {
 	}
 	const collectionId = collection._id;
 
-	// const tools = await Tool.aggregate([
-	// 	{ $match: { collection: collectionId, verified: true } },
-	// 	{
-	// 		$lookup: {
-	// 			from: "likedtools",
-	// 			localField: "_id",
-	// 			foreignField: "tool",
-	// 			as: "likes",
-	// 		},
-	// 	},
-	// 	{
-	// 		$addFields: {
-	// 			likeCount: { $size: "$likes" },
-	// 		},
-	// 	},
-	// 	{
-	// 		$sort: { likeCount: -1, createdAt: -1 },
-	// 	},
-	// 	{
-	// 		$lookup: {
-	// 			from: "collections",
-	// 			localField: "collection",
-	// 			foreignField: "_id",
-	// 			as: "collection",
-	// 		},
-	// 	},
-	// 	{
-	// 		$lookup: {
-	// 			from: "subcollections",
-	// 			localField: "subCollection",
-	// 			foreignField: "_id",
-	// 			as: "subCollection",
-	// 		},
-	// 	},
-	// 	{
-	// 		$lookup: {
-	// 			from: "pricings",
-	// 			localField: "pricing",
-	// 			foreignField: "_id",
-	// 			as: "pricing",
-	// 		},
-	// 	},
-	// 	{
-	// 		$project: {
-	// 			name: 1,
-	// 			slug: 1,
-	// 			url: 1,
-	// 			image: 1,
-	// 			oneLiner: 1,
-	// 			collection: { $arrayElemAt: ["$collection", 0] },
-	// 			subCollection: { $arrayElemAt: ["$subCollection", 0] },
-	// 			pricing: { $arrayElemAt: ["$pricing", 0] },
-	// 			createdAt: 1,
-	// 			likeCount: 1,
-	// 		},
-	// 	},
-	// ]);
+	const tools = await CollectionToolRelation.aggregate([
+		{ $match: { collectionId: collectionId } },
+		{
+			$lookup: {
+				from: "tools",
+				localField: "toolId",
+				foreignField: "_id",
+				as: "tools",
+			},
+		},
+		{
+			$unwind: "$tools",
+		},
+		{
+			$replaceRoot: { newRoot: "$tools" },
+		},
+		{
+			$lookup: {
+				from: "likedtools",
+				localField: "_id",
+				foreignField: "tool",
+				as: "likes",
+			},
+		},
+		{
+			$addFields: {
+				likeCount: { $size: "$likes" },
+			},
+		},
+		{
+			$sort: { likeCount: -1, createdAt: -1 },
+		},
+		{
+			$lookup: {
+				from: "categories",
+				localField: "category",
+				foreignField: "_id",
+				as: "category",
+			},
+		},
+		{
+			$lookup: {
+				from: "subcategories",
+				localField: "subCategory",
+				foreignField: "_id",
+				as: "subCategory",
+			},
+		},
+		{
+			$lookup: {
+				from: "pricings",
+				localField: "pricing",
+				foreignField: "_id",
+				as: "pricing",
+			},
+		},
+		{
+			$project: {
+				name: 1,
+				slug: 1,
+				url: 1,
+				image: 1,
+				oneLiner: 1,
+				category: { $arrayElemAt: ["$category", 0] },
+				subCategory: { $arrayElemAt: ["$subCategory", 0] },
+				pricing: { $arrayElemAt: ["$pricing", 0] },
+				createdAt: 1,
+				likeCount: 1,
+			},
+		},
+	]);
 
-	// const toolsWithLike = await maybeAddLikedTools(req, tools);
+	const toolsWithLike = await maybeAddLikedTools(req, tools);
 
-	// // Find all subcollections that have the same collectionId as the collection
-	// const subcollections = await SubCollection.find({ collectionId });
-	res.status(200).json({ success: true, collection });
+	res.status(200).json({ success: true, collection: { ...collection._doc, tools: toolsWithLike } });
 });
 
-export { createCollection, allCollections, updateCollection, deleteCollection, getCollectionBySlug };
+// add tool to collection => /api/collections/:id/add-tool
+const addToolToCollection = catchAsyncErrors(async (req, res, next) => {
+	const { id } = req.query;
+	const { toolId } = req.body;
+
+	const collection = await Collection.findById(id);
+	if (!collection) {
+		return next(new ErrorHandler("No collection found with this id", 404));
+	}
+
+	const tool = await Tool.findById(toolId);
+	if (!tool) {
+		return next(new ErrorHandler("No tool found with this id", 404));
+	}
+
+	const alreadyFound = await CollectionToolRelation.findOne({
+		collectionId: id,
+		toolId,
+	});
+	if (alreadyFound) {
+		return next(new ErrorHandler("Tool already exists in this collection", 400));
+	}
+
+	const collectionToolRelation = await CollectionToolRelation.create({
+		collectionId: id,
+		toolId,
+	});
+
+	res.status(200).json({
+		success: true,
+		collectionToolRelation,
+	});
+});
+
+// remove tool from collection => /api/collections/:id/remove-tool
+const removeToolFromCollection = catchAsyncErrors(async (req, res, next) => {
+	const { id } = req.query;
+	const { toolId } = req.body;
+
+	const collection = await Collection.findById(id);
+	if (!collection) {
+		return next(new ErrorHandler("No collection found with this id", 404));
+	}
+
+	const tool = await Tool.findById(toolId);
+	if (!tool) {
+		return next(new ErrorHandler("No tool found with this id", 404));
+	}
+
+	const toolExistsInCollection = await CollectionToolRelation.findOne({
+		collectionId: id,
+		toolId,
+	});
+	if (!toolExistsInCollection) {
+		return next(new ErrorHandler("Tool does not exist in this collection", 400));
+	}
+
+	const collectionToolRelation = await CollectionToolRelation.findOneAndDelete({
+		collectionId: id,
+		toolId,
+	});
+
+	res.status(200).json({
+		success: true,
+		collectionToolRelation,
+	});
+});
+
+export { createCollection, allCollections, updateCollection, deleteCollection, getCollectionBySlug, addToolToCollection, removeToolFromCollection };

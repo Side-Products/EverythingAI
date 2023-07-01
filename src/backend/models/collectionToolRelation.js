@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const collectionToolRelationSchema = new mongoose.Schema(
 	{
-		tool: {
+		toolId: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Tool",
 			required: true,

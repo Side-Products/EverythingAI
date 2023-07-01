@@ -18,6 +18,13 @@ import {
 	GET_COLLECTION_REQUEST,
 	GET_COLLECTION_SUCCESS,
 	GET_COLLECTION_FAIL,
+	ADD_TOOL_TO_COLLECTION_REQUEST,
+	ADD_TOOL_TO_COLLECTION_SUCCESS,
+	ADD_TOOL_TO_COLLECTION_FAIL,
+	REMOVE_TOOL_FROM_COLLECTION_REQUEST,
+	REMOVE_TOOL_FROM_COLLECTION_SUCCESS,
+	REMOVE_TOOL_FROM_COLLECTION_FAIL,
+	REMOVE_TOOL_FROM_COLLECTION_RESET,
 	CLEAR_ERRORS,
 } from "../constants/collectionConstants";
 
@@ -146,6 +153,36 @@ export const adminGetAllCollections = (req) => async (dispatch) => {
 		dispatch({
 			type: GET_COLLECTIONS_FAIL,
 			payload: error?.response.data.message,
+		});
+	}
+};
+
+export const addToolToCollection = (id, toolId) => async (dispatch) => {
+	try {
+		dispatch({ type: ADD_TOOL_TO_COLLECTION_REQUEST });
+
+		const { data } = await axios.post(`/api/collections/${id}/add-tool`, { toolId });
+
+		dispatch({ type: ADD_TOOL_TO_COLLECTION_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: ADD_TOOL_TO_COLLECTION_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+export const removeToolFromCollection = (id, toolId) => async (dispatch) => {
+	try {
+		dispatch({ type: REMOVE_TOOL_FROM_COLLECTION_REQUEST });
+
+		const { data } = await axios.post(`/api/collections/${id}/remove-tool`, { toolId });
+
+		dispatch({ type: REMOVE_TOOL_FROM_COLLECTION_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: REMOVE_TOOL_FROM_COLLECTION_FAIL,
+			payload: error.response.data.message,
 		});
 	}
 };

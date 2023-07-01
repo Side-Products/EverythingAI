@@ -16,6 +16,13 @@ import {
 	GET_COLLECTION_REQUEST,
 	GET_COLLECTION_SUCCESS,
 	GET_COLLECTION_FAIL,
+	ADD_TOOL_TO_COLLECTION_REQUEST,
+	ADD_TOOL_TO_COLLECTION_SUCCESS,
+	ADD_TOOL_TO_COLLECTION_FAIL,
+	REMOVE_TOOL_FROM_COLLECTION_REQUEST,
+	REMOVE_TOOL_FROM_COLLECTION_SUCCESS,
+	REMOVE_TOOL_FROM_COLLECTION_FAIL,
+	REMOVE_TOOL_FROM_COLLECTION_RESET,
 	CLEAR_ERRORS,
 } from "../constants/collectionConstants";
 
@@ -152,6 +159,66 @@ export const getCollectionReducer = (state = { collection: {} }, action) => {
 				collection: action.payload.collection,
 			};
 		case GET_COLLECTION_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			};
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				error: null,
+			};
+		default:
+			return state;
+	}
+};
+
+// add tool to collection reducer
+export const addToolToCollectionReducer = (state = {}, action) => {
+	switch (action.type) {
+		case ADD_TOOL_TO_COLLECTION_REQUEST:
+			return {
+				loading: true,
+			};
+		case ADD_TOOL_TO_COLLECTION_SUCCESS:
+			return {
+				loading: false,
+				success: true,
+				collectionToolRelation: action.payload.collectionToolRelation,
+			};
+		case ADD_TOOL_TO_COLLECTION_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			};
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				error: null,
+			};
+		default:
+			return state;
+	}
+};
+
+// remove tool from collection reducer
+export const removeToolFromCollectionReducer = (state = {}, action) => {
+	switch (action.type) {
+		case REMOVE_TOOL_FROM_COLLECTION_REQUEST:
+			return {
+				loading: true,
+			};
+		case REMOVE_TOOL_FROM_COLLECTION_SUCCESS:
+			return {
+				loading: false,
+				isDeleted: action.payload,
+			};
+		case REMOVE_TOOL_FROM_COLLECTION_RESET:
+			return {
+				loading: false,
+				isDeleted: false,
+			};
+		case REMOVE_TOOL_FROM_COLLECTION_FAIL:
 			return {
 				loading: false,
 				error: action.payload,

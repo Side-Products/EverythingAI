@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import ToolIntro from "./ToolUtils/ToolIntro";
+import ToolIntro from "./ToolIntro";
 import ToolsCarousel from "@/components/Tools/ToolsCarousel";
 import ShareModal from "@/components/ui/ShareModal";
 import Cta from "@/components/Tools/Cta";
 import DemoVideo from "@/components/Tools/DemoVideo";
 import Features from "@/components/Tools/Features";
 import UseCases from "@/components/Tools/UseCases";
-import EmbedTag from "./ToolUtils/EmbedTag";
+import EmbedTag from "@/components/Tools/EmbedTag";
 import { useRouter } from "next/router";
 
 export default function Tool({}) {

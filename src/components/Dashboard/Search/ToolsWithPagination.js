@@ -41,7 +41,7 @@ export default function ToolsWithPagination({ options, resultsPerPage, totalCoun
 			<div className="w-full flex flex-col items-center justify-center mt-14">
 				{options && options.length === 0 ? (
 					<div>
-						<p className="text-2xl font-medium text-dark-300 text-center mt-10">No liked tools yet</p>
+						<p className="text-2xl font-medium text-dark-300 text-center mt-12">No liked tools yet</p>
 						<div className="mt-5">
 							<Button
 								variant={"primary"}

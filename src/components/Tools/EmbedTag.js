@@ -6,7 +6,7 @@ export default function EmbedTag({ toolSlug, hostURL = "https://everything-ai.ve
 	const { setSuccess } = useContext(StatusContext);
 
 	const copyToClipboard = async () => {
-		const htmlToCopy = `<a href='${hostURL}/tools/${toolSlug}' target="_blank">
+		const htmlToCopy = `<a href='${hostURL}/tools/${toolSlug}' target="_blank" rel="noopener noreferrer">
         <img src='${hostURL}/api/tools/image/${toolSlug}' alt="everythingai tool" width="200" height="50"></img>
         </a>`;
 

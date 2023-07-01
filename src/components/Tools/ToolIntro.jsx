@@ -1,15 +1,17 @@
-import { useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getPricingChipClass } from "@/utils/Helpers";
 import Button from "@/components/ui/Button";
-import ToolSocials from "./ToolIntroUtils/ToolSocials";
-import ToolPill from "./ToolIntroUtils/ToolPill";
+import ToolSocials from "./ToolUtils/ToolSocials";
+import ToolPill from "./ToolUtils/ToolPill";
 import { convertTimestampToNormalDate } from "@/utils/Helpers";
 import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { likeTool, deleteLikedTool } from "@/redux/actions/likedToolActions";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
+import AddToCollectionModal from "@/components/Admin/Modals/Tool/AddToCollectionModal";
+import { getAllCollections } from "@/redux/actions/collectionActions";
 
 export default function ToolIntro({ tool, setShareModalOpen }) {
 	const createdDate = new Date(tool?.createdAt);
@@ -30,8 +32,28 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 		}
 	}, [likedTool]);
 
+	useEffect(() => {
+		if (session && session.user && session.user.role == "admin") {
+			dispatch(getAllCollections());
+		}
+	}, [dispatch, session]);
+
+	const [isAddToCollectionModalOpen, setAddToCollectionModalOpen] = useState(false);
+
 	return (
-		<>
+		<div>
+			{session && session.user && session && session.user.role == "admin" && (
+				<div className="w-full flex justify-between p-4 mt-6 mb-12 bg-gray-200 rounded-xl">
+					<div className="text-sm font-semibold">Admin Actions</div>
+					<div
+						onClick={() => setAddToCollectionModalOpen(true)}
+						className="text-end text-sm hover:text-primary-500 transition duration-300 cursor-pointer"
+					>
+						<i className="fa-solid fa-circle-plus"></i> Add to a collection
+					</div>
+				</div>
+			)}
+
 			<div className="flex mt-8">
 				<Image className="rounded-xl" width={640} height={360} src={tool?.image} priority alt="tool image" />
 				<div className="flex flex-col flex-1 ml-12">
@@ -112,6 +134,8 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 					</div>
 				</div>
 			</div>
-		</>
+
+			<AddToCollectionModal isOpen={isAddToCollectionModalOpen} setOpen={setAddToCollectionModalOpen} toolId={tool?._id} />
+		</div>
 	);
 }
