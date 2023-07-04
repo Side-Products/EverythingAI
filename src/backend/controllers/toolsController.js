@@ -712,6 +712,24 @@ const getLikeCountBySlug = catchAsyncErrors(async (req, res, next) => {
 	res.status(200).json({ likes: likeCount });
 });
 
+// get featured tools => /api/tools/featured
+const getFeaturedTools = catchAsyncErrors(async (req, res, next) => {
+	const tools = await Tool.find({ featured: { $exists: true }, verified: true })
+		.sort({ featured: 1 })
+		.limit(10)
+		.populate({
+			path: "category",
+		})
+		.populate({
+			path: "subCategory",
+		})
+		.populate({
+			path: "pricing",
+		});
+
+	res.status(200).json({ success: true, tools });
+});
+
 export {
 	createTool,
 	allTools,
@@ -726,4 +744,5 @@ export {
 	getToolBySlug,
 	getLikeCountBySlug,
 	maybeAddLikedTools,
+	getFeaturedTools,
 };

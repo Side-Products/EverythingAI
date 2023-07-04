@@ -3,15 +3,38 @@ import Carousel from "@/components/ui/Carousel";
 import ToolCard from "@/components/Cards/ToolCard";
 
 export default function ToolsCarousel({ heading, tools, childrenSlides, setActiveSlideIdx }) {
-	if(childrenSlides && childrenSlides.length > 0){
+	if (childrenSlides && childrenSlides.length > 0) {
+		const breakpoints = {
+			320: {
+				slidesPerView: 1,
+				spaceBetween: 5,
+			},
+			640: {
+				slidesPerView: 2,
+				spaceBetween: 5,
+			},
+			768: {
+				slidesPerView: 2,
+				spaceBetween: 10,
+			},
+			1024: {
+				slidesPerView: 3,
+				spaceBetween: 10,
+			},
+			1380: {
+				slidesPerView: 4,
+				spaceBetween: 20,
+			},
+			1800: {
+				slidesPerView: 5,
+				spaceBetween: 20,
+			},
+		};
+
 		return (
-			<Carousel heading={heading} setActiveSlideIdx={setActiveSlideIdx}>
-				{childrenSlides.map((slide,idx) => {
-					return (
-						<SwiperSlide key={'1'+idx}>
-							{slide}
-						</SwiperSlide>
-					)
+			<Carousel setActiveSlideIdx={setActiveSlideIdx} breakpoints={breakpoints}>
+				{childrenSlides.map((slide, idx) => {
+					return <SwiperSlide key={"1" + idx}>{slide}</SwiperSlide>;
 				})}
 			</Carousel>
 		);

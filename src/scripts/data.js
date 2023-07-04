@@ -83,6 +83,102 @@ const collections = [
 
 const tools = [
 	{
+		name: "ChatGPT",
+		url: "https://chat.openai.com",
+		oneLiner: "ChatGPT is an artificial intelligence chatbot developed by OpenAI",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg",
+		logo: "https://everythingai.s3.ap-south-1.amazonaws.com/chatgpt.png",
+		featured: 1,
+		youtubeDemoVideoLink: "https://www.youtube.com/watch?v=Xn8tufsbSz0",
+		features: `AI editor: Effortlessly edit text, images, and language translations to ensure that each word is precisely crafted to perfection.\n\n
+		Content inspiration: Get content ideas as you write in the editor and get fresh ideas for your next creation.\n
+		50+ Templates: Choose from handpicked curated templates for SEO, ad copywriting, marketing copywriting, social media content, and many more.`,
+		useCases: `Marketing: Maximize Marketing ROI with high-converting AI content, grow social media presence, improve search engine rankings, and create ad copies driving digital growth.\n
+		Sales: Increase your sales quota with AI-generated content, create conversion-focused emails, subject lines that boost open-rate, and convert prospects into profits.\n
+		Support: Lightning-fast customer support with AI-powered conversations, immediate responses to customer queries, create support docs quickly, and generate comprehensive FAQs.\n
+		Personal: Transform personal writing with AI-powered enhancements, stand out with compelling cover letters, impress with stellar LinkedIn bios, and accelerate your content creation process.`,
+		category: "",
+		subCategory: "",
+		pricing: "",
+		twitter: "https://twitter.com/Pushpit07",
+		instagram: "https://www.instagram.com/pushpit._.07",
+		linkedin: "",
+		youtube: "",
+		verified: true,
+	},
+	{
+		name: "Notion AI",
+		url: "https://notion.so",
+		oneLiner: "Your ultra-capable teammate. Messy notes? Have Notion AI summarize what's important and actionable",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg",
+		logo: "https://everythingai.s3.ap-south-1.amazonaws.com/notion-ai.png",
+		featured: 2,
+		youtubeDemoVideoLink: "https://www.youtube.com/watch?v=Xn8tufsbSz0",
+		features: `AI editor: Effortlessly edit text, images, and language translations to ensure that each word is precisely crafted to perfection.\n\n
+		Content inspiration: Get content ideas as you write in the editor and get fresh ideas for your next creation.\n
+		50+ Templates: Choose from handpicked curated templates for SEO, ad copywriting, marketing copywriting, social media content, and many more.`,
+		useCases: `Marketing: Maximize Marketing ROI with high-converting AI content, grow social media presence, improve search engine rankings, and create ad copies driving digital growth.\n
+		Sales: Increase your sales quota with AI-generated content, create conversion-focused emails, subject lines that boost open-rate, and convert prospects into profits.\n
+		Support: Lightning-fast customer support with AI-powered conversations, immediate responses to customer queries, create support docs quickly, and generate comprehensive FAQs.\n
+		Personal: Transform personal writing with AI-powered enhancements, stand out with compelling cover letters, impress with stellar LinkedIn bios, and accelerate your content creation process.`,
+		category: "",
+		subCategory: "",
+		pricing: "",
+		twitter: "https://twitter.com/Pushpit07",
+		instagram: "https://www.instagram.com/pushpit._.07",
+		linkedin: "https://www.linkedin.com/in/pushpit-bhardwaj",
+		youtube: "https://www.youtube.com/@pushpit07",
+		verified: true,
+	},
+	{
+		name: "Framer AI",
+		url: "https://www.framer.com/ai",
+		oneLiner: "AI generated, human curated. ... From raw idea to a real page in seconds. The more details you provide, the better the output",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg",
+		logo: "https://everythingai.s3.ap-south-1.amazonaws.com/framer-ai.png",
+		featured: 3,
+		youtubeDemoVideoLink: "https://www.youtube.com/watch?v=Xn8tufsbSz0",
+		features: `AI editor: Effortlessly edit text, images, and language translations to ensure that each word is precisely crafted to perfection.\n\n
+		Content inspiration: Get content ideas as you write in the editor and get fresh ideas for your next creation.\n
+		50+ Templates: Choose from handpicked curated templates for SEO, ad copywriting, marketing copywriting, social media content, and many more.`,
+		useCases: `Marketing: Maximize Marketing ROI with high-converting AI content, grow social media presence, improve search engine rankings, and create ad copies driving digital growth.\n
+		Sales: Increase your sales quota with AI-generated content, create conversion-focused emails, subject lines that boost open-rate, and convert prospects into profits.\n
+		Support: Lightning-fast customer support with AI-powered conversations, immediate responses to customer queries, create support docs quickly, and generate comprehensive FAQs.\n
+		Personal: Transform personal writing with AI-powered enhancements, stand out with compelling cover letters, impress with stellar LinkedIn bios, and accelerate your content creation process.`,
+		category: "",
+		subCategory: "",
+		pricing: "",
+		twitter: "https://twitter.com/Pushpit07",
+		instagram: "https://www.instagram.com/pushpit._.07",
+		linkedin: "",
+		youtube: "",
+		verified: true,
+	},
+	{
+		name: "Writesonic",
+		url: "https://writesonic.com",
+		oneLiner: "Writesonic is an AI writer that creates SEO-friendly content for blogs, Facebook ads, Google ads, and Shopify for free",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg",
+		logo: "https://everythingai.s3.ap-south-1.amazonaws.com/writesonic.png",
+		featured: 4,
+		youtubeDemoVideoLink: "https://www.youtube.com/watch?v=Xn8tufsbSz0",
+		features: `AI editor: Effortlessly edit text, images, and language translations to ensure that each word is precisely crafted to perfection.\n\n
+		Content inspiration: Get content ideas as you write in the editor and get fresh ideas for your next creation.\n
+		50+ Templates: Choose from handpicked curated templates for SEO, ad copywriting, marketing copywriting, social media content, and many more.`,
+		useCases: `Marketing: Maximize Marketing ROI with high-converting AI content, grow social media presence, improve search engine rankings, and create ad copies driving digital growth.\n
+		Sales: Increase your sales quota with AI-generated content, create conversion-focused emails, subject lines that boost open-rate, and convert prospects into profits.\n
+		Support: Lightning-fast customer support with AI-powered conversations, immediate responses to customer queries, create support docs quickly, and generate comprehensive FAQs.\n
+		Personal: Transform personal writing with AI-powered enhancements, stand out with compelling cover letters, impress with stellar LinkedIn bios, and accelerate your content creation process.`,
+		category: "",
+		subCategory: "",
+		pricing: "",
+		twitter: "https://twitter.com/Pushpit07",
+		instagram: "https://www.instagram.com/pushpit._.07",
+		linkedin: "",
+		youtube: "",
+		verified: true,
+	},
+	{
 		name: "BeachAI",
 		url: "https://beachai.com",
 		oneLiner: "BeachAI is a tool that helps you create a beach landing page in seconds",
@@ -306,28 +402,6 @@ const tools = [
 		name: "Chat Shape",
 		url: "https://www.chatshape.com",
 		oneLiner: "Build AI Bots quickly",
-		image: "https://everythingai.s3.amazonaws.com/dba82405-541d-42ea-b523-bf2a0b059ee2.jpg",
-		youtubeDemoVideoLink: "https://www.youtube.com/watch?v=Xn8tufsbSz0",
-		features: `AI editor: Effortlessly edit text, images, and language translations to ensure that each word is precisely crafted to perfection.\n\n
-		Content inspiration: Get content ideas as you write in the editor and get fresh ideas for your next creation.\n
-		50+ Templates: Choose from handpicked curated templates for SEO, ad copywriting, marketing copywriting, social media content, and many more.`,
-		useCases: `Marketing: Maximize Marketing ROI with high-converting AI content, grow social media presence, improve search engine rankings, and create ad copies driving digital growth.\n
-		Sales: Increase your sales quota with AI-generated content, create conversion-focused emails, subject lines that boost open-rate, and convert prospects into profits.\n
-		Support: Lightning-fast customer support with AI-powered conversations, immediate responses to customer queries, create support docs quickly, and generate comprehensive FAQs.\n
-		Personal: Transform personal writing with AI-powered enhancements, stand out with compelling cover letters, impress with stellar LinkedIn bios, and accelerate your content creation process.`,
-		category: "",
-		subCategory: "",
-		pricing: "",
-		twitter: "https://twitter.com/Pushpit07",
-		instagram: "https://www.instagram.com/pushpit._.07",
-		linkedin: "https://www.linkedin.com/in/pushpit-bhardwaj",
-		youtube: "https://www.youtube.com/@pushpit07",
-		verified: true,
-	},
-	{
-		name: "Notion AI",
-		url: "https://www.notion.so/product/ai?gspk=dml2ZWt2YXJtYTc0OTA&gsxid=ZjEehZIWjdBy&pscd=affiliate.notion.so&utm_medium=vivekvarma7490&utm_source=affl",
-		oneLiner: "Notion AI Powered",
 		image: "https://everythingai.s3.amazonaws.com/dba82405-541d-42ea-b523-bf2a0b059ee2.jpg",
 		youtubeDemoVideoLink: "https://www.youtube.com/watch?v=Xn8tufsbSz0",
 		features: `AI editor: Effortlessly edit text, images, and language translations to ensure that each word is precisely crafted to perfection.\n\n

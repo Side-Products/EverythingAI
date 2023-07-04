@@ -92,6 +92,14 @@ const toolSchema = new mongoose.Schema(
 			trim: true,
 			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 		},
+		logo: {
+			type: String,
+			trim: true,
+			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
+		},
+		featured: {
+			type: Number,
+		},
 		oneLiner: {
 			type: String,
 			required: [true, "Please enter a one liner"],
