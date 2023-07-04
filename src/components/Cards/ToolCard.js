@@ -47,7 +47,7 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 	const { setToolToRemoveFromCollection, setIsRemoveToolFromCollectionModalOpen, setCollectionToRemoveFrom } = useContext(ToolContext);
 
 	return (
-		<div className="flex flex-col justify-between transition duration-300 shadow-md group max-w-fit bg-light-100 rounded-xl hover:shadow-2xl">
+		<div className="flex flex-col justify-between transition duration-300 shadow-md group w-full max-w-fit bg-light-100 rounded-xl hover:shadow-2xl">
 			<div>
 				<div
 					onClick={() => {

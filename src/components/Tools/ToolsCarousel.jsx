@@ -11,15 +11,15 @@ export default function ToolsCarousel({ heading, tools, childrenSlides, setActiv
 			},
 			640: {
 				slidesPerView: 2,
-				spaceBetween: 5,
+				spaceBetween: 10,
 			},
 			768: {
 				slidesPerView: 2,
-				spaceBetween: 10,
+				spaceBetween: 20,
 			},
 			1024: {
 				slidesPerView: 3,
-				spaceBetween: 10,
+				spaceBetween: 20,
 			},
 			1380: {
 				slidesPerView: 4,
@@ -33,12 +33,28 @@ export default function ToolsCarousel({ heading, tools, childrenSlides, setActiv
 
 		return (
 			<Carousel setActiveSlideIdx={setActiveSlideIdx} breakpoints={breakpoints}>
-				{childrenSlides.map((slide, idx) => {
-					return <SwiperSlide key={"1" + idx}>{slide}</SwiperSlide>;
-				})}
+				{childrenSlides && childrenSlides.length > 0 ? (
+					childrenSlides.map((slide, idx) => <SwiperSlide key={"1" + idx}>{slide}</SwiperSlide>)
+				) : (
+					<>
+						<SwiperSlide>
+							<ToolCard />
+						</SwiperSlide>
+						<SwiperSlide>
+							<ToolCard />
+						</SwiperSlide>
+						<SwiperSlide>
+							<ToolCard />
+						</SwiperSlide>
+						<SwiperSlide>
+							<ToolCard />
+						</SwiperSlide>
+					</>
+				)}
 			</Carousel>
 		);
 	}
+
 	return (
 		<Carousel heading={heading}>
 			{tools && tools.length > 0 ? (
