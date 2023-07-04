@@ -32,7 +32,7 @@ export default function ToolsCarousel({ heading, tools, childrenSlides, setActiv
 		};
 
 		return (
-			<Carousel setActiveSlideIdx={setActiveSlideIdx} breakpoints={breakpoints}>
+			<Carousel setActiveSlideIdx={setActiveSlideIdx} breakpoints={breakpoints} classes={"featured-carousel"}>
 				{childrenSlides && childrenSlides.length > 0 ? (
 					childrenSlides.map((slide, idx) => <SwiperSlide key={"1" + idx}>{slide}</SwiperSlide>)
 				) : (

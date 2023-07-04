@@ -1150,7 +1150,7 @@ input[type="radio"] + label > span {
 	padding-top: 60px;
 }
 
-.swiper-wrapper .swiper-slide{
+.swiper-wrapper .swiper-slide {
 	display: flex;
 	justify-content: center;
 }
@@ -1236,6 +1236,19 @@ input[type="radio"] + label > span {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+}
+
+.swiper-wrapper .swiper-slide {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	max-width: 343px;
+	margin-right: 50px;
+}
+
+.featured-carousel .swiper-wrapper .swiper-slide {
+	max-width: 356px;
+	margin-right: 20px;
 }
 
 /* YouTube Embed */
