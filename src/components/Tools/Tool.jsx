@@ -23,7 +23,7 @@ export default function Tool({}) {
 			<div className="flex flex-col space-y-20">
 				<ToolIntro tool={tool} setShareModalOpen={setShareModalOpen} />
 				<EmbedTag toolSlug={query.tool} />
-				<div className="flex">
+				<div className="flex p-8 space-x-12 bg-gray-200 border-[3px] border-primary-500 rounded-2xl">
 					<Features features={tool?.features} />
 					<UseCases useCases={tool?.useCases} />
 				</div>

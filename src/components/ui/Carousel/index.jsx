@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Mousewheel, Keyboard } from "swiper";
 
-export default function Carousel({ heading, children }) {
+export default function Carousel({ heading, children, setActiveSlideIdx=null }) {
 	return (
 		<div>
 			{heading && <h1 className="text-3xl font-semibold -mb-7">{heading}</h1>}
@@ -26,13 +26,9 @@ export default function Carousel({ heading, children }) {
 							slidesPerView: 3,
 							spaceBetween: 30,
 						},
-						1280: {
+						1380: {
 							slidesPerView: 4,
-							spaceBetween: 40,
-						},
-						1440: {
-							slidesPerView: 4,
-							spaceBetween: 40,
+							spaceBetween: 50,
 						},
 						1800: {
 							slidesPerView: 5,
@@ -48,6 +44,10 @@ export default function Carousel({ heading, children }) {
 					mousewheel={true}
 					keyboard={true}
 					modules={[Navigation, Mousewheel, Keyboard]}
+					onSlideChange={(e) => {
+						if(setActiveSlideIdx)
+							setActiveSlideIdx(e.activeIndex)
+					}}
 				>
 					{children}
 				</Swiper>
