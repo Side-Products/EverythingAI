@@ -33,7 +33,7 @@ export default function HeroSection() {
 
 	return (
 		<div className="relative">
-			<div className="absolute z-[-1] w-full h-full">
+			<div className="absolute z-[0] w-full h-full">
 				{tools[activeSlideIdx]?.logo && <Image src={tools[activeSlideIdx].logo} alt='tool' fill style={heroBgStyles}/>}
 			</div>
 			<div className="mb-28 z-[2] backdrop-blur-2xl">
