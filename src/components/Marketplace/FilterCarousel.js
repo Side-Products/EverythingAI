@@ -58,7 +58,7 @@ export default function FilterCarousel({ options, setFilter, type }) {
 					options.map((option) => (
 						<SwiperSlide key={option._id} onClick={() => setFilter({ type, selectedSubcategories: [option] })}>
 							<div
-								className={`flex flex-col text-center text-sm px-3 py-2 bg-light-100 rounded-full hover:bg-primary-100 transition duration-300 cursor-pointer ${
+								className={`w-full flex flex-col text-center text-sm px-3 py-2 bg-light-100 rounded-full hover:bg-primary-100 transition duration-300 cursor-pointer ${
 									subcategoriesArray.includes(option.name) ? "bg-primary-100" : ""
 								}`}
 							>
