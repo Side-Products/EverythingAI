@@ -15,7 +15,7 @@ export default function Filter({ filter, setFilter }) {
 
 	useEffect(() => {
 		if (categories && categories.length > 0 && filter.category) {
-			dispatch(getCategory(filter.category?._id));
+			if (filter.category?._id) dispatch(getCategory(filter.category._id));
 		}
 	}, [categories, filter.category]);
 	const { category } = useSelector((state) => state.category);

@@ -138,7 +138,7 @@ const allTools = catchAsyncErrors(async (req, res) => {
 		pipeline.push({
 			$match: {
 				"pricing.name": pricing,
-				"pricing.meta": meta,
+				"pricing.meta": meta || "",
 			},
 		});
 	}
