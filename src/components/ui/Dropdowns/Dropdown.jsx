@@ -8,7 +8,7 @@ function classNames(...classes) {
 
 export default function Dropdown({ selectedValue, setSelectedValue, placeholder, type, options }) {
 	const handleOptionSelection = (item) => {
-		setSelectedValue({ type, _id: item._id, name: item.name, meta: item.meta });
+		setSelectedValue({ type, _id: item._id, name: item.name, meta: item.meta || "" });
 	};
 
 	const menuItemsArr = options?.map((item, idx) => {

@@ -15,20 +15,29 @@ const ExploreTools = ({ filter, tools, setTools }) => {
 		const sanitizedSubcategoryNames = subcategoryNames.join(",");
 
 		const queryParams = {
+			search: router.query.search,
 			category: filter.category.name,
 			subcategories: sanitizedSubcategoryNames,
 			sortby: filter.sortingFilter,
 			pricing: filter.pricing.name,
 			meta: filter.pricing.meta,
 		};
+
 		// Remove null or undefined values from queryParams
 		Object.keys(queryParams).forEach((key) => {
-			if (queryParams[key] === null || queryParams[key] === undefined || queryParams[key] === "") {
+			if (
+				queryParams[key] === null ||
+				queryParams[key] === "null" ||
+				queryParams[key] === undefined ||
+				queryParams[key] === "undefined" ||
+				queryParams[key] === ""
+			) {
 				delete queryParams[key];
 			}
 		});
+
 		// Merge the new query parameters with the existing ones
-		const updatedQuery = { ...router.query, ...queryParams };
+		const updatedQuery = { ...queryParams };
 		// Convert the updated query object to a search string
 		const search = new URLSearchParams(updatedQuery).toString();
 		// Push the updated search string to the router
