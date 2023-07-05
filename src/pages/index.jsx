@@ -7,6 +7,7 @@ import ToolsCarousel from "@/components/Tools/ToolsCarousel";
 import CategoriesCarousel from "@/components/Categories/CategoriesCarousel";
 import { getToolsForHomepage } from "@/redux/actions/toolActions";
 import { getAllCategories } from "@/redux/actions/categoryActions";
+import TrendTable from "@/components/Home/TrendTable";
 
 export async function getStaticProps() {
 	try {
@@ -59,6 +60,10 @@ export default function HomePage({ featuredTools }) {
 	return (
 		<PageWrapper classes="w-full max-w-[1920px] pt-32 pb-32 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-20">
 			<HeroSection featuredTools={featuredTools} />
+			<div className="flex space-x-6">
+				<TrendTable tools={trendingToolsOfTheWeek} limit={5} startIdx={0}/>
+				<TrendTable tools={trendingToolsOfTheWeek} limit={5} startIdx={5}/>
+			</div>
 			<ToolsCarousel heading={"Trending Tools of the Week"} tools={trendingToolsOfTheWeek} />
 			<ToolsCarousel heading={"Top Tools of the Month"} tools={topToolsOfTheMonth} />
 			<ToolsCarousel heading={"Top Tools in Marketing"} tools={marketingTools} />
