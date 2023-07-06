@@ -1153,6 +1153,9 @@ input[type="radio"] + label > span {
 .swiper-wrapper .swiper-slide {
 	display: flex;
 	justify-content: center;
+	width: fit-content;
+	max-width: 343px;
+	margin-right: 50px;
 }
 
 .swiper-button-next,
