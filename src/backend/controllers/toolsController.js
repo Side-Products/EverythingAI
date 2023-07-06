@@ -727,7 +727,73 @@ const getFeaturedTools = catchAsyncErrors(async (req, res, next) => {
 			path: "pricing",
 		});
 
-	res.status(200).json({ success: true, tools });
+	return res.status(200).json({ success: true, tools });
+});
+
+// get leaderboard tools => /api/tools/leaderboard
+const getLeaderboardTools = catchAsyncErrors(async (req, res, next) => {
+	const tools = await Tool.aggregate([
+		{ $match: { verified: true } },
+		{
+			$lookup: {
+				from: "likedtools",
+				localField: "_id",
+				foreignField: "tool",
+				as: "likes",
+			},
+		},
+		{
+			$addFields: {
+				likeCount: { $size: "$likes" },
+			},
+		},
+		{
+			$sort: { likeCount: -1, createdAt: -1 },
+		},
+		{
+			$limit: 10,
+		},
+		{
+			$lookup: {
+				from: "categories",
+				localField: "category",
+				foreignField: "_id",
+				as: "category",
+			},
+		},
+		{
+			$lookup: {
+				from: "subcategories",
+				localField: "subCategory",
+				foreignField: "_id",
+				as: "subCategory",
+			},
+		},
+		{
+			$lookup: {
+				from: "pricings",
+				localField: "pricing",
+				foreignField: "_id",
+				as: "pricing",
+			},
+		},
+		{
+			$project: {
+				name: 1,
+				slug: 1,
+				url: 1,
+				image: 1,
+				oneLiner: 1,
+				category: { $arrayElemAt: ["$category", 0] },
+				subCategory: { $arrayElemAt: ["$subCategory", 0] },
+				pricing: { $arrayElemAt: ["$pricing", 0] },
+				createdAt: 1,
+				likeCount: 1,
+			},
+		},
+	]);
+
+	return res.status(200).json({ success: true, tools });
 });
 
 export {
@@ -745,4 +811,5 @@ export {
 	getLikeCountBySlug,
 	maybeAddLikedTools,
 	getFeaturedTools,
+	getLeaderboardTools,
 };

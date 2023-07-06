@@ -12,15 +12,18 @@ import TrendTable from "@/components/Home/TrendTable";
 export async function getStaticProps() {
 	try {
 		// Make the HTTP request to the endpoint
-		const response = await axios.get(`${process.env.NEXTAUTH_URL}/api/tools/featured`);
+		const featuredResponse = await axios.get(`${process.env.NEXTAUTH_URL}/api/tools/featured`);
+		const leaderboardResponse = await axios.get(`${process.env.NEXTAUTH_URL}/api/tools/leaderboard`);
 
-		// Retrieve the data from the response
-		const featuredTools = response.data.tools;
+		// Retrieve the data from the featuredResponse
+		const featuredTools = featuredResponse.data.tools;
+		const leaderboardTools = leaderboardResponse.data.tools;
 
 		// Return the data as props
 		return {
 			props: {
 				featuredTools,
+				leaderboardTools,
 			},
 		};
 	} catch (error) {
@@ -29,12 +32,13 @@ export async function getStaticProps() {
 		return {
 			props: {
 				featuredTools: [],
+				leaderboardTools: [],
 			},
 		};
 	}
 }
 
-export default function HomePage({ featuredTools }) {
+export default function HomePage({ featuredTools, leaderboardTools }) {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -60,10 +64,15 @@ export default function HomePage({ featuredTools }) {
 	return (
 		<PageWrapper classes="w-full max-w-[1920px] pt-32 pb-32 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-20">
 			<HeroSection featuredTools={featuredTools} />
-			<div className="flex space-x-6">
-				<TrendTable tools={trendingToolsOfTheWeek} limit={5} startIdx={0}/>
-				<TrendTable tools={trendingToolsOfTheWeek} limit={5} startIdx={5}/>
+
+			<div className="bg-white py-10 px-8 rounded-2xl mb-24">
+				<h2 className="font-semibold text-3xl mb-12 ml-4">Leaderboard</h2>
+				<div className="flex space-x-8">
+					<TrendTable tools={leaderboardTools} limit={5} startIdx={0} />
+					<TrendTable tools={leaderboardTools} limit={5} startIdx={5} />
+				</div>
 			</div>
+
 			<ToolsCarousel heading={"Trending Tools of the Week"} tools={trendingToolsOfTheWeek} />
 			<ToolsCarousel heading={"Top Tools of the Month"} tools={topToolsOfTheMonth} />
 			<ToolsCarousel heading={"Top Tools in Marketing"} tools={marketingTools} />
