@@ -13,21 +13,21 @@ export async function getStaticProps() {
 	try {
 		// Make the HTTP request to the endpoint
 		console.log("process.env.NEXTAUTH_URL", process.env.NEXTAUTH_URL);
-		const featuredResponse = await axios.get(`${process.env.NEXTAUTH_URL}/api/tools/featured`);
-		const leaderboardResponse = await axios.get(`${process.env.NEXTAUTH_URL}/api/tools/leaderboard`);
+		// const featuredResponse = await axios.get(`${process.env.NEXTAUTH_URL}/api/tools/featured`);
+		// const leaderboardResponse = await axios.get(`${process.env.NEXTAUTH_URL}/api/tools/leaderboard`);
 
 		// Retrieve the data from the featuredResponse
 		const featuredTools = featuredResponse.data.tools;
 		console.log("featuredTools::", featuredTools);
-		const trendingToolsOfTheWeek = leaderboardResponse.data.trendingToolsOfTheWeek;
-		const topToolsOfTheMonth = leaderboardResponse.data.topToolsOfTheMonth;
+		// const trendingToolsOfTheWeek = leaderboardResponse.data.trendingToolsOfTheWeek;
+		// const topToolsOfTheMonth = leaderboardResponse.data.topToolsOfTheMonth;
 
 		// Return the data as props
 		return {
 			props: {
 				featuredTools,
-				trendingToolsOfTheWeek,
-				topToolsOfTheMonth,
+				// trendingToolsOfTheWeek,
+				// topToolsOfTheMonth,
 			},
 		};
 	} catch (error) {
