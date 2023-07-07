@@ -17,15 +17,15 @@ export async function getStaticProps() {
 		// const leaderboardResponse = await axios.get(`${process.env.NEXTAUTH_URL}/api/tools/leaderboard`);
 
 		// Retrieve the data from the featuredResponse
-		const featuredTools = featuredResponse.data.tools;
-		console.log("featuredTools::", featuredTools);
+		// const featuredTools = featuredResponse.data.tools;
+		// console.log("featuredTools::", featuredTools);
 		// const trendingToolsOfTheWeek = leaderboardResponse.data.trendingToolsOfTheWeek;
 		// const topToolsOfTheMonth = leaderboardResponse.data.topToolsOfTheMonth;
 
 		// Return the data as props
 		return {
 			props: {
-				featuredTools,
+				// featuredTools,
 				// trendingToolsOfTheWeek,
 				// topToolsOfTheMonth,
 			},
