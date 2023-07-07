@@ -79,8 +79,20 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 						)}
 
 						<div className="flex items-end justify-between mt-1 font-medium">
+							{/* <p className="px-4 py-1 rounded-md bg-dark-700 text-light-100 text-[12px]">{tool?.category?.name}</p> */}
 							{tool?.category ? (
-								<p className="px-4 py-1 rounded-md bg-dark-700 text-light-100 text-[12px]">{tool?.category?.name}</p>
+								tool?.category?.name?.length > 0 && (
+									<span className="cursor-info">
+										<Tooltip
+											labelText={
+												<p className="px-4 py-1 rounded-md font-[410] tracking-[0.4px] bg-dark-700 text-light-100 text-[12px]">
+													{tool?.category?.name}
+												</p>
+											}
+											message={tool?.subCategory?.name}
+										/>
+									</span>
+								)
 							) : (
 								<ShinyLoader classes={"w-32 h-5 rounded-md"} />
 							)}

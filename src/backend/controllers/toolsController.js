@@ -62,7 +62,7 @@ const maybeAddLikedTools = async (req, tools) => {
 
 // get all tools => /api/tools
 const allTools = catchAsyncErrors(async (req, res) => {
-	const { category, subcategories, sortby, pricing, meta } = req.query;
+	const { category, subcategories, sortby, pricing, meta, search } = req.query;
 	let subcategoriesArray = [];
 	if (subcategories) subcategoriesArray = subcategories.split(",");
 
@@ -85,14 +85,6 @@ const allTools = catchAsyncErrors(async (req, res) => {
 		pipeline.push({
 			$match: {
 				verified: true,
-			},
-		});
-	}
-
-	if (req.query.search) {
-		pipeline.push({
-			$match: {
-				name: { $regex: `^${req.query.search}`, $options: "-i" },
 			},
 		});
 	}
@@ -123,6 +115,18 @@ const allTools = catchAsyncErrors(async (req, res) => {
 			},
 		}
 	);
+
+	if (search) {
+		pipeline.push({
+			$match: {
+				$or: [
+					{ name: { $regex: `^${search}`, $options: "-i" } },
+					{ "category.name": { $regex: `^${search}`, $options: "-i" } },
+					{ "subCategory.name": { $regex: `^${search}`, $options: "-i" } },
+				],
+			},
+		});
+	}
 
 	if (category && category !== "null") {
 		const categoryObj = await Category.findOne({ name: { $regex: new RegExp(category, "i") } });
