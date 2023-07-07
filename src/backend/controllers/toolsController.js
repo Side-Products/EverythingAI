@@ -341,8 +341,6 @@ const getTrendingTools = async (timeframe) => {
 // get all tools for homepage => /api/tools/homepage
 const allToolsForHomepage = catchAsyncErrors(async (req, res) => {
 	const promises = [
-		getTrendingTools(7 * 24 * 60 * 60 * 1000),
-		getTrendingTools(30 * 24 * 60 * 60 * 1000),
 		getToolsByCategory("Marketing"),
 		getToolsByCategory("Design"),
 		getToolsByCategory("Developer"),
@@ -357,24 +355,12 @@ const allToolsForHomepage = catchAsyncErrors(async (req, res) => {
 		return tools;
 	});
 
-	const [
-		trendingToolsOfTheWeek,
-		topToolsOfTheMonth,
-		marketingTools,
-		designTools,
-		developerTools,
-		productivityTools,
-		imagesTools,
-		promptsTools,
-		videoTools,
-		productTools,
-		salesTools,
-	] = await Promise.all(promises);
+	const [marketingTools, designTools, developerTools, productivityTools, imagesTools, promptsTools, videoTools, productTools, salesTools] = await Promise.all(
+		promises
+	);
 
 	res.status(200).json({
 		success: true,
-		trendingToolsOfTheWeek,
-		topToolsOfTheMonth,
 		marketingTools,
 		designTools,
 		developerTools,
@@ -732,68 +718,18 @@ const getFeaturedTools = catchAsyncErrors(async (req, res, next) => {
 
 // get leaderboard tools => /api/tools/leaderboard
 const getLeaderboardTools = catchAsyncErrors(async (req, res, next) => {
-	const tools = await Tool.aggregate([
-		{ $match: { verified: true } },
-		{
-			$lookup: {
-				from: "likedtools",
-				localField: "_id",
-				foreignField: "tool",
-				as: "likes",
-			},
-		},
-		{
-			$addFields: {
-				likeCount: { $size: "$likes" },
-			},
-		},
-		{
-			$sort: { likeCount: -1, createdAt: -1 },
-		},
-		{
-			$limit: 10,
-		},
-		{
-			$lookup: {
-				from: "categories",
-				localField: "category",
-				foreignField: "_id",
-				as: "category",
-			},
-		},
-		{
-			$lookup: {
-				from: "subcategories",
-				localField: "subCategory",
-				foreignField: "_id",
-				as: "subCategory",
-			},
-		},
-		{
-			$lookup: {
-				from: "pricings",
-				localField: "pricing",
-				foreignField: "_id",
-				as: "pricing",
-			},
-		},
-		{
-			$project: {
-				name: 1,
-				slug: 1,
-				url: 1,
-				image: 1,
-				oneLiner: 1,
-				category: { $arrayElemAt: ["$category", 0] },
-				subCategory: { $arrayElemAt: ["$subCategory", 0] },
-				pricing: { $arrayElemAt: ["$pricing", 0] },
-				createdAt: 1,
-				likeCount: 1,
-			},
-		},
-	]);
+	const promises = [getTrendingTools(7 * 24 * 60 * 60 * 1000), getTrendingTools(30 * 24 * 60 * 60 * 1000)].map(async (typePromise) => {
+		const tools = await maybeAddLikedTools(req, await typePromise);
+		return tools;
+	});
 
-	return res.status(200).json({ success: true, tools });
+	const [trendingToolsOfTheWeek, topToolsOfTheMonth] = await Promise.all(promises);
+
+	res.status(200).json({
+		success: true,
+		trendingToolsOfTheWeek,
+		topToolsOfTheMonth,
+	});
 });
 
 export {

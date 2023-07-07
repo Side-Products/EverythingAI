@@ -99,8 +99,6 @@ export const getToolsForHomepageReducer = (state = { tools: [] }, action) => {
 		case GET_TOOLS_FOR_HOMEPAGE_SUCCESS:
 			return {
 				loading: false,
-				trendingToolsOfTheWeek: action.payload.trendingToolsOfTheWeek,
-				topToolsOfTheMonth: action.payload.topToolsOfTheMonth,
 				marketingTools: action.payload.marketingTools,
 				designTools: action.payload.designTools,
 				developerTools: action.payload.developerTools,
