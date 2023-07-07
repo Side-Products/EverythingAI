@@ -10,7 +10,7 @@ import { ToolContext } from "@/store/ToolContextProvider";
 export default function HeroSection({ featuredTools }) {
 	const [activeSlideIdx, setActiveSlideIdx] = useState(0);
 
-	const heroTools = featuredTools.map((tool, idx) => {
+	const heroTools = featuredTools?.map((tool, idx) => {
 		return <HeroCard key={idx} tool={tool} />;
 	});
 
@@ -73,9 +73,7 @@ export default function HeroSection({ featuredTools }) {
 					</form>
 				</div>
 
-				<div>
-					<ToolsCarousel childrenSlides={heroTools} setActiveSlideIdx={setActiveSlideIdx} />
-				</div>
+				<div>{heroTools && <ToolsCarousel childrenSlides={heroTools} setActiveSlideIdx={setActiveSlideIdx} />}</div>
 
 				<BottomGradient />
 			</div>
