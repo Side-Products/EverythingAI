@@ -14,10 +14,6 @@ export default function HeroSection({ featuredTools }) {
 		return <HeroCard key={idx} tool={tool} />;
 	});
 
-	const heroBgStyles = {
-		objectFit: "cover",
-	};
-
 	const [searchText, setSearchText] = useState("");
 	const { setFilteredTools } = useContext(ToolContext);
 	const router = useRouter();
@@ -41,6 +37,7 @@ export default function HeroSection({ featuredTools }) {
 					<form
 						onSubmit={async (e) => {
 							e.preventDefault();
+							console.log("searchText", searchText);
 							const queryParams = {
 								search: searchText,
 							};
@@ -65,10 +62,14 @@ export default function HeroSection({ featuredTools }) {
 							onChange={(e) => {
 								setSearchText(e.target.value);
 							}}
+							required
 						/>
-						<span className="absolute top-1/2 right-[4px] transform -translate-y-1/2 flex items-center justify-center p-3 transition duration-200 rounded-full cursor-pointer w-[43px] h-[43px] bg-search-100 hover:bg-dark-800 hover:text-light-100 text-dark-200">
+						<button
+							type="submit"
+							className="absolute top-1/2 right-[4px] transform -translate-y-1/2 flex items-center justify-center p-3 transition duration-200 rounded-full cursor-pointer w-[43px] h-[43px] bg-search-100 hover:bg-dark-800 hover:text-light-100 text-dark-200"
+						>
 							<i className="fas fa-search"></i>
-						</span>
+						</button>
 					</form>
 				</div>
 

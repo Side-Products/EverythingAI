@@ -23,11 +23,24 @@ export default function Tool({}) {
 			<div className="flex flex-col space-y-20">
 				<ToolIntro tool={tool} setShareModalOpen={setShareModalOpen} />
 				<EmbedTag toolSlug={query.tool} />
-				<div className="flex p-8 space-x-12 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
-					<Features features={tool?.features} />
-					<UseCases useCases={tool?.useCases} />
+
+				<div className="w-full h-full grid md:grid-cols-2 gap-x-10">
+					<div className="w-full h-full flex flex-col space-y-4">
+						<div className="text-2xl font-semibold">Features</div>
+						<div className="w-full h-full flex p-8 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
+							<Features features={tool?.features} />
+						</div>
+					</div>
+
+					<DemoVideo link={tool?.youtubeDemoVideoLink} />
 				</div>
-				<DemoVideo link={tool?.youtubeDemoVideoLink} />
+
+				{tool?.useCases && (
+					<div className="w-full h-full flex p-8 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
+						<UseCases useCases={tool?.useCases} />
+					</div>
+				)}
+
 				<Cta tool={tool} />
 				<ToolsCarousel tools={tool.similarTools} heading={"Explore Similar Tools"} />
 			</div>

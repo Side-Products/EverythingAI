@@ -84,11 +84,7 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 								tool?.category?.name?.length > 0 && (
 									<span className="cursor-info">
 										<Tooltip
-											labelText={
-												<p className="px-4 py-1 rounded-md font-[410] tracking-[0.4px] bg-dark-700 text-light-100 text-[12px]">
-													{tool?.category?.name}
-												</p>
-											}
+											labelText={<p className="px-4 py-1 rounded-md bg-dark-700 text-light-100 text-[12px]">{tool?.category?.name}</p>}
 											message={tool?.subCategory?.name}
 										/>
 									</span>

@@ -77,21 +77,20 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 						</Link>
 					</div>
 
-					<p className="mt-6 text-lg font-medium">{tool?.oneLiner}</p>
+					<div className="w-full flex mt-4 space-x-3">
+						<ToolPill pillText={tool?.category?.name} />
+						<ToolPill pillText={tool?.subCategory?.name} />
+						<ToolPill pillText={tool?.pricing?.name} chipStyle={getPricingChipClass(tool?.pricing?.name)} tooltip={tool?.pricing?.meta} />
+					</div>
+
+					<p className="mt-10 text-lg font-medium">{tool?.oneLiner}</p>
 
 					<div className="w-full flex flex-col justify-between items-end mt-auto">
-						<div className="w-full flex flex-col">
-							<div className="flex mt-6 space-x-3">
-								<ToolPill pillText={tool?.category?.name} />
-								<ToolPill pillText={tool?.subCategory?.name} />
-							</div>
-
-							<div className="flex mt-4 justify-between items-end">
-								<ToolPill pillText={tool?.pricing?.name} chipStyle={getPricingChipClass(tool?.pricing?.name)} tooltip={tool?.pricing?.meta} />
-								<span className="text-sm">
-									<i className="fa fa-calendar mr-2"></i>Added on {convertTimestampToNormalDate(createdDate)}
-								</span>
-							</div>
+						<div className="flex mt-4 justify-between items-end">
+							<div></div>
+							<span className="text-sm">
+								<i className="fa fa-calendar mr-2"></i>Added on {convertTimestampToNormalDate(createdDate)}
+							</span>
 						</div>
 
 						<div className="w-full flex justify-between items-end mt-auto">
