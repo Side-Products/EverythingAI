@@ -27,6 +27,7 @@ export async function getStaticProps() {
 				trendingToolsOfTheWeek,
 				topToolsOfTheMonth,
 			},
+			revalidate: 2,
 		};
 	} catch (error) {
 		console.error("Error fetching data:", error);
@@ -37,6 +38,7 @@ export async function getStaticProps() {
 				trendingToolsOfTheWeek: [],
 				topToolsOfTheMonth: [],
 			},
+			revalidate: 2,
 		};
 	}
 }
