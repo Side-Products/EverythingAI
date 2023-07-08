@@ -740,13 +740,13 @@ tr th:nth-child(1) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 
-.allCategories-table tr td:nth-child(n + 5),
-.allCategories-table tr th:nth-child(n + 5) {
+.allCategories-table tr td:nth-child(n + 6),
+.allCategories-table tr th:nth-child(n + 6) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 
-.allCollections-table tr td:nth-child(n + 6),
-.allCollections-table tr th:nth-child(n + 6) {
+.allCollections-table tr td:nth-child(n + 8),
+.allCollections-table tr th:nth-child(n + 8) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 

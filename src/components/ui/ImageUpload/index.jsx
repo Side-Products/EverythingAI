@@ -56,7 +56,7 @@ export default function ImageUpload({ image, setImage, setImageName, required })
 			setImageToCrop(imageURL);
 			setShowModal(true);
 			selectedImage.current = event.target.files[0];
-			setImageName(event.target.files[0].name);
+			if (setImageName) setImageName(event.target.files[0].name);
 		}
 	};
 

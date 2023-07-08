@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import validator from "validator";
 import CollectionToolRelation from "./collectionToolRelation";
 
 const collectionSchema = new mongoose.Schema(
@@ -17,11 +18,21 @@ const collectionSchema = new mongoose.Schema(
 			maxLength: [100, "Slug cannot exceed 100 characters"],
 			unique: true,
 		},
+		image: {
+			type: String,
+			trim: true,
+			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
+		},
 		description: {
 			type: String,
 			required: [true, "Please enter a description"],
 			trim: true,
 			maxLength: [500, "Description cannot exceed 500 characters"],
+		},
+		metaDescription: {
+			type: String,
+			trim: true,
+			maxLength: [3000, "Meta description cannot exceed 3000 characters"],
 		},
 	},
 	{ timestamps: true }

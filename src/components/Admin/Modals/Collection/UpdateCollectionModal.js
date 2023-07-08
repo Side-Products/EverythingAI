@@ -5,15 +5,41 @@ import { useRouter } from "next/router";
 import { updateCollection, clearErrors } from "@/redux/actions/collectionActions";
 import { UPDATE_COLLECTION_RESET } from "@/redux/constants/collectionConstants";
 import { StatusContext } from "@/store/StatusContextProvider";
+import { LoadingContext } from "@/store/LoadingContextProvider";
 import Loader from "@/components/ui/Loader";
 import Button from "@/components/ui/Button";
 import { sleep } from "@/utils/Sleep";
 import TextInput from "@/components/ui/Input/TextInput";
+import Image from "next/image";
+import ImageUploadInput from "@/components/ui/Input/ImageUploadInput";
+import Textarea from "@/components/ui/Input/Textarea";
+import { uploadImage } from "@/utils/Helpers";
 
 const UpdateCollectionModal = ({ isOpen, setOpen, collectionToUpdate }) => {
-	const [name, setName] = useState("");
-	const [description, setDescription] = useState("");
+	const [collectionData, setCollectionData] = useState({
+		name: "",
+		description: "",
+		metaDescription: "",
+	});
+	const [image, setImage] = useState("");
+	const [imageName, setImageName] = useState("");
 
+	const onCollectionDataChange = (e) => {
+		setCollectionData({ ...collectionData, [e.target.name]: e.target.value });
+	};
+
+	useEffect(() => {
+		if (collectionToUpdate) {
+			setCollectionData({
+				name: collectionToUpdate.name,
+				description: collectionToUpdate.description,
+				metaDescription: collectionToUpdate.metaDescription,
+			});
+			setImage(collectionToUpdate.image);
+		}
+	}, [collectionToUpdate]);
+
+	const { setLoading } = useContext(LoadingContext);
 	const { setSuccess, setError } = useContext(StatusContext);
 
 	const dispatch = useDispatch();
@@ -35,12 +61,8 @@ const UpdateCollectionModal = ({ isOpen, setOpen, collectionToUpdate }) => {
 			});
 		}
 
-		if (collectionToUpdate) {
-			setName(collectionToUpdate.name);
-			setDescription(collectionToUpdate.description);
-		}
-
 		if (error) {
+			setLoading({ status: false, showProgressBar: false, progress: 0 });
 			setError({
 				title: "Something went wrong",
 				message: error,
@@ -48,15 +70,29 @@ const UpdateCollectionModal = ({ isOpen, setOpen, collectionToUpdate }) => {
 			});
 			dispatch(clearErrors());
 		}
-	}, [dispatch, collectionToUpdate, error, isUpdated]);
+	}, [dispatch, error, isUpdated]);
 
-	const submitHandler = () => {
-		const collectionData = {
-			name,
-			description,
-		};
-		dispatch(updateCollection(collectionToUpdate._id, collectionData));
-		setOpen(false);
+	const submitHandler = async () => {
+		if (image && imageName) {
+			const imageUrl = await uploadImage(image, imageName, setLoading, setError);
+			if (!imageUrl) {
+				setLoading({ status: false, showProgressBar: false, progress: 0 });
+				return;
+			}
+
+			const collectionDataToUpload = {
+				...collectionData,
+				image: imageUrl,
+			};
+			dispatch(updateCollection(collectionToUpdate._id, collectionDataToUpload));
+			setOpen(false);
+		} else {
+			const collectionDataToUpload = {
+				...collectionData,
+			};
+			dispatch(updateCollection(collectionToUpdate._id, collectionDataToUpload));
+			setOpen(false);
+		}
 	};
 
 	return loading ? (
@@ -79,15 +115,54 @@ const UpdateCollectionModal = ({ isOpen, setOpen, collectionToUpdate }) => {
 						}}
 						className="flex flex-col gap-y-3"
 					>
-						<TextInput label={"Name"} id={"name_field"} value={name} name={"name"} onFieldChange={(e) => setName(e.target.value)} required={true} />
+						<div className="flex flex-col">
+							<div className="relative mb-16">
+								<div className="absolute right-0 w-[160px] h-[90px] rounded-lg">
+									{image ? (
+										<Image src={image} alt="image" objectFit="cover" layout="fill" className="rounded-lg" priority />
+									) : (
+										<div
+											className={`bg-primary-300 opacity-40 w-full h-full flex items-center justify-center rounded-lg text-light-100 text-4xl`}
+										>
+											<i className="fa-solid fa-image"></i>
+										</div>
+									)}
+								</div>
+							</div>
+							<ImageUploadInput
+								image={image}
+								setImage={setImage}
+								setImageName={setImageName}
+								label={"Collection Image (Ratio 16 : 9)"}
+								required={false}
+							/>
+						</div>
+
+						<TextInput
+							label={"Name"}
+							id={"name_field"}
+							value={collectionData.name}
+							name={"name"}
+							onFieldChange={onCollectionDataChange}
+							required={true}
+						/>
 
 						<TextInput
 							label={"Description"}
 							id={"description_field"}
-							value={description}
+							value={collectionData.description}
 							name={"description"}
-							onFieldChange={(e) => setDescription(e.target.value)}
+							onFieldChange={onCollectionDataChange}
 							required={true}
+						/>
+
+						<Textarea
+							label={"Meta Description"}
+							value={collectionData.metaDescription}
+							name={"metaDescription"}
+							onFieldChange={onCollectionDataChange}
+							placeholder="Meta Description for the collection"
+							required={false}
 						/>
 
 						<div className="mt-10">

@@ -25,5 +25,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 export default function Collection() {
 	const { collection } = useSelector((state) => state.collection);
 
-	return <PageWrapper>{collection && <CollectionComponent collection={collection} />}</PageWrapper>;
+	return (
+		<PageWrapper title={collection.name} description={collection.metaDescription}>
+			{collection && <CollectionComponent collection={collection} />}
+		</PageWrapper>
+	);
 }

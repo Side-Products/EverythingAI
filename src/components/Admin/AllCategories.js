@@ -8,6 +8,7 @@ import { getTimestamp } from "@/utils/Helpers";
 import UpdateCategoryModal from "./Modals/Category/UpdateCategoryModal";
 import DeleteCategoryConfirmModal from "./Modals/Category/DeleteCategoryConfirmModal";
 import AddCategoryModal from "./Modals/Category/AddCategoryModal";
+import Image from "next/image";
 
 export default function AllCategories() {
 	const dispatch = useDispatch();
@@ -75,6 +76,7 @@ export default function AllCategories() {
 									<tr>
 										<th className="p-3 text-left pl-6 text-light-200">Created At (UTC)</th>
 										<th className="p-3 text-left text-light-200">ID</th>
+										<th className="p-3 text-left text-light-200">Image</th>
 										<th className="p-3 text-left text-light-200">Name</th>
 										<th className="p-3 text-left text-light-200">Edit</th>
 										<th className="p-3 text-left text-light-200">Delete</th>
@@ -93,6 +95,13 @@ export default function AllCategories() {
 											</td>
 											<td className="p-3">
 												<span data-info={category._id}>{category._id}</span>
+											</td>
+											<td className="p-3">
+												{category.image ? (
+													<Image src={category.image} alt={category.name} width={80} height={45} className="rounded" />
+												) : (
+													"-"
+												)}
 											</td>
 											<td className="p-3">{category.name}</td>
 											<td
@@ -126,6 +135,7 @@ export default function AllCategories() {
 										<tr>
 											<th className="p-3">Created At (UTC)</th>
 											<th className="p-3 text-left">ID</th>
+											<th className="p-3 text-left">Image</th>
 											<th className="p-3 text-left">Name</th>
 											<th className="p-3 text-left">Edit</th>
 											<th className="p-3 text-left">Delete</th>

@@ -8,6 +8,7 @@ import { getTimestamp } from "@/utils/Helpers";
 import UpdateCollectionModal from "./Modals/Collection/UpdateCollectionModal";
 import DeleteCollectionConfirmModal from "./Modals/Collection/DeleteCollectionConfirmModal";
 import AddCollectionModal from "./Modals/Collection/AddCollectionModal";
+import Image from "next/image";
 
 export default function AllCollections() {
 	const dispatch = useDispatch();
@@ -75,8 +76,10 @@ export default function AllCollections() {
 									<tr>
 										<th className="p-3 text-left pl-6 text-light-200">Created At (UTC)</th>
 										<th className="p-3 text-left text-light-200">ID</th>
+										<th className="p-3 text-left text-light-200">Image</th>
 										<th className="p-3 text-left text-light-200">Name</th>
 										<th className="p-3 text-left text-light-200">Description</th>
+										<th className="p-3 text-left text-light-200">Meta Description</th>
 										<th className="p-3 text-left text-light-200">Edit</th>
 										<th className="p-3 text-left text-light-200">Delete</th>
 									</tr>
@@ -95,8 +98,22 @@ export default function AllCollections() {
 											<td className="p-3">
 												<span data-info={collection._id}>{collection._id}</span>
 											</td>
+											<td className="p-3">
+												{collection.image ? (
+													<Image src={collection.image} alt={collection.name} width={80} height={45} className="rounded" />
+												) : (
+													"-"
+												)}
+											</td>
 											<td className="p-3">{collection.name}</td>
 											<td className="p-3">{collection.description}</td>
+											<td className="p-3">
+												{collection.metaDescription
+													? collection.metaDescription.length > 120
+														? collection.metaDescription.substring(0, 120) + "..."
+														: collection.metaDescription
+													: "-"}
+											</td>
 											<td
 												className="p-3 bg-primary-600 hover:bg-primary-800 transition duration-300 text-light-100 cursor-pointer text-center"
 												onClick={(e) => {
@@ -128,8 +145,10 @@ export default function AllCollections() {
 										<tr>
 											<th className="p-3">Created At (UTC)</th>
 											<th className="p-3 text-left">ID</th>
+											<th className="p-3 text-left">Image</th>
 											<th className="p-3 text-left">Name</th>
 											<th className="p-3 text-left">Description</th>
+											<th className="p-3 text-left">Meta Description</th>
 											<th className="p-3 text-left">Edit</th>
 											<th className="p-3 text-left">Delete</th>
 										</tr>

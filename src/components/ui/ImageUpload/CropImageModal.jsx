@@ -9,7 +9,7 @@ export default function CropImageModal({ showModal, setShowModal, imageToCrop, s
 		<Transition.Root show={showModal} as={Fragment}>
 			<Dialog
 				as="div"
-				className="fixed inset-0 top-0 left-0 z-50 w-screen h-screen overflow-y-auto"
+				className="fixed inset-0 top-0 left-0 z-[70] w-screen h-screen overflow-y-auto"
 				initialFocus={cancelButtonRef}
 				onClose={() => setShowModal(false)}
 			>

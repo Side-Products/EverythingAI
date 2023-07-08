@@ -70,15 +70,69 @@ const categories = {
 };
 
 const collections = [
-	{ name: "For Digital Nomads", description: "Make the best of your time while travelling" },
-	{ name: "For SaaS Entrepreneurs", description: "Grow your SaaS business using these tools" },
-	{ name: "For Social Media Managers", description: "Manage and generate quality content quickly" },
-	{ name: "For Building Following on Linkedin", description: "Tools to scale your influence on Linkedin" },
-	{ name: "For E-Commerce Entrepreneurs", description: "Tools for scaling your D2C business" },
-	{ name: "For Improving Mental Health", description: "Tools to create balance and positivity" },
-	{ name: "For Creators & Influencers", description: "Tools to build influence & create content" },
-	{ name: "For Content Writers", description: "Tools to write better copy & long form content" },
-	{ name: "Our Top 25 AI Tools Collection", description: "Tools we love across all categories" },
+	{
+		name: "For Digital Nomads",
+		description: "Make the best of your time while travelling",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/a503a233-6853-432b-b01d-43fb4bd4a408.jpg",
+		metaDescription:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod lacinia at quis. Arcu vitae elementum curabitur vitae nunc. Arcu dictum varius duis at consectetur. Diam donec adipiscing tristique risus nec feugiat. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Fames ac turpis egestas integer eget aliquet nibh praesent. Tincidunt dui ut ornare lectus sit amet. Mauris rhoncus aenean vel elit scelerisque mauris. Viverra aliquet eget sit amet tellus. Nunc consequat interdum varius sit amet mattis vulputate. Id velit ut tortor pretium viverra suspendisse potenti nullam. Vel facilisis volutpat est velit. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Consequat nisl vel pretium lectus quam id leo. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac.",
+	},
+	{
+		name: "For SaaS Entrepreneurs",
+		description: "Grow your SaaS business using these tools",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg",
+		metaDescription:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod lacinia at quis. Arcu vitae elementum curabitur vitae nunc. Arcu dictum varius duis at consectetur. Diam donec adipiscing tristique risus nec feugiat. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Fames ac turpis egestas integer eget aliquet nibh praesent. Tincidunt dui ut ornare lectus sit amet. Mauris rhoncus aenean vel elit scelerisque mauris. Viverra aliquet eget sit amet tellus. Nunc consequat interdum varius sit amet mattis vulputate. Id velit ut tortor pretium viverra suspendisse potenti nullam. Vel facilisis volutpat est velit. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Consequat nisl vel pretium lectus quam id leo. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac.",
+	},
+	{
+		name: "For Social Media Managers",
+		description: "Manage and generate quality content quickly",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/a503a233-6853-432b-b01d-43fb4bd4a408.jpg",
+		metaDescription:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod lacinia at quis. Arcu vitae elementum curabitur vitae nunc. Arcu dictum varius duis at consectetur. Diam donec adipiscing tristique risus nec feugiat. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Fames ac turpis egestas integer eget aliquet nibh praesent. Tincidunt dui ut ornare lectus sit amet. Mauris rhoncus aenean vel elit scelerisque mauris. Viverra aliquet eget sit amet tellus. Nunc consequat interdum varius sit amet mattis vulputate. Id velit ut tortor pretium viverra suspendisse potenti nullam. Vel facilisis volutpat est velit. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Consequat nisl vel pretium lectus quam id leo. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac.",
+	},
+	{
+		name: "For Building Following on Linkedin",
+		description: "Tools to scale your influence on Linkedin",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg",
+		metaDescription:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod lacinia at quis. Arcu vitae elementum curabitur vitae nunc. Arcu dictum varius duis at consectetur. Diam donec adipiscing tristique risus nec feugiat. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Fames ac turpis egestas integer eget aliquet nibh praesent. Tincidunt dui ut ornare lectus sit amet. Mauris rhoncus aenean vel elit scelerisque mauris. Viverra aliquet eget sit amet tellus. Nunc consequat interdum varius sit amet mattis vulputate. Id velit ut tortor pretium viverra suspendisse potenti nullam. Vel facilisis volutpat est velit. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Consequat nisl vel pretium lectus quam id leo. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac.",
+	},
+	{
+		name: "For E-Commerce Entrepreneurs",
+		description: "Tools for scaling your D2C business",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/b4c2c256-f654-4918-8c98-282bef3df372.jpg",
+		metaDescription:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod lacinia at quis. Arcu vitae elementum curabitur vitae nunc. Arcu dictum varius duis at consectetur. Diam donec adipiscing tristique risus nec feugiat. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Fames ac turpis egestas integer eget aliquet nibh praesent. Tincidunt dui ut ornare lectus sit amet. Mauris rhoncus aenean vel elit scelerisque mauris. Viverra aliquet eget sit amet tellus. Nunc consequat interdum varius sit amet mattis vulputate. Id velit ut tortor pretium viverra suspendisse potenti nullam. Vel facilisis volutpat est velit. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Consequat nisl vel pretium lectus quam id leo. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac.",
+	},
+	{
+		name: "For Improving Mental Health",
+		description: "Tools to create balance and positivity",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/07c728d1-d819-44cc-a14b-365917e7b885.jpg",
+		metaDescription:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod lacinia at quis. Arcu vitae elementum curabitur vitae nunc. Arcu dictum varius duis at consectetur. Diam donec adipiscing tristique risus nec feugiat. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Fames ac turpis egestas integer eget aliquet nibh praesent. Tincidunt dui ut ornare lectus sit amet. Mauris rhoncus aenean vel elit scelerisque mauris. Viverra aliquet eget sit amet tellus. Nunc consequat interdum varius sit amet mattis vulputate. Id velit ut tortor pretium viverra suspendisse potenti nullam. Vel facilisis volutpat est velit. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Consequat nisl vel pretium lectus quam id leo. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac.",
+	},
+	{
+		name: "For Creators & Influencers",
+		description: "Tools to build influence & create content",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/a503a233-6853-432b-b01d-43fb4bd4a408.jpg",
+		metaDescription:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod lacinia at quis. Arcu vitae elementum curabitur vitae nunc. Arcu dictum varius duis at consectetur. Diam donec adipiscing tristique risus nec feugiat. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Fames ac turpis egestas integer eget aliquet nibh praesent. Tincidunt dui ut ornare lectus sit amet. Mauris rhoncus aenean vel elit scelerisque mauris. Viverra aliquet eget sit amet tellus. Nunc consequat interdum varius sit amet mattis vulputate. Id velit ut tortor pretium viverra suspendisse potenti nullam. Vel facilisis volutpat est velit. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Consequat nisl vel pretium lectus quam id leo. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac.",
+	},
+	{
+		name: "For Content Writers",
+		description: "Tools to write better copy & long form content",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/b4c2c256-f654-4918-8c98-282bef3df372.jpg",
+		metaDescription:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod lacinia at quis. Arcu vitae elementum curabitur vitae nunc. Arcu dictum varius duis at consectetur. Diam donec adipiscing tristique risus nec feugiat. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Fames ac turpis egestas integer eget aliquet nibh praesent. Tincidunt dui ut ornare lectus sit amet. Mauris rhoncus aenean vel elit scelerisque mauris. Viverra aliquet eget sit amet tellus. Nunc consequat interdum varius sit amet mattis vulputate. Id velit ut tortor pretium viverra suspendisse potenti nullam. Vel facilisis volutpat est velit. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Consequat nisl vel pretium lectus quam id leo. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac.",
+	},
+	{
+		name: "Our Top 25 AI Tools Collection",
+		description: "Tools we love across all categories",
+		image: "https://everythingai.s3.ap-south-1.amazonaws.com/a503a233-6853-432b-b01d-43fb4bd4a408.jpg",
+		metaDescription:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod lacinia at quis. Arcu vitae elementum curabitur vitae nunc. Arcu dictum varius duis at consectetur. Diam donec adipiscing tristique risus nec feugiat. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Fames ac turpis egestas integer eget aliquet nibh praesent. Tincidunt dui ut ornare lectus sit amet. Mauris rhoncus aenean vel elit scelerisque mauris. Viverra aliquet eget sit amet tellus. Nunc consequat interdum varius sit amet mattis vulputate. Id velit ut tortor pretium viverra suspendisse potenti nullam. Vel facilisis volutpat est velit. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Feugiat in ante metus dictum at tempor commodo ullamcorper a. Consequat nisl vel pretium lectus quam id leo. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac.",
+	},
 ];
 
 const tools = [

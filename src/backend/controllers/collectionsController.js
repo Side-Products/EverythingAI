@@ -9,8 +9,8 @@ import { generateSlug } from "@/utils/Helpers";
 // add to db => /api/collections
 const createCollection = catchAsyncErrors(async (req, res) => {
 	// save to db
-	const { name, description } = req.body;
-	const collection = await Collection.create({ name, slug: generateSlug(name), description });
+	const { name, description, image, metaDescription } = req.body;
+	const collection = await Collection.create({ name, slug: generateSlug(name), description, image, metaDescription });
 
 	res.status(200).json({
 		success: true,
@@ -20,7 +20,7 @@ const createCollection = catchAsyncErrors(async (req, res) => {
 
 // get all collections => /api/collections
 const allCollections = catchAsyncErrors(async (req, res) => {
-	const collections = await Collection.find().sort({ name: 1, createdAt: "desc" });
+	const collections = await Collection.find().sort({ createdAt: -1, name: 1 });
 	const collectionsCount = await Collection.countDocuments();
 
 	res.status(200).json({
