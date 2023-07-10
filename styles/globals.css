@@ -1250,7 +1250,20 @@ input[type="radio"] + label > span {
 
 .featured-carousel .swiper-wrapper .swiper-slide {
 	max-width: 356px;
+}
+
+.featured-carousel .swiper-wrapper .swiper-slide:not(:last-child) {
 	margin-right: 20px;
+}
+
+.featured-carousel .swiper-wrapper .swiper-slide:last-child {
+	margin-right: 0px;
+}
+
+.featured-carousel .swiper-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 /* YouTube Embed */

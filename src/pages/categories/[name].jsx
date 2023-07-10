@@ -7,14 +7,6 @@ import CategoryComponent from "@/components/Categories/Category";
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
 	const session = await getSession({ req: req });
-	if (!session) {
-		return {
-			redirect: {
-				destination: "/?login",
-				permanent: false,
-			},
-		};
-	}
 	await store.dispatch(getCategoryByName(req, query.name));
 
 	return {

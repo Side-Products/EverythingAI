@@ -35,7 +35,7 @@ export default function Carousel({ heading, children, setActiveSlideIdx = null, 
 									},
 									1800: {
 										slidesPerView: 5,
-										spaceBetween: 40,
+										spaceBetween: 50,
 									},
 							  }
 					}
@@ -43,6 +43,14 @@ export default function Carousel({ heading, children, setActiveSlideIdx = null, 
 					autowidth={"false"}
 					enabled={true}
 					cssMode={true}
+					parallax={true}
+					freeMode={true}
+					observer={true}
+					observeParents={true}
+					observeSlideChildren={true}
+					watchSlidesVisibility={true}
+					watchSlidesProgress={true}
+					centeredSlides={false}
 					centerInsufficientSlides={true}
 					navigation={true}
 					mousewheel={true}

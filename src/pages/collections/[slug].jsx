@@ -7,14 +7,6 @@ import CollectionComponent from "@/components/Collections/Collection";
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
 	const session = await getSession({ req: req });
-	if (!session) {
-		return {
-			redirect: {
-				destination: "/?login",
-				permanent: false,
-			},
-		};
-	}
 	await store.dispatch(getCollectionBySlug(req, query.slug));
 
 	return {

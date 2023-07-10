@@ -6,14 +6,6 @@ import { getToolBySlug } from "@/redux/actions/toolActions";
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query, params }) => {
 	const session = await getSession({ req: req });
-	if (!session) {
-		return {
-			redirect: {
-				destination: "/?login",
-				permanent: false,
-			},
-		};
-	}
 	await store.dispatch(getToolBySlug(req, params.tool));
 
 	return {
