@@ -65,6 +65,19 @@ const pricingSchema = new mongoose.Schema(
 );
 
 // Tool schema
+const useCaseSchema = new mongoose.Schema({
+	heading: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	content: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+});
+
 const toolSchema = new mongoose.Schema(
 	{
 		name: {
@@ -88,7 +101,6 @@ const toolSchema = new mongoose.Schema(
 		},
 		image: {
 			type: String,
-			required: [true, "Please upload an image"],
 			trim: true,
 			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 		},
@@ -116,8 +128,8 @@ const toolSchema = new mongoose.Schema(
 			trim: true,
 		},
 		useCases: {
-			type: String,
-			trim: true,
+			type: [useCaseSchema],
+			default: [],
 		},
 		category: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -254,23 +266,23 @@ async function populateCategoriesAndSubCategories() {
 		const collectionIds = collectionInsertResult.map((collection) => collection._id);
 		console.log("Collections inserted successfully:", collectionIds);
 
-		tools.forEach((tool) => {
-			tool.slug = generateSlug(tool.name);
-			// Assign random pricing values to each tool
-			const pricingRandomIndex = Math.floor(Math.random() * pricingIds.length);
-			tool.pricing = mongoose.Types.ObjectId(pricingIds[pricingRandomIndex].toString());
-			console.log("Tool pricing:", tool.pricing);
-			// Assign random category and subCategory values to each tool
-			const randomIndex = Math.floor(Math.random() * subCategoryInsertResult.length);
-			const { categoryId, _id } = subCategoryInsertResult[randomIndex];
-			tool.category = mongoose.Types.ObjectId(categoryId.toString());
-			tool.subCategory = mongoose.Types.ObjectId(_id.toString());
-		});
+		// tools.forEach((tool) => {
+		// 	tool.slug = generateSlug(tool.name);
+		// 	// Assign random pricing values to each tool
+		// 	const pricingRandomIndex = Math.floor(Math.random() * pricingIds.length);
+		// 	tool.pricing = mongoose.Types.ObjectId(pricingIds[pricingRandomIndex].toString());
+		// 	console.log("Tool pricing:", tool.pricing);
+		// 	// Assign random category and subCategory values to each tool
+		// 	const randomIndex = Math.floor(Math.random() * subCategoryInsertResult.length);
+		// 	const { categoryId, _id } = subCategoryInsertResult[randomIndex];
+		// 	tool.category = mongoose.Types.ObjectId(categoryId.toString());
+		// 	tool.subCategory = mongoose.Types.ObjectId(_id.toString());
+		// });
 
-		// Insert the tools into the database
-		const toolsInsertResult = await Tool.insertMany(tools);
-		const toolsIds = toolsInsertResult.map((tool) => tool._id);
-		console.log("Tools inserted successfully:", toolsIds);
+		// // Insert the tools into the database
+		// const toolsInsertResult = await Tool.insertMany(tools);
+		// const toolsIds = toolsInsertResult.map((tool) => tool._id);
+		// console.log("Tools inserted successfully:", toolsIds);
 
 		// Close the connection
 		await mongoose.connection.close();

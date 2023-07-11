@@ -7,6 +7,8 @@ import { getAllPricings } from "@/redux/actions/pricingActions";
 import { createTool, updateTool, clearErrors } from "@/redux/actions/toolActions";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import { StatusContext } from "@/store/StatusContextProvider";
+import { AuthModalContext } from "@/store/AuthModalContextProvider";
+import { useSession } from "next-auth/react";
 import TextInput from "@/components/ui/Input/TextInput";
 import Textarea from "@/components/ui/Input/Textarea";
 import Dropdown from "@/components/ui/Input/Dropdown";
@@ -14,10 +16,13 @@ import Button from "@/components/ui/Button";
 import ImageUploadInput from "@/components/ui/Input/ImageUploadInput";
 import { getObjectByName, uploadImage } from "@/utils/Helpers";
 import { sleep } from "@/utils/Sleep";
+import UseCasesInput from "@/components/Submit/UseCasesInput";
 
 const SubmitTool = ({ toolToEdit = null }) => {
 	const { setLoading } = useContext(LoadingContext);
 	const { setError, setSuccess } = useContext(StatusContext);
+	const { data: session } = useSession();
+	const { setAuthModalOpen } = useContext(AuthModalContext);
 
 	const [toolData, setToolData] = useState({
 		name: "",
@@ -25,7 +30,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 		oneLiner: "",
 		youtubeDemoVideoLink: "",
 		features: "",
-		useCases: "",
+		useCases: [{ heading: "", content: "" }],
 		category: "",
 		subCategory: "",
 		pricing: "",
@@ -88,7 +93,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				name: toolToEdit.name,
 				url: toolToEdit.url,
 				oneLiner: toolToEdit.oneLiner,
-				youtubeDemoVideoLink: toolToEdit.oneLiner,
+				youtubeDemoVideoLink: toolToEdit.youtubeDemoVideoLink,
 				features: toolToEdit.features,
 				useCases: toolToEdit.useCases,
 				category: toolToEdit.category,
@@ -104,29 +109,50 @@ const SubmitTool = ({ toolToEdit = null }) => {
 	}, []);
 
 	const submitForm = async () => {
-		try {
-			if (image && imageName) {
-				const imageUrl = await uploadImage(image, imageName, setLoading, setError);
-				if (!imageUrl) {
-					setLoading({ status: false, showProgressBar: false, progress: 0 });
+		if (session && session.user) {
+			try {
+				if (!toolData.category) {
+					setError({
+						title: "Category not selected",
+						message: "Please select a category",
+						showErrorBox: true,
+					});
+					return;
+				}
+				if (!toolData.pricing) {
+					setError({
+						title: "Pricing not selected",
+						message: "Please select a pricing option",
+						showErrorBox: true,
+					});
 					return;
 				}
 
-				const tool = {
-					...toolData,
-					image: imageUrl,
-				};
 				if (toolToEdit) {
-					dispatch(updateTool(toolToEdit._id, tool));
-					return;
+					if (image && imageName) {
+						const imageUrl = await uploadImage(image, imageName, setLoading, setError);
+						if (!imageUrl) {
+							setLoading({ status: false, showProgressBar: false, progress: 0 });
+							return;
+						}
+
+						const tool = {
+							...toolData,
+							image: imageUrl,
+						};
+						dispatch(updateTool(toolToEdit._id, tool));
+						return;
+					} else {
+						dispatch(updateTool(toolToEdit._id, toolData));
+					}
 				} else {
-					dispatch(createTool(tool));
+					dispatch(createTool(toolData));
 				}
-			} else {
-				dispatch(updateTool(toolToEdit._id, toolData));
+			} catch (error) {
+				return;
 			}
-		} catch (error) {
-			return;
+		} else {
+			setAuthModalOpen(true);
 		}
 	};
 
@@ -183,8 +209,49 @@ const SubmitTool = ({ toolToEdit = null }) => {
 		}
 	}, [dispatch, error, success]);
 
+	const [isBrowser, setBrowser] = useState(false);
+	useEffect(() => {
+		setBrowser(true);
+	}, []);
+
+	// // Uncomment this to use actual data
+	// useEffect(() => {
+	// 	setToolData({
+	// 		name: "Evernote",
+	// 		url: "https://evernote.com",
+	// 		oneLiner: "Evernote is a cross-platform app designed for note taking, organizing, tasks lists, and archiving.",
+	// 		youtubeDemoVideoLink: "https://www.youtube.com/watch?v=2Oa7HqUqD9M",
+	// 		features: "Evernote is a cross-platform app designed for note taking, organizing, tasks lists, and archiving.",
+	// 		useCases: [
+	// 			{
+	// 				heading: "Marketing",
+	// 				content:
+	// 					"Maximize Marketing ROI with high-converting AI content, grow social media presence, improve search engine rankings, and create ad copies driving digital growth.",
+	// 			},
+	// 			{
+	// 				heading: "Sales",
+	// 				content:
+	// 					"Maximize Marketing ROI with high-converting AI content, grow social media presence, improve search engine rankings, and create ad copies driving digital growth.",
+	// 			},
+	// 			{
+	// 				heading: "Content",
+	// 				content:
+	// 					"Maximize Marketing ROI with high-converting AI content, grow social media presence, improve search engine rankings, and create ad copies driving digital growth.",
+	// 			},
+	// 		],
+	// 		category: "",
+	// 		subCategory: "",
+	// 		pricing: "",
+	// 		twitter: "https://twitter.com/evernote",
+	// 		instagram: "https://www.instagram.com/evernote/",
+	// 		linkedin: "https://www.linkedin.com/company/evernote/",
+	// 		youtube: "https://www.youtube.com/user/EvernoteVideos",
+	// 	});
+	// }, []);
+
 	return (
 		<form
+			id="tool-form"
 			onSubmit={(e) => {
 				e.preventDefault();
 				submitForm();
@@ -192,132 +259,140 @@ const SubmitTool = ({ toolToEdit = null }) => {
 			className="w-full flex flex-col items-center justify-center gap-y-10"
 			encType="multipart/form-data"
 		>
-			<div className="w-full grid grid-cols-2 mt-20 gap-x-16 items-end">
+			<div className="w-full grid grid-cols-2 mt-20 gap-x-16 items-start">
 				<div className="flex flex-col gap-y-8">
-					<TextInput
-						label={"Product Name"}
-						type={"text"}
-						value={toolData.name}
-						name={"name"}
-						onFieldChange={onToolDataChange}
-						placeholder="Eg. EverythingAI"
-						required={true}
-					/>
-
-					<TextInput
-						label={"Product URL (This will be the CTA link on your tool page)"}
-						type={"text"}
-						value={toolData.url}
-						name={"url"}
-						onFieldChange={onToolDataChange}
-						placeholder="Eg. https://everythingai.club"
-						required={true}
-					/>
-
-					<TextInput
-						label={"Product one liner"}
-						type={"text"}
-						value={toolData.oneLiner}
-						name={"oneLiner"}
-						onFieldChange={onToolDataChange}
-						placeholder="Discover AI tools that fit like a glove: handpicked for your industry and goals."
-						required={true}
-					/>
-
-					<TextInput
-						label={"YouTube Demo Video Link"}
-						type={"url"}
-						value={toolData.youtubeDemoVideoLink}
-						name={"youtubeDemoVideoLink"}
-						onFieldChange={onToolDataChange}
-						placeholder="A YouTube video link to your product demo"
-						required={false}
-					/>
-
-					<Textarea
-						label={"Features"}
-						value={toolData.features}
-						name={"features"}
-						onFieldChange={onToolDataChange}
-						placeholder="Your product features"
-						required={false}
-					/>
-
-					<Dropdown
-						id={"selectCategory"}
-						label={"Select Category"}
-						name="category"
-						options={categories}
-						objKey={"name"}
-						defaultOption={toolToEdit?.category?.name || categoryDefaultOption}
-						setChoice={onToolDataChange}
-						classes={"w-full"}
-						required={true}
-					/>
-
-					<Dropdown
-						id={"selectSubCategory"}
-						label={"Select Sub-Category"}
-						name="subCategory"
-						options={category?.subcategories}
-						objKey={"name"}
-						defaultOption={toolToEdit?.subCategory?.name || subCategoryDefaultOption}
-						setChoice={onToolDataChange}
-						classes={"w-full"}
-						required={true}
-					/>
-
-					<Dropdown
-						id={"selectPricing"}
-						label={"Select Pricing"}
-						name="pricing"
-						options={pricings}
-						objKey={"name"}
-						defaultOption={toolToEdit ? toolToEdit?.pricing?.name + " " + toolToEdit?.pricing?.meta : pricingDefaultOption}
-						setChoice={onToolDataChange}
-						classes={"w-full"}
-						required={true}
-					/>
-				</div>
-
-				<div className="flex flex-col gap-y-6">
-					<div className="flex flex-col">
-						<div className="relative mb-16">
-							<div className="absolute right-0 w-[160px] h-[90px] rounded-lg">
-								{image ? (
-									<Image src={image} alt="image" objectFit="cover" layout="fill" className="rounded-lg" priority />
-								) : (
-									<div
-										className={`bg-primary-300 opacity-40 w-full h-full flex items-center justify-center rounded-lg text-light-100 text-4xl`}
-									>
-										<i className="fa-solid fa-image"></i>
-									</div>
-								)}
+					{toolToEdit && (
+						<div className="flex flex-col">
+							<div className="relative mb-16">
+								<div className="absolute right-0 w-[160px] h-[90px] rounded-lg">
+									{image ? (
+										<Image src={image} alt="image" objectFit="cover" layout="fill" className="rounded-lg" priority />
+									) : (
+										<div
+											className={`bg-primary-300 opacity-40 w-full h-full flex items-center justify-center rounded-lg text-light-100 text-4xl`}
+										>
+											<i className="fa-solid fa-image"></i>
+										</div>
+									)}
+								</div>
 							</div>
+							<ImageUploadInput
+								image={image}
+								setImage={setImage}
+								setImageName={setImageName}
+								label={"Product Image (Ratio 16 : 9)"}
+								required={toolToEdit && toolToEdit.image == image ? false : true}
+							/>
 						</div>
-						<ImageUploadInput
-							image={image}
-							setImage={setImage}
-							setImageName={setImageName}
-							label={"Product Image (Ratio 16 : 9)"}
-							required={toolToEdit && toolToEdit.image == image ? false : true}
+					)}
+
+					<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+						<TextInput
+							variant="secondary"
+							label={"Product Name"}
+							type={"text"}
+							value={toolData.name}
+							name={"name"}
+							onFieldChange={onToolDataChange}
+							placeholder="Eg. EverythingAI"
+							required={true}
+						/>
+
+						<TextInput
+							variant="secondary"
+							label={"Product URL (This will be the CTA link on your tool page)"}
+							type={"text"}
+							value={toolData.url}
+							name={"url"}
+							onFieldChange={onToolDataChange}
+							placeholder="Eg. https://everythingai.club"
+							required={true}
+						/>
+
+						<TextInput
+							variant="secondary"
+							label={"Product one liner"}
+							type={"text"}
+							value={toolData.oneLiner}
+							name={"oneLiner"}
+							onFieldChange={onToolDataChange}
+							placeholder="Discover AI tools that fit like a glove: handpicked for your industry and goals."
+							required={true}
 						/>
 					</div>
 
-					<Textarea
-						label={"Use Cases"}
-						value={toolData.useCases}
-						name={"useCases"}
-						onFieldChange={onToolDataChange}
-						placeholder="Some use cases of your product"
-						required={false}
-					/>
+					<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+						<TextInput
+							variant="secondary"
+							label={"YouTube Demo Video Link"}
+							type={"url"}
+							value={toolData.youtubeDemoVideoLink}
+							name={"youtubeDemoVideoLink"}
+							onFieldChange={onToolDataChange}
+							placeholder="A YouTube video link to your product demo"
+							required={false}
+						/>
 
-					<div>
+						<Textarea
+							variant="secondary"
+							label={"Features"}
+							value={toolData.features}
+							name={"features"}
+							onFieldChange={onToolDataChange}
+							placeholder="Your product features"
+							required={false}
+						/>
+					</div>
+
+					<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+						<Dropdown
+							variant="secondary"
+							id={"selectCategory"}
+							label={"Select Category"}
+							name="category"
+							options={categories}
+							objKey={"name"}
+							defaultOption={toolToEdit?.category?.name || categoryDefaultOption}
+							setChoice={onToolDataChange}
+							classes={"w-full"}
+							required={true}
+						/>
+
+						<Dropdown
+							variant="secondary"
+							id={"selectSubCategory"}
+							label={"Select Sub-Category"}
+							name="subCategory"
+							options={category?.subcategories}
+							objKey={"name"}
+							defaultOption={toolToEdit?.subCategory?.name || subCategoryDefaultOption}
+							setChoice={onToolDataChange}
+							classes={"w-full"}
+							required={false}
+						/>
+
+						<Dropdown
+							variant="secondary"
+							id={"selectPricing"}
+							label={"Select Pricing"}
+							name="pricing"
+							options={pricings}
+							objKey={"name"}
+							defaultOption={toolToEdit ? toolToEdit?.pricing?.name + " " + toolToEdit?.pricing?.meta : pricingDefaultOption}
+							setChoice={onToolDataChange}
+							classes={"w-full"}
+							required={true}
+						/>
+					</div>
+				</div>
+
+				<div className="flex flex-col gap-y-6">
+					<div className="flex flex-col bg-light-100 rounded-2xl p-10">
 						<div className="mb-6 font-semibold">Social Links</div>
 
 						<div className="flex flex-col gap-y-8">
 							<TextInput
+								variant="secondary"
 								label={"Twitter"}
 								type={"text"}
 								value={toolData.twitter}
@@ -327,6 +402,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 								required={false}
 							/>
 							<TextInput
+								variant="secondary"
 								label={"Instagram"}
 								type={"text"}
 								value={toolData.instagram}
@@ -336,6 +412,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 								required={false}
 							/>
 							<TextInput
+								variant="secondary"
 								label={"LinkedIn"}
 								type={"text"}
 								value={toolData.linkedin}
@@ -345,6 +422,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 								required={false}
 							/>
 							<TextInput
+								variant="secondary"
 								label={"YouTube"}
 								type={"text"}
 								value={toolData.youtube}
@@ -355,6 +433,8 @@ const SubmitTool = ({ toolToEdit = null }) => {
 							/>
 						</div>
 					</div>
+
+					<UseCasesInput toolData={toolData} setToolData={setToolData} />
 				</div>
 			</div>
 
@@ -365,6 +445,20 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						<i className="fas fa-angle-double-right absolute opacity-0 font-bold mt-1 pl-2 transition-all duration-500 group-hover:opacity-100"></i>
 					</span>
 				</Button>
+				{/* <Button
+					variant={"primary"}
+					classes="text-md px-4 py-3 group mt-4"
+					disabled={isBrowser && !document?.getElementById("tool-form")?.checkValidity()}
+				>
+					{isBrowser && !document?.getElementById("tool-form")?.checkValidity() ? (
+						<span>Submit</span>
+					) : (
+						<span className="transition-all duration-500 group-hover:pr-6">
+							Submit
+							<i className="fas fa-angle-double-right absolute opacity-0 font-bold mt-1 pl-2 transition-all duration-500 group-hover:opacity-100"></i>
+						</span>
+					)}
+				</Button> */}
 			</div>
 		</form>
 	);

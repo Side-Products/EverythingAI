@@ -61,7 +61,7 @@ a {
 	@apply transition duration-300 opacity-100 bg-gradient-to-tr from-primary-400 to-primary-600 animate-bg hover:opacity-90;
 }
 .bg-gradient-primary-tr-loading {
-	@apply bg-gradient-to-tr from-primary-700 to-primary-900 animate-bg;
+	@apply bg-gradient-to-tr from-primary-200 to-primary-300 animate-bg;
 }
 .bg-gradient-primary-tr-outline {
 	@apply bg-gradient-to-tr from-purple-600 via-violet-600 to-indigo-600 animate-bg;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import RequiredAsterisk from "@/components/ui/RequiredAsterisk";
 
-export default function Dropdown({ label = "", id, name = "", options = [], objKey, setChoice, classes, defaultOption, required }) {
+export default function Dropdown({ label = "", id, name = "", options = [], objKey, setChoice, classes, defaultOption, required = true, variant = "primary" }) {
 	const [dropdownOptions, setDropdownOptions] = useState(options);
 
 	useEffect(() => {
@@ -21,6 +21,7 @@ export default function Dropdown({ label = "", id, name = "", options = [], objK
 					name={name}
 					className={
 						"w-full focus:ring-primary-500 transition duration-300 text-dark-300 text-sm font-medium rounded-md cursor-pointer py-[0.5rem] px-[0.75rem] border-transparent border-r-[10px] outline-none " +
+						(variant == "secondary" ? "bg-light-200/70 " : "bg-light-100 ") +
 						classes
 					}
 					onChange={(e) => setChoice && setChoice(e)}

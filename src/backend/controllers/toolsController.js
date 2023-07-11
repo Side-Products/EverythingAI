@@ -8,23 +8,34 @@ import ErrorHandler from "@/backend/utils/errorHandler";
 import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
 import APIFeatures from "@/backend/utils/apiFeatures";
 import { generateSlug } from "@/utils/Helpers";
+import axios from "node_modules/axios/index";
 
 // add to db => /api/tools
 const createTool = catchAsyncErrors(async (req, res) => {
+	const userId = req.user._id || req.user.id;
 	// save to db
-	const { name, url, image, oneLiner, category, subCategory, pricing, twitter, instagram, linkedin, youtube } = req.body;
+	const { name, url, image, oneLiner, youtubeDemoVideoLink, features, useCases, category, subCategory, pricing, twitter, instagram, linkedin, youtube } =
+		req.body;
 
-	const receivedSubCategory = await SubCategory.findById(subCategory._id);
-	if (receivedSubCategory.categoryId.toString() !== category._id.toString()) {
-		return next(new ErrorHandler("Sub-category does not belong to the category", 404));
+	if (subCategory) {
+		const receivedSubCategory = await SubCategory.findById(subCategory._id);
+		if (receivedSubCategory.categoryId.toString() !== category._id.toString()) {
+			return next(new ErrorHandler("Sub-category does not belong to the category", 404));
+		}
 	}
 
+	const sanitizedUseCases = useCases.filter((useCase) => useCase.heading !== "" && useCase.content !== "");
+
 	const tool = await Tool.create({
+		user: userId,
 		name,
 		slug: generateSlug(name),
 		url,
 		image,
 		oneLiner,
+		youtubeDemoVideoLink,
+		features,
+		useCases: sanitizedUseCases,
 		category: category._id,
 		subCategory: subCategory._id,
 		pricing: pricing._id,
@@ -383,17 +394,25 @@ const updateTool = catchAsyncErrors(async (req, res, next) => {
 	if (!tool) {
 		return next(new ErrorHandler("No tool found with this id", 404));
 	}
-	const { category, subCategory } = req.body;
-	const receivedSubCategory = await SubCategory.findById(subCategory._id);
-	if (receivedSubCategory.categoryId.toString() !== category._id.toString()) {
-		return next(new ErrorHandler("Sub-category does not belong to the category", 404));
+	const { category, subCategory, useCases } = req.body;
+	if (subCategory) {
+		const receivedSubCategory = await SubCategory.findById(subCategory._id);
+		if (receivedSubCategory.categoryId.toString() !== category._id.toString()) {
+			return next(new ErrorHandler("Sub-category does not belong to the category", 404));
+		}
 	}
 
-	tool = await Tool.findByIdAndUpdate(req.query.id, req.body, {
-		new: true,
-		runValidators: true,
-		useFindAndModify: false,
-	});
+	const sanitizedUseCases = useCases.filter((useCase) => useCase.heading !== "" && useCase.content !== "");
+
+	tool = await Tool.findByIdAndUpdate(
+		req.query.id,
+		{ ...req.body, useCases: sanitizedUseCases },
+		{
+			new: true,
+			runValidators: true,
+			useFindAndModify: false,
+		}
+	);
 	res.status(200).json({ success: true, tool });
 });
 
@@ -482,7 +501,9 @@ const verifyTool = catchAsyncErrors(async (req, res, next) => {
 		return next(new ErrorHandler("No tool found with this id", 404));
 	}
 
-	tool = await Tool.findByIdAndUpdate(req.query.id, { verified: true });
+	const result = await axios.post(`http://ec2-65-2-37-76.ap-south-1.compute.amazonaws.com:8080/screenshot`, { url: tool.url });
+
+	tool = await Tool.findByIdAndUpdate(req.query.id, { verified: true, image: result.data.Location });
 	res.status(200).json({ success: true, tool });
 });
 

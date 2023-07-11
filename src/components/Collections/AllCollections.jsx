@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCollections } from "@/redux/actions/collectionActions";
 import CollectionCard from "@/components/Cards/CollectionCard";
-import TopGradient from "@/components/ui/BgGradient/TopGradient";
-import BottomGradient from "@/components/ui/BgGradient/BottomGradient";
 
 export default function AllCollections() {
 	const dispatch = useDispatch();
@@ -16,8 +14,6 @@ export default function AllCollections() {
 
 	return (
 		<div>
-			<TopGradient />
-
 			<h1 className="text-[40px] sm:text-[60px] md:text-[70px] lg:text-[70px] leading-[120px] font-bold text-center tracking-[-1px] text-gradient-primary-tr">
 				Collections
 			</h1>
@@ -28,8 +24,6 @@ export default function AllCollections() {
 					))}
 				</div>
 			)}
-
-			<BottomGradient />
 		</div>
 	);
 }

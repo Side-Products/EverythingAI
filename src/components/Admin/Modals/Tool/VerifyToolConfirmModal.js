@@ -6,19 +6,23 @@ import { useRouter } from "next/router";
 import { verifyTool, clearErrors } from "@/redux/actions/toolActions";
 import { VERIFY_TOOL_RESET } from "@/redux/constants/toolConstants";
 import { StatusContext } from "@/store/StatusContextProvider";
-import Loader from "@/components/ui/Loader";
+import { LoadingContext } from "@/store/LoadingContextProvider";
 import { sleep } from "@/utils/Sleep";
 
 const VerifyToolConfirmModal = ({ isOpen, setOpen, toolToVerify }) => {
 	const { setSuccess, setError } = useContext(StatusContext);
+	const { setLoading } = useContext(LoadingContext);
 
 	const dispatch = useDispatch();
 	const router = useRouter();
 
-	const { error, isVerified, loading } = useSelector((state) => state.verifyTool);
+	const { error, isVerified } = useSelector((state) => state.verifyTool);
 
 	useEffect(() => {
 		if (isVerified) {
+			setLoading({
+				status: false,
+			});
 			setSuccess({
 				title: "Tool verified successfully",
 				message: "The selected tool was verified",
@@ -32,6 +36,9 @@ const VerifyToolConfirmModal = ({ isOpen, setOpen, toolToVerify }) => {
 		}
 
 		if (error) {
+			setLoading({
+				status: false,
+			});
 			setError({
 				title: "Something went wrong",
 				message: error,
@@ -44,11 +51,13 @@ const VerifyToolConfirmModal = ({ isOpen, setOpen, toolToVerify }) => {
 	const verifyToolHandler = () => {
 		dispatch(verifyTool(toolToVerify._id));
 		setOpen(false);
+		setLoading({
+			status: true,
+			title: "Verifying tool...",
+		});
 	};
 
-	return loading ? (
-		<Loader />
-	) : (
+	return (
 		<Modal
 			isOpen={isOpen}
 			image={

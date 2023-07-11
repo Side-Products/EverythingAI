@@ -135,12 +135,12 @@ export default function AllTools() {
 												{tool.name}
 											</td>
 											<td className="p-3">
-												<Image src={tool.image} alt={tool.name} width={80} height={45} className="rounded" />
+												{tool.image ? <Image src={tool.image} alt={tool.name} width={80} height={45} className="rounded" /> : "-"}
 											</td>
 											<td className="p-3">{tool.url}</td>
 											<td className="p-3">{tool.oneLiner}</td>
 											<td className="p-3">{tool.category.name}</td>
-											<td className="p-3">{tool.subCategory.name}</td>
+											<td className="p-3">{tool.subCategory ? tool.subCategory.name : "-"}</td>
 											<td className="p-3">{tool.pricing.name}</td>
 											<td className="p-3">
 												<div className="flex gap-x-2">
@@ -272,12 +272,12 @@ export default function AllTools() {
 												{tool.name}
 											</td>
 											<td className="p-3">
-												<Image src={tool.image} alt={tool.name} width={80} height={45} className="rounded" />
+												{tool.image ? <Image src={tool.image} alt={tool.name} width={80} height={45} className="rounded" /> : "-"}
 											</td>
 											<td className="p-3">{tool.url}</td>
 											<td className="p-3">{tool.oneLiner}</td>
 											<td className="p-3">{tool.category.name}</td>
-											<td className="p-3">{tool.subCategory.name}</td>
+											<td className="p-3">{tool.subCategory ? tool.subCategory.name : "-"}</td>
 											<td className="p-3">{tool.pricing.name}</td>
 											<td className="p-3">
 												<div className="flex gap-x-2">
@@ -420,12 +420,12 @@ export default function AllTools() {
 												{tool.name}
 											</td>
 											<td className="p-3">
-												<Image src={tool.image} alt={tool.name} width={80} height={45} className="rounded" />
+												{tool.image ? <Image src={tool.image} alt={tool.name} width={80} height={45} className="rounded" /> : "-"}
 											</td>
 											<td className="p-3">{tool.url}</td>
 											<td className="p-3">{tool.oneLiner}</td>
 											<td className="p-3">{tool.category.name}</td>
-											<td className="p-3">{tool.subCategory.name}</td>
+											<td className="p-3">{tool.subCategory ? tool.subCategory.name : "-"}</td>
 											<td className="p-3">{tool.pricing.name}</td>
 											<td className="p-3">
 												<div className="flex gap-x-2">

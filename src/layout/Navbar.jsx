@@ -122,7 +122,9 @@ const Navbar = ({ setAuthModalOpen }) => {
 											(router.pathname == "/blog" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
-										<Link href="/blog">Blog</Link>
+										<Link href="https://blog.everythingai.club" target="_blank" rel="noopener noreferrer">
+											Blog
+										</Link>
 									</li>
 								</ul>
 							</div>

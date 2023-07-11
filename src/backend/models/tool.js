@@ -2,8 +2,26 @@ import mongoose from "mongoose";
 import validator from "validator";
 import LikedTool from "./likedTool";
 
+const useCaseSchema = new mongoose.Schema({
+	heading: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	content: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+});
+
 const toolSchema = new mongoose.Schema(
 	{
+		user: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
+		},
 		name: {
 			type: String,
 			required: [true, "Please enter a name"],
@@ -25,7 +43,6 @@ const toolSchema = new mongoose.Schema(
 		},
 		image: {
 			type: String,
-			required: [true, "Please upload an image"],
 			trim: true,
 			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 		},
@@ -53,8 +70,8 @@ const toolSchema = new mongoose.Schema(
 			trim: true,
 		},
 		useCases: {
-			type: String,
-			trim: true,
+			type: [useCaseSchema],
+			default: [],
 		},
 		category: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -64,7 +81,6 @@ const toolSchema = new mongoose.Schema(
 		subCategory: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "SubCategory",
-			required: [true, "Please choose a sub-category"],
 		},
 		pricing: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -103,10 +119,10 @@ const toolSchema = new mongoose.Schema(
 toolSchema.pre("remove", async function (next) {
 	try {
 		// Find all tools with the toolId of the current tool
-		const tools = await LikedTool.find({ tool: this._id });
+		const likedTools = await LikedTool.find({ tool: this._id });
 
 		// Remove each tool
-		for (const tool of tools) {
+		for (const tool of likedTools) {
 			await tool.remove();
 		}
 		next();
