@@ -103,7 +103,7 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 			<ToolsCarousel heading={"Trending in Video"} tools={videoTools} />
 			<ToolsCarousel heading={"Trending in Productivity"} tools={productivityTools} />
 			<ToolsCarousel heading={"Trending in Sales"} tools={salesTools} />
-			<ToolsCarousel heading={"Trending in Prompts"} tools={promptsTools} />
+			{/* <ToolsCarousel heading={"Trending in Prompts"} tools={promptsTools} /> */}
 			{categories && categories.length > 0 && <CategoriesCarousel heading={"Explore Categories"} categories={categories} />}
 		</PageWrapper>
 	);

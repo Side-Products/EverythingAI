@@ -137,7 +137,11 @@ export default function AllTools() {
 											<td className="p-3">
 												{tool.image ? <Image src={tool.image} alt={tool.name} width={80} height={45} className="rounded" /> : "-"}
 											</td>
-											<td className="p-3">{tool.url}</td>
+											<td className="p-3">
+												<a href={tool.url} target="_blank" rel="noopener noreferrer" className="hover:underline hover:text-primary-500">
+													{tool.url.length > 30 ? tool.url.slice(0, 30) + "..." : tool.url}
+												</a>
+											</td>
 											<td className="p-3">{tool.oneLiner}</td>
 											<td className="p-3">{tool.category.name}</td>
 											<td className="p-3">{tool.subCategory ? tool.subCategory.name : "-"}</td>
@@ -274,7 +278,11 @@ export default function AllTools() {
 											<td className="p-3">
 												{tool.image ? <Image src={tool.image} alt={tool.name} width={80} height={45} className="rounded" /> : "-"}
 											</td>
-											<td className="p-3">{tool.url}</td>
+											<td className="p-3">
+												<a href={tool.url} target="_blank" rel="noopener noreferrer" className="hover:underline hover:text-primary-500">
+													{tool.url.length > 30 ? tool.url.slice(0, 30) + "..." : tool.url}
+												</a>
+											</td>
 											<td className="p-3">{tool.oneLiner}</td>
 											<td className="p-3">{tool.category.name}</td>
 											<td className="p-3">{tool.subCategory ? tool.subCategory.name : "-"}</td>
@@ -422,7 +430,11 @@ export default function AllTools() {
 											<td className="p-3">
 												{tool.image ? <Image src={tool.image} alt={tool.name} width={80} height={45} className="rounded" /> : "-"}
 											</td>
-											<td className="p-3">{tool.url}</td>
+											<td className="p-3">
+												<a href={tool.url} target="_blank" rel="noopener noreferrer" className="hover:underline hover:text-primary-500">
+													{tool.url.length > 30 ? tool.url.slice(0, 30) + "..." : tool.url}
+												</a>
+											</td>
 											<td className="p-3">{tool.oneLiner}</td>
 											<td className="p-3">{tool.category.name}</td>
 											<td className="p-3">{tool.subCategory ? tool.subCategory.name : "-"}</td>

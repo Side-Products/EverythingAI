@@ -86,7 +86,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 					<p className="mt-10 text-lg font-medium">{tool?.oneLiner}</p>
 
 					<div className="w-full flex flex-col justify-between items-end mt-auto">
-						<div className="flex mt-4 justify-between items-end">
+						<div className={"flex mt-4 justify-between items-end " + (!hasSocials() && "mb-6")}>
 							<div></div>
 							<span className="text-sm">
 								<i className="fa fa-calendar mr-2"></i>Added on {convertTimestampToNormalDate(createdDate)}

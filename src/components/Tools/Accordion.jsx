@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export default function Accordion({ useCases }) {
 	const [currentlyExpanded, setCurrentlyExpanded] = useState(0);
-	console.log(useCases);
 
 	const accordion = useCases.map((elem, idx) => {
 		return (
