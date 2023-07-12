@@ -12,7 +12,9 @@
 		"start": "next build && next start",
 		"prodStart": "next start",
 		"lint": "next lint",
-		"postbuild": "next-sitemap"
+		"postbuild": "next-sitemap",
+		"populate": "node src/scripts/populate_db.js",
+		"verify": "node src/scripts/verify_tools_and_generate_screenshots.js"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.10.5",
@@ -57,6 +59,7 @@
 	"devDependencies": {
 		"@tailwindcss/forms": "^0.4.0",
 		"autoprefixer": "^10.4.13",
+		"dotenv": "^16.3.1",
 		"eslint": "8.6.0",
 		"eslint-config-next": "^12.3.1",
 		"postcss": "^8.4.20",

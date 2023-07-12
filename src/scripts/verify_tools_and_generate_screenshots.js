@@ -1,7 +1,15 @@
-import mongoose from "mongoose";
-import validator from "validator";
-import LikedTool from "./likedTool";
+// Verify tools and generate screenshots
+const mongoose = require("mongoose");
+const validator = require("validator");
+const axios = require("axios");
 
+// GET latest schemas and data from constants.js
+
+// MongoDB connection URL
+const MONGODB_URI = "mongodb://0.0.0.0:27017/everythingai";
+const screenshot_api_url = "http://ec2-13-232-221-114.ap-south-1.compute.amazonaws.com:8080/screenshot";
+
+// Tool schema
 const toolSchema = new mongoose.Schema(
 	{
 		user: {
@@ -110,20 +118,31 @@ const toolSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-// Define the pre "remove" middleware on the tool schema
-toolSchema.pre("remove", async function (next) {
+const Tool = mongoose.model("Tool", toolSchema);
+
+async function verifyToolsAndGenerateScreenshots() {
 	try {
-		// Find all tools with the toolId of the current tool
-		const likedTools = await LikedTool.find({ tool: this._id });
+		// Connect to MongoDB
+		await mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+		console.log("Connected to MongoDB");
 
-		// Remove each tool
-		for (const tool of likedTools) {
-			await tool.remove();
+		const tools = await Tool.find({});
+		// Verify tools
+		for (const tool of tools) {
+			tool.verified = true;
+			const result = await axios.post(`${screenshot_api_url}`, { url: tool.url });
+			tool.image = result.data.Location;
+			await tool.save();
+			console.log(`Tool "${tool.name}" verified successfully.`);
 		}
-		next();
-	} catch (error) {
-		next(error);
-	}
-});
 
-export default mongoose.models.Tool || mongoose.model("Tool", toolSchema);
+		// Close the connection
+		await mongoose.connection.close();
+		console.log("Connection closed");
+	} catch (error) {
+		console.error("Error:", error);
+	}
+}
+
+// Call the function to populate the categories and subcategories
+verifyToolsAndGenerateScreenshots();

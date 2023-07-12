@@ -64,22 +64,49 @@ const pricingSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
+const userSchema = new mongoose.Schema(
+	{
+		name: {
+			type: String,
+			required: [true, "Please enter a name"],
+			trim: true,
+			maxLength: [50, "Name cannot exceed 50 characters"],
+		},
+		email: {
+			type: String,
+			required: [true, "Please enter your email"],
+			trim: true,
+			unique: true,
+			validate: [validator.isEmail, "Please enter a valid email"],
+		},
+		password: {
+			type: String,
+			required: [true, "Please enter your password"],
+			trim: true,
+			minLength: [6, "Your password must be at least 6 characters long"],
+			select: false,
+		},
+		image: {
+			type: String,
+		},
+		role: {
+			type: String,
+			default: "user",
+		},
+		resetPasswordToken: String,
+		resetPasswordExpire: Date,
+	},
+	{ timestamps: true }
+);
+const User = mongoose.model("User", userSchema);
 // Tool schema
-const useCaseSchema = new mongoose.Schema({
-	heading: {
-		type: String,
-		required: true,
-		trim: true,
-	},
-	content: {
-		type: String,
-		required: true,
-		trim: true,
-	},
-});
-
 const toolSchema = new mongoose.Schema(
 	{
+		user: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
+		},
 		name: {
 			type: String,
 			required: [true, "Please enter a name"],
@@ -127,10 +154,18 @@ const toolSchema = new mongoose.Schema(
 			type: String,
 			trim: true,
 		},
-		useCases: {
-			type: [useCaseSchema],
-			default: [],
-		},
+		useCases: [
+			{
+				heading: {
+					type: String,
+					trim: true,
+				},
+				content: {
+					type: String,
+					trim: true,
+				},
+			},
+		],
 		category: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Category",
@@ -139,7 +174,6 @@ const toolSchema = new mongoose.Schema(
 		subCategory: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "SubCategory",
-			required: [true, "Please choose a sub-category"],
 		},
 		pricing: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -266,23 +300,28 @@ async function populateCategoriesAndSubCategories() {
 		const collectionIds = collectionInsertResult.map((collection) => collection._id);
 		console.log("Collections inserted successfully:", collectionIds);
 
-		// tools.forEach((tool) => {
-		// 	tool.slug = generateSlug(tool.name);
-		// 	// Assign random pricing values to each tool
-		// 	const pricingRandomIndex = Math.floor(Math.random() * pricingIds.length);
-		// 	tool.pricing = mongoose.Types.ObjectId(pricingIds[pricingRandomIndex].toString());
-		// 	console.log("Tool pricing:", tool.pricing);
-		// 	// Assign random category and subCategory values to each tool
-		// 	const randomIndex = Math.floor(Math.random() * subCategoryInsertResult.length);
-		// 	const { categoryId, _id } = subCategoryInsertResult[randomIndex];
-		// 	tool.category = mongoose.Types.ObjectId(categoryId.toString());
-		// 	tool.subCategory = mongoose.Types.ObjectId(_id.toString());
-		// });
+		const user = await User.findOne({}).sort({ createdAt: "asc" });
+		console.log("User found:", user);
 
-		// // Insert the tools into the database
-		// const toolsInsertResult = await Tool.insertMany(tools);
-		// const toolsIds = toolsInsertResult.map((tool) => tool._id);
-		// console.log("Tools inserted successfully:", toolsIds);
+		const toolsArray = tools.reverse();
+		toolsArray.forEach((tool) => {
+			tool.slug = generateSlug(tool.name);
+			tool.user = mongoose.Types.ObjectId(user._id.toString());
+			// Assign random pricing values to each tool
+			const pricingRandomIndex = Math.floor(Math.random() * pricingIds.length);
+			tool.pricing = mongoose.Types.ObjectId(pricingIds[pricingRandomIndex].toString());
+			console.log("Tool pricing:", tool.pricing);
+			// Assign random category and subCategory values to each tool
+			const randomIndex = Math.floor(Math.random() * subCategoryInsertResult.length);
+			const { categoryId, _id } = subCategoryInsertResult[randomIndex];
+			tool.category = mongoose.Types.ObjectId(categoryId.toString());
+			tool.subCategory = mongoose.Types.ObjectId(_id.toString());
+		});
+
+		// Insert the tools into the database
+		const toolsInsertResult = await Tool.insertMany(toolsArray);
+		const toolsIds = toolsInsertResult.map((tool) => tool._id);
+		console.log("Tools inserted successfully:", toolsIds);
 
 		// Close the connection
 		await mongoose.connection.close();

@@ -35,11 +35,7 @@ export default function Tool({}) {
 					<DemoVideo link={tool?.youtubeDemoVideoLink} />
 				</div>
 
-				{tool?.useCases && (
-					<div className="w-full h-full flex p-8 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
-						<UseCases useCases={tool?.useCases} />
-					</div>
-				)}
+				{tool?.useCases && tool?.useCases.length > 0 && <UseCases useCases={tool?.useCases} />}
 
 				<Cta tool={tool} />
 				<ToolsCarousel tools={tool.similarTools} heading={"Explore Similar Tools"} />

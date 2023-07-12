@@ -79,7 +79,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 
 					<div className="w-full flex mt-4 space-x-3">
 						<ToolPill pillText={tool?.category?.name} />
-						<ToolPill pillText={tool?.subCategory?.name} />
+						{tool?.subCategory?.name && <ToolPill pillText={tool?.subCategory?.name} />}
 						<ToolPill pillText={tool?.pricing?.name} chipStyle={getPricingChipClass(tool?.pricing?.name)} tooltip={tool?.pricing?.meta} />
 					</div>
 

@@ -9,6 +9,7 @@ import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
 import APIFeatures from "@/backend/utils/apiFeatures";
 import { generateSlug } from "@/utils/Helpers";
 import axios from "node_modules/axios/index";
+import { screenshot_api_url } from "@/config/constants";
 
 // add to db => /api/tools
 const createTool = catchAsyncErrors(async (req, res) => {
@@ -501,7 +502,7 @@ const verifyTool = catchAsyncErrors(async (req, res, next) => {
 		return next(new ErrorHandler("No tool found with this id", 404));
 	}
 
-	const result = await axios.post(`http://ec2-65-2-37-76.ap-south-1.compute.amazonaws.com:8080/screenshot`, { url: tool.url });
+	const result = await axios.post(`${screenshot_api_url}`, { url: tool.url });
 
 	tool = await Tool.findByIdAndUpdate(req.query.id, { verified: true, image: result.data.Location });
 	res.status(200).json({ success: true, tool });
