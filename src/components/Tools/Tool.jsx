@@ -24,7 +24,7 @@ export default function Tool({}) {
 				<ToolIntro tool={tool} setShareModalOpen={setShareModalOpen} />
 				<EmbedTag toolSlug={query.tool} />
 
-				<div className="w-full h-full grid md:grid-cols-2 gap-x-10">
+				<div className="w-full h-full grid md:grid-cols-2 gap-x-10 gap-y-16">
 					<div className="w-full h-full flex flex-col space-y-4">
 						<div className="text-2xl font-semibold">Features</div>
 						<div className="w-full h-full flex p-8 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
@@ -32,10 +32,15 @@ export default function Tool({}) {
 						</div>
 					</div>
 
-					<DemoVideo link={tool?.youtubeDemoVideoLink} />
-				</div>
+					{tool?.youtubeDemoVideoLink && <DemoVideo link={tool?.youtubeDemoVideoLink} />}
 
-				{tool?.useCases && tool?.useCases.length > 0 && <UseCases useCases={tool?.useCases} />}
+					{tool?.useCases && tool?.useCases.length > 0 && (
+						<div className="w-full flex flex-col space-y-4">
+							<div className="text-2xl font-semibold">Use Cases</div>
+							<UseCases useCases={tool?.useCases} />
+						</div>
+					)}
+				</div>
 
 				<Cta tool={tool} />
 				<ToolsCarousel tools={tool.similarTools} heading={"Explore Similar Tools"} />

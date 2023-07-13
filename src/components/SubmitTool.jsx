@@ -217,11 +217,12 @@ const SubmitTool = ({ toolToEdit = null }) => {
 	// // Uncomment this to use actual data
 	// useEffect(() => {
 	// 	setToolData({
-	// 		name: "Evernote",
-	// 		url: "https://evernote.com",
-	// 		oneLiner: "Evernote is a cross-platform app designed for note taking, organizing, tasks lists, and archiving.",
+	// 		name: "Goodreads",
+	// 		url: "https://www.goodreads.com",
+	// 		oneLiner: "Deciding what to read next? You’re in the right place.",
 	// 		youtubeDemoVideoLink: "https://www.youtube.com/watch?v=2Oa7HqUqD9M",
-	// 		features: "Evernote is a cross-platform app designed for note taking, organizing, tasks lists, and archiving.",
+	// 		features:
+	// 			"See what books your friends are reading.\nTrack the books you're reading, have read, and want to read.\nCheck out your personalized book recommendations. Our recommendation engine analyzes 20 billion data points to give suggestions tailored to your literary tastes.\nFind out if a book is a good fit for you from our community’s reviews.",
 	// 		useCases: [
 	// 			{
 	// 				heading: "Marketing",

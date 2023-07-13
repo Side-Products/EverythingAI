@@ -14,11 +14,6 @@ import AddToCollectionModal from "@/components/Admin/Modals/Tool/AddToCollection
 import { getAllCollections } from "@/redux/actions/collectionActions";
 
 export default function ToolIntro({ tool, setShareModalOpen }) {
-	const createdDate = new Date(tool?.createdAt);
-	const hasSocials = () => {
-		return (tool?.instagram || tool?.twitter || tool?.linkedin || tool?.youtube)?.length > 0;
-	};
-
 	const dispatch = useDispatch();
 	const { data: session } = useSession();
 	const { setAuthModalOpen } = useContext(AuthModalContext);
@@ -39,6 +34,11 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 	}, [dispatch, session]);
 
 	const [isAddToCollectionModalOpen, setAddToCollectionModalOpen] = useState(false);
+
+	const createdDate = new Date(tool?.createdAt);
+	const hasSocials = () => {
+		return (tool?.instagram || tool?.twitter || tool?.linkedin || tool?.youtube)?.length > 0;
+	};
 
 	return (
 		<div>
@@ -69,12 +69,6 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 							</a>
 							<Image src={"/verified_tick.svg"} width={22} height={22} alt="verified tick" />
 						</div>
-						<Link href={tool?.url || ""} target="_blank" rel="noopener noreferrer">
-							<Button type="button">
-								<i className="mr-2 text-base fa-solid fa-arrow-up-right-from-square text-light-100"></i>
-								Visit Site
-							</Button>
-						</Link>
 					</div>
 
 					<div className="w-full flex mt-4 space-x-3">
@@ -86,48 +80,56 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 					<p className="mt-10 text-lg font-medium">{tool?.oneLiner}</p>
 
 					<div className="w-full flex flex-col justify-between items-end mt-auto">
-						<div className={"flex mt-4 justify-between items-end " + (!hasSocials() && "mb-6")}>
+						{/* <div className={"flex mt-4 justify-between items-end " + (!hasSocials() && "mb-6")}>
 							<div></div>
 							<span className="text-sm">
 								<i className="fa fa-calendar mr-2"></i>Added on {convertTimestampToNormalDate(createdDate)}
 							</span>
-						</div>
+						</div> */}
 
 						<div className="w-full flex justify-between items-end mt-auto">
 							<div className="mt-auto">{hasSocials() && <ToolSocials tool={tool} />}</div>
 							<div className="flex space-x-3">
-								<Button
-									onClick={() => {
-										if (session && session.user) {
-											if (tool?.liked) {
-												dispatch(deleteLikedTool(tool?._id));
-												tool.liked = false;
+								<div className="flex space-x-3">
+									<Button
+										onClick={() => {
+											if (session && session.user) {
+												if (tool?.liked) {
+													dispatch(deleteLikedTool(tool?._id));
+													tool.liked = false;
+												} else {
+													dispatch(likeTool(tool?._id));
+													tool.liked = true;
+												}
 											} else {
-												dispatch(likeTool(tool?._id));
-												tool.liked = true;
+												setAuthModalOpen(true);
 											}
-										} else {
-											setAuthModalOpen(true);
-										}
-									}}
-									type="button"
-									variant="classic-100"
-									active={tool?.liked}
-									classes="relative group/like-btn px-10"
-								>
-									<i
-										className={
-											"fa-solid fa-thumbs-up text-lg " +
-											(tool?.liked ? "text-light-100" : "text-dark-200 group-hover/like-btn:text-primary-400")
-										}
-									></i>
-								</Button>
-								<Button type="button" variant="classic-100" onClick={() => setShareModalOpen(true)}>
-									<div className="flex justify-center items-center space-x-2">
-										<i className="fa-solid fa-share-nodes text-lg"></i>
-										<span>Share</span>
-									</div>
-								</Button>
+										}}
+										type="button"
+										variant="classic-100"
+										active={tool?.liked}
+										classes="relative group/like-btn px-10"
+									>
+										<i
+											className={
+												"fa-solid fa-thumbs-up text-lg " +
+												(tool?.liked ? "text-light-100" : "text-dark-200 group-hover/like-btn:text-primary-400")
+											}
+										></i>
+									</Button>
+									<Button type="button" variant="classic-100" onClick={() => setShareModalOpen(true)}>
+										<div className="flex justify-center items-center space-x-2">
+											<i className="fa-solid fa-share-nodes text-lg"></i>
+											<span>Share</span>
+										</div>
+									</Button>
+								</div>
+								<Link href={tool?.url || ""} target="_blank" rel="noopener noreferrer" className="w-fit">
+									<Button type="button" classes={"py-2 px-7 text-base"}>
+										<i className="mr-2 text-base fa-solid fa-arrow-up-right-from-square text-light-100"></i>
+										Visit Site
+									</Button>
+								</Link>
 							</div>
 						</div>
 					</div>

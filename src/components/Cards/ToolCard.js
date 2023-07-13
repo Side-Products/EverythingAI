@@ -119,7 +119,7 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 				</div>
 
 				<div className="relative flex justify-between px-5 pb-5 mt-3">
-					<p className={"text-sm " + styles["oneLiner"]}>{tool?.oneLiner}</p>
+					<p className={"text-sm " + styles["oneLiner"]}>{tool?.oneLiner.length > 35 ? tool?.oneLiner.substring(0, 35) + "..." : tool?.oneLiner}</p>
 					{adminRemoveFromCollectionView && session && session.user && session.user.role == "admin" && (
 						<span
 							className="absolute group-hover:block hidden right-6 bottom-4 text-lg cursor-pointer text-gray-400 hover:text-error-400 transition duration-300"
