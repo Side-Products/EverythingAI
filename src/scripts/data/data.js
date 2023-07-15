@@ -1,17 +1,20 @@
 const pricingOptions = [
 	{ name: "Free", meta: "" },
+	{ name: "Freemium", meta: "" },
 	{ name: "Freemium", meta: "Pay as you go" },
-	{ name: "Free trial", meta: "without credit card" },
-	{ name: "Free trial", meta: "with credit card" },
+	{ name: "Freemium", meta: "Pay only for advanced, otherwise free" },
+	{ name: "Free Trial", meta: "No credit card required" },
+	{ name: "Free Trial", meta: "Credit card required" },
 	{ name: "Premium", meta: "Pay upfront" },
 	{ name: "Subscription", meta: "" },
-	{ name: "Custom", meta: "" },
 ];
 
 const categories = {
 	Marketing: [
 		"Branding",
+		"Video Editing",
 		"SEO",
+		"Music",
 		"Ads/Performance Marketing",
 		"Email Marketing",
 		"Social Media",
@@ -30,11 +33,12 @@ const categories = {
 		"Copywriting",
 		"Summarizer",
 		"Podcasts",
+		"Social Media (YT, Insta, Linkedin)",
 		"Other",
 	],
-	Sales: ["Outreach", "Automation", "Responses"],
-	Product: ["Website Builder", "Landing pages", "Customer Development", "Analytics", "A/B Testing", "Other"],
-	Developer: ["Code Assistant", "Developer Tools", "Low Code/No Code"],
+	Sales: ["Outreach", "Automation", "Responses", "Social Media (YT, Insta, Linkedin)"],
+	Product: ["Website Builder", "Landing pages", "Customer Development", "Analytics", "A/B Testing", "Low Code/No Code", "Other"],
+	Developer: ["Code Assistant", "Dev Tools", "Low Code/No Code"],
 	Data: ["Spreadsheets", "SQL"],
 	Design: ["Presentations", "Thumbnails", "Design Assistant", "Logo Generator", "UI/UX", "Ad creatives"],
 	Productivity: ["Work", "Personal", "Project Management", "Time Management", "Note Taking"],
@@ -50,6 +54,7 @@ const categories = {
 	"3-D": [],
 	Prompts: [],
 	"Search Engine Results": [],
+	"Customer Success": [],
 	Industries: [
 		"Education",
 		"Finance",

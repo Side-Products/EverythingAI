@@ -7,7 +7,7 @@ const axios = require("axios");
 
 // MongoDB connection URL
 const MONGODB_URI = "mongodb://0.0.0.0:27017/everythingai";
-const screenshot_api_url = "http://ec2-13-232-221-114.ap-south-1.compute.amazonaws.com:8080/screenshot";
+const screenshot_api_url = "http://ec2-35-154-166-49.ap-south-1.compute.amazonaws.com:8080/screenshot";
 
 // Tool schema
 const toolSchema = new mongoose.Schema(
