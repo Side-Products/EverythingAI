@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, useRef } from "react";
 import CropImageModal from "./CropImageModal";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 
-export default function ImageUpload({ image, setImage, setImageName, required }) {
+export default function ImageUpload({ image, setImage, setImageName, required, aspectRatio }) {
 	const { loading, setLoading } = useContext(LoadingContext);
 	const [showModal, setShowModal] = useState(false);
 	const [imageToCrop, setImageToCrop] = useState("");
@@ -12,7 +12,6 @@ export default function ImageUpload({ image, setImage, setImageName, required })
 	const selectedImage = useRef(null);
 
 	const circularCrop = false;
-	const aspectRatio = { width: 16, height: 9 };
 	const cropModalValues = { showModal, setShowModal, imageToCrop, setCroppedImage, circularCrop, aspectRatio };
 
 	useEffect(() => {

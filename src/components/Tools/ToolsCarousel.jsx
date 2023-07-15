@@ -2,7 +2,7 @@ import { SwiperSlide } from "swiper/react";
 import Carousel from "@/components/ui/Carousel";
 import ToolCard from "@/components/Cards/ToolCard";
 
-export default function ToolsCarousel({ heading, tools, childrenSlides, setActiveSlideIdx }) {
+export default function ToolsCarousel({ heading, tools, childrenSlides, setActiveSlideIdx, loading = false }) {
 	if (childrenSlides && childrenSlides.length > 0) {
 		const breakpoints = {
 			320: {
@@ -56,29 +56,32 @@ export default function ToolsCarousel({ heading, tools, childrenSlides, setActiv
 	}
 
 	return (
-		<Carousel heading={heading}>
-			{tools && tools.length > 0 ? (
-				tools.map((tool) => (
-					<SwiperSlide key={tool._id}>
-						<ToolCard tool={tool} />
-					</SwiperSlide>
-				))
-			) : (
-				<>
-					<SwiperSlide>
-						<ToolCard />
-					</SwiperSlide>
-					<SwiperSlide>
-						<ToolCard />
-					</SwiperSlide>
-					<SwiperSlide>
-						<ToolCard />
-					</SwiperSlide>
-					<SwiperSlide>
-						<ToolCard />
-					</SwiperSlide>
-				</>
-			)}
-		</Carousel>
+		loading ||
+		(tools && tools.length > 0 && (
+			<Carousel heading={heading}>
+				{tools && tools.length > 0 ? (
+					tools.map((tool) => (
+						<SwiperSlide key={tool._id}>
+							<ToolCard tool={tool} />
+						</SwiperSlide>
+					))
+				) : (
+					<>
+						<SwiperSlide>
+							<ToolCard />
+						</SwiperSlide>
+						<SwiperSlide>
+							<ToolCard />
+						</SwiperSlide>
+						<SwiperSlide>
+							<ToolCard />
+						</SwiperSlide>
+						<SwiperSlide>
+							<ToolCard />
+						</SwiperSlide>
+					</>
+				)}
+			</Carousel>
+		))
 	);
 }

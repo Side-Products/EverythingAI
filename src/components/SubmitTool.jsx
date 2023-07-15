@@ -38,9 +38,15 @@ const SubmitTool = ({ toolToEdit = null }) => {
 		instagram: "",
 		linkedin: "",
 		youtube: "",
+		featured: "",
 	});
 	const [image, setImage] = useState("");
 	const [imageName, setImageName] = useState("");
+
+	const [logo, setLogo] = useState("");
+	const [logoName, setLogoName] = useState("");
+
+	const [aspectRatio, setAspectRatio] = useState({ width: 16, height: 9 });
 
 	const categoryDefaultOption = "Select a category";
 	const subCategoryDefaultOption = "Select a sub-category";
@@ -103,8 +109,10 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				instagram: toolToEdit.instagram,
 				linkedin: toolToEdit.linkedin,
 				youtube: toolToEdit.youtube,
+				featured: toolToEdit.featured,
 			});
 			setImage(toolToEdit.image);
+			setLogo(toolToEdit.logo);
 		}
 	}, []);
 
@@ -128,6 +136,21 @@ const SubmitTool = ({ toolToEdit = null }) => {
 					return;
 				}
 
+				let tool = {
+					...toolData,
+				};
+				if (!tool.featured || tool.featured == undefined || tool.featured == "undefined") {
+					delete tool.featured;
+				}
+				if (tool.featured && logo == "") {
+					setError({
+						title: "Logo not uploaded",
+						message: "Please upload a logo to set the tool as featured",
+						showErrorBox: true,
+					});
+					return;
+				}
+
 				if (toolToEdit) {
 					if (image && imageName) {
 						const imageUrl = await uploadImage(image, imageName, setLoading, setError);
@@ -136,15 +159,27 @@ const SubmitTool = ({ toolToEdit = null }) => {
 							return;
 						}
 
-						const tool = {
-							...toolData,
+						tool = {
+							...tool,
 							image: imageUrl,
 						};
-						dispatch(updateTool(toolToEdit._id, tool));
-						return;
-					} else {
-						dispatch(updateTool(toolToEdit._id, toolData));
 					}
+
+					if (logo && logoName) {
+						const logoUrl = await uploadImage(logo, logoName, setLoading, setError);
+						if (!logoUrl) {
+							setLoading({ status: false, showProgressBar: false, progress: 0 });
+							return;
+						}
+
+						tool = {
+							...tool,
+							logo: logoUrl,
+						};
+					}
+
+					dispatch(updateTool(toolToEdit._id, tool));
+					return;
 				} else {
 					dispatch(createTool(toolData));
 				}
@@ -184,6 +219,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 
 	const { success, tool, error } = useSelector((state) => state.createTool);
 	const router = useRouter();
+	const { query } = router;
 	useEffect(() => {
 		if (success && tool) {
 			setLoading({ status: false });
@@ -262,7 +298,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 		>
 			<div className="w-full grid grid-cols-2 mt-20 gap-x-16 items-start">
 				<div className="flex flex-col gap-y-8">
-					{toolToEdit && (
+					{toolToEdit && query?.feature !== "true" && (
 						<div className="flex flex-col">
 							<div className="relative mb-16">
 								<div className="absolute right-0 w-[160px] h-[90px] rounded-lg">
@@ -283,7 +319,47 @@ const SubmitTool = ({ toolToEdit = null }) => {
 								setImageName={setImageName}
 								label={"Product Image (Ratio 16 : 9)"}
 								required={toolToEdit && toolToEdit.image == image ? false : true}
+								aspectRatio={aspectRatio}
 							/>
+						</div>
+					)}
+
+					{toolToEdit && (
+						<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+							<TextInput
+								variant="secondary"
+								label={"Featured"}
+								type={"number"}
+								value={toolData.featured}
+								name={"featured"}
+								onFieldChange={onToolDataChange}
+								placeholder="Enter featured position"
+								required={false}
+							/>
+
+							<div className="flex flex-col" onClick={() => setAspectRatio({ width: 1, height: 1 })}>
+								<div className="relative mb-16">
+									<div className="absolute right-0 w-[90px] h-[90px] rounded-lg">
+										{logo ? (
+											<Image src={logo} alt="logo" objectFit="cover" layout="fill" className="rounded-lg" priority />
+										) : (
+											<div
+												className={`bg-primary-300 opacity-40 w-full h-full flex items-center justify-center rounded-lg text-light-100 text-4xl`}
+											>
+												<i className="fa-solid fa-image"></i>
+											</div>
+										)}
+									</div>
+								</div>
+								<ImageUploadInput
+									image={logo}
+									setImage={setLogo}
+									setImageName={setLogoName}
+									label={"Logo"}
+									required={false}
+									aspectRatio={aspectRatio}
+								/>
+							</div>
 						</div>
 					)}
 

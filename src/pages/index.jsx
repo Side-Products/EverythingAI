@@ -51,9 +51,8 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 		dispatch(getAllCategories(10));
 	}, [dispatch]);
 
-	const { marketingTools, designTools, developerTools, productivityTools, imagesTools, promptsTools, videoTools, productTools, salesTools } = useSelector(
-		(state) => state.toolsForHomepage
-	);
+	const { loading, marketingTools, designTools, developerTools, productivityTools, imagesTools, promptsTools, videoTools, productTools, salesTools } =
+		useSelector((state) => state.toolsForHomepage);
 	const { categories } = useSelector((state) => state.allCategories);
 
 	const [selectedTrendingOption, setSelectedTrendingOption] = useState("7d");
@@ -95,14 +94,14 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 				</div>
 			</div>
 
-			<ToolsCarousel heading={"Top Tools in Marketing"} tools={marketingTools} />
-			<ToolsCarousel heading={"Trending in Images"} tools={imagesTools} />
-			<ToolsCarousel heading={"Trending in Design"} tools={designTools} />
-			<ToolsCarousel heading={"Trending in Product"} tools={productTools} />
-			<ToolsCarousel heading={"Trending in Developer"} tools={developerTools} />
-			<ToolsCarousel heading={"Trending in Video"} tools={videoTools} />
-			<ToolsCarousel heading={"Trending in Productivity"} tools={productivityTools} />
-			<ToolsCarousel heading={"Trending in Sales"} tools={salesTools} />
+			<ToolsCarousel heading={"Top Tools in Marketing"} tools={marketingTools} loading={loading} />
+			<ToolsCarousel heading={"Trending in Images"} tools={imagesTools} loading={loading} />
+			<ToolsCarousel heading={"Trending in Design"} tools={designTools} loading={loading} />
+			<ToolsCarousel heading={"Trending in Product"} tools={productTools} loading={loading} />
+			<ToolsCarousel heading={"Trending in Developer"} tools={developerTools} loading={loading} />
+			<ToolsCarousel heading={"Trending in Video"} tools={videoTools} loading={loading} />
+			<ToolsCarousel heading={"Trending in Productivity"} tools={productivityTools} loading={loading} />
+			<ToolsCarousel heading={"Trending in Sales"} tools={salesTools} loading={loading} />
 			{/* <ToolsCarousel heading={"Trending in Prompts"} tools={promptsTools} /> */}
 			{categories && categories.length > 0 && <CategoriesCarousel heading={"Explore Categories"} categories={categories} />}
 		</PageWrapper>

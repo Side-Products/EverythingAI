@@ -760,8 +760,8 @@ tr th:nth-child(1) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 
-.verifiedTools-table tr td:nth-child(n + 12),
-.verifiedTools-table tr th:nth-child(n + 12) {
+.verifiedTools-table tr td:nth-child(n + 13),
+.verifiedTools-table tr th:nth-child(n + 13) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 

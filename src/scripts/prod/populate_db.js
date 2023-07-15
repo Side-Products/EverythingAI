@@ -364,10 +364,8 @@ async function populateCategoriesAndSubCategories() {
 			const categoryName = tool.category;
 			if (categoryName && categories.hasOwnProperty(categoryName)) {
 				// Get the category ID from the categories object
-				const categoryId = categoryIds.find(async (id) => {
-					const foundCategory = await Category.findById(id);
-					return foundCategory.name === categoryName;
-				});
+				const category = categoryInsertResult.find(async (category) => category.name === categoryName);
+				const categoryId = category._id;
 				if (!categoryId) {
 					console.error(`Category ID not found for category: ${categoryName}`);
 					await deleteDatabase();
