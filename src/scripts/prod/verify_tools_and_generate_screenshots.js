@@ -6,7 +6,7 @@ const axios = require("axios");
 // GET latest schemas and data from constants.js
 
 // MongoDB connection URL
-const MONGODB_URI = "mongodb://0.0.0.0:27017/everythingai";
+const MONGODB_URI = "mongodb+srv://musixverse:Mus!xVerse007NFT@cluster0.zdujeeq.mongodb.net/everythingai?retryWrites=true&w=majority";
 const screenshot_api_url = "http://ec2-35-154-166-49.ap-south-1.compute.amazonaws.com:8080/screenshot";
 
 // Tool schema
@@ -148,7 +148,7 @@ async function verifyToolsAndGenerateScreenshots() {
 					if (e.message == "timeout of 20000ms exceeded") {
 						console.log(`!! Timeout exceeded for tool ${tool.name}. Something is probably wrong with the url. !!`);
 					} else {
-						console.log("Error:", e);
+						console.log("Error:", e.data.message);
 					}
 					continue;
 				}

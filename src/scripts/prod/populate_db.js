@@ -320,22 +320,24 @@ async function populateCategoriesAndSubCategories() {
 
 		// Populate subcategories collection
 		const subCategoryDocuments = [];
-		Object.entries(categories).forEach(async ([category, subcategories]) => {
-			const categoryId = categoryIds.find(async (id) => {
-				const foundCategory = await Category.findById(id);
-				return foundCategory.name === category;
-			});
+		for (const [category, subcategories] of Object.entries(categories)) {
+			const categoryObj = categoryInsertResult.find((cat) => cat.name === category);
+			if (!categoryObj) {
+				console.error(`Category not found for category: ${category}`);
+				await deleteDatabase();
+			}
+			const categoryId = categoryObj._id;
 			if (!categoryId) {
 				console.error(`Category ID not found for category: ${category}`);
 				await deleteDatabase();
 			}
-			subcategories.forEach((subcategory) => {
+			for (const subcategory of subcategories) {
 				subCategoryDocuments.push({
 					name: subcategory,
 					categoryId: categoryId,
 				});
-			});
-		});
+			}
+		}
 		const subCategoryInsertResult = await SubCategory.insertMany(subCategoryDocuments);
 		console.log(subCategoryInsertResult.length, "Subcategories inserted successfully");
 
@@ -364,7 +366,7 @@ async function populateCategoriesAndSubCategories() {
 			const categoryName = tool.category;
 			if (categoryName && categories.hasOwnProperty(categoryName)) {
 				// Get the category ID from the categories object
-				const category = categoryInsertResult.find(async (category) => category.name === categoryName);
+				const category = await categoryInsertResult.find((cat) => cat.name === categoryName);
 				const categoryId = category._id;
 				if (!categoryId) {
 					console.error(`Category ID not found for category: ${categoryName}`);
@@ -374,13 +376,13 @@ async function populateCategoriesAndSubCategories() {
 
 				const subCategoryName = tool.subCategory;
 				if (subCategoryName) {
-					const subCategory = subCategoryInsertResult.find(
-						(subcategory) => subcategory.name === subCategoryName && subcategory.categoryId.toString() === categoryId.toString()
+					const subCategory = await subCategoryInsertResult.find(
+						(subcategory) => subcategory.name === subCategoryName && subcategory.categoryId.equals(categoryId)
 					);
 					if (subCategory) {
 						tool.subCategory = mongoose.Types.ObjectId(subCategory._id.toString());
 					} else {
-						console.error(`Subcategory not found for tool: ${tool.name}`);
+						console.error(`Subcategory "${tool.subCategory}" not found in category "${category.name}" for tool: ${tool.name}`);
 						await deleteDatabase();
 					}
 				} else {
@@ -393,7 +395,7 @@ async function populateCategoriesAndSubCategories() {
 			// Lookup pricing name and meta in pricingOptions array
 			const { name, meta } = tool.pricing;
 			if (name) {
-				const pricing = pricingInsertResult.find((pricingOption) => pricingOption.name === name && pricingOption.meta === meta);
+				const pricing = await pricingInsertResult.find((pricingOption) => pricingOption.name === name && pricingOption.meta === meta);
 				if (pricing) {
 					tool.pricing = mongoose.Types.ObjectId(pricing._id.toString());
 				} else {
