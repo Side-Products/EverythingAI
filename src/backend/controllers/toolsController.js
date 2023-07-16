@@ -742,14 +742,100 @@ const getFeaturedTools = catchAsyncErrors(async (req, res, next) => {
 	return res.status(200).json({ success: true, tools });
 });
 
+const getTrendingSponsoredTools = async () => {
+	const pipeline = [
+		{
+			$match: {
+				trendingSponsored: { $exists: true, $ne: 0 },
+			},
+		},
+		{
+			$lookup: {
+				from: "likedtools",
+				localField: "_id",
+				foreignField: "tool",
+				as: "likes",
+			},
+		},
+		{
+			$addFields: {
+				likeCount: { $size: "$likes" },
+			},
+		},
+		{
+			$lookup: {
+				from: "categories",
+				localField: "category",
+				foreignField: "_id",
+				as: "category",
+			},
+		},
+		{
+			$lookup: {
+				from: "subcategories",
+				localField: "subCategory",
+				foreignField: "_id",
+				as: "subCategory",
+			},
+		},
+		{
+			$lookup: {
+				from: "pricings",
+				localField: "pricing",
+				foreignField: "_id",
+				as: "pricing",
+			},
+		},
+		{
+			$project: {
+				name: 1,
+				slug: 1,
+				url: 1,
+				image: 1,
+				oneLiner: 1,
+				featured: 1,
+				category: { $arrayElemAt: ["$category", 0] },
+				subCategory: { $arrayElemAt: ["$subCategory", 0] },
+				pricing: { $arrayElemAt: ["$pricing", 0] },
+				createdAt: 1,
+				likeCount: 1,
+				trendingSponsored: 1,
+			},
+		},
+	];
+
+	const toolsWithTrendingSponsored = await Tool.aggregate(pipeline);
+	return toolsWithTrendingSponsored;
+};
+
 // get leaderboard tools => /api/tools/leaderboard
 const getLeaderboardTools = catchAsyncErrors(async (req, res, next) => {
-	const promises = [getTrendingTools(7 * 24 * 60 * 60 * 1000), getTrendingTools(30 * 24 * 60 * 60 * 1000)].map(async (typePromise) => {
-		const tools = await maybeAddLikedTools(req, await typePromise);
-		return tools;
+	const promises = [getTrendingTools(7 * 24 * 60 * 60 * 1000), getTrendingTools(30 * 24 * 60 * 60 * 1000), getTrendingSponsoredTools()].map(
+		async (typePromise) => {
+			const tools = await maybeAddLikedTools(req, await typePromise);
+			return tools;
+		}
+	);
+
+	const [trendingToolsOfTheWeek, topToolsOfTheMonth, trendingSponsoredTools] = await Promise.all(promises);
+
+	trendingSponsoredTools.map((tool, idx) => {
+		for (let i = 0; i < trendingToolsOfTheWeek.length; i++) {
+			if (trendingSponsoredTools[idx].trendingSponsored == i + 1) {
+				// Add the sponsored tool at position i in trendingToolsOfTheWeek and shift all other tools after that
+				trendingToolsOfTheWeek.splice(i, 0, tool);
+			}
+		}
 	});
 
-	const [trendingToolsOfTheWeek, topToolsOfTheMonth] = await Promise.all(promises);
+	trendingSponsoredTools.map((tool, idx) => {
+		for (let i = 0; i < topToolsOfTheMonth.length; i++) {
+			if (trendingSponsoredTools[idx].trendingSponsored == i + 1) {
+				// Add the sponsored tool at position i in topToolsOfTheMonth and shift all other tools after that
+				topToolsOfTheMonth.splice(i, 0, tool);
+			}
+		}
+	});
 
 	res.status(200).json({
 		success: true,

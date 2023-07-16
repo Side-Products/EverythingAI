@@ -39,6 +39,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 		linkedin: "",
 		youtube: "",
 		featured: "",
+		trendingSponsored: "",
 	});
 	const [image, setImage] = useState("");
 	const [imageName, setImageName] = useState("");
@@ -110,6 +111,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				linkedin: toolToEdit.linkedin,
 				youtube: toolToEdit.youtube,
 				featured: toolToEdit.featured,
+				trendingSponsored: toolToEdit.trendingSponsored,
 			});
 			setImage(toolToEdit.image);
 			setLogo(toolToEdit.logo);
@@ -141,6 +143,9 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				};
 				if (!tool.featured || tool.featured == undefined || tool.featured == "undefined") {
 					delete tool.featured;
+				}
+				if (!tool.trendingSponsored || tool.trendingSponsored == undefined || tool.trendingSponsored == "undefined") {
+					delete tool.trendingSponsored;
 				}
 				if (tool.featured && logo == "") {
 					setError({
@@ -324,7 +329,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						</div>
 					)}
 
-					{toolToEdit && (
+					{toolToEdit && query?.feature == "true" && (
 						<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
 							<TextInput
 								variant="secondary"
@@ -360,6 +365,21 @@ const SubmitTool = ({ toolToEdit = null }) => {
 									aspectRatio={aspectRatio}
 								/>
 							</div>
+						</div>
+					)}
+
+					{toolToEdit && (
+						<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+							<TextInput
+								variant="secondary"
+								label={"Trending Sponsored"}
+								type={"number"}
+								value={toolData.trendingSponsored}
+								name={"trendingSponsored"}
+								onFieldChange={onToolDataChange}
+								placeholder="Enter position"
+								required={false}
+							/>
 						</div>
 					)}
 
