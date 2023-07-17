@@ -6,7 +6,7 @@ import { Navigation, Mousewheel, Keyboard } from "swiper";
 export default function Carousel({ heading, children, setActiveSlideIdx = null, breakpoints = null, classes }) {
 	return (
 		<div>
-			{heading && <h1 className="text-3xl font-semibold -mb-7">{heading}</h1>}
+			{heading && <h1 className="text-xl font-semibold sm:text-2xl lg:text-3xl -mb-7">{heading}</h1>}
 			<div className={"swiper-container " + classes}>
 				<Swiper
 					breakpoints={

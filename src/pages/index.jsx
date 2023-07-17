@@ -71,10 +71,10 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 		<PageWrapper classes="w-full max-w-[1920px] pt-32 pb-32 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-20">
 			<HeroSection featuredTools={featuredTools} />
 
-			<div className="bg-white py-10 px-8 rounded-2xl mb-24">
-				<div className="flex justify-between">
-					<h2 className="font-semibold text-3xl mb-12 ml-4">Trending Tools {selectedTrendingOption == "7d" ? "of the week" : "of the month"}</h2>
-					<div className="flex h-fit text-sm bg-gray-200 p-1 rounded-xl z-10">
+			<div className="px-8 py-10 mb-24 bg-white rounded-2xl">
+				<div className="flex items-center justify-between mb-12">
+					<h2 className="ml-4 text-xl font-semibold sm:text-2xl lg:text-3xl">Trending Tools {selectedTrendingOption == "7d" ? "of the week" : "of the month"}</h2>
+					<div className="z-10 flex p-1 text-sm bg-gray-200 h-fit rounded-xl">
 						<div
 							className={`px-4 py-2 rounded-xl cursor-pointer ${selectedTrendingOption == "7d" ? "bg-light-200" : "bg-gray-200"}`}
 							onClick={() => handleTrendingOptionClick("7d")}
@@ -89,7 +89,7 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 						</div>
 					</div>
 				</div>
-				<div className="flex space-x-8">
+				<div className="flex space-x-8 overflow-x-auto">
 					<TrendTable tools={leaderboardTools} limit={5} startIdx={0} />
 					<TrendTable tools={leaderboardTools} limit={5} startIdx={5} />
 				</div>

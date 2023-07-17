@@ -21,12 +21,12 @@ export default function EmbedTag({ toolSlug, hostURL = "https://everything-ai.ve
 
 	return (
 		<div>
-			<h1 className="text-2xl font-semibold">Promote your tool</h1>
-			<div className="flex items-center justify-between p-4 mt-6 border-2 border-gray-200 rounded-xl">
-				<img src={`/api/tools/image/${toolSlug}`} alt="sometign" width="200" height="50"></img>
+			<h1 className="text-xl font-semibold md:text-2xl">Promote your tool</h1>
+			<div className="flex items-center justify-between p-4 mt-3 border-2 border-gray-200 md:mt-6 rounded-xl">
+				<img src={`/api/tools/image/${toolSlug}`} className="md:w-[200px] w-[125px] md:h-[50px] h-[32px] " alt="sometign"></img>
 				<Button variant="classic" onClick={copyToClipboard} classes={"max-w-fit"}>
-					<span className="material-symbols-outlined">content_copy</span>
-					<span className="ml-2">Copy Embed Code</span>
+					<span className="text-sm material-symbols-outlined md:text-base">content_copy</span>
+					<span className="ml-2 text-xs md:text-sm">Copy Embed Code</span>
 				</Button>
 			</div>
 		</div>

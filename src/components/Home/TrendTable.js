@@ -56,7 +56,7 @@ export default function TrendTable({ tools, startIdx, limit }) {
 	}
 
 	return (
-		<div className="flex flex-col w-[48%] space-y-3">
+		<div className="flex flex-col w-[48%] min-w-[578px] space-y-3">
 			{/* Header div */}
 			<div className="flex items-center w-full px-4 pb-3 mb-2 border-b-[1px] border-[#e5e8eb]  text-[#646d75] text-sm justify-between">
 				<p className="w-[48px] text-left">Rank</p>

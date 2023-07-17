@@ -34,11 +34,11 @@ const Navbar = ({ setAuthModalOpen }) => {
 	return (
 		<div className="flex justify-center w-screen">
 			<div className={"w-full fixed z-40 max-w-[1920px]"}>
-				<nav className={"navbar py-2 duration-500 ease-in mx-auto border-[0.5px] border-gray-300"}>
-					<div className="w-full flex flex-wrap items-center justify-between pl-7 sm:pl-9 pr-16 lg:px-16 py-2">
+				<nav className={"navbar min-h-[60px] sm:block flex py-2 duration-500 ease-in mx-auto border-[0.5px] border-gray-300"}>
+					<div className="flex flex-wrap items-center justify-between w-full py-2 pr-16 pl-7 sm:pl-9 lg:px-16">
 						<Link href="/">
 							<span className="flex">
-								<Image src={logo} alt="MXV Logo" width="150" className="rounded-full" />
+								<Image src={logo} alt="everythingai logo" width="150" className="rounded-full" />
 							</span>
 						</Link>
 
@@ -47,7 +47,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 							<div className="hidden lg:block">
 								<ul className="flex flex-row items-center font-medium md:text-sm md:space-x-3 xl:space-x-4 md:mt-0 sm:text-sm">
 									<li
-										className="block group relative search-li"
+										className="relative block group search-li"
 										onMouseEnter={() => {
 											document.getElementById("search-input").focus();
 										}}
@@ -138,7 +138,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 											setAuthModalOpen(true);
 										}
 									}}
-									className="flex items-center justify-center px-10 py-2 text-sm font-semibold rounded-full bg-primary-500 hover:bg-primary-600 text-light-100 transition duration-300 cursor-pointer"
+									className="items-center justify-center hidden px-10 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer sm:flex bg-primary-500 hover:bg-primary-600 text-light-100"
 								>
 									Submit Tool
 								</div>
@@ -229,7 +229,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 														{status === "authenticated" && session.user && session.user.role == "admin" && (
 															<>
 																<li>
-																	<div className="block w-full text-center px-4 pb-2 pt-3 border-t border-zinc-300 bg-transparent dropdown-item whitespace-nowrap text-light-700">
+																	<div className="block w-full px-4 pt-3 pb-2 text-center bg-transparent border-t border-zinc-300 dropdown-item whitespace-nowrap text-light-700">
 																		Admin Routes
 																	</div>
 																</li>

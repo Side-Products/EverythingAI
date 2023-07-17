@@ -23,14 +23,13 @@ export default function HeroSection({ featuredTools }) {
 			<div className="mb-6 z-[2] backdrop-blur-2xl">
 				<TopGradient />
 
-				<h1 className="mt-6 px-2 sm:px-8 md:px-16 text-[48px] sm:text-[50px] md:text-[80px] lg:text-[100px] leading-[120px] text-center font-extrabold tracking-[-2.5px] text-black">
-					The Future of
-					<br />
-					Growth is AI
-				</h1>
+				<div className="mt-6 space-y-5 px-2 sm:px-8 md:px-16 text-[48px] sm:text-[50px] md:text-[80px] lg:text-[100px] leading-[120px] text-center font-extrabold tracking-[-2.5px] text-black">
+					<h1>The Future of</h1>
+					<h1>Growth is AI</h1>
+				</div>
 
-				<div className="w-full flex justify-center mt-10 mb-8">
-					{/* <div className="text-center rounded-full w-fit px-8 py-3 border border-zinc-300 text-zinc-500">
+				<div className="flex justify-center w-full mt-10 mb-8">
+					{/* <div className="px-8 py-3 text-center border rounded-full w-fit border-zinc-300 text-zinc-500">
 						Discover AI tools that fit like a glove: handpicked for your industry and goals.
 					</div> */}
 
@@ -52,10 +51,10 @@ export default function HeroSection({ featuredTools }) {
 							});
 							setFilteredTools(data?.tools);
 						}}
-						className="relative w-1/2 flex justify-center bg-transparent"
+						className="relative flex justify-center w-10/12 bg-transparent md:w-1/2"
 					>
 						<input
-							className="w-full text-start rounded-full px-8 py-3 bg-transparent border border-zinc-300 text-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:border-transparent transition duration-200"
+							className="w-full px-8 py-3 transition duration-200 bg-transparent border rounded-full text-start border-zinc-300 text-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:border-transparent"
 							type="text"
 							placeholder="Discover AI tools that fit like a glove: handpicked for your industry and goals."
 							value={searchText}
