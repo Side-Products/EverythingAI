@@ -10,7 +10,7 @@ export default function TrendTable({ tools, startIdx, limit }) {
 			contentArr.push(
 				<div
 					key={"i" + i}
-					className="flex items-center justify-between w-full px-4 py-3 text-sm font-semibold cursor-pointer hover:bg-zinc-100 rounded-xl transition duration-200"
+					className="flex items-center justify-between w-full px-4 py-3 text-sm font-semibold transition duration-200 cursor-pointer hover:bg-zinc-100 rounded-xl"
 					onClick={() => router.push(`/tools/${tools[i].slug}`)}
 				>
 					<p className="w-[48px]">{i + 1}</p>
@@ -26,7 +26,7 @@ export default function TrendTable({ tools, startIdx, limit }) {
 	}
 
 	return (
-		<div className="flex flex-col w-[48%] space-y-3">
+		<div className="flex flex-col w-[48%] min-w-[578px] space-y-3">
 			{/* Header div */}
 			<div className="flex items-center w-full px-4 pb-3 mb-2 border-b-[1px] border-[#e5e8eb]  text-[#646d75] text-sm justify-between">
 				<p className="w-[48px] text-left">Rank</p>

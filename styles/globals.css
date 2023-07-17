@@ -230,11 +230,11 @@ a:hover {
 	height: 3px;
 	border-radius: 1.2px;
 	transition: 0.4s;
-	@apply bg-white;
+	@apply bg-gray-300;
 }
 
 .hamburger > div:before {
-	@apply bg-white;
+	@apply bg-gray-300;
 	content: "";
 	position: absolute;
 	width: 75%;
@@ -246,7 +246,7 @@ a:hover {
 }
 
 .hamburger > div:after {
-	@apply bg-white;
+	@apply bg-gray-300;
 	content: "";
 	position: absolute;
 	width: 85%;
@@ -1192,6 +1192,12 @@ input[type="radio"] + label > span {
 .scrollbar-hide {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
+}
+
+@media screen and (max-width: 768px){
+	.swiper-container .swiper {
+		margin-left: 0px;
+	}
 }
 
 /**************************************************************************/

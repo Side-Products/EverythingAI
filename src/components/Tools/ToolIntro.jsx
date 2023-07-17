@@ -43,52 +43,45 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 	return (
 		<div>
 			{session && session.user && session && session.user.role == "admin" && (
-				<div className="w-full flex justify-between p-4 mt-6 mb-12 bg-gray-200 rounded-xl">
+				<div className="flex justify-between w-full p-4 mt-6 mb-12 bg-gray-200 rounded-xl">
 					<div className="text-sm font-semibold">Admin Actions</div>
 					<div
 						onClick={() => setAddToCollectionModalOpen(true)}
-						className="text-end text-sm hover:text-primary-500 transition duration-300 cursor-pointer"
+						className="text-sm transition duration-300 cursor-pointer text-end hover:text-primary-500"
 					>
 						<i className="fa-solid fa-circle-plus"></i> Add to a collection
 					</div>
 				</div>
 			)}
 
-			<div className="flex mt-8">
-				<Image className="rounded-xl" width={640} height={360} src={tool?.image} priority alt="tool image" />
-				<div className="flex flex-col flex-1 ml-12">
+			<div className="flex flex-col items-center mt-8 lg:flex-row">
+				<Image className="rounded-xl lg:w-[580px] lg:h-[300px] xl:w-[640px] xl:h-[360px]" width={640} height={360} src={tool?.image} priority alt="tool image" />
+				<div className="flex flex-col flex-1 mt-12 lg:mt-0 lg:ml-8 xl:ml-12">
 					<div className="flex items-center justify-between">
-						<div className="flex items-center space-x-3">
+						<div className="flex items-center space-x-1 md:space-x-3">
 							<a
 								href={tool?.url}
 								target="_blank"
 								rel="noreferrer"
-								className="md:text-4xl text-3xl font-semibold cursor-pointer font-secondary hover:text-primary-600"
+								className="text-xl font-semibold cursor-pointer md:text-3xl lg:text-4xl font-secondary hover:text-primary-600"
 							>
 								{tool?.name}
 							</a>
-							<Image src={"/verified_tick.svg"} width={22} height={22} alt="verified tick" />
+							<Image className="md:w-[22px] aspect-square w-[16px]" src={"/verified_tick.svg"} width={22} height={22} alt="verified tick" />
 						</div>
 					</div>
 
-					<div className="w-full flex mt-4 space-x-3">
+					<div className="flex w-full mt-4 space-x-3">
 						<ToolPill pillText={tool?.category?.name} />
 						{tool?.subCategory?.name && <ToolPill pillText={tool?.subCategory?.name} />}
 						<ToolPill pillText={tool?.pricing?.name} chipStyle={getPricingChipClass(tool?.pricing?.name)} tooltip={tool?.pricing?.meta} />
 					</div>
 
-					<p className="mt-10 text-lg font-medium">{tool?.oneLiner}</p>
+					<p className="mt-5 text-sm font-medium md:mt-10 md:text-lg">{tool?.oneLiner}</p>
 
-					<div className="w-full flex flex-col justify-between items-end mt-auto">
-						{/* <div className={"flex mt-4 justify-between items-end " + (!hasSocials() && "mb-6")}>
-							<div></div>
-							<span className="text-sm">
-								<i className="fa fa-calendar mr-2"></i>Added on {convertTimestampToNormalDate(createdDate)}
-							</span>
-						</div> */}
-
-						<div className="w-full flex justify-between items-end mt-auto">
-							<div className="mt-auto">{hasSocials() && <ToolSocials tool={tool} />}</div>
+					<div className="flex flex-col items-end justify-between w-full mt-auto">
+						<div className="flex flex-col justify-between w-full mt-auto xl:flex-row xl:items-end">
+							<div className="mb-5">{hasSocials() && <ToolSocials tool={tool} />}</div>
 							<div className="flex space-x-3">
 								<div className="flex space-x-3">
 									<Button
@@ -112,21 +105,21 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 									>
 										<i
 											className={
-												"fa-solid fa-thumbs-up text-lg " +
+												"fa-solid fa-thumbs-up text-xs md:text-base lg:text-lg " +
 												(tool?.liked ? "text-light-100" : "text-dark-200 group-hover/like-btn:text-primary-400")
 											}
 										></i>
 									</Button>
 									<Button type="button" variant="classic-100" onClick={() => setShareModalOpen(true)}>
-										<div className="flex justify-center items-center space-x-2">
-											<i className="fa-solid fa-share-nodes text-lg"></i>
-											<span>Share</span>
+										<div className="flex items-center justify-center space-x-2">
+											<i className="text-xs sm:text-sm md:text-lg fa-solid fa-share-nodes"></i>
+											<span className="text-xs sm:text-sm md:text-base">Share</span>
 										</div>
 									</Button>
 								</div>
 								<Link href={tool?.url || ""} target="_blank" rel="noopener noreferrer" className="w-fit">
-									<Button type="button" classes={"py-2 px-7 text-base"}>
-										<i className="mr-2 text-base fa-solid fa-arrow-up-right-from-square text-light-100"></i>
+									<Button type="button" classes={"py-2 px-7 text-xs md:text-sm md:text-base"}>
+										<i className="mr-2 text-xs sm:text-sm md:text-base fa-solid fa-arrow-up-right-from-square text-light-100"></i>
 										Visit Site
 									</Button>
 								</Link>

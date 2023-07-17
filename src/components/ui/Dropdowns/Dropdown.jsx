@@ -6,7 +6,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
 }
 
-export default function Dropdown({ selectedValue, setSelectedValue, placeholder, type, options }) {
+export default function Dropdown({ selectedValue, setSelectedValue, placeholder, type, options, styledButton=false }) {
 	const handleOptionSelection = (item) => {
 		setSelectedValue({ type, _id: item._id, name: item.name, meta: item.meta || "" });
 	};
@@ -29,8 +29,8 @@ export default function Dropdown({ selectedValue, setSelectedValue, placeholder,
 	return (
 		<Menu as="div" className="relative inline-block text-left">
 			<div>
-				<Menu.Button className="inline-flex w-full min-w-[125px] text-primary-500 font-semibold justify-center gap-x-1.5 pl-3 text-sm">
-					<span className="max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">{selectedValue ?? placeholder}</span>
+				<Menu.Button className={"inline-flex w-full min-w-[125px] text-primary-500 font-semibold justify-center gap-x-1.5 pl-3 text-sm "+(styledButton?"bg-white pr-3 py-2 rounded-md min-w-fit ring-2 ring-primary-400":'')}>
+					<span className={styledButton? "max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap":''}>{selectedValue ?? placeholder}</span>
 					<ChevronDownIcon className="w-5 h-5 ml-auto -mr-1" aria-hidden="true" />
 				</Menu.Button>
 			</div>
