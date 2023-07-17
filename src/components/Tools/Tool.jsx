@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import ToolIntro from "./ToolIntro";
 import ToolsCarousel from "@/components/Tools/ToolsCarousel";
 import ShareModal from "@/components/ui/ShareModal";
@@ -8,7 +9,7 @@ import DemoVideo from "@/components/Tools/DemoVideo";
 import Features from "@/components/Tools/Features";
 import UseCases from "@/components/Tools/UseCases";
 import EmbedTag from "@/components/Tools/EmbedTag";
-import { useRouter } from "next/router";
+import Collections from "@/components/Tools/Collections";
 
 export default function Tool({}) {
 	const { tool } = useSelector((state) => state.tool);
@@ -40,6 +41,11 @@ export default function Tool({}) {
 							<UseCases useCases={tool?.useCases} />
 						</div>
 					)}
+
+					<div className={"flex flex-col w-full space-y-4 " + (!tool?.youtubeDemoVideoLink && " col-span-2")}>
+						<div className="text-2xl font-semibold">Explore our collections</div>
+						<Collections />
+					</div>
 				</div>
 
 				<Cta tool={tool} />

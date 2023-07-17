@@ -49,12 +49,7 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 	return (
 		<div className="flex flex-col justify-between transition duration-300 shadow-md group w-full max-w-fit bg-light-100 rounded-xl hover:shadow-2xl">
 			<div>
-				<div
-					onClick={() => {
-						if (tool?.slug) router.push(`/tools/${tool?.slug}`);
-					}}
-					className="cursor-pointer"
-				>
+				<Link href={`/tools/${tool?.slug}`} className="cursor-pointer">
 					<div className="relative w-full overflow-hidden h-44 rounded-t-xl">
 						{tool?.image ? (
 							<Image
@@ -70,13 +65,10 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 					</div>
 
 					<div className="p-5 pb-0">
-						{tool?.name?.length > 10 ? (
+						{/* tool?.name?.length > 10 ? (
 							<MarqueeText text={tool?.name} classes={"text-lg font-semibold"} marqueeWidth={"w-[125px]"} />
-						) : tool?.name ? (
-							<p className="text-lg font-semibold">{tool?.name}</p>
-						) : (
-							<ShinyLoader classes={"w-24 h-5 rounded-md"} />
-						)}
+						) :  */}
+						{tool?.name ? <p className="text-lg font-semibold">{tool?.name}</p> : <ShinyLoader classes={"w-24 h-5 rounded-md"} />}
 
 						<div className="flex items-end justify-between mt-1 font-medium">
 							{/* <p className="px-4 py-1 rounded-md bg-dark-700 text-light-100 text-[12px]">{tool?.category?.name}</p> */}
@@ -116,7 +108,7 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 							)}
 						</div>
 					</div>
-				</div>
+				</Link>
 
 				<div className="relative flex justify-between px-5 pb-5 mt-3">
 					<p className={"text-sm " + styles["oneLiner"]}>{tool?.oneLiner.length > 35 ? tool?.oneLiner.substring(0, 35) + "..." : tool?.oneLiner}</p>

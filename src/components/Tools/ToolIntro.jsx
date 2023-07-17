@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { getPricingChipClass } from "@/utils/Helpers";
 import Button from "@/components/ui/Button";
 import ToolSocials from "./ToolUtils/ToolSocials";
@@ -17,6 +18,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 	const dispatch = useDispatch();
 	const { data: session } = useSession();
 	const { setAuthModalOpen } = useContext(AuthModalContext);
+	const router = useRouter();
 
 	const { likedTool } = useSelector((state) => state.createLikedTool);
 	useEffect(() => {
@@ -45,18 +47,39 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 			{session && session.user && session && session.user.role == "admin" && (
 				<div className="flex justify-between w-full p-4 mt-6 mb-12 bg-gray-200 rounded-xl">
 					<div className="text-sm font-semibold">Admin Actions</div>
-					<div
-						onClick={() => setAddToCollectionModalOpen(true)}
-						className="text-sm transition duration-300 cursor-pointer text-end hover:text-primary-500"
-					>
-						<i className="fa-solid fa-circle-plus"></i> Add to a collection
+					<div className="flex space-x-8">
+						<div
+							onClick={() => router.push(`/admin/tools/edit/${tool._id}`)}
+							className="text-sm transition duration-300 cursor-pointer text-end hover:text-primary-500"
+						>
+							<i className="fa-edit fa-solid"></i> Edit
+						</div>
+						<div
+							onClick={() => router.push(`/admin/tools/edit/${tool._id}?feature=true`)}
+							className="text-sm transition duration-300 cursor-pointer text-end hover:text-primary-500"
+						>
+							<i className="fa-bolt fa-solid"></i> Feature on hero section
+						</div>
+						<div
+							onClick={() => setAddToCollectionModalOpen(true)}
+							className="text-sm transition duration-300 cursor-pointer text-end hover:text-primary-500"
+						>
+							<i className="fa-solid fa-circle-plus"></i> Add to a collection
+						</div>
 					</div>
 				</div>
 			)}
 
-			<div className="flex flex-col items-center mt-8 lg:flex-row">
-				<Image className="rounded-xl lg:w-[580px] lg:h-[300px] xl:w-[640px] xl:h-[360px]" width={640} height={360} src={tool?.image} priority alt="tool image" />
-				<div className="flex flex-col flex-1 mt-12 lg:mt-0 lg:ml-8 xl:ml-12">
+			<div className="flex flex-col items-center mt-8 lg:flex-row lg:items-between">
+				<Image
+					className="rounded-xl lg:w-[580px] lg:h-[300px] xl:w-[640px] xl:h-[360px]"
+					width={640}
+					height={360}
+					src={tool?.image}
+					priority
+					alt="tool image"
+				/>
+				<div className="h-full flex flex-col flex-1 mt-12 lg:mt-0 lg:ml-8 xl:ml-12">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center space-x-1 md:space-x-3">
 							<a
