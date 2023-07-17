@@ -408,8 +408,9 @@ export default function AllTools() {
 										<th className="p-3 text-left text-light-200">Pricing</th>
 										<th className="p-3 text-left text-light-200">Socials</th>
 										<th className="p-3 text-left text-light-200">Edit Tool</th>
-										<th className="p-3 text-left text-light-200">Delete Tool</th>
 										<th className="p-3 text-left text-light-200">Unverify</th>
+										<th className="p-3 text-left text-light-200">Feature</th>
+										<th className="p-3 text-left text-light-200">Delete Tool</th>
 									</tr>
 								</thead>
 
@@ -493,16 +494,6 @@ export default function AllTools() {
 												Edit
 											</td>
 											<td
-												className="p-3 bg-error-600 hover:bg-error-700 transition duration-300 text-light-100 cursor-pointer text-center"
-												onClick={(e) => {
-													e.preventDefault();
-													setToolToDelete(tool);
-													setDeleteToolModalOpen(true);
-												}}
-											>
-												Delete
-											</td>
-											<td
 												className="p-3 bg-gray-400 hover:bg-gray-500 transition duration-300 text-light-100 cursor-pointer text-center"
 												onClick={(e) => {
 													e.preventDefault();
@@ -511,6 +502,25 @@ export default function AllTools() {
 												}}
 											>
 												Unverify
+											</td>
+											<td
+												className="p-3 bg-primary-600 hover:bg-primary-800 transition duration-300 text-light-100 cursor-pointer text-center"
+												onClick={(e) => {
+													e.preventDefault();
+													router.push(`/admin/tools/edit/${tool._id}?feature=true`);
+												}}
+											>
+												Feature
+											</td>
+											<td
+												className="p-3 bg-error-600 hover:bg-error-700 transition duration-300 text-light-100 cursor-pointer text-center"
+												onClick={(e) => {
+													e.preventDefault();
+													setToolToDelete(tool);
+													setDeleteToolModalOpen(true);
+												}}
+											>
+												Delete
 											</td>
 										</tr>
 									))}

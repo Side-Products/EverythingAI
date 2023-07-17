@@ -6,8 +6,8 @@ const axios = require("axios");
 // GET latest schemas and data from constants.js
 
 // MongoDB connection URL
-const MONGODB_URI = "mongodb://0.0.0.0:27017/everythingai";
-const screenshot_api_url = "http://ec2-13-232-221-114.ap-south-1.compute.amazonaws.com:8080/screenshot";
+const MONGODB_URI = "mongodb+srv://musixverse:Mus!xVerse007NFT@cluster0.zdujeeq.mongodb.net/everythingai?retryWrites=true&w=majority";
+const screenshot_api_url = "http://ec2-35-154-166-49.ap-south-1.compute.amazonaws.com:8080/screenshot";
 
 // Tool schema
 const toolSchema = new mongoose.Schema(
@@ -15,7 +15,6 @@ const toolSchema = new mongoose.Schema(
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
-			required: true,
 		},
 		name: {
 			type: String,
@@ -129,11 +128,31 @@ async function verifyToolsAndGenerateScreenshots() {
 		const tools = await Tool.find({});
 		// Verify tools
 		for (const tool of tools) {
-			tool.verified = true;
-			const result = await axios.post(`${screenshot_api_url}`, { url: tool.url });
-			tool.image = result.data.Location;
-			await tool.save();
-			console.log(`Tool "${tool.name}" verified successfully.`);
+			if (tool.verified) {
+				console.log(`Tool "${tool.name}" already verified.`);
+				continue;
+			} else {
+				try {
+					tool.verified = true;
+					const result = await axios.post(
+						`${screenshot_api_url}`,
+						{ url: tool.url },
+						{
+							timeout: 20000, // Set timeout to 20 seconds (15,000 milliseconds)
+						}
+					);
+					tool.image = result.data.Location;
+					await tool.save();
+					console.log(`Tool "${tool.name}" verified successfully.`);
+				} catch (e) {
+					if (e.message == "timeout of 20000ms exceeded") {
+						console.log(`!! Timeout exceeded for tool ${tool.name}. Something is probably wrong with the url. !!`);
+					} else {
+						console.log("Error:", e.data.message);
+					}
+					continue;
+				}
+			}
 		}
 
 		// Close the connection

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const { categories, tools, pricingOptions, collections } = require("./data.js");
+const { categories, tools, pricingOptions, collections } = require("../data/data.js");
 
 // GET latest schemas and data from constants.js
 
@@ -105,7 +105,6 @@ const toolSchema = new mongoose.Schema(
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
-			required: true,
 		},
 		name: {
 			type: String,
@@ -137,6 +136,9 @@ const toolSchema = new mongoose.Schema(
 			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 		},
 		featured: {
+			type: Number,
+		},
+		trendingSponsored: {
 			type: Number,
 		},
 		oneLiner: {

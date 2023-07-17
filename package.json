@@ -13,8 +13,10 @@
 		"prodStart": "next start",
 		"lint": "next lint",
 		"postbuild": "next-sitemap",
-		"populate": "node src/scripts/populate_db.js",
-		"verify": "node src/scripts/verify_tools_and_generate_screenshots.js"
+		"populate-test": "node src/scripts/test/populate_db.js",
+		"verify-test": "node src/scripts/test/verify_tools_and_generate_screenshots.js",
+		"populate-prod": "node src/scripts/prod/populate_db.js",
+		"verify-prod": "node src/scripts/prod/verify_tools_and_generate_screenshots.js"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.10.5",
@@ -63,6 +65,7 @@
 		"eslint": "8.6.0",
 		"eslint-config-next": "^12.3.1",
 		"postcss": "^8.4.20",
-		"tailwindcss": "^3.2.4"
+		"tailwindcss": "^3.2.4",
+		"xlsx": "^0.18.5"
 	}
 }
