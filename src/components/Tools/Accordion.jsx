@@ -9,6 +9,7 @@ export default function Accordion({ useCases }) {
 				key={idx}
 				className={
 					(idx == 0 ? "rounded-t-xl border-[2px]" : idx == useCases.length - 1 ? "rounded-b-xl border-[2px] border-t-0" : "border-[2px] border-t-0") +
+					(useCases.length == 1 ? " rounded-b-xl border-[2px]" : "") +
 					" p-4 border-gray-300"
 				}
 			>
@@ -51,7 +52,7 @@ export default function Accordion({ useCases }) {
 	});
 
 	return (
-		<div id="accordion-dropdown" className="w-full flex flex-col items-center h-full rounded-2xl bg-gray-200">
+		<div id="accordion-dropdown" className="w-full flex flex-col items-center h-fit rounded-2xl bg-gray-200">
 			<div id="accordionExample" className="w-full h-full">
 				{accordion}
 			</div>

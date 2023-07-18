@@ -197,11 +197,7 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 													</div>
 
 													<div className="flex flex-wrap justify-center ham_menu_hover_effect_row">
-														<Link
-															href={`/admin/tools`}
-															className="text-center ham_menu_link ham_menu_hover_effect"
-															passHref={true}
-														>
+														<Link href={`/admin/tools`} className="text-center ham_menu_link ham_menu_hover_effect" passHref={true}>
 															<span className="text-white hover:text-primary-400" onClick={closeNavbar}>
 																All Tools
 															</span>

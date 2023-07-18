@@ -74,6 +74,32 @@ export const getAllCollections = (limit) => async (dispatch) => {
 	}
 };
 
+// get all collections
+export const getAllCollectionsServerSide = (req, limit) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_COLLECTIONS_REQUEST });
+
+		const { origin } = absoluteUrl(req);
+		if (limit) {
+			const { data } = await axios.get(`${origin}/api/collections`, {
+				params: {
+					limit: limit,
+				},
+			});
+			dispatch({ type: GET_COLLECTIONS_SUCCESS, payload: data });
+		} else {
+			const { data } = await axios.get(`${origin}/api/collections`);
+
+			dispatch({ type: GET_COLLECTIONS_SUCCESS, payload: data });
+		}
+	} catch (error) {
+		dispatch({
+			type: GET_COLLECTIONS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
 // update collection
 export const updateCollection = (id, collectionData) => async (dispatch) => {
 	try {

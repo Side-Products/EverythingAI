@@ -20,7 +20,7 @@ function ToolContextProvider({ children }) {
 			setLoading({ status: false });
 			setSuccess({
 				title: "Success",
-				message: "Tool added to your liked tools",
+				message: "Tool added to your collection",
 				showSuccessBox: true,
 			});
 			dispatch(clearErrors());

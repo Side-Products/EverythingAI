@@ -333,7 +333,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
 							<TextInput
 								variant="secondary"
-								label={"Featured"}
+								label={"Position for Featured Tool in the Hero Section"}
 								type={"number"}
 								value={toolData.featured}
 								name={"featured"}
@@ -372,7 +372,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
 							<TextInput
 								variant="secondary"
-								label={"Trending Sponsored"}
+								label={"Position for Sponsored Tool on Trending Table"}
 								type={"number"}
 								value={toolData.trendingSponsored}
 								name={"trendingSponsored"}
