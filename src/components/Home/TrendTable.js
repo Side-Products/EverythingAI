@@ -34,7 +34,7 @@ export default function TrendTable({ tools, startIdx, limit }) {
 					<div
 						key={"i" + i}
 						className={
-							"flex items-center justify-between w-full px-4 py-3 text-sm font-semibold cursor-pointer hover:bg-zinc-100 rounded-xl transition duration-200 " +
+							"flex items-center justify-between w-full px-4 py-3 text-sm font-semibold cursor-pointer bg-zinc-100/50 hover:bg-zinc-200/60 rounded-xl transition duration-200 " +
 							(tools[i].trendingSponsored ? "bg-primary-100" : "")
 						}
 						onClick={() => router.push(`/tools/${tools[i].slug}`)}
