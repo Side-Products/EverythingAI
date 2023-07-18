@@ -6,8 +6,8 @@ const axios = require("axios");
 // GET latest schemas and data from constants.js
 
 // MongoDB connection URL
-const MONGODB_URI = "mongodb+srv://musixverse:Mus!xVerse007NFT@cluster0.zdujeeq.mongodb.net/everythingai?retryWrites=true&w=majority";
-const screenshot_api_url = "http://ec2-35-154-166-49.ap-south-1.compute.amazonaws.com:8080/screenshot";
+const MONGODB_URI = "mongodb+srv://everythingai:0kZyzZJNRGH5ZjrB@cluster0.mdlg1ru.mongodb.net/everythingai?retryWrites=true&w=majority";
+const screenshot_api_url = "http://ec2-3-6-126-0.ap-south-1.compute.amazonaws.com:8080/screenshot";
 
 // Tool schema
 const toolSchema = new mongoose.Schema(
@@ -35,6 +35,11 @@ const toolSchema = new mongoose.Schema(
 			trim: true,
 			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 		},
+		utmLink: {
+			type: String,
+			trim: true,
+			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
+		},
 		image: {
 			type: String,
 			trim: true,
@@ -46,6 +51,12 @@ const toolSchema = new mongoose.Schema(
 			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 		},
 		featured: {
+			type: Number,
+		},
+		trendingSponsored: {
+			type: Number,
+		},
+		ad: {
 			type: Number,
 		},
 		oneLiner: {
@@ -128,6 +139,10 @@ async function verifyToolsAndGenerateScreenshots() {
 		const tools = await Tool.find({});
 		// Verify tools
 		for (const tool of tools) {
+			// if (tool.name == "Get Munch") {
+			// 	console.log(`Skipping for Tool "${tool.name}"`);
+			// 	continue;
+			// }
 			if (tool.verified) {
 				console.log(`Tool "${tool.name}" already verified.`);
 				continue;

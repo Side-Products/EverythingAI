@@ -42,39 +42,41 @@ const readExcelData = () => {
 		const convertedObj = {};
 		for (const [key, value] of Object.entries(obj)) {
 			if (key === "A") {
-				convertedObj["name"] = value.trim();
+				convertedObj["name"] = value?.trim();
+			} else if (key === "B") {
+				convertedObj["url"] = value?.trim();
 			} else if (key === "G") {
-				convertedObj["url"] = value.trim();
+				convertedObj["utmLink"] = value?.trim();
 			} else if (key === "H") {
-				convertedObj["oneLiner"] = value.trim();
+				convertedObj["oneLiner"] = value?.trim();
 			} else if (key === "I") {
-				convertedObj["youtubeDemoVideoLink"] = value && value !== "NA" ? value.trim() : "";
+				convertedObj["youtubeDemoVideoLink"] = value && value !== "NA" ? value?.trim() : "";
 			} else if (key === "J") {
-				convertedObj["features"] = value.trim();
+				convertedObj["features"] = value?.trim();
 			} else if (key === "K") {
-				convertedObj["category"] = value.trim();
+				convertedObj["category"] = value?.trim();
 			} else if (key === "L") {
-				convertedObj["subCategory"] = value && !value.includes("---") ? value.trim() : "";
+				convertedObj["subCategory"] = value && !value.includes("---") ? value?.trim() : "";
 			} else if (key === "M") {
 				convertedObj["pricing"] = {
 					name: capitalize(obj["M"].trim()),
 					meta: "",
 				};
 			} else if (key === "N") {
-				if (obj["I"]) {
+				if (obj["N"]) {
 					convertedObj["pricing"] = {
 						name: capitalize(obj["M"].trim()),
 						meta: capitalize(obj["N"].trim()),
 					};
 				}
 			} else if (key === "O") {
-				convertedObj["twitter"] = value && value !== "NA" ? value.trim() : "";
+				convertedObj["twitter"] = value && value !== "NA" ? value?.trim() : "";
 			} else if (key === "P") {
-				convertedObj["instagram"] = value && value !== "NA" ? value.trim() : "";
+				convertedObj["instagram"] = value && value !== "NA" ? value?.trim() : "";
 			} else if (key === "Q") {
-				convertedObj["linkedin"] = value && value !== "NA" ? value.trim() : "";
+				convertedObj["linkedin"] = value && value !== "NA" ? value?.trim() : "";
 			} else if (key === "R") {
-				convertedObj["youtube"] = value && value !== "NA" ? value.trim() : "";
+				convertedObj["youtube"] = value && value !== "NA" ? value?.trim() : "";
 			} else {
 				if (key === "T") {
 					if (obj["T"]) {
