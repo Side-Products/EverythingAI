@@ -142,6 +142,9 @@ const toolSchema = new mongoose.Schema(
 		trendingSponsored: {
 			type: Number,
 		},
+		ad: {
+			type: Number,
+		},
 		oneLiner: {
 			type: String,
 			required: [true, "Please enter a one liner"],

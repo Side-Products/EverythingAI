@@ -133,6 +133,7 @@ const getCollectionBySlug = catchAsyncErrors(async (req, res, next) => {
 				pricing: { $arrayElemAt: ["$pricing", 0] },
 				createdAt: 1,
 				likeCount: 1,
+				ad: 1,
 			},
 		},
 	]);

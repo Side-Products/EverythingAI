@@ -68,7 +68,14 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 						{/* tool?.name?.length > 10 ? (
 							<MarqueeText text={tool?.name} classes={"text-lg font-semibold"} marqueeWidth={"w-[125px]"} />
 						) :  */}
-						{tool?.name ? <p className="text-lg font-semibold">{tool?.name}</p> : <ShinyLoader classes={"w-24 h-5 rounded-md"} />}
+						{tool?.name ? (
+							<div className="flex justify-between">
+								<p className="text-lg font-semibold">{tool?.name}</p>
+								{tool?.ad ? <p className="h-fit text-[10px] px-2 py-[2px] rounded bg-gray-200">AD</p> : <></>}
+							</div>
+						) : (
+							<ShinyLoader classes={"w-24 h-5 rounded-md"} />
+						)}
 
 						<div className="flex items-end justify-between mt-1 font-medium">
 							{/* <p className="px-4 py-1 rounded-md bg-dark-700 text-light-100 text-[12px]">{tool?.category?.name}</p> */}

@@ -43,62 +43,62 @@ const readExcelData = () => {
 		for (const [key, value] of Object.entries(obj)) {
 			if (key === "A") {
 				convertedObj["name"] = value.trim();
-			} else if (key === "B") {
-				convertedObj["url"] = value.trim();
-			} else if (key === "C") {
-				convertedObj["oneLiner"] = value.trim();
-			} else if (key === "D") {
-				convertedObj["youtubeDemoVideoLink"] = value && value !== "NA" ? value.trim() : "";
-			} else if (key === "E") {
-				convertedObj["features"] = value.trim();
-			} else if (key === "F") {
-				convertedObj["category"] = value.trim();
 			} else if (key === "G") {
-				convertedObj["subCategory"] = value && !value.includes("---") ? value.trim() : "";
+				convertedObj["url"] = value.trim();
 			} else if (key === "H") {
+				convertedObj["oneLiner"] = value.trim();
+			} else if (key === "I") {
+				convertedObj["youtubeDemoVideoLink"] = value && value !== "NA" ? value.trim() : "";
+			} else if (key === "J") {
+				convertedObj["features"] = value.trim();
+			} else if (key === "K") {
+				convertedObj["category"] = value.trim();
+			} else if (key === "L") {
+				convertedObj["subCategory"] = value && !value.includes("---") ? value.trim() : "";
+			} else if (key === "M") {
 				convertedObj["pricing"] = {
-					name: capitalize(obj["H"].trim()),
+					name: capitalize(obj["M"].trim()),
 					meta: "",
 				};
-			} else if (key === "I") {
+			} else if (key === "N") {
 				if (obj["I"]) {
 					convertedObj["pricing"] = {
-						name: capitalize(obj["H"].trim()),
-						meta: capitalize(obj["I"].trim()),
+						name: capitalize(obj["M"].trim()),
+						meta: capitalize(obj["N"].trim()),
 					};
 				}
-			} else if (key === "J") {
+			} else if (key === "O") {
 				convertedObj["twitter"] = value && value !== "NA" ? value.trim() : "";
-			} else if (key === "K") {
+			} else if (key === "P") {
 				convertedObj["instagram"] = value && value !== "NA" ? value.trim() : "";
-			} else if (key === "L") {
+			} else if (key === "Q") {
 				convertedObj["linkedin"] = value && value !== "NA" ? value.trim() : "";
-			} else if (key === "M") {
+			} else if (key === "R") {
 				convertedObj["youtube"] = value && value !== "NA" ? value.trim() : "";
 			} else {
-				if (key === "O") {
-					if (obj["O"]) {
+				if (key === "T") {
+					if (obj["T"]) {
 						convertedObj["useCases"] = [
 							{
-								heading: obj["N"].trim(),
-								content: obj["O"].trim(),
+								heading: obj["S"].trim(),
+								content: obj["T"].trim(),
 							},
 						];
 					}
 				}
-				if (key === "Q") {
-					if (obj["Q"]) {
+				if (key === "V") {
+					if (obj["V"]) {
 						convertedObj["useCases"].push({
-							heading: obj["P"].trim(),
-							content: obj["Q"].trim(),
+							heading: obj["U"].trim(),
+							content: obj["V"].trim(),
 						});
 					}
 				}
-				if (key === "S") {
-					if (obj["S"]) {
+				if (key === "X") {
+					if (obj["X"]) {
 						convertedObj["useCases"].push({
-							heading: obj["R"].trim(),
-							content: obj["S"].trim(),
+							heading: obj["W"].trim(),
+							content: obj["X"].trim(),
 						});
 					}
 				}

@@ -40,6 +40,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 		youtube: "",
 		featured: "",
 		trendingSponsored: "",
+		ad: "",
 	});
 	const [image, setImage] = useState("");
 	const [imageName, setImageName] = useState("");
@@ -112,6 +113,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				youtube: toolToEdit.youtube,
 				featured: toolToEdit.featured,
 				trendingSponsored: toolToEdit.trendingSponsored,
+				ad: toolToEdit.ad,
 			});
 			setImage(toolToEdit.image);
 			setLogo(toolToEdit.logo);
@@ -146,6 +148,9 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				}
 				if (!tool.trendingSponsored || tool.trendingSponsored == undefined || tool.trendingSponsored == "undefined") {
 					delete tool.trendingSponsored;
+				}
+				if (!tool.ad || tool.ad == undefined || tool.ad == "undefined") {
+					delete tool.ad;
 				}
 				if (tool.featured && logo == "") {
 					setError({
@@ -369,18 +374,33 @@ const SubmitTool = ({ toolToEdit = null }) => {
 					)}
 
 					{toolToEdit && (
-						<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
-							<TextInput
-								variant="secondary"
-								label={"Position for Sponsored Tool on Trending Table"}
-								type={"number"}
-								value={toolData.trendingSponsored}
-								name={"trendingSponsored"}
-								onFieldChange={onToolDataChange}
-								placeholder="Enter position"
-								required={false}
-							/>
-						</div>
+						<>
+							<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+								<TextInput
+									variant="secondary"
+									label={"Position for Sponsored Tool on Trending Table"}
+									type={"number"}
+									value={toolData.trendingSponsored}
+									name={"trendingSponsored"}
+									onFieldChange={onToolDataChange}
+									placeholder="Enter position"
+									required={false}
+								/>
+							</div>
+
+							<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+								<TextInput
+									variant="secondary"
+									label={"Position for the AD on tools page"}
+									type={"number"}
+									value={toolData.ad}
+									name={"ad"}
+									onFieldChange={onToolDataChange}
+									placeholder="Enter position for the ad"
+									required={false}
+								/>
+							</div>
+						</>
 					)}
 
 					<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">

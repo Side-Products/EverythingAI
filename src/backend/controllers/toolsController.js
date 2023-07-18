@@ -169,12 +169,12 @@ const allTools = catchAsyncErrors(async (req, res) => {
 	}
 
 	// Sort based on conditions
-	let sorting_condition = { createdAt: -1 };
+	let sorting_condition = { ad: -1, createdAt: -1 };
 	if (sortby) {
 		if (sortby === "Newest") {
-			sorting_condition = { createdAt: -1 };
+			sorting_condition = { ad: -1, createdAt: -1 };
 		} else if (sortby === "Oldest") {
-			sorting_condition = { createdAt: 1 };
+			sorting_condition = { ad: -1, createdAt: 1 };
 		}
 	}
 	if (req.query.type === "trending" || (sortby && sortby === "Most Popular")) {
@@ -193,7 +193,7 @@ const allTools = catchAsyncErrors(async (req, res) => {
 				},
 			}
 		);
-		sorting_condition = { likeCount: -1, createdAt: -1 };
+		sorting_condition = { ad: -1, likeCount: -1, createdAt: -1 };
 	}
 
 	pipeline.push({ $sort: sorting_condition });
@@ -210,6 +210,7 @@ const allTools = catchAsyncErrors(async (req, res) => {
 			pricing: { $arrayElemAt: ["$pricing", 0] },
 			createdAt: 1,
 			likeCount: 1,
+			ad: 1,
 		},
 	});
 
@@ -243,7 +244,7 @@ const getToolsByCategory = async (categoryName) => {
 			},
 		},
 		{
-			$sort: { likeCount: -1, createdAt: -1 },
+			$sort: { ad: -1, likeCount: -1, createdAt: -1 },
 		},
 		{
 			$limit: 10,
@@ -284,6 +285,7 @@ const getToolsByCategory = async (categoryName) => {
 				pricing: { $arrayElemAt: ["$pricing", 0] },
 				createdAt: 1,
 				likeCount: 1,
+				ad: 1,
 			},
 		},
 	]);
@@ -307,7 +309,7 @@ const getTrendingTools = async (timeframe) => {
 			},
 		},
 		{
-			$sort: { likeCount: -1, createdAt: -1 },
+			$sort: { ad: -1, likeCount: -1, createdAt: -1 },
 		},
 		{
 			$limit: 10,
@@ -348,6 +350,7 @@ const getTrendingTools = async (timeframe) => {
 				pricing: { $arrayElemAt: ["$pricing", 0] },
 				createdAt: 1,
 				likeCount: 1,
+				ad: 1,
 			},
 		},
 	]);
@@ -627,6 +630,7 @@ const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
 				pricing: { $arrayElemAt: ["$pricing", 0] },
 				createdAt: 1,
 				likeCount: 1,
+				ad: 1,
 			},
 		},
 	]);
@@ -654,7 +658,7 @@ const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
 			},
 		},
 		{
-			$sort: { likeCount: -1, createdAt: -1 },
+			$sort: { ad: -1, likeCount: -1, createdAt: -1 },
 		},
 		{
 			$limit: 10,
@@ -695,6 +699,7 @@ const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
 				pricing: { $arrayElemAt: ["$pricing", 0] },
 				createdAt: 1,
 				likeCount: 1,
+				ad: 1,
 			},
 		},
 	]);
@@ -800,6 +805,7 @@ const getTrendingSponsoredTools = async () => {
 				createdAt: 1,
 				likeCount: 1,
 				trendingSponsored: 1,
+				ad: 1,
 			},
 		},
 	];

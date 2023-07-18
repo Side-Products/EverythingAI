@@ -10,7 +10,7 @@ export default function Accordion({ useCases }) {
 				className={
 					(idx == 0 ? "rounded-t-xl border-[2px]" : idx == useCases.length - 1 ? "rounded-b-xl border-[2px] border-t-0" : "border-[2px] border-t-0") +
 					(useCases.length == 1 ? " rounded-b-xl border-[2px]" : "") +
-					" p-4 border-gray-300"
+					" p-4 border-gray-300 z-20"
 				}
 			>
 				<h2 className="mb-0" id={elem.heading}>
