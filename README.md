@@ -6,7 +6,7 @@ Production: https://everythingai.club
 
 Latest Dev Updates: https://everything-ai.vercel.app
 
-### Instructions
+## Instructions
 
 ### Start MongoDB locally
 
