@@ -12,12 +12,12 @@ export default function TrendTable({ tools, startIdx, limit }) {
 					<div
 						key={"i" + i}
 						className={
-							"relative group overflow-hidden flex items-center justify-between w-full hover:bg-zinc-100 px-4 py-3 text-sm font-semibold cursor-pointer  rounded-xl transition duration-200 text-dark-600 " +
+							"relative overflow-hidden flex items-center justify-between w-full hover:bg-zinc-100 px-4 py-3 text-sm font-semibold cursor-pointer  rounded-xl transition duration-200 text-dark-600 " +
 							(tools[i].trendingSponsored ? "bg-primary-100" : "")
 						}
 						onClick={() => router.push(`/tools/${tools[i].slug}`)}
 					>
-						<div className="transition-opacity ease-in duration-300 group-hover:opacity-100 opacity-0 absolute px-4 py-1 text-[10px] leading-4 font-medium text-center text-white -rotate-[45deg] top-2 -left-5 h-fit bg-primary-600">
+						<div className="transition-opacity ease-in duration-300 opacity-100 absolute px-5 py-1 text-[10px] leading-4 font-medium text-center text-white -rotate-[45deg] top-3 -left-5 h-fit bg-primary-600">
 							Sponsored
 						</div>
 						<p className="w-[48px] text-left">{i + 1}</p>
@@ -28,7 +28,6 @@ export default function TrendTable({ tools, startIdx, limit }) {
 						<p className="w-[20%] text-right">{tools[i].category.name}</p>
 						<p className="w-[20%] text-right">{tools[i].pricing.name}</p>
 					</div>
-						
 				);
 			} else {
 				contentArr.push(
