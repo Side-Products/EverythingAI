@@ -79,11 +79,11 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 					priority
 					alt="tool image"
 				/>
-				<div className="h-full flex flex-col flex-1 mt-12 lg:mt-0 lg:ml-8 xl:ml-12">
+				<div className="flex flex-col flex-1 h-full mt-12 lg:mt-0 lg:ml-8 xl:ml-12">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center space-x-1 md:space-x-3">
 							<a
-								href={tool?.url}
+								href={tool?.utmLink || tool?.url}
 								target="_blank"
 								rel="noreferrer"
 								className="text-xl font-semibold cursor-pointer md:text-3xl lg:text-4xl font-secondary hover:text-primary-600"
@@ -94,7 +94,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 						</div>
 					</div>
 
-					<div className="flex w-full mt-4 space-x-3">
+					<div className="flex w-full mt-4 mb-auto space-x-3">
 						<ToolPill pillText={tool?.category?.name} />
 						{tool?.subCategory?.name && <ToolPill pillText={tool?.subCategory?.name} />}
 						<ToolPill pillText={tool?.pricing?.name} chipStyle={getPricingChipClass(tool?.pricing?.name)} tooltip={tool?.pricing?.meta} />
@@ -104,7 +104,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 
 					<div className="flex flex-col items-end justify-between w-full mt-auto">
 						<div className="flex flex-col justify-between w-full mt-auto xl:flex-row xl:items-end">
-							<div className="mb-5">{hasSocials() && <ToolSocials tool={tool} />}</div>
+							<div className="mb-5 xl:mb-0">{hasSocials() && <ToolSocials tool={tool} />}</div>
 							<div className="flex space-x-3">
 								<div className="flex space-x-3">
 									<Button
@@ -140,7 +140,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 										</div>
 									</Button>
 								</div>
-								<Link href={tool?.url || ""} target="_blank" rel="noopener noreferrer" className="w-fit">
+								<Link href={tool?.utmLink || tool?.url || ""} target="_blank" rel="noopener noreferrer" className="w-fit">
 									<Button type="button" classes={"py-2 px-7 text-xs md:text-sm md:text-base"}>
 										<i className="mr-2 text-xs sm:text-sm md:text-base fa-solid fa-arrow-up-right-from-square text-light-100"></i>
 										Visit Site
