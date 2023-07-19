@@ -736,7 +736,10 @@ const getLikeCountBySlug = catchAsyncErrors(async (req, res, next) => {
 
 // get featured tools => /api/tools/featured
 const getFeaturedTools = catchAsyncErrors(async (req, res, next) => {
-	const tools = await Tool.find({ featured: { $exists: true }, verified: true })
+	const tools = await Tool.find({
+		featured: { $exists: true, $gt: 0 },
+		verified: true,
+	})
 		.sort({ featured: 1 })
 		.limit(10)
 		.populate({
