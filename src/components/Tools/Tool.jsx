@@ -42,10 +42,15 @@ export default function Tool({}) {
 						</div>
 					)}
 
-					{/* <div className={"flex flex-col w-full space-y-4 " + (!tool?.youtubeDemoVideoLink && " col-span-2")}>
+					<div className={"md:block hidden flex flex-col w-full space-y-4 " + (!tool?.youtubeDemoVideoLink ? " col-span-2" : "")}>
 						<div className="text-2xl font-semibold">Explore our collections</div>
 						<Collections />
-					</div> */}
+					</div>
+				</div>
+
+				<div className={"md:hidden block flex flex-col w-full space-y-4"}>
+					<div className="text-2xl font-semibold">Explore our collections</div>
+					<Collections />
 				</div>
 
 				<Cta tool={tool} />

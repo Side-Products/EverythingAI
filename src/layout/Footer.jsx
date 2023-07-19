@@ -53,7 +53,7 @@ const Footer = () => {
 								<Link href="/contact">Contact Us</Link>
 							</li>
 							<li className="text-dark-200 hover:text-primary-500">
-								<Tooltip message={"Comming Soon"} labelText={"Join the Community"}/>
+								<Tooltip message={"Coming Soon"} labelText={"Join the Community"} />
 								{/* <Link href="/join-community">Join the Community</Link> */}
 							</li>
 						</ul>
@@ -66,7 +66,7 @@ const Footer = () => {
 								<Link href="/#faq">FAQ</Link>
 							</li>
 							<li className="text-dark-200 hover:text-primary-500">
-								<Link href="/blogs">Top blogs</Link>
+								<Link href="https://blog.everythingai.club">Top blogs</Link>
 							</li>
 						</ul>
 					</div>

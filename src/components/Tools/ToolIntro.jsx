@@ -83,7 +83,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 					<div className="flex items-center justify-between">
 						<div className="flex items-center space-x-1 md:space-x-3">
 							<a
-								href={tool?.url}
+								href={tool?.utmLink || tool?.url}
 								target="_blank"
 								rel="noreferrer"
 								className="text-xl font-semibold cursor-pointer md:text-3xl lg:text-4xl font-secondary hover:text-primary-600"
@@ -140,7 +140,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 										</div>
 									</Button>
 								</div>
-								<Link href={tool?.url || ""} target="_blank" rel="noopener noreferrer" className="w-fit">
+								<Link href={tool?.utmLink || tool?.url || ""} target="_blank" rel="noopener noreferrer" className="w-fit">
 									<Button type="button" classes={"py-2 px-7 text-xs md:text-sm md:text-base"}>
 										<i className="mr-2 text-xs sm:text-sm md:text-base fa-solid fa-arrow-up-right-from-square text-light-100"></i>
 										Visit Site
