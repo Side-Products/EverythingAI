@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
 import { twitter_url, linkedin_url } from "@/config/constants";
 import Button from "@/components/ui/Button";
+import Tooltip from "@/components/ui/Tooltip";
 
 const Footer = () => {
 	const { data: session } = useSession();
@@ -14,14 +15,14 @@ const Footer = () => {
 	return (
 		<div className="flex justify-center w-full">
 			<div className="w-full max-w-[1920px] pt-12 pb-12 px-6 md:px-8 lg:px-16 xl:px-20 2xl:px-20 bg-light-100 border-t border-t-light-400">
-				<div className="w-full flex justify-between items-center">
+				<div className="flex items-center justify-between w-full">
 					<Image src={logo} alt="logo" width="150" />
-					<p className="font-primary sm:text-lg text-base font-medium text-gradient-primary-tr">EverythingAI</p>
+					<p className="text-base font-medium font-primary sm:text-lg text-gradient-primary-tr">EverythingAI</p>
 				</div>
 
-				<div className="grid grid-cols-2 gap-y-10 md:gap-y-0 md:flex flex-wrap font-primary justify-between border-t-2 border-gray-100 w-full py-8 mt-5">
+				<div className="grid flex-wrap justify-between w-full grid-cols-1 py-8 mt-5 border-t-2 border-gray-100 sm:grid-cols-2 gap-y-10 md:gap-y-0 md:flex font-primary">
 					<div className="flex flex-col space-y-2">
-						<Button rounded={true} classes="font-semibold text-lg px-12 py-3">
+						<Button rounded={true} hasWFull={false} classes="font-semibold w-fit text-sm md:text-lg px-8 py-2 md:px-12 md:py-3">
 							Sign up for Newsletter
 						</Button>
 					</div>
@@ -52,7 +53,8 @@ const Footer = () => {
 								<Link href="/contact">Contact Us</Link>
 							</li>
 							<li className="text-dark-200 hover:text-primary-500">
-								<Link href="/join-community">Join the Community</Link>
+								<Tooltip message={"Comming Soon"} labelText={"Join the Community"}/>
+								{/* <Link href="/join-community">Join the Community</Link> */}
 							</li>
 						</ul>
 					</div>
@@ -70,29 +72,29 @@ const Footer = () => {
 					</div>
 				</div>
 
-				<div className="flex flex-col justify-center items-center space-y-5 mb-4 sm:flex-row sm:justify-between sm:items-center w-full mt-3 sm:space-y-2 sm:mb-0">
+				<div className="flex flex-col items-center justify-center w-full mt-3 mb-4 space-y-5 sm:flex-row sm:justify-between sm:items-center sm:space-y-2 sm:mb-0">
 					<div className="space-y-2">
-						<p className="font-semibold text-lg text-center sm:text-left">See what&apos;s new on</p>
+						<p className="text-lg font-semibold text-center sm:text-left">See what&apos;s new on</p>
 						<div className="flex justify-center sm:justify-start gap-x-6">
-							<a href={twitter_url} target="_blank" rel="noopener noreferrer" className="connect_link text-center relative">
+							<a href={twitter_url} target="_blank" rel="noopener noreferrer" className="relative text-center connect_link">
 								<i className="fab fa-twitter fa-lg"></i>
 							</a>
-							<a href={linkedin_url} target="_blank" rel="noopener noreferrer" className="connect_link text-center relative">
+							<a href={linkedin_url} target="_blank" rel="noopener noreferrer" className="relative text-center connect_link">
 								<i className="fab fa-linkedin fa-lg"></i>
 							</a>
 						</div>
 					</div>
-					<div className="grid grid-cols-2 gap-2 gap-x-10 md:gap-x-8 md:pt-6 lg:gap-0 lg:flex justify-between lg:space-x-6 xl:space-x-28 font-primary">
-						<li className="text-xs text-neutral-400 list-none">
+					<div className="grid justify-between grid-cols-2 gap-2 gap-x-10 md:gap-x-8 md:pt-6 lg:gap-0 lg:flex lg:space-x-6 xl:space-x-28 font-primary">
+						<li className="text-xs list-none text-neutral-400">
 							<Link href="/privacy-policy">Privacy Policy</Link>
 						</li>
-						<li className="text-xs text-neutral-400 list-none sm:block hidden">
+						<li className="hidden text-xs list-none text-neutral-400 sm:block">
 							<Link href="/contact">Contact Us</Link>
 						</li>
 					</div>
 				</div>
 
-				<p className="font-primary text-xs max-w-sm text-center text-neutral-400 sm:text-left mx-auto sm:mx-0 mt-4">
+				<p className="max-w-sm mx-auto mt-4 text-xs text-center font-primary text-neutral-400 sm:text-left sm:mx-0">
 					©️Everything AI 2023. All Rights Reserved.
 				</p>
 			</div>

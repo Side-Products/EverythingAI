@@ -303,10 +303,10 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				e.preventDefault();
 				submitForm();
 			}}
-			className="w-full flex flex-col items-center justify-center gap-y-10"
+			className="flex flex-col items-center justify-center w-full gap-y-10"
 			encType="multipart/form-data"
 		>
-			<div className="w-full grid grid-cols-2 mt-20 gap-x-16 items-start">
+			<div className="grid items-start w-full grid-cols-1 mt-20 md:grid-cols-2 gap-x-6 lg:gap-x-10 xl:gap-x-16">
 				<div className="flex flex-col gap-y-8">
 					{toolToEdit && query?.feature !== "true" && (
 						<div className="flex flex-col">
@@ -335,7 +335,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 					)}
 
 					{toolToEdit && query?.feature == "true" && (
-						<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+						<div className="flex flex-col p-10 gap-y-8 bg-light-100 rounded-2xl">
 							<TextInput
 								variant="secondary"
 								label={"Position for Featured Tool in the Hero Section"}
@@ -375,7 +375,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 
 					{toolToEdit && (
 						<>
-							<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+							<div className="flex flex-col p-10 gap-y-8 bg-light-100 rounded-2xl">
 								<TextInput
 									variant="secondary"
 									label={"Position for Sponsored Tool on Trending Table"}
@@ -388,7 +388,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 								/>
 							</div>
 
-							<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+							<div className="flex flex-col p-10 gap-y-8 bg-light-100 rounded-2xl">
 								<TextInput
 									variant="secondary"
 									label={"Position for the AD on tools page"}
@@ -403,7 +403,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						</>
 					)}
 
-					<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+					<div className="flex flex-col p-10 gap-y-8 bg-light-100 rounded-2xl">
 						<TextInput
 							variant="secondary"
 							label={"Product Name"}
@@ -438,7 +438,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						/>
 					</div>
 
-					<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+					<div className="flex flex-col p-10 gap-y-8 bg-light-100 rounded-2xl">
 						<TextInput
 							variant="secondary"
 							label={"YouTube Demo Video Link"}
@@ -461,7 +461,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						/>
 					</div>
 
-					<div className="flex flex-col gap-y-8 bg-light-100 rounded-2xl p-10">
+					<div className="flex flex-col p-10 mb-8 md:mb-0 gap-y-8 bg-light-100 rounded-2xl">
 						<Dropdown
 							variant="secondary"
 							id={"selectCategory"}
@@ -504,7 +504,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				</div>
 
 				<div className="flex flex-col gap-y-6">
-					<div className="flex flex-col bg-light-100 rounded-2xl p-10">
+					<div className="flex flex-col p-10 bg-light-100 rounded-2xl">
 						<div className="mb-6 font-semibold">Social Links</div>
 
 						<div className="flex flex-col gap-y-8">
@@ -559,7 +559,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				<Button variant={"primary"} classes="text-md px-4 py-3 group mt-4">
 					<span className="transition-all duration-500 group-hover:pr-6">
 						Submit
-						<i className="fas fa-angle-double-right absolute opacity-0 font-bold mt-1 pl-2 transition-all duration-500 group-hover:opacity-100"></i>
+						<i className="absolute pl-2 mt-1 font-bold transition-all duration-500 opacity-0 fas fa-angle-double-right group-hover:opacity-100"></i>
 					</span>
 				</Button>
 				{/* <Button
@@ -572,7 +572,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 					) : (
 						<span className="transition-all duration-500 group-hover:pr-6">
 							Submit
-							<i className="fas fa-angle-double-right absolute opacity-0 font-bold mt-1 pl-2 transition-all duration-500 group-hover:opacity-100"></i>
+							<i className="absolute pl-2 mt-1 font-bold transition-all duration-500 opacity-0 fas fa-angle-double-right group-hover:opacity-100"></i>
 						</span>
 					)}
 				</Button> */}

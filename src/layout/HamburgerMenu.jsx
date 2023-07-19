@@ -129,14 +129,14 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 														</span>
 													</Link>
 												</div>
-												<div className="flex flex-wrap justify-center ham_menu_hover_effect_row">
+												{/* <div className="flex flex-wrap justify-center ham_menu_hover_effect_row">
 													<Link href={"/report-a-bug"} className="text-center ham_menu_link ham_menu_hover_effect" passHref={true}>
 														<span className="text-white hover:text-primary-400" onClick={closeNavbar}>
 															Report a Bug
 														</span>
 													</Link>
-												</div>
-												<div className="flex flex-wrap justify-center ham_menu_hover_effect_row">
+												</div> */}
+												{/* <div className="flex flex-wrap justify-center ham_menu_hover_effect_row">
 													<Link
 														href={"/request-a-feature"}
 														className="text-center ham_menu_link ham_menu_hover_effect"
@@ -146,7 +146,7 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 															Request Feature
 														</span>
 													</Link>
-												</div>
+												</div> */}
 											</div>
 
 											<div className="w-1/2 px-2 mt-4 text-center md:w-1/4 md:mt-0">
@@ -262,7 +262,7 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 											rel="noopener noreferrer"
 											className="relative flex-1 flex-grow max-w-full p-0 px-4 text-center connect_link"
 										>
-											<i className="fab fa-twitter fa-lg"></i>
+											<i className="text-white fab fa-twitter fa-lg"></i>
 										</a>
 										<a
 											href={linkedin_url}
@@ -270,7 +270,7 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 											rel="noopener noreferrer"
 											className="relative flex-1 flex-grow max-w-full p-0 px-4 text-center connect_link"
 										>
-											<i className="fab fa-linkedin fa-lg"></i>
+											<i className="text-white fab fa-linkedin fa-lg"></i>
 										</a>
 									</div>
 								</div>
