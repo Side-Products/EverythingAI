@@ -132,9 +132,9 @@ const allTools = catchAsyncErrors(async (req, res) => {
 		pipeline.push({
 			$match: {
 				$or: [
-					{ name: { $regex: `^${search}`, $options: "-i" } },
-					{ "category.name": { $regex: `^${search}`, $options: "-i" } },
-					{ "subCategory.name": { $regex: `^${search}`, $options: "-i" } },
+					{ name: { $regex: `^${search}`, $options: "i" } },
+					{ "category.name": { $regex: `^${search}`, $options: "i" } },
+					{ "subCategory.name": { $regex: `^${search}`, $options: "i" } },
 				],
 			},
 		});
