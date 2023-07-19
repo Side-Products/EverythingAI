@@ -11,6 +11,7 @@ export default function Button({
 	innerClasses,
 	isLoading = false,
 	active = false,
+	hasWFull=true,
 }) {
 	return (
 		<button
@@ -19,7 +20,8 @@ export default function Button({
 			onClick={() => (!isLoading && !disabled && onClick ? onClick() : {})}
 			className={
 				btnClasses +
-				` w-full flex items-center justify-center font-primary font-medium transition duration-300 text-[14px] ` +
+				` flex items-center justify-center font-primary font-medium transition duration-300 text-[14px] ` +
+				(hasWFull? ' w-full ':'')+
 				(isLoading || disabled ? `cursor-default ` : `cursor-pointer `) +
 				(outline ? `px-[2px] py-[2px] ` : `px-6 py-2 `) +
 				(variant == "primary"
