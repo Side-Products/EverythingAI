@@ -69,39 +69,39 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 					</div>
 				</div>
 			)}
-
-			<div className="flex flex-col items-center mt-8 lg:flex-row lg:items-between">
+			<div className="grid grid-cols-1 lg:gap-y-0 gap-y-12 lg:grid-cols-2 gap-x-0 lg:gap-x-8 xl:gap-x-12">
 				<Image
-					className="rounded-xl lg:w-[580px] lg:h-[300px] xl:w-[640px] xl:h-[360px]"
+					className="rounded-xl justify-self-center lg:w-[580px] lg:h-[300px] xl:w-[640px] xl:h-[360px]"
 					width={640}
 					height={360}
 					src={tool?.image}
 					priority
 					alt="tool image"
 				/>
-				<div className="flex flex-col flex-1 h-full mt-12 lg:mt-0 lg:ml-8 xl:ml-12">
-					<div className="flex items-center justify-between">
-						<div className="flex items-center space-x-1 md:space-x-3">
-							<a
-								href={tool?.utmLink || tool?.url}
-								target="_blank"
-								rel="noreferrer"
-								className="text-xl font-semibold cursor-pointer md:text-3xl lg:text-4xl font-secondary hover:text-primary-600"
-							>
-								{tool?.name}
-							</a>
-							<Image className="md:w-[22px] aspect-square w-[16px]" src={"/verified_tick.svg"} width={22} height={22} alt="verified tick" />
+				<div className="flex flex-col flex-1 h-full">
+					<div>
+						<div className="flex items-center justify-between">
+							<div className="flex items-center space-x-1 md:space-x-3">
+								<a
+									href={tool?.url}
+									target="_blank"
+									rel="noreferrer"
+									className="text-xl font-semibold cursor-pointer md:text-3xl lg:text-4xl font-secondary hover:text-primary-600"
+								>
+									{tool?.name}
+								</a>
+								<Image className="md:w-[22px] aspect-square w-[16px]" src={"/verified_tick.svg"} width={22} height={22} alt="verified tick" />
+							</div>
 						</div>
+
+						<div className="flex w-full mt-4 mb-auto space-x-3">
+							<ToolPill pillText={tool?.category?.name} />
+							{tool?.subCategory?.name && <ToolPill pillText={tool?.subCategory?.name} />}
+							<ToolPill pillText={tool?.pricing?.name} chipStyle={getPricingChipClass(tool?.pricing?.name)} tooltip={tool?.pricing?.meta} />
+						</div>
+
+						<p className="mt-5 text-sm font-medium md:mt-10 md:text-lg">{tool?.oneLiner}</p>
 					</div>
-
-					<div className="flex w-full mt-4 mb-auto space-x-3">
-						<ToolPill pillText={tool?.category?.name} />
-						{tool?.subCategory?.name && <ToolPill pillText={tool?.subCategory?.name} />}
-						<ToolPill pillText={tool?.pricing?.name} chipStyle={getPricingChipClass(tool?.pricing?.name)} tooltip={tool?.pricing?.meta} />
-					</div>
-
-					<p className="mt-5 text-sm font-medium md:mt-10 md:text-lg">{tool?.oneLiner}</p>
-
 					<div className="flex flex-col items-end justify-between w-full mt-auto">
 						<div className="flex flex-col justify-between w-full mt-auto xl:flex-row xl:items-end">
 							<div className="mb-5 xl:mb-0">{hasSocials() && <ToolSocials tool={tool} />}</div>
@@ -151,7 +151,6 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 					</div>
 				</div>
 			</div>
-
 			<AddToCollectionModal isOpen={isAddToCollectionModalOpen} setOpen={setAddToCollectionModalOpen} toolId={tool?._id} />
 		</div>
 	);
