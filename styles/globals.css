@@ -1273,11 +1273,13 @@ input[type="radio"] + label > span {
 	margin-right: 0px;
 }
 
+/*
 .featured-carousel .swiper-wrapper {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
+*/
 
 /* YouTube Embed */
 
