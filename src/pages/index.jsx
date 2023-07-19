@@ -73,7 +73,9 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 
 			<div className="px-8 py-10 mb-24 bg-white rounded-2xl">
 				<div className="flex items-center justify-between mb-12">
-					<h2 className="ml-4 text-xl font-semibold sm:text-2xl lg:text-3xl">Trending Tools {selectedTrendingOption == "7d" ? "of the week" : "of the month"}</h2>
+					<h2 className="ml-4 text-xl font-semibold sm:text-2xl lg:text-3xl">
+						Trending Tools {selectedTrendingOption == "7d" ? "of the week" : "of the month"}
+					</h2>
 					<div className="z-10 flex p-1 text-sm bg-gray-200 h-fit rounded-xl">
 						<div
 							className={`px-4 py-2 rounded-xl cursor-pointer ${selectedTrendingOption == "7d" ? "bg-light-200" : "bg-gray-200"}`}
@@ -95,15 +97,15 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 				</div>
 			</div>
 
-			<ToolsCarousel heading={"Top Tools in Marketing"} tools={marketingTools} />
-			<ToolsCarousel heading={"Trending in Images"} tools={imagesTools} />
-			<ToolsCarousel heading={"Trending in Design"} tools={designTools} />
-			<ToolsCarousel heading={"Trending in Product"} tools={productTools} />
-			<ToolsCarousel heading={"Trending in Developer"} tools={developerTools} />
-			<ToolsCarousel heading={"Trending in Video"} tools={videoTools} />
-			<ToolsCarousel heading={"Trending in Productivity"} tools={productivityTools} />
-			<ToolsCarousel heading={"Trending in Sales"} tools={salesTools} />
-			{/* <ToolsCarousel heading={"Trending in Prompts"} tools={promptsTools} /> */}
+			<ToolsCarousel heading={"Tools Trending in Marketing"} tools={marketingTools} />
+			<ToolsCarousel heading={"Tools Trending in Images"} tools={imagesTools} />
+			<ToolsCarousel heading={"Tools Trending in Design"} tools={designTools} />
+			<ToolsCarousel heading={"Tools Trending in Product"} tools={productTools} />
+			<ToolsCarousel heading={"Tools Trending in Developer"} tools={developerTools} />
+			<ToolsCarousel heading={"Tools Trending in Video"} tools={videoTools} />
+			<ToolsCarousel heading={"Tools Trending in Productivity"} tools={productivityTools} />
+			<ToolsCarousel heading={"Tools Trending in Sales"} tools={salesTools} />
+			{/* <ToolsCarousel heading={"Tools Trending in Prompts"} tools={promptsTools} /> */}
 			{categories && categories.length > 0 && <CategoriesCarousel heading={"Explore Categories"} categories={categories} />}
 		</PageWrapper>
 	);
