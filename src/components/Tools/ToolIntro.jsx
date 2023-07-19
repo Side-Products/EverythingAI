@@ -140,7 +140,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 										</div>
 									</Button>
 								</div>
-								<Link href={tool?.url || ""} target="_blank" rel="noopener noreferrer" className="w-fit">
+								<Link href={tool?.utmLink || tool?.url || ""} target="_blank" rel="noopener noreferrer" className="w-fit">
 									<Button type="button" classes={"py-2 px-7 text-xs md:text-sm md:text-base"}>
 										<i className="mr-2 text-xs sm:text-sm md:text-base fa-solid fa-arrow-up-right-from-square text-light-100"></i>
 										Visit Site

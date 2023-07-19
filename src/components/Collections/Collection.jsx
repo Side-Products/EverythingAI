@@ -8,11 +8,12 @@ export default function Collection({ collection }) {
 			</h1>
 
 			{collection.metaDescription && (
-				<div className="mt-8 text-center text-lg text-dark-800 px-52 py-8 rounded-2xl bg-light-100">
+				<div className="mt-8 text-center text-lg text-dark-800 px-10 sm:px-20 md:px-40 lg:px-52 py-8 rounded-2xl bg-light-100">
 					{collection.description && <div className="text-center text-xl font-semibold text-gray-600">{collection.description}</div>}
 					<div className="mt-8">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra
-						ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque.
+						{collection.metaDescription
+							? collection.metaDescription
+							: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra ipsum nunc aliquet bibendum enim. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque."}
 					</div>
 				</div>
 			)}

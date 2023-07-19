@@ -124,6 +124,7 @@ const getCategoryByName = catchAsyncErrors(async (req, res, next) => {
 				name: 1,
 				slug: 1,
 				url: 1,
+				utmLink: 1,
 				image: 1,
 				oneLiner: 1,
 				category: { $arrayElemAt: ["$category", 0] },

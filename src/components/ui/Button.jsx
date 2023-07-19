@@ -11,7 +11,7 @@ export default function Button({
 	innerClasses,
 	isLoading = false,
 	active = false,
-	hasWFull=true,
+	hasWFull = true,
 }) {
 	return (
 		<button
@@ -21,7 +21,7 @@ export default function Button({
 			className={
 				btnClasses +
 				` flex items-center justify-center font-primary font-medium transition duration-300 text-[14px] ` +
-				(hasWFull? ' w-full ':'')+
+				(hasWFull ? " w-full " : "") +
 				(isLoading || disabled ? `cursor-default ` : `cursor-pointer `) +
 				(outline ? `px-[2px] py-[2px] ` : `px-6 py-2 `) +
 				(variant == "primary"
@@ -49,7 +49,7 @@ export default function Button({
 							: `bg-zinc-300 `
 						: isLoading
 						? `bg-zinc-300`
-						: `py-2 px-7 font-semibold text-base ` +
+						: `py-2 px-6 font-semibold text-base ` +
 						  (active ? `bg-primary-500 hover:bg-error-700 ` : `bg-zinc-100 hover:bg-zinc-200 text-dark-600 `)
 					: variant == "classic-100"
 					? outline

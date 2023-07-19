@@ -135,9 +135,9 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 			</div>
 
 			<div className="grid items-center justify-between w-full grid-cols-2 px-5 pb-5 mt-2 gap-x-6">
-				{tool?.url ? (
+				{tool?.utmLink || tool?.url ? (
 					<>
-						<Link href={tool?.url || "https://everythingai.club"} target="_blank" rel="noopener noreferrer" className="h-full">
+						<Link href={tool?.utmLink || tool?.url || "https://everythingai.club"} target="_blank" rel="noopener noreferrer" className="h-full">
 							<Button type="button" variant="classic" classes="relative group/link-btn" btnClasses={"h-full"}>
 								<i className="text-base fa-solid fa-arrow-up-right-from-square text-dark-200 group-hover/link-btn:text-primary-400"></i>
 							</Button>
