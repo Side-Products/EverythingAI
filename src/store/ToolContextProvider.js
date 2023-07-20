@@ -32,7 +32,7 @@ function ToolContextProvider({ children }) {
 			setLoading({ status: false });
 			setSuccess({
 				title: "Success",
-				message: "Tool removed from your liked tools",
+				message: "Tool removed from your tools",
 				showSuccessBox: true,
 			});
 			dispatch(clearErrors());

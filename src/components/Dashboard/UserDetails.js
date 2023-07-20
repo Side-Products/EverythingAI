@@ -85,7 +85,7 @@ export default function UserDetails({ count }) {
 					<div className="w-full grid sm:grid-cols-2 gap-x-8 bg-gradient-to-br from-primary-100 to-primary-200 px-8 pt-6 pb-8 rounded-2xl">
 						<div className="flex flex-col items-end"></div>
 						<div className="flex flex-col items-end">
-							<p className="text-3xl font-semibold text-primary-700">Liked Tools</p>
+							<p className="text-3xl font-semibold text-primary-700">My Tools</p>
 							<p className="mt-[2px] text-3xl font-bold text-gradient-primary-tr">{count || 0}</p>
 						</div>
 					</div>

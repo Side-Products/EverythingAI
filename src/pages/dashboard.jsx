@@ -31,7 +31,7 @@ export default function Dashboard() {
 		<PageWrapper>
 			<UserDetails count={likedToolsCount} />
 			<div className="w-full flex flex-col mt-20">
-				<h1 className="text-6xl font-bold text-center tracking-[-2.5px] text-gradient-primary-tr">Liked Tools</h1>
+				<h1 className="text-6xl font-bold text-center tracking-[-2.5px] text-gradient-primary-tr">My Tools</h1>
 				<ToolsWithPagination
 					options={likedTools}
 					resultsPerPage={resultsPerPage}
