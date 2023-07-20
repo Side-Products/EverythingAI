@@ -118,7 +118,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
+											"font-medium hidden py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
 											(router.pathname == "/blog" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>

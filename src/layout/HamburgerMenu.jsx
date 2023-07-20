@@ -50,7 +50,7 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 													{avatarUrl ? <Image src={avatarUrl} alt="avatar" width="24" height="24" className="rounded-full" /> : null}
 												</div>
 												<button
-													className="w-full px-4 py-2 mt-2 font-medium transition-all duration-300 rounded-full cursor-pointer bg-error-600/30 hover:bg-error-600/50"
+													className="w-full px-4 py-2 mt-2 font-medium transition-all duration-300 rounded-full cursor-pointer text-white bg-error-600/30 hover:bg-error-600/50"
 													onClick={() => {
 														signOut();
 														localStorage.removeItem("selectedTeam");
@@ -88,9 +88,16 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 													</Link>
 												</div>
 												<div className="flex flex-wrap justify-center ham_menu_hover_effect_row md:mt-8">
-													<Link href={"/submit-tool"} className="text-center ham_menu_link ham_menu_hover_effect" passHref={true}>
+													<Link href={"/collections"} className="text-center ham_menu_link ham_menu_hover_effect" passHref={true}>
 														<span className="text-white hover:text-primary-400" onClick={closeNavbar}>
-															Submit Tool
+															Collections
+														</span>
+													</Link>
+												</div>
+												<div className="flex flex-wrap justify-center ham_menu_hover_effect_row md:mt-8">
+													<Link href={"/categories"} className="text-center ham_menu_link ham_menu_hover_effect" passHref={true}>
+														<span className="text-white hover:text-primary-400" onClick={closeNavbar}>
+															Categories
 														</span>
 													</Link>
 												</div>
@@ -116,6 +123,13 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 															Profile
 														</span>
 													)}
+												</div>
+												<div className="flex flex-wrap justify-center ham_menu_hover_effect_row md:mt-8">
+													<Link href={"/submit-tool"} className="text-center ham_menu_link ham_menu_hover_effect" passHref={true}>
+														<span className="text-white hover:text-primary-400" onClick={closeNavbar}>
+															Submit Tool
+														</span>
+													</Link>
 												</div>
 											</div>
 

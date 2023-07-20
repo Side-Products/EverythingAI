@@ -48,7 +48,7 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 
 	useEffect(() => {
 		dispatch(getToolsForHomepage());
-		dispatch(getAllCategories(10));
+		dispatch(getAllCategories());
 	}, [dispatch]);
 
 	const { marketingTools, designTools, developerTools, productivityTools, imagesTools, promptsTools, videoTools, productTools, salesTools } = useSelector(
