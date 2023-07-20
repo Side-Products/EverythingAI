@@ -90,6 +90,9 @@ const Footer = () => {
 						<li className="text-xs list-none text-neutral-400">
 							<Link href="/privacy-policy">Privacy Policy</Link>
 						</li>
+						<li className="text-xs list-none text-neutral-400">
+							<Link href="/terms-conditions">Terms & Conditions</Link>
+						</li>
 						<li className="hidden text-xs list-none text-neutral-400 sm:block">
 							<Link href="/contact">Contact Us</Link>
 						</li>

@@ -15,8 +15,23 @@ import { screenshot_api_url } from "@/config/constants";
 const createTool = catchAsyncErrors(async (req, res) => {
 	const userId = req.user._id || req.user.id;
 	// save to db
-	const { name, url, image, oneLiner, youtubeDemoVideoLink, features, useCases, category, subCategory, pricing, twitter, instagram, linkedin, youtube } =
-		req.body;
+	const {
+		name,
+		url,
+		image,
+		logo,
+		oneLiner,
+		youtubeDemoVideoLink,
+		features,
+		useCases,
+		category,
+		subCategory,
+		pricing,
+		twitter,
+		instagram,
+		linkedin,
+		youtube,
+	} = req.body;
 
 	if (subCategory) {
 		const receivedSubCategory = await SubCategory.findById(subCategory._id);
@@ -33,6 +48,7 @@ const createTool = catchAsyncErrors(async (req, res) => {
 		slug: generateSlug(name),
 		url,
 		image,
+		logo,
 		oneLiner,
 		youtubeDemoVideoLink,
 		features,

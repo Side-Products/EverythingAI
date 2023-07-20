@@ -139,6 +139,14 @@ const SubmitTool = ({ toolToEdit = null }) => {
 					});
 					return;
 				}
+				if (!toolToEdit && (!logo || !logoName)) {
+					setError({
+						title: "Logo not uploaded",
+						message: "Please upload a logo",
+						showErrorBox: true,
+					});
+					return;
+				}
 
 				let tool = {
 					...toolData,
@@ -161,6 +169,19 @@ const SubmitTool = ({ toolToEdit = null }) => {
 					return;
 				}
 
+				if (logo && logoName) {
+					const logoUrl = await uploadImage(logo, logoName, setLoading, setError);
+					if (!logoUrl) {
+						setLoading({ status: false, showProgressBar: false, progress: 0 });
+						return;
+					}
+
+					tool = {
+						...tool,
+						logo: logoUrl,
+					};
+				}
+
 				if (toolToEdit) {
 					if (image && imageName) {
 						const imageUrl = await uploadImage(image, imageName, setLoading, setError);
@@ -175,23 +196,10 @@ const SubmitTool = ({ toolToEdit = null }) => {
 						};
 					}
 
-					if (logo && logoName) {
-						const logoUrl = await uploadImage(logo, logoName, setLoading, setError);
-						if (!logoUrl) {
-							setLoading({ status: false, showProgressBar: false, progress: 0 });
-							return;
-						}
-
-						tool = {
-							...tool,
-							logo: logoUrl,
-						};
-					}
-
 					dispatch(updateTool(toolToEdit._id, tool));
 					return;
 				} else {
-					dispatch(createTool(toolData));
+					dispatch(createTool(tool));
 				}
 			} catch (error) {
 				return;
@@ -346,7 +354,10 @@ const SubmitTool = ({ toolToEdit = null }) => {
 								placeholder="Enter featured position"
 								required={false}
 							/>
-
+						</div>
+					)}
+					{(!toolToEdit || query?.feature == "true") && (
+						<div className="flex flex-col p-10 gap-y-8 bg-light-100 rounded-2xl">
 							<div className="flex flex-col" onClick={() => setAspectRatio({ width: 1, height: 1 })}>
 								<div className="relative mb-16">
 									<div className="absolute right-0 w-[90px] h-[90px] rounded-lg">
