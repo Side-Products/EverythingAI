@@ -6,7 +6,7 @@ const axios = require("axios");
 // GET latest schemas and data from constants.js
 
 // MongoDB connection URL
-const MONGODB_URI = "mongodb+srv://everythingai:0kZyzZJNRGH5ZjrB@cluster0.mdlg1ru.mongodb.net/everythingai?retryWrites=true&w=majority";
+const MONGODB_URI = "mongodb://0.0.0.0:27017/everythingai";
 const screenshot_api_url = "http://ec2-52-66-235-37.ap-south-1.compute.amazonaws.com:8080/screenshot";
 
 // Tool schema
