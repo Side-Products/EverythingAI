@@ -22,9 +22,11 @@ const Footer = () => {
 
 				<div className="grid flex-wrap justify-between w-full grid-cols-1 py-8 mt-5 border-t-2 border-gray-100 sm:grid-cols-2 gap-y-10 md:gap-y-0 md:flex font-primary">
 					<div className="flex flex-col space-y-2">
-						<Button rounded={true} hasWFull={false} classes="font-semibold w-fit text-sm md:text-lg px-8 py-2 md:px-12 md:py-3">
-							Sign up for Newsletter
-						</Button>
+						<Link href="/contact">
+							<Button rounded={true} hasWFull={false} classes="font-semibold w-fit text-sm md:text-lg px-8 py-2 md:px-12 md:py-3">
+								Contact Us
+							</Button>
+						</Link>
 					</div>
 
 					<div className="flex flex-col space-y-4">
@@ -62,9 +64,9 @@ const Footer = () => {
 					<div className="flex flex-col space-y-4">
 						<p className="font-semibold text">General</p>
 						<ul className="space-y-2">
-							<li className="text-dark-200 hover:text-primary-500">
+							{/* <li className="text-dark-200 hover:text-primary-500">
 								<Link href="/#faq">FAQ</Link>
-							</li>
+							</li> */}
 							<li className="text-dark-200 hover:text-primary-500">
 								<Link href="https://blog.everythingai.club">Top blogs</Link>
 							</li>

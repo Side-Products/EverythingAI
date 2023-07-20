@@ -10,7 +10,7 @@ export default function Accordion({ useCases }) {
 				className={
 					(idx == 0 ? "rounded-t-xl border-[2px]" : idx == useCases.length - 1 ? "rounded-b-xl border-[2px] border-t-0" : "border-[2px] border-t-0") +
 					(useCases.length == 1 ? " rounded-b-xl border-[2px]" : "") +
-					" p-4 border-gray-300 z-20"
+					" p-4 border-gray-300"
 				}
 			>
 				<h2 className="mb-0" id={elem.heading}>
@@ -20,12 +20,12 @@ export default function Accordion({ useCases }) {
 						onClick={() => {
 							setCurrentlyExpanded(idx);
 						}}
-						data-te-collapse-init
+						// data-te-collapse-init
 						data-te-collapse-collapsed={idx == 0 ? "false" : "true"}
-						data-te-target={"#" + elem.heading + "target"}
-						aria-expanded={idx == 0 ? "true" : "false"}
+						// data-te-target={"#" + elem.heading + "target"}
+						// aria-expanded={idx == 0 ? "true" : "false"}
 						// aria-expanded={currentlyExpanded === idx ? "true" : "false"}
-						aria-controls={elem.heading + "target"}
+						// aria-controls={elem.heading + "target"}
 					>
 						{elem.heading}
 						<span className="ml-auto h-5 w-5 shrink-0 rotate-[-180deg] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 motion-reduce:transition-none fill-blue-300 group-[[data-te-collapse-collapsed]]:fill-white">
@@ -38,12 +38,12 @@ export default function Accordion({ useCases }) {
 				{/* Item Content */}
 				<div
 					id={elem.heading + "target"}
-					// className={"!visible " + (idx != 0 && "hidden")}
-					className={"!visible hidden"}
+					className={"!visible " + (currentlyExpanded != idx && "hidden")}
+					// className={"!visible hidden"}
 					data-te-collapse-item
 					// data-te-collapse-show={currentlyExpanded == idx ? "true" : "false"}
 					aria-labelledby={elem.heading}
-					data-te-parent="#accordionExample"
+					// data-te-parent="#accordionExample"
 				>
 					<div className="py-4 px-5">{elem.content}</div>
 				</div>
@@ -52,8 +52,14 @@ export default function Accordion({ useCases }) {
 	});
 
 	return (
-		<div id="accordion-dropdown" className="w-full flex flex-col items-center h-fit rounded-2xl bg-gray-200">
-			<div id="accordionExample" className="w-full h-full">
+		<div
+			// id="accordion-dropdown"
+			className="w-full flex flex-col items-center h-fit rounded-2xl bg-gray-200"
+		>
+			<div
+				// id="accordionExample"
+				className="w-full h-full"
+			>
 				{accordion}
 			</div>
 		</div>
