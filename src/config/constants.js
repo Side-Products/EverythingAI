@@ -3,7 +3,7 @@
 /**************************************************************************/
 export const product_name = "EverythingAI";
 export const product_url = "https://everythingai.club";
-export const product_website_legal = "https://everythingai.club/legal";
+export const product_website_legal = "https://everythingai.club";
 export const domain = "everythingai.club";
 export const contact_email = "ani@everythingai.club";
 export const company_name = "EverythingAI";
