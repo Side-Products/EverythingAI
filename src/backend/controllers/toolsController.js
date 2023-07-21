@@ -663,7 +663,7 @@ const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
 
 	const categoryId = toolWithLike.category._id;
 	const similarTools = await Tool.aggregate([
-		{ $match: { category: categoryId, verified: true } },
+		{ $match: { category: categoryId, verified: true, slug: { $ne: req.query.slug } } },
 		{
 			$lookup: {
 				from: "likedtools",

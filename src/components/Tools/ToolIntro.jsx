@@ -69,9 +69,9 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 					</div>
 				</div>
 			)}
-			<div className="grid grid-cols-1 lg:gap-y-0 gap-y-12 lg:grid-cols-2 gap-x-0 lg:gap-x-8 xl:gap-x-12">
+			<div className="grid grid-cols-1 lg:gap-y-0 gap-y-12 lg:grid-cols-2 gap-x-0 lg:gap-x-12 xl:gap-x-12 2xl:gap-x-0">
 				<Image
-					className="rounded-xl justify-self-center lg:w-[580px] lg:h-[300px] xl:w-[640px] xl:h-[360px]"
+					className="rounded-xl justify-self-start lg:w-[580px] lg:h-[300px] xl:w-[640px] xl:h-[360px]"
 					width={640}
 					height={360}
 					src={tool?.image}

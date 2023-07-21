@@ -70,6 +70,14 @@ const Footer = () => {
 							<li className="text-dark-200 hover:text-primary-500">
 								<Link href="https://blog.everythingai.club">Top blogs</Link>
 							</li>
+							<li className="text-dark-200 hover:text-primary-500">
+								<Link href="https://everything-ai.notion.site/everything-ai/Everything-AI-Sponsorship-and-Promotions-e20dededcfc94f70b3b9a791a19406ad">
+									Advertise
+								</Link>
+							</li>
+							<li className="text-dark-200 hover:text-primary-500">
+								<Link href="/offerings.pdf">Our Offerings</Link>
+							</li>
 						</ul>
 					</div>
 				</div>
