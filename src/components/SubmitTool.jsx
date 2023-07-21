@@ -451,7 +451,6 @@ const SubmitTool = ({ toolToEdit = null }) => {
 								name={"utmLink"}
 								onFieldChange={onToolDataChange}
 								placeholder="Eg. https://everythingai.club"
-								required={true}
 							/>
 						)}
 
