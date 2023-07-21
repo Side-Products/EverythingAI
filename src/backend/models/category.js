@@ -16,6 +16,10 @@ const categorySchema = new mongoose.Schema(
 			trim: true,
 			validator: (value) => validator.isURL(value, { protocols: ["http", "https", "ftp"], require_tld: true, require_protocol: true }),
 		},
+		timesVisited: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{ timestamps: true }
 );

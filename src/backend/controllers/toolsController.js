@@ -651,6 +651,7 @@ const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
 				createdAt: 1,
 				likeCount: 1,
 				ad: 1,
+				timesVisited: 1,
 			},
 		},
 	]);
@@ -725,6 +726,8 @@ const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
 		},
 	]);
 	const similarToolsWithLikes = await maybeAddLikedTools(req, similarTools);
+
+	await Tool.findByIdAndUpdate(toolWithLike._id.toString(), { timesVisited: (toolWithLike.timesVisited || 0) + 1 });
 
 	res.status(200).json({ success: true, tool: { ...toolWithLike, similarTools: similarToolsWithLikes } });
 });

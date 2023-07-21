@@ -27,6 +27,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 	const [toolData, setToolData] = useState({
 		name: "",
 		url: "",
+		utmLink: "",
 		oneLiner: "",
 		youtubeDemoVideoLink: "",
 		features: "",
@@ -100,6 +101,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 			setToolData({
 				name: toolToEdit.name,
 				url: toolToEdit.url,
+				utmLink: toolToEdit.utmLink,
 				oneLiner: toolToEdit.oneLiner,
 				youtubeDemoVideoLink: toolToEdit.youtubeDemoVideoLink,
 				features: toolToEdit.features,
@@ -159,6 +161,9 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				}
 				if (!tool.ad || tool.ad == undefined || tool.ad == "undefined") {
 					delete tool.ad;
+				}
+				if (!tool.utmLink || tool.utmLink == undefined || tool.utmLink == "undefined") {
+					delete tool.utmLink;
 				}
 				if (tool.featured && logo == "") {
 					setError({
@@ -436,6 +441,19 @@ const SubmitTool = ({ toolToEdit = null }) => {
 							placeholder="Eg. https://everythingai.club"
 							required={true}
 						/>
+
+						{toolToEdit && (
+							<TextInput
+								variant="secondary"
+								label={"UTM Link"}
+								type={"text"}
+								value={toolData.utmLink}
+								name={"utmLink"}
+								onFieldChange={onToolDataChange}
+								placeholder="Eg. https://everythingai.club"
+								required={true}
+							/>
+						)}
 
 						<TextInput
 							variant="secondary"

@@ -139,6 +139,8 @@ const getCategoryByName = catchAsyncErrors(async (req, res, next) => {
 
 	const toolsWithLike = await maybeAddLikedTools(req, tools);
 
+	await Category.findByIdAndUpdate(categoryId, { timesVisited: category.timesVisited + 1 });
+
 	// Find all subcategories that have the same categoryId as the category
 	const subcategories = await SubCategory.find({ categoryId });
 	res.status(200).json({ success: true, category: { ...category._doc, subcategories, tools: toolsWithLike } });

@@ -34,6 +34,10 @@ const collectionSchema = new mongoose.Schema(
 			trim: true,
 			maxLength: [3000, "Meta description cannot exceed 3000 characters"],
 		},
+		timesVisited: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{ timestamps: true }
 );

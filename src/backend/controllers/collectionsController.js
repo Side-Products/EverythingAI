@@ -141,6 +141,8 @@ const getCollectionBySlug = catchAsyncErrors(async (req, res, next) => {
 
 	const toolsWithLike = await maybeAddLikedTools(req, tools);
 
+	await Collection.findByIdAndUpdate(collection._id, { timesVisited: collection.timesVisited + 1 });
+
 	res.status(200).json({ success: true, collection: { ...collection._doc, tools: toolsWithLike } });
 });
 
