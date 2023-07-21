@@ -1,4 +1,4 @@
-const product_url = "https://everything-ai.vercel.app";
+const product_url = "https://everythingai.club";
 
 module.exports = {
 	siteUrl: product_url,

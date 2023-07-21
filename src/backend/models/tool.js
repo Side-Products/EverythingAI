@@ -116,6 +116,10 @@ const toolSchema = new mongoose.Schema(
 			type: Boolean,
 			default: false,
 		},
+		timesVisited: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{ timestamps: true }
 );

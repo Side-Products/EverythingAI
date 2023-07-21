@@ -2,7 +2,7 @@ import Button from "@/components/ui/Button";
 import { useContext } from "react";
 import { StatusContext } from "@/store/StatusContextProvider";
 
-export default function EmbedTag({ toolSlug, hostURL = "https://everything-ai.vercel.app" }) {
+export default function EmbedTag({ toolSlug, hostURL = "https://everythingai.club" }) {
 	const { setSuccess } = useContext(StatusContext);
 
 	const copyToClipboard = async () => {
