@@ -71,7 +71,7 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 		<PageWrapper classes="w-full max-w-[1920px] pt-32 pb-32 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-20">
 			<HeroSection featuredTools={featuredTools} />
 
-			<div className="px-8 py-10 mb-24 bg-white rounded-2xl">
+			<div className="sm:px-8 px-4 py-10 mb-24 bg-white rounded-2xl">
 				<div className="flex items-center justify-between mb-12">
 					<h2 className="ml-4 text-xl font-semibold sm:text-2xl lg:text-3xl">
 						Trending Tools {selectedTrendingOption == "7d" ? "of the week" : "of the month"}
@@ -91,7 +91,7 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 						</div>
 					</div>
 				</div>
-				<div className="flex space-x-8 overflow-x-auto">
+				<div className="flex flex-col md:flex-row gap-x-8 overflow-x-auto">
 					<TrendTable tools={leaderboardTools} limit={5} startIdx={0} />
 					<TrendTable tools={leaderboardTools} limit={5} startIdx={5} />
 				</div>
