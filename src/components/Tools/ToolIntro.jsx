@@ -83,7 +83,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
 						<div className="flex items-center justify-between">
 							<div className="flex items-center space-x-1 md:space-x-3">
 								<a
-									href={tool?.url}
+									href={tool?.utmLink || tool?.url}
 									target="_blank"
 									rel="noreferrer"
 									className="text-xl font-semibold cursor-pointer md:text-3xl lg:text-4xl font-secondary hover:text-primary-600"

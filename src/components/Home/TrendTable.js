@@ -55,7 +55,12 @@ export default function TrendTable({ tools, startIdx, limit }) {
 	return (
 		<div className="flex flex-col w-[48%] min-w-[578px] space-y-3">
 			{/* Header div */}
-			<div className="flex items-center w-full px-4 pb-3 mb-2 border-b-[1px] border-[#e5e8eb]  text-[#646d75] text-sm justify-between">
+			<div
+				className={
+					"flex items-center w-full px-4 pb-3 mb-2 border-b-[1px] border-[#e5e8eb]  text-[#646d75] text-sm justify-between " +
+					(startIdx == 5 ? "md:flex hidden" : "")
+				}
+			>
 				<p className="w-[48px] text-left">Rank</p>
 				<p className="w-[40%] text-left">Tool</p>
 				<p className="w-[20%] text-right">Cateory</p>
