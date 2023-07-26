@@ -312,7 +312,7 @@ const getToolsByCategory = async (categoryName) => {
 
 const getTrendingTools = async (timeframe) => {
 	const tools = await Tool.aggregate([
-		{ $match: { verified: true, createdAt: { $gte: new Date(Date.now() - timeframe) } } },
+		{ $match: { verified: true } },
 		{
 			$lookup: {
 				from: "likedtools",
@@ -321,11 +321,26 @@ const getTrendingTools = async (timeframe) => {
 				as: "likes",
 			},
 		},
+		// Filter likes based on the createdAt field
 		{
-			$addFields: {
-				likeCount: { $size: "$likes" },
+			$unwind: "$likes", // Unwind the likes array to filter based on the createdAt field
+		},
+		{
+			$match: { "likes.createdAt": { $gte: new Date(Date.now() - timeframe) } },
+		},
+		{
+			$group: {
+				_id: "$_id", // Group back by the original _id after filtering likes
+				data: { $first: "$$ROOT" }, // Keep the original document data in the "data" field
+				likeCount: { $sum: 1 }, // Recalculate the likeCount
 			},
 		},
+		{ $replaceRoot: { newRoot: "$data" } }, // Restore the original document structure
+		// {
+		// 	$addFields: {
+		// 		likeCount: { $size: "$likes" },
+		// 	},
+		// },
 		{
 			$sort: { ad: -1, likeCount: -1, createdAt: -1 },
 		},
