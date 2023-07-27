@@ -321,32 +321,48 @@ const getTrendingTools = async (timeframe) => {
 				as: "likes",
 			},
 		},
-		// Filter likes based on the createdAt field
+		// Filter likes based on the createdAt field and limit the trending tools
 		{
-			$unwind: "$likes", // Unwind the likes array to filter based on the createdAt field
-		},
-		{
-			$match: { "likes.createdAt": { $gte: new Date(Date.now() - timeframe) } },
-		},
-		{
-			$group: {
-				_id: "$_id", // Group back by the original _id after filtering likes
-				data: { $first: "$$ROOT" }, // Keep the original document data in the "data" field
-				likeCount: { $sum: 1 }, // Recalculate the likeCount
+			$facet: {
+				trendingTools: [
+					{
+						$unwind: "$likes",
+					},
+					{
+						$match: { "likes.createdAt": { $gte: new Date(Date.now() - timeframe) } },
+					},
+					{
+						$group: {
+							_id: "$_id",
+							data: { $first: "$$ROOT" },
+							likeCount: { $sum: 1 },
+						},
+					},
+					{ $replaceRoot: { newRoot: "$data" } },
+					{
+						$sort: { ad: -1, likeCount: -1, createdAt: -1 },
+					},
+					{
+						$limit: 10,
+					},
+				],
+				nonTrendingTools: [
+					{
+						$match: { likes: [] },
+					},
+					{
+						$sample: { size: 10 },
+					},
+				],
 			},
 		},
-		{ $replaceRoot: { newRoot: "$data" } }, // Restore the original document structure
-		// {
-		// 	$addFields: {
-		// 		likeCount: { $size: "$likes" },
-		// 	},
-		// },
 		{
-			$sort: { ad: -1, likeCount: -1, createdAt: -1 },
+			$project: {
+				tools: { $concatArrays: ["$trendingTools", "$nonTrendingTools"] },
+			},
 		},
-		{
-			$limit: 10,
-		},
+		{ $unwind: "$tools" },
+		{ $replaceRoot: { newRoot: "$tools" } },
 		{
 			$lookup: {
 				from: "categories",
