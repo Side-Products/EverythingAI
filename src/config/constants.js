@@ -8,9 +8,9 @@ export const domain = "everythingai.club";
 export const contact_email = "ani@everythingai.club";
 export const company_name = "EverythingAI";
 
-export const twitter_url = "https://twitter.com/everythingai";
+export const twitter_url = "https://twitter.com/every_thing_AI";
 export const twitter_handle = "@everythingai";
-export const linkedin_url = "https://www.linkedin.com/company/everythingai";
+export const linkedin_url = "https://www.linkedin.com/company/everything-ai-club";
 
 export const screenshot_api_url = "http://ec2-52-66-235-37.ap-south-1.compute.amazonaws.com:8080/screenshot";
 
