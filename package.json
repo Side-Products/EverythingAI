@@ -17,7 +17,8 @@
 		"verify-test": "node src/scripts/test/verify_tools_and_generate_screenshots.js",
 		"populate-prod": "node src/scripts/prod/populate_db.js",
 		"verify-prod": "node src/scripts/prod/verify_tools_and_generate_screenshots.js",
-		"scrape": "node src/scripts/prod/scrape_data.js"
+		"scrape": "node src/scripts/prod/scrape_data.js",
+		"write": "node src/scripts/prod/write_excel.js"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.10.5",
