@@ -72,7 +72,7 @@ const Footer = () => {
 							</li>
 							<li className="text-dark-200 hover:text-primary-500">
 								<Link href="https://everything-ai.notion.site/everything-ai/Everything-AI-Sponsorship-and-Promotions-e20dededcfc94f70b3b9a791a19406ad">
-									Advertise
+									Get Featured
 								</Link>
 							</li>
 							<li className="text-dark-200 hover:text-primary-500">

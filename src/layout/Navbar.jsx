@@ -45,7 +45,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 						<div className="flex gap-x-6">
 							{/* Internal links */}
 							<div className="hidden lg:block">
-								<ul className="flex flex-row items-center font-medium md:text-sm md:space-x-3 xl:space-x-4 md:mt-0 sm:text-sm">
+								<ul className="flex flex-row items-center font-medium md:text-sm md:space-x-2 xl:space-x-1 md:mt-0 sm:text-sm">
 									<li
 										className="relative block group search-li"
 										onMouseEnter={() => {
@@ -114,6 +114,17 @@ const Navbar = ({ setAuthModalOpen }) => {
 										}
 									>
 										<Link href="/collections">Collections</Link>
+									</li>
+
+									<li
+										className={
+											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
+											(router.pathname == "/get-featured" ? "text-dark-800 bg-gray-200" : "")
+										}
+									>
+										<Link href="https://everything-ai.notion.site/everything-ai/Everything-AI-Sponsorship-and-Promotions-e20dededcfc94f70b3b9a791a19406ad">
+											Get Featured
+										</Link>
 									</li>
 
 									<li
