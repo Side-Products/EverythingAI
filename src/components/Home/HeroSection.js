@@ -24,7 +24,7 @@ export default function HeroSection({ featuredTools }) {
 				<TopGradient />
 
 				<div className="mt-6 space-y-5 px-2 sm:px-8 md:px-16 text-[40px] sm:text-[50px] md:text-[80px] lg:text-[100px] leading-[120px] text-center font-extrabold tracking-[-2.5px] text-black">
-					<h1>A Prettier way to</h1>
+					<h1>A Prettier Way to</h1>
 					<h1>Search for AI Tools</h1>
 				</div>
 
