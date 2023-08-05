@@ -10,8 +10,10 @@ import Features from "@/components/Tools/Features";
 import UseCases from "@/components/Tools/UseCases";
 import EmbedTag from "@/components/Tools/EmbedTag";
 import Collections from "@/components/Tools/Collections";
+import Rate from "./Rate";
+import Comments from "./Comments";
 
-export default function Tool({}) {
+export default function Tool() {
 	const { tool } = useSelector((state) => state.tool);
 	const { query } = useRouter();
 	/*******************************
@@ -54,6 +56,8 @@ export default function Tool({}) {
 				</div>
 
 				<Cta tool={tool} />
+				<Rate toolName={tool.name}/>
+				<Comments/>
 				<ToolsCarousel tools={tool.similarTools} heading={"Explore Similar Tools"} />
 			</div>
 			<ShareModal isOpen={isShareModalOpen} setOpen={setShareModalOpen} tool={tool} />
