@@ -56,8 +56,8 @@ export default function Tool() {
 				</div>
 
 				<Cta tool={tool} />
-				<Rate toolName={tool.name}/>
-				<Comments/>
+				<Rate toolName={tool.name} />
+				<Comments toolName={tool.name} />
 				<ToolsCarousel tools={tool.similarTools} heading={"Explore Similar Tools"} />
 			</div>
 			<ShareModal isOpen={isShareModalOpen} setOpen={setShareModalOpen} tool={tool} />
