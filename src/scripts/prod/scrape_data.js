@@ -1,5 +1,6 @@
 const { chromium } = require("playwright");
 const { Configuration, OpenAIApi } = require("openai");
+const XLSX = require("xlsx");
 
 const BASE_URL = "https://www.futurepedia.io";
 const OPENAI_API_KEY = "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";
@@ -15,7 +16,7 @@ const generateToolInfo = async (toolContent) => {
                 Text: ${toolContent.features}
 
 				Also, figure out what would be the most suitable category and sub-category for this tool. Only choose one category and one subCategory that corresponds to the tool's main functionality.
-				You should choose the subCategory only from the corresponding array of whatever category fits best. If there is no subCategory in the corresponding array, then choose nothing.
+				You should choose the subCategory only from the corresponding array of whatever category fits best. If there is no subCategory in the corresponding array, then choose nothing. Do not make up subcategories on your own!
 				Here is a list of category and their sub-categories:
 
 				const categories = {
@@ -149,9 +150,90 @@ const generateToolInfo = async (toolContent) => {
 	}
 };
 
+const generateSlug = (name) => name.replace(/[^a-zA-Z0-9]+/g, "_");
+
+const generateUtmLink = (url, utm_source, utm_medium, utm_campaign) => {
+	const queryParams = new URLSearchParams({
+		utm_source: utm_source,
+		utm_medium: utm_medium,
+		utm_campaign: utm_campaign,
+	});
+
+	return `${url}?${queryParams.toString()}`;
+};
+
+const writeExcelData = (data) => {
+	const workbook = XLSX.utils.book_new();
+
+	const sheetData = [
+		[
+			"name",
+			"url",
+			"url",
+			"utm_source",
+			"utm_medium",
+			"utm_campaign",
+			"utmLink",
+			"oneLiner",
+			"youtubeDemoVideoLink",
+			"features",
+			"category",
+			"subCategory",
+			"pricing name",
+			"pricing meta",
+			"twitter",
+			"instagram",
+			"linkedin",
+			"youtube",
+			"useCases",
+		],
+	];
+
+	for (const item of data) {
+		const rowData = [
+			item.name || "",
+			item.url || "",
+			item.url || "",
+			"everything_ai",
+			"marketplace",
+			generateSlug(item.name || ""),
+			generateUtmLink(item.url, "everything_ai", "marketplace", generateSlug(item.name || "")),
+			item.oneLiner || "",
+			item.youtubeDemoVideoLink || "",
+			item.features ? JSON.stringify(item.features) : "",
+			item.category || "",
+			item.subCategory || "",
+			item.pricing && item.pricing.name ? item.pricing.name : "",
+			item.pricing && item.pricing.meta ? item.pricing.meta : "",
+			item.twitter || "",
+			item.instagram || "",
+			item.linkedin || "",
+			item.youtube || "",
+			item.useCases
+				? JSON.stringify(
+						item.useCases.map((useCase) => ({
+							heading: useCase.heading || "",
+							content: useCase.content || "",
+						}))
+				  )
+				: "",
+		];
+		sheetData.push(rowData);
+	}
+
+	const sheet = XLSX.utils.aoa_to_sheet(sheetData);
+	XLSX.utils.book_append_sheet(workbook, sheet, "Sheet1");
+
+	// Write the data to the file
+	const excelFileName = "output.xlsx";
+	XLSX.writeFile(workbook, excelFileName);
+};
+
 // Function to scrape tool data from the website
 async function scrapeToolsData() {
 	try {
+		const startTime = performance.now();
+
 		const browser = await chromium.launch({ headless: false });
 		const context = await browser.newContext();
 		const page = await context.newPage();
@@ -160,7 +242,26 @@ async function scrapeToolsData() {
 		// await page.waitForLoadState("networkidle");
 
 		// Add a short delay (e.g., 2 seconds) to ensure that the page content has fully loaded
-		// await page.waitForTimeout(2000);
+		await page.waitForTimeout(2000);
+
+		// Scroll the page multiple times to load more tools via pagination
+		const numScrolls = 2; // Number of times to scroll
+		const scrollDistance = 1600; // Set the desired scroll distance in pixels
+
+		for (let i = 0; i < numScrolls; i++) {
+			console.log("\n==========", i, "times scrolled ==========\n");
+			await page.evaluate((scrollDistance) => {
+				window.scrollBy(0, scrollDistance);
+			}, scrollDistance);
+
+			// Wait for a short duration to allow the page to load more tools after scrolling
+			await page.waitForTimeout(2000);
+		}
+
+		const endTime = performance.now();
+		// Calculate the time taken in seconds
+		const timeTakenInSeconds = (endTime - startTime) / 1000;
+		console.log(`Time taken: ${timeTakenInSeconds} seconds`);
 
 		const toolsData = await page.evaluate(() => {
 			const tools = [];
@@ -179,13 +280,22 @@ async function scrapeToolsData() {
 			return { tools, toolElements };
 		});
 
+		console.log("tools::", toolsData.tools);
+		console.log("number of tools::", toolsData.tools.length);
+		// return;
+
 		// console.log("toolElements::", toolsData.toolElements);
 		// Print the scraped tool data
 		// console.log("tools::", toolsData.tools);
 
+		const generateStartTime = performance.now();
+
 		const tools = [];
 		// Loop through each tool link and open it in a new tab
+		let i = 0;
 		for (const link of toolsData.tools) {
+			i++;
+			console.log("\n\n<========== Running for Tool", i, "==========>\n\n");
 			const newPage = await browser.newPage();
 			await newPage.goto(`${BASE_URL}${link}`);
 			// Add a short delay (e.g., 2 seconds) to ensure that the new page content has fully loaded
@@ -207,7 +317,6 @@ async function scrapeToolsData() {
 						return null;
 					}
 				};
-				const oneLiner = document.querySelector("p.MuiTypography-root.MuiTypography-body1");
 
 				const socialLinks = {};
 				const socialLinksContainer = document.querySelector("div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-4");
@@ -243,9 +352,15 @@ async function scrapeToolsData() {
 				const extractedFeatures = thirdChild.textContent;
 
 				const zeroethChild = secondChild.children[0];
-				const zsecondChild = zeroethChild.querySelector("div:nth-child(2)");
+				// const zsecondChild = zeroethChild.querySelector("div:nth-child(2)");
+				let zsecondChild = zeroethChild.children[2];
+				if (zsecondChild.textContent.includes("Product Information")) {
+					zsecondChild = zeroethChild.children[3];
+				}
 				const pricingTargetChild = zsecondChild.children[1];
 				const pricingContent = pricingTargetChild.textContent;
+
+				const oneLiner = pricingTargetChild.querySelector("p:nth-child(1)");
 
 				return {
 					name: toolTitle ? toolTitle.textContent : "",
@@ -271,6 +386,13 @@ async function scrapeToolsData() {
 			// Close the new tab
 			await newPage.close();
 		}
+
+		writeExcelData(tools);
+
+		const generateEndTime = performance.now();
+		// Calculate the time taken in seconds
+		const generateTimeTakenInSeconds = (generateEndTime - generateStartTime) / 1000;
+		console.log(`Time taken for generation: ${generateTimeTakenInSeconds} seconds`);
 
 		await browser.close();
 	} catch (error) {

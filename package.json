@@ -18,7 +18,8 @@
 		"populate-prod": "node src/scripts/prod/populate_db.js",
 		"verify-prod": "node src/scripts/prod/verify_tools_and_generate_screenshots.js",
 		"scrape": "node src/scripts/prod/scrape_data.js",
-		"write": "node src/scripts/prod/write_excel.js"
+		"write": "node src/scripts/prod/write_excel.js",
+		"add-tools": "node src/scripts/prod/add_tools.js"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.10.5",
