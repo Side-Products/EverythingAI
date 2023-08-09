@@ -1,6 +1,7 @@
 const { chromium } = require("playwright");
 const { Configuration, OpenAIApi } = require("openai");
 const XLSX = require("xlsx");
+const fs = require("fs");
 
 const BASE_URL = "https://www.futurepedia.io";
 const OPENAI_API_KEY = "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";
@@ -191,27 +192,27 @@ const writeExcelData = (data) => {
 
 	for (const item of data) {
 		const rowData = [
-			item.name || "",
-			item.url || "",
-			item.url || "",
+			item?.name || "",
+			item?.url || "",
+			item?.url || "",
 			"everything_ai",
 			"marketplace",
-			generateSlug(item.name || ""),
-			generateUtmLink(item.url, "everything_ai", "marketplace", generateSlug(item.name || "")),
-			item.oneLiner || "",
-			item.youtubeDemoVideoLink || "",
-			item.features ? JSON.stringify(item.features) : "",
-			item.category || "",
-			item.subCategory || "",
-			item.pricing && item.pricing.name ? item.pricing.name : "",
-			item.pricing && item.pricing.meta ? item.pricing.meta : "",
-			item.twitter || "",
-			item.instagram || "",
-			item.linkedin || "",
-			item.youtube || "",
-			item.useCases
+			generateSlug(item?.name || ""),
+			generateUtmLink(item?.url, "everything_ai", "marketplace", generateSlug(item?.name || "")),
+			item?.oneLiner || "",
+			item?.youtubeDemoVideoLink || "",
+			item?.features ? JSON.stringify(item?.features) : "",
+			item?.category || "",
+			item?.subCategory || "",
+			item?.pricing && item?.pricing.name ? item?.pricing.name : "",
+			item?.pricing && item?.pricing.meta ? item?.pricing.meta : "",
+			item?.twitter || "",
+			item?.instagram || "",
+			item?.linkedin || "",
+			item?.youtube || "",
+			item?.useCases
 				? JSON.stringify(
-						item.useCases.map((useCase) => ({
+						item?.useCases.map((useCase) => ({
 							heading: useCase.heading || "",
 							content: useCase.content || "",
 						}))
@@ -232,159 +233,231 @@ const writeExcelData = (data) => {
 // Function to scrape tool data from the website
 async function scrapeToolsData() {
 	try {
-		const startTime = performance.now();
+		const fileName = "tool_urls.json";
+		const data = await fs.readFileSync(fileName, { encoding: "utf8" });
+		const toolUrls = JSON.parse(data);
 
+		const generateStartTime = performance.now();
 		const browser = await chromium.launch({ headless: false });
 		const context = await browser.newContext();
 		const page = await context.newPage();
-
 		await page.goto(BASE_URL);
 		// await page.waitForLoadState("networkidle");
 
 		// Add a short delay (e.g., 2 seconds) to ensure that the page content has fully loaded
 		await page.waitForTimeout(2000);
 
-		// Scroll the page multiple times to load more tools via pagination
-		const numScrolls = 2; // Number of times to scroll
-		const scrollDistance = 1600; // Set the desired scroll distance in pixels
+		// const tools = [];
+		// // Loop through each tool link and open it in a new tab
+		// let i = 0;
+		// for (const link of toolUrls) {
+		// 	i++;
+		// 	console.log("\n\n<========== Running for Tool", i, "==========>\n\n");
+		// 	const newPage = await browser.newPage();
+		// 	await newPage.goto(`${BASE_URL}${link}`);
+		// 	// Add a short delay (e.g., 2 seconds) to ensure that the new page content has fully loaded
+		// 	await newPage.waitForTimeout(2000);
 
-		for (let i = 0; i < numScrolls; i++) {
-			console.log("\n==========", i, "times scrolled ==========\n");
-			await page.evaluate((scrollDistance) => {
-				window.scrollBy(0, scrollDistance);
-			}, scrollDistance);
+		// 	// Scrape the content of the new page
+		// 	const toolContent = await newPage.evaluate(async () => {
+		// 		const toolTitle = document.querySelector("h1.MuiTypography-root.MuiTypography-h4");
+		// 		const toolUrl = document.querySelector(
+		// 			"a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-disableElevation.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-disableElevation"
+		// 		);
+		// 		const getBaseURL = (url) => {
+		// 			try {
+		// 				const urlObject = new URL(url);
+		// 				const base = `${urlObject.protocol}//${urlObject.hostname}`;
+		// 				return base;
+		// 			} catch (error) {
+		// 				console.error("Invalid URL:", error.message);
+		// 				return null;
+		// 			}
+		// 		};
 
-			// Wait for a short duration to allow the page to load more tools after scrolling
-			await page.waitForTimeout(2000);
-		}
+		// 		const socialLinks = {};
+		// 		const socialLinksContainer = document.querySelector("div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-4");
+		// 		if (socialLinksContainer) {
+		// 			const instagramLink = socialLinksContainer.querySelector("a[href^='https://www.instagram.com/']");
+		// 			if (instagramLink) {
+		// 				socialLinks.instagram = instagramLink.getAttribute("href");
+		// 			}
+		// 			const twitterLink = socialLinksContainer.querySelector("a[href^='https://twitter.com/']");
+		// 			if (twitterLink) {
+		// 				socialLinks.twitter = twitterLink.getAttribute("href");
+		// 			}
+		// 			const linkedInLink = socialLinksContainer.querySelector("a[href^='https://www.linkedin.com/company/']");
+		// 			if (linkedInLink) {
+		// 				socialLinks.linkedin = linkedInLink.getAttribute("href");
+		// 			}
+		// 			const youtubeLink = socialLinksContainer.querySelector("a[href^='https://www.youtube.com/']");
+		// 			if (youtubeLink) {
+		// 				socialLinks.youtube = youtubeLink.getAttribute("href");
+		// 			}
+		// 		} else {
+		// 			socialLinks.instagram = "";
+		// 			socialLinks.twitter = "";
+		// 			socialLinks.linkedin = "";
+		// 			socialLinks.youtube = "";
+		// 		}
 
-		const endTime = performance.now();
-		// Calculate the time taken in seconds
-		const timeTakenInSeconds = (endTime - startTime) / 1000;
-		console.log(`Time taken: ${timeTakenInSeconds} seconds`);
+		// 		// Extract features
+		// 		const topLevelDiv = document.querySelector("#__next");
+		// 		const mainDiv = topLevelDiv.children[1];
+		// 		const secondChild = mainDiv.querySelector("div:nth-child(2)");
+		// 		const thirdChild = secondChild.children[2];
+		// 		const extractedFeatures = thirdChild.textContent;
 
-		const toolsData = await page.evaluate(() => {
-			const tools = [];
-			const toolElements = document.querySelectorAll(
-				"div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-6.MuiGrid-grid-md-4.MuiGrid-grid-lg-4.css-12y6uts"
-			);
+		// 		const zeroethChild = secondChild.children[0];
+		// 		// const zsecondChild = zeroethChild.querySelector("div:nth-child(2)");
+		// 		let zsecondChild = zeroethChild.children[2];
+		// 		if (zsecondChild.textContent.includes("Product Information")) {
+		// 			zsecondChild = zeroethChild.children[3];
+		// 		}
+		// 		const pricingTargetChild = zsecondChild.children[1];
+		// 		const pricingContent = pricingTargetChild.textContent;
 
-			for (const element of toolElements) {
-				const anchorElement = element.querySelector("a[target='_blank']");
-				if (anchorElement) {
-					const toolLink = anchorElement.getAttribute("href");
-					tools.push(toolLink);
-				}
-			}
+		// 		const oneLiner = pricingTargetChild.querySelector("p:nth-child(1)");
 
-			return { tools, toolElements };
-		});
+		// 		return {
+		// 			name: toolTitle ? toolTitle.textContent : "",
+		// 			url: getBaseURL(toolUrl.href),
+		// 			utmLink: "",
+		// 			oneLiner: oneLiner ? oneLiner.textContent : "",
+		// 			youtubeDemoVideoLink: "",
+		// 			features: extractedFeatures,
+		// 			category: "",
+		// 			subCategory: "",
+		// 			// pricing: { name: "Freemium", meta: "Pay only for advanced, otherwise free" },
+		// 			pricing: pricingContent,
+		// 			...socialLinks,
+		// 			useCases: [],
+		// 		};
+		// 	});
 
-		console.log("tools::", toolsData.tools);
-		console.log("number of tools::", toolsData.tools.length);
-		// return;
+		// 	await generateToolInfo(toolContent);
+		// 	tools.push(toolContent);
 
-		// console.log("toolElements::", toolsData.toolElements);
-		// Print the scraped tool data
-		// console.log("tools::", toolsData.tools);
+		// 	console.log("Tool:", toolContent);
 
-		const generateStartTime = performance.now();
+		// 	// Close the new tab
+		// 	await newPage.close();
+		// }
 
+		const batchSize = 20; // Number of URLs to process in each batch
+		const totalBatches = Math.ceil(toolUrls.length / batchSize);
 		const tools = [];
-		// Loop through each tool link and open it in a new tab
+
 		let i = 0;
-		for (const link of toolsData.tools) {
-			i++;
-			console.log("\n\n<========== Running for Tool", i, "==========>\n\n");
-			const newPage = await browser.newPage();
-			await newPage.goto(`${BASE_URL}${link}`);
-			// Add a short delay (e.g., 2 seconds) to ensure that the new page content has fully loaded
-			await newPage.waitForTimeout(2000);
+		for (let batch = 0; batch < totalBatches; batch++) {
+			console.log(`\n\n<========== Running Batch ${batch + 1} ==========>\n\n`);
 
-			// Scrape the content of the new page
-			const toolContent = await newPage.evaluate(async () => {
-				const toolTitle = document.querySelector("h1.MuiTypography-root.MuiTypography-h4");
-				const toolUrl = document.querySelector(
-					"a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-disableElevation.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-disableElevation"
-				);
-				const getBaseURL = (url) => {
-					try {
-						const urlObject = new URL(url);
-						const base = `${urlObject.protocol}//${urlObject.hostname}`;
-						return base;
-					} catch (error) {
-						console.error("Invalid URL:", error.message);
-						return null;
-					}
-				};
+			// Extract URLs for the current batch
+			const startIdx = batch * batchSize;
+			const endIdx = Math.min((batch + 1) * batchSize, toolUrls.length);
+			const currentBatchUrls = toolUrls.slice(startIdx, endIdx);
 
-				const socialLinks = {};
-				const socialLinksContainer = document.querySelector("div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-4");
-				if (socialLinksContainer) {
-					const instagramLink = socialLinksContainer.querySelector("a[href^='https://www.instagram.com/']");
-					if (instagramLink) {
-						socialLinks.instagram = instagramLink.getAttribute("href");
-					}
-					const twitterLink = socialLinksContainer.querySelector("a[href^='https://twitter.com/']");
-					if (twitterLink) {
-						socialLinks.twitter = twitterLink.getAttribute("href");
-					}
-					const linkedInLink = socialLinksContainer.querySelector("a[href^='https://www.linkedin.com/company/']");
-					if (linkedInLink) {
-						socialLinks.linkedin = linkedInLink.getAttribute("href");
-					}
-					const youtubeLink = socialLinksContainer.querySelector("a[href^='https://www.youtube.com/']");
-					if (youtubeLink) {
-						socialLinks.youtube = youtubeLink.getAttribute("href");
-					}
-				} else {
-					socialLinks.instagram = "";
-					socialLinks.twitter = "";
-					socialLinks.linkedin = "";
-					socialLinks.youtube = "";
+			// Use Promise.all() for parallel execution within the batch
+			const toolPromises = currentBatchUrls.map(async (link) => {
+				let newPage;
+				try {
+					i++;
+					console.log("\n\n<========== Running for Tool", i, "==========>\n\n");
+					newPage = await browser.newPage();
+					await newPage.goto(`${BASE_URL}${link}`, { timeout: 60000 });
+					// Add a short delay (e.g., 2 seconds) to ensure that the new page content has fully loaded
+					await newPage.waitForTimeout(3000);
+
+					// Scrape the content of the new page
+					const toolContent = await newPage.evaluate(async () => {
+						const toolTitle = document.querySelector("h1.MuiTypography-root.MuiTypography-h4");
+						const toolUrl = document.querySelector(
+							"a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-disableElevation.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-disableElevation"
+						);
+						const getBaseURL = (url) => {
+							try {
+								const urlObject = new URL(url);
+								const base = `${urlObject.protocol}//${urlObject.hostname}`;
+								return base;
+							} catch (error) {
+								console.error("Invalid URL:", error.message);
+								return null;
+							}
+						};
+
+						const socialLinks = {};
+						const socialLinksContainer = document.querySelector("div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-4");
+						if (socialLinksContainer) {
+							const instagramLink = socialLinksContainer.querySelector("a[href^='https://www.instagram.com/']");
+							if (instagramLink) {
+								socialLinks.instagram = instagramLink.getAttribute("href");
+							}
+							const twitterLink = socialLinksContainer.querySelector("a[href^='https://twitter.com/']");
+							if (twitterLink) {
+								socialLinks.twitter = twitterLink.getAttribute("href");
+							}
+							const linkedInLink = socialLinksContainer.querySelector("a[href^='https://www.linkedin.com/company/']");
+							if (linkedInLink) {
+								socialLinks.linkedin = linkedInLink.getAttribute("href");
+							}
+							const youtubeLink = socialLinksContainer.querySelector("a[href^='https://www.youtube.com/']");
+							if (youtubeLink) {
+								socialLinks.youtube = youtubeLink.getAttribute("href");
+							}
+						} else {
+							socialLinks.instagram = "";
+							socialLinks.twitter = "";
+							socialLinks.linkedin = "";
+							socialLinks.youtube = "";
+						}
+
+						// Extract features
+						const topLevelDiv = document.querySelector("#__next");
+						const mainDiv = topLevelDiv.children[1];
+						const secondChild = mainDiv.querySelector("div:nth-child(2)");
+						const thirdChild = secondChild.children[2];
+						const extractedFeatures = thirdChild.textContent;
+
+						const zeroethChild = secondChild.children[0];
+						// const zsecondChild = zeroethChild.querySelector("div:nth-child(2)");
+						let zsecondChild = zeroethChild.children[2];
+						if (zsecondChild.textContent.includes("Product Information")) {
+							zsecondChild = zeroethChild.children[3];
+						}
+						const pricingTargetChild = zsecondChild.children[1];
+						const pricingContent = pricingTargetChild.textContent;
+
+						const oneLiner = pricingTargetChild.querySelector("p:nth-child(1)");
+
+						return {
+							name: toolTitle ? toolTitle.textContent : "",
+							url: getBaseURL(toolUrl.href),
+							utmLink: "",
+							oneLiner: oneLiner ? oneLiner.textContent : "",
+							youtubeDemoVideoLink: "",
+							features: extractedFeatures,
+							category: "",
+							subCategory: "",
+							// pricing: { name: "Freemium", meta: "Pay only for advanced, otherwise free" },
+							pricing: pricingContent,
+							...socialLinks,
+							useCases: [],
+						};
+					});
+
+					await generateToolInfo(toolContent);
+					console.log("Tool:", toolContent);
+
+					await newPage.close();
+					return toolContent;
+				} catch (error) {
+					console.log("Error loading page:", error.message);
+					await newPage.close();
 				}
-
-				// Extract features
-				const topLevelDiv = document.querySelector("#__next");
-				const mainDiv = topLevelDiv.children[1];
-				const secondChild = mainDiv.querySelector("div:nth-child(2)");
-				const thirdChild = secondChild.children[2];
-				const extractedFeatures = thirdChild.textContent;
-
-				const zeroethChild = secondChild.children[0];
-				// const zsecondChild = zeroethChild.querySelector("div:nth-child(2)");
-				let zsecondChild = zeroethChild.children[2];
-				if (zsecondChild.textContent.includes("Product Information")) {
-					zsecondChild = zeroethChild.children[3];
-				}
-				const pricingTargetChild = zsecondChild.children[1];
-				const pricingContent = pricingTargetChild.textContent;
-
-				const oneLiner = pricingTargetChild.querySelector("p:nth-child(1)");
-
-				return {
-					name: toolTitle ? toolTitle.textContent : "",
-					url: getBaseURL(toolUrl.href),
-					utmLink: "",
-					oneLiner: oneLiner ? oneLiner.textContent : "",
-					youtubeDemoVideoLink: "",
-					features: extractedFeatures,
-					category: "",
-					subCategory: "",
-					// pricing: { name: "Freemium", meta: "Pay only for advanced, otherwise free" },
-					pricing: pricingContent,
-					...socialLinks,
-					useCases: [],
-				};
 			});
 
-			await generateToolInfo(toolContent);
-			tools.push(toolContent);
-
-			console.log("Tool:", toolContent);
-
-			// Close the new tab
-			await newPage.close();
+			const batchTools = await Promise.all(toolPromises);
+			tools.push(...batchTools);
 		}
 
 		writeExcelData(tools);

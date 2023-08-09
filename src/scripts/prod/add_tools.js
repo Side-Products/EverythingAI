@@ -492,7 +492,6 @@ async function populateCategoriesAndSubCategories() {
 				}
 			}
 
-			tool.verified = true;
 			filteredData.push(tool);
 		}
 
