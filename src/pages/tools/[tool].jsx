@@ -4,6 +4,7 @@ import { getSession } from "next-auth/react";
 import { wrapper } from "@/redux/redux-store";
 import { getToolBySlug } from "@/redux/actions/toolActions";
 import { getAllCollectionsServerSide } from "@/redux/actions/collectionActions";
+import { useSelector } from "react-redux";
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query, params }) => {
 	const session = await getSession({ req: req });
@@ -16,8 +17,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 });
 
 export default function Categories() {
+	const { tool } = useSelector((state) => state.tool);
+
 	return (
-		<PageWrapper>
+		<PageWrapper
+			title={`${tool?.name} - Everything You Need to Know (2023)`}
+			description={`${tool?.name} - ${tool?.oneLiner}  Explore features, use cases & more.`}
+		>
 			<Tool />
 		</PageWrapper>
 	);
