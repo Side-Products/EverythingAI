@@ -28,7 +28,12 @@ export default function Dashboard() {
 	const { likedTools, resultsPerPage, likedToolsCount, filteredToolsCount } = useSelector((state) => state.myLikedTools);
 
 	return (
-		<PageWrapper>
+		<PageWrapper
+			title={"My Tools - Keep All Your Favorite AI Tools In One Place"}
+			description={
+				"Browse 4,000+ AI tools to find the ones for you. Save and organize your favorites in one place, and easily share with friends, colleagues, and your community."
+			}
+		>
 			<UserDetails count={likedToolsCount} />
 			<div className="w-full flex flex-col mt-20">
 				<h1 className="text-6xl font-bold text-center tracking-[-2.5px] text-gradient-primary-tr">My Tools</h1>
