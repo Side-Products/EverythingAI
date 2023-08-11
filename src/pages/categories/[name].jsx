@@ -17,7 +17,16 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 const Category = () => {
 	const { category } = useSelector((state) => state.category);
 
-	return <PageWrapper>{category && <CategoryComponent category={category} />}</PageWrapper>;
+	return (
+		<PageWrapper
+			title={"Explore 25+ [Category Name] AI Tools"}
+			description={
+				"Explore 25+ [Category Name] AI Tools on Everything AI. Browse AI tools in 70+ categories and subcategories like marketing, sales, content writing, coding, etc."
+			}
+		>
+			{category && <CategoryComponent category={category} />}
+		</PageWrapper>
+	);
 };
 
 export default Category;

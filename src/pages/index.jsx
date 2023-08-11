@@ -68,7 +68,13 @@ export default function HomePage({ featuredTools, trendingToolsOfTheWeek, topToo
 	};
 
 	return (
-		<PageWrapper classes="w-full max-w-[1920px] pt-32 pb-32 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-20">
+		<PageWrapper
+			title={"Everything AI - Discover AI Tools Handpicked For You"}
+			description={
+				"Browse 4,000+ AI tools to find the one for you. Everything AI helps you find the best-curated set of tools & helps you learn how to use them together."
+			}
+			classes="w-full max-w-[1920px] pt-32 pb-32 px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-20"
+		>
 			<HeroSection featuredTools={featuredTools} />
 
 			<div className="sm:px-8 px-4 py-10 mb-24 bg-white rounded-2xl">
