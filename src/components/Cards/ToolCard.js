@@ -47,7 +47,15 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 	const { setToolToRemoveFromCollection, setIsRemoveToolFromCollectionModalOpen, setCollectionToRemoveFrom } = useContext(ToolContext);
 
 	return (
-		<div className="flex flex-col justify-between transition duration-300 shadow-md group w-full max-w-fit bg-light-100 rounded-xl hover:shadow-2xl">
+		<div className="flex relative overflow-hidden flex-col justify-between transition duration-300 shadow-md group w-full max-w-fit bg-light-100 rounded-xl hover:shadow-2xl">
+			{
+				tool?.ad ? 
+					<div className="transition-opacity z-10 ease-in duration-300 opacity-100 absolute px-5 py-1 text-[10px] leading-4 font-medium text-center text-white -rotate-[45deg] top-3 -left-5 h-fit bg-primary-600">
+						Sponsored
+					</div>
+					: 
+					null
+			}
 			<div>
 				<Link href={`/tools/${tool?.slug}`} className="cursor-pointer">
 					<div className="relative w-full overflow-hidden h-44 rounded-t-xl">
@@ -71,7 +79,7 @@ export default function ToolCard({ tool, adminRemoveFromCollectionView, collecti
 						{tool?.name ? (
 							<div className="flex justify-between">
 								<p className="text-lg font-semibold">{tool?.name}</p>
-								{tool?.ad ? <p className="h-fit text-[10px] px-2 py-[2px] rounded bg-gray-200">AD</p> : <></>}
+								{/* {tool?.ad ? <p className="h-fit text-[10px] px-2 py-[2px] rounded bg-gray-200">AD</p> : <></>} */}
 							</div>
 						) : (
 							<ShinyLoader classes={"w-24 h-5 rounded-md"} />
