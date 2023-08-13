@@ -1,27 +1,119 @@
 import Pager from "@/components/ui/Pagination/Pager";
 import CommentCard from "./CommentCard";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Modal from "../ui/Modal";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { getAllReviews, deleteReview, updateReview, clearErrors } from "@/redux/actions/reviewActions";
+import { DELETE_REVIEW_RESET } from "@/redux/constants/reviewConstants";
+import { LoadingContext } from "@/store/LoadingContextProvider";
+import { StatusContext } from "@/store/StatusContextProvider";
+import { sleep } from "@/utils/Sleep";
 
-export default function Comments({ comments, resultsPerPage = 5, totalCount = 6, toolName = "" }) {
+export default function Comments({ resultsPerPage = 5, totalCount = 6, toolName = "" }) {
 	const [page, setPage] = useState(1);
-    const [readComment, setReadComment] = useState('')
+	const [readComment, setReadComment] = useState("");
+
+	const dispatch = useDispatch();
+	const router = useRouter();
+	const { reviews } = useSelector((state) => state.allReviews);
+
+	useEffect(() => {
+		dispatch(getAllReviews(router.query.tool));
+	}, [dispatch, page]);
 
 	const handlePagination = () => {};
 
+	const { setSuccess, setError } = useContext(StatusContext);
+	const { setLoading } = useContext(LoadingContext);
+	const { error, isDeleted } = useSelector((state) => state.deleteReview);
+	useEffect(() => {
+		if (isDeleted) {
+			setSuccess({
+				title: "Review deleted successfully",
+				message: "The selected review was deleted",
+				showSuccessBox: true,
+			});
+
+			dispatch({ type: DELETE_REVIEW_RESET });
+			sleep(1000).then(() => {
+				router.reload();
+			});
+		}
+
+		if (error) {
+			setError({
+				title: "Something went wrong",
+				message: error,
+				showErrorBox: true,
+			});
+			dispatch(clearErrors());
+		}
+	}, [dispatch, error, isDeleted]);
+
+	const handleDeleteReview = (reviewId) => {
+		setLoading({
+			status: true,
+		});
+		dispatch(deleteReview(reviewId));
+	};
+
+	const { error: updateReviewError, isUpdated } = useSelector((state) => state.updateReview);
+	useEffect(() => {
+		if (isUpdated) {
+			setSuccess({
+				title: "Review updated successfully",
+				message: "Selected review has been updated",
+				showSuccessBox: true,
+			});
+
+			sleep(1000).then(() => {
+				router.reload();
+			});
+		}
+
+		if (updateReviewError) {
+			setLoading({ status: false, showProgressBar: false, progress: 0 });
+			setError({
+				title: "Something went wrong",
+				message: error,
+				showErrorBox: true,
+			});
+			dispatch(clearErrors());
+		}
+	}, [dispatch, updateReviewError, isUpdated]);
+
+	const handlePostClick = (newRate, newReview, reviewToEditId) => {
+		const updatedReviewData = {
+			rating: newRate,
+			review: newReview,
+		};
+		if (newReview && (newRate > 0 || newRate <= 5)) {
+			dispatch(updateReview(reviewToEditId, updatedReviewData));
+		}
+	};
+
 	return (
 		<>
-			<div className="flex flex-col">
-				<h3 className="mb-5 font-semibold">See what others say about <em>{toolName}</em></h3>
+			<div className="flex flex-col mt-12">
+				<h3 className="mb-5 font-semibold">
+					See what people say about <em>{toolName}</em>
+				</h3>
 				<div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-					<CommentCard
-						rating={3}
-						authorName={"John Doe"}
-						comment={
-							"aoscoascnl ajslnaljsncljn  lnjlnaslcjnalsn ljnaljsnljasncljan aljljanscljansljjcn alsnclanscljansljcna slanclasnclnaslcn alsncljanslcknalsc"
-						}
-                        handleReadComment={setReadComment}
-					/>
+					{reviews &&
+						reviews.length > 0 &&
+						reviews.map((review, index) => (
+							<CommentCard
+								key={index}
+								rating={review?.rating}
+								authorName={review?.user?.name}
+								comment={review?.review}
+								handleReadComment={setReadComment}
+								review={review}
+								handleDeleteReview={handleDeleteReview}
+								handlePostClick={handlePostClick}
+							/>
+						))}
 				</div>
 				<div className="mt-12">
 					{resultsPerPage < totalCount && (
@@ -29,17 +121,18 @@ export default function Comments({ comments, resultsPerPage = 5, totalCount = 6,
 					)}
 				</div>
 			</div>
-            <Modal
-                title=""
-                titleClasses="hidden"
-                isOpen={Boolean(readComment)}
-                content={
-                    <div className="w-full">
-                        <p>{readComment}</p> 
-                    </div>
-                }
-                onClose={() => setReadComment('')}
-            ></Modal>
+
+			<Modal
+				title=""
+				titleClasses="hidden"
+				isOpen={Boolean(readComment)}
+				content={
+					<div className="w-full text-start">
+						<p>{readComment}</p>
+					</div>
+				}
+				onClose={() => setReadComment("")}
+			></Modal>
 		</>
 	);
 }
