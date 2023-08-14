@@ -10,19 +10,12 @@ import { LoadingContext } from "@/store/LoadingContextProvider";
 import { StatusContext } from "@/store/StatusContextProvider";
 import { sleep } from "@/utils/Sleep";
 
-export default function Comments({ resultsPerPage = 5, totalCount = 6, toolName = "" }) {
-	const [page, setPage] = useState(1);
+export default function Comments({ toolName = "" }) {
 	const [readComment, setReadComment] = useState("");
 
 	const dispatch = useDispatch();
 	const router = useRouter();
-	const { reviews } = useSelector((state) => state.allReviews);
-
-	useEffect(() => {
-		dispatch(getAllReviews(router.query.tool));
-	}, [dispatch, page]);
-
-	const handlePagination = () => {};
+	const { reviews, resultsPerPage, reviewsCount, filteredReviewsCount } = useSelector((state) => state.allReviews);
 
 	const { setSuccess, setError } = useContext(StatusContext);
 	const { setLoading } = useContext(LoadingContext);
@@ -93,6 +86,37 @@ export default function Comments({ resultsPerPage = 5, totalCount = 6, toolName 
 		}
 	};
 
+	// Pagination
+	let { search, page = 1 } = router.query;
+	page = Number(page);
+
+	useEffect(() => {
+		dispatch(getAllReviews(router.query.tool, router.query.page || 1));
+	}, [dispatch, page]);
+
+	let queryParams;
+	if (typeof window !== "undefined") {
+		queryParams = new URLSearchParams(window.location.search);
+	}
+
+	const handlePagination = (pageNumber) => {
+		if (queryParams.has("page")) {
+			queryParams.set("page", pageNumber + 1);
+		} else {
+			queryParams.append("page", pageNumber + 1);
+		}
+
+		router.replace({
+			search: queryParams.toString(),
+			pathname: `/tools/${router.query.tool}`,
+		});
+	};
+
+	let count = reviewsCount;
+	if (search) {
+		count = filteredReviewsCount;
+	}
+
 	return (
 		<>
 			<div className="flex flex-col mt-12">
@@ -116,8 +140,8 @@ export default function Comments({ resultsPerPage = 5, totalCount = 6, toolName 
 						))}
 				</div>
 				<div className="mt-12">
-					{resultsPerPage < totalCount && (
-						<Pager activePage={page} onPageChange={handlePagination} itemsCountPerPage={resultsPerPage} totalPagesCount={totalCount} />
+					{resultsPerPage < reviewsCount && (
+						<Pager activePage={page} onPageChange={handlePagination} itemsCountPerPage={resultsPerPage} totalPagesCount={count} />
 					)}
 				</div>
 			</div>

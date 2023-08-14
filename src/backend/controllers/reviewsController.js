@@ -2,6 +2,7 @@ import Review from "../models/review";
 import Tool from "../models/tool";
 import ErrorHandler from "@/backend/utils/errorHandler";
 import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
+import APIFeatures from "@/backend/utils/apiFeatures";
 
 // add to db => /api/reviews
 const createReview = catchAsyncErrors(async (req, res) => {
@@ -28,15 +29,31 @@ const allReviews = catchAsyncErrors(async (req, res, next) => {
 		return next(new ErrorHandler("No tool found with this id", 404));
 	}
 
-	const reviews = await Review.find({ tool: tool.id })
-		.populate({
-			path: "user",
-		})
-		.sort({ createdAt: "desc" });
+	const resultsPerPage = 4;
+	const reviewsCount = await Review.countDocuments({ tool: tool.id });
+
+	const apiFeatures = new APIFeatures(
+		Review.find({ tool: tool.id })
+			.populate({
+				path: "user",
+			})
+			.sort({ createdAt: "desc" }),
+		req.query
+	)
+		.search()
+		.filter();
+	let reviews = await apiFeatures.query;
+	let filteredReviewsCount = reviews.length;
+
+	apiFeatures.pagination(resultsPerPage);
+	reviews = await apiFeatures.query.clone();
 
 	res.status(200).json({
 		success: true,
-		reviews,
+		reviewsCount,
+		resultsPerPage,
+		filteredReviewsCount,
+		reviews: reviews,
 	});
 });
 

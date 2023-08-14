@@ -55,6 +55,9 @@ export const getAllReviewsReducer = (state = { reviews: [] }, action) => {
 			return {
 				loading: false,
 				reviews: action.payload.reviews,
+				reviewsCount: action.payload.reviewsCount,
+				resultsPerPage: action.payload.resultsPerPage,
+				filteredReviewsCount: action.payload.filteredReviewsCount,
 			};
 		case GET_REVIEWS_FAIL:
 			return {

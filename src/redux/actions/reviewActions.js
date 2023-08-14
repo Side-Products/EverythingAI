@@ -40,7 +40,7 @@ export const createReview = (reviewData) => async (dispatch) => {
 };
 
 // get all reviews
-export const getAllReviews = (slug) => async (dispatch) => {
+export const getAllReviews = (slug, currentPage) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_REVIEWS_REQUEST });
 
@@ -49,7 +49,7 @@ export const getAllReviews = (slug) => async (dispatch) => {
 				"Content-Type": "application/json",
 			},
 		};
-		const { data } = await axios.post(`/api/reviews/find`, { slug: slug }, config);
+		const { data } = await axios.post(`/api/reviews/find?page=${currentPage}`, { slug: slug }, config);
 		dispatch({ type: GET_REVIEWS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({
