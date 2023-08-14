@@ -118,15 +118,15 @@ export default function Comments({ toolName = "" }) {
 	}
 
 	return (
-		<>
-			<div className="flex flex-col mt-12">
-				<h3 className="mb-5 font-semibold">
-					See what people say about <em>{toolName}</em>
-				</h3>
-				<div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-					{reviews &&
-						reviews.length > 0 &&
-						reviews.map((review, index) => (
+		reviews &&
+		reviews.length > 0 && (
+			<>
+				<div className="flex flex-col mt-12">
+					<h3 className="mb-5 font-semibold">
+						See what people say about <em>{toolName}</em>
+					</h3>
+					<div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+						{reviews.map((review, index) => (
 							<CommentCard
 								key={index}
 								rating={review?.rating}
@@ -138,25 +138,26 @@ export default function Comments({ toolName = "" }) {
 								handlePostClick={handlePostClick}
 							/>
 						))}
-				</div>
-				<div className="mt-12">
-					{resultsPerPage < reviewsCount && (
-						<Pager activePage={page} onPageChange={handlePagination} itemsCountPerPage={resultsPerPage} totalPagesCount={count} />
-					)}
-				</div>
-			</div>
-
-			<Modal
-				title=""
-				titleClasses="hidden"
-				isOpen={Boolean(readComment)}
-				content={
-					<div className="w-full text-start">
-						<p>{readComment}</p>
 					</div>
-				}
-				onClose={() => setReadComment("")}
-			></Modal>
-		</>
+					<div className="mt-12">
+						{resultsPerPage < reviewsCount && (
+							<Pager activePage={page} onPageChange={handlePagination} itemsCountPerPage={resultsPerPage} totalPagesCount={count} />
+						)}
+					</div>
+				</div>
+
+				<Modal
+					title=""
+					titleClasses="hidden"
+					isOpen={Boolean(readComment)}
+					content={
+						<div className="w-full text-start">
+							<p>{readComment}</p>
+						</div>
+					}
+					onClose={() => setReadComment("")}
+				></Modal>
+			</>
+		)
 	);
 }
