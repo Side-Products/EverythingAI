@@ -152,9 +152,8 @@ const toolSchema = new mongoose.Schema(
 		},
 		oneLiner: {
 			type: String,
-			required: [true, "Please enter a one liner"],
 			trim: true,
-			maxLength: [250, "One liner cannot exceed 250 characters"],
+			maxLength: [500, "One liner cannot exceed 500 characters"],
 		},
 		youtubeDemoVideoLink: {
 			type: String,
@@ -324,60 +323,72 @@ const readExcelData = () => {
 
 	const formattedData = [];
 	for (const obj of rowData) {
-		const convertedObj = {};
-		for (const [key, value] of Object.entries(obj)) {
-			if (key === "A") {
-				convertedObj["name"] = value?.trim();
-			} else if (key === "B") {
-				convertedObj["url"] = value?.trim();
-			} else if (key === "G") {
-				convertedObj["utmLink"] = value?.trim();
-			} else if (key === "H") {
-				convertedObj["oneLiner"] = value?.trim();
-			} else if (key === "I") {
-				convertedObj["youtubeDemoVideoLink"] = value && value !== "NA" ? value?.trim() : "";
-			} else if (key === "J") {
-				const inputArray = JSON.parse(value?.trim());
-				// Check if the parsed data is an array
-				if (!Array.isArray(inputArray)) {
-					const res = formatStringToText(value?.trim());
-					convertedObj["features"] = res;
-				} else {
-					const res = formatArrayToText(inputArray);
-					convertedObj["features"] = res;
-				}
-			} else if (key === "K") {
-				convertedObj["category"] = value?.trim();
-			} else if (key === "L") {
-				convertedObj["subCategory"] = value && !value.includes("---") ? value?.trim() : "";
-			} else if (key === "M") {
-				convertedObj["pricing"] = {
-					name: capitalize(obj["M"].trim()),
-					meta: "",
-				};
-			} else if (key === "N") {
-				if (obj["N"]) {
+		if (obj.A) {
+			if (!obj.J) {
+				obj.J = JSON.stringify([obj.H]);
+			}
+			if (obj.S == "") {
+				obj.S = JSON.stringify([]);
+			}
+			const convertedObj = {};
+			for (const [key, value] of Object.entries(obj)) {
+				if (key === "A") {
+					convertedObj["name"] = value?.trim();
+				} else if (key === "B") {
+					convertedObj["url"] = value?.trim();
+				} else if (key === "G") {
+					convertedObj["utmLink"] = value?.trim();
+				} else if (key === "H") {
+					convertedObj["oneLiner"] = value?.trim();
+				} else if (key === "I") {
+					convertedObj["youtubeDemoVideoLink"] = value && value !== "NA" ? value?.trim() : "";
+				} else if (key === "J") {
+					const inputArray = JSON.parse(value?.trim());
+					// Check if the parsed data is an array
+					if (!Array.isArray(inputArray)) {
+						const res = formatStringToText(value?.trim());
+						convertedObj["features"] = res;
+					} else {
+						const res = formatArrayToText(inputArray);
+						convertedObj["features"] = res;
+					}
+				} else if (key === "K") {
+					convertedObj["category"] = value?.trim();
+				} else if (key === "L") {
+					convertedObj["subCategory"] = value && !value.includes("---") ? value?.trim() : "";
+				} else if (key === "M") {
 					convertedObj["pricing"] = {
 						name: capitalize(obj["M"].trim()),
-						meta: capitalize(obj["N"].trim()),
+						meta: "",
 					};
-				}
-			} else if (key === "O") {
-				convertedObj["twitter"] = value && value !== "NA" ? value?.trim() : "";
-			} else if (key === "P") {
-				convertedObj["instagram"] = value && value !== "NA" ? value?.trim() : "";
-			} else if (key === "Q") {
-				convertedObj["linkedin"] = value && value !== "NA" ? value?.trim() : "";
-			} else if (key === "R") {
-				convertedObj["youtube"] = value && value !== "NA" ? value?.trim() : "";
-			} else {
-				if (key === "S") {
-					const inputArray = JSON.parse(value?.trim());
-					convertedObj["useCases"] = inputArray;
+				} else if (key === "N") {
+					if (obj["N"]) {
+						convertedObj["pricing"] = {
+							name: capitalize(obj["M"].trim()),
+							meta: capitalize(obj["N"].trim()),
+						};
+					}
+				} else if (key === "O") {
+					convertedObj["twitter"] = value && value !== "NA" ? value?.trim() : "";
+				} else if (key === "P") {
+					convertedObj["instagram"] = value && value !== "NA" ? value?.trim() : "";
+				} else if (key === "Q") {
+					convertedObj["linkedin"] = value && value !== "NA" ? value?.trim() : "";
+				} else if (key === "R") {
+					convertedObj["youtube"] = value && value !== "NA" ? value?.trim() : "";
+				} else {
+					if (key === "S") {
+						console.log("value::", value);
+						const inputArray = JSON.parse(value?.trim());
+						convertedObj["useCases"] = inputArray;
+					}
 				}
 			}
+
+			if (convertedObj?.name) {
+				formattedData.push(convertedObj);
+			}
 		}
-		formattedData.push(convertedObj);
 	}
 
 	console.log("\n\nFormatted Data:", formattedData[3]);
@@ -389,17 +400,26 @@ async function populateCategoriesAndSubCategories() {
 	try {
 		const data = readExcelData();
 
+		// Connect to MongoDB
+		await mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+		console.log("Connected to MongoDB");
+
 		// Checks for data mismatch
 		data.forEach(async (tool) => {
 			const category = tool.category;
 			const subCategory = tool.subCategory;
 
 			if (!categories.hasOwnProperty(category)) {
-				console.log(`Category "${category}" not found in the categories object for tool "${tool.name}"`);
-				await deleteDatabase();
+				console.log(`Category "${category}" not found in the categories object for tool "${tool.name}". Using Industries instead.`);
+				tool.category = "Industries";
+				// await deleteDatabase();
 			}
 			if (subCategory !== "" && !categories[category]?.includes(subCategory)) {
-				console.log(`Mismatch found: Tool "${tool.name}" has a different subCategory "${subCategory}" for category "${category}"`);
+				console.log(
+					`Mismatch found: Tool "${tool.name}" has a different subCategory "${subCategory}" for category "${category}". Using B2B SAAS instead.`
+				);
+				tool.category = "Industries";
+				tool.subCategory = "B2B SAAS";
 				// await deleteDatabase();
 			}
 
@@ -412,24 +432,25 @@ async function populateCategoriesAndSubCategories() {
 			}
 
 			if (!matchedPricingOption) {
-				console.log(`No matching pricing option found for tool "${tool.name}". ${JSON.stringify(tool.pricing)}`);
-				await deleteDatabase();
+				console.log(`No matching pricing option found for tool "${tool.name}". ${JSON.stringify(tool.pricing)}. Using Freemium instead.`);
+				tool.pricing = { name: "Freemium", meta: "" };
+				// await deleteDatabase();
 			}
 
 			// Check if the tool.url starts with "http://" or "https://"
 			if (!tool.url.startsWith("http://") && !tool.url.startsWith("https://")) {
 				console.log(`Invalid URL format for tool "${tool.name}". The URL must start with "http://" or "https://"`);
-				await deleteDatabase();
+				// await deleteDatabase();
 			}
 		});
-
 		console.log("Data mismatch check complete");
 
-		// return;
+		// console.log(data[0]);
+		// console.log(data[1]);
+		// console.log(data[2]);
+		// console.log(data[3]);
 
-		// Connect to MongoDB
-		await mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-		console.log("Connected to MongoDB");
+		// return;
 
 		const user = await User.findOne({}).sort({ createdAt: "asc" });
 		console.log("User found:", user);

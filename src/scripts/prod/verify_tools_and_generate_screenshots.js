@@ -61,9 +61,8 @@ const toolSchema = new mongoose.Schema(
 		},
 		oneLiner: {
 			type: String,
-			required: [true, "Please enter a one liner"],
 			trim: true,
-			maxLength: [250, "One liner cannot exceed 250 characters"],
+			maxLength: [500, "One liner cannot exceed 500 characters"],
 		},
 		youtubeDemoVideoLink: {
 			type: String,
