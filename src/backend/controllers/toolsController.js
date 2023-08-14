@@ -575,8 +575,9 @@ const unverifyTool = catchAsyncErrors(async (req, res, next) => {
 // get liked tools => /api/tools/liked
 const getMyLikedTools = catchAsyncErrors(async (req, res, next) => {
 	const userId = req.user._id || req.user.id;
-	const resultsPerPage = 4;
 	const likedToolsCount = await LikedTool.countDocuments({ user: userId });
+	// const resultsPerPage = 4;
+	const resultsPerPage = likedToolsCount;
 
 	const apiFeatures = new APIFeatures(LikedTool.find({ user: userId }).sort({ createdAt: "desc" }), req.query).search().filter();
 	let likedTools = await apiFeatures.query;

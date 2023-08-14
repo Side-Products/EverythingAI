@@ -24,6 +24,7 @@ import {
 	addToolToCollectionReducer,
 	removeToolFromCollectionReducer,
 } from "./collectionReducers";
+import { createReviewReducer, getAllReviewsReducer, updateReviewReducer, deleteReviewReducer } from "./reviewReducers";
 
 const reducer = combineReducers({
 	auth: authReducer,
@@ -70,6 +71,11 @@ const reducer = combineReducers({
 	deleteCollection: deleteCollectionReducer,
 	addToolToCollection: addToolToCollectionReducer,
 	removeToolFromCollection: removeToolFromCollectionReducer,
+	// review
+	createReview: createReviewReducer,
+	allReviews: getAllReviewsReducer,
+	updateReview: updateReviewReducer,
+	deleteReview: deleteReviewReducer,
 });
 
 export default reducer;

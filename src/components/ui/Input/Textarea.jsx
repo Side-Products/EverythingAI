@@ -4,7 +4,7 @@ export default function Textarea({ label, value = "", id = "", name, onFieldChan
 	return (
 		<div className="w-full flex flex-col justify-end">
 			<label htmlFor={id} className="text-dark-400 text-sm font-medium mb-1 text-start">
-				{label} {required && <RequiredAsterisk />}
+				{label} {label && required && <RequiredAsterisk />}
 			</label>
 			<textarea
 				name={name}

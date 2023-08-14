@@ -2,7 +2,7 @@ import { useState, useRef, useContext } from "react";
 import { StatusContext } from "@/store/StatusContextProvider";
 
 export default function Pager(props) {
-	const [currPage, setCurrPage] = useState(1);
+	const [currPage, setCurrPage] = useState(props.activePage);
 	const { setError } = useContext(StatusContext);
 
 	const inputRef = useRef(1);
@@ -10,16 +10,17 @@ export default function Pager(props) {
 	const maxPages = Math.ceil(props.totalPagesCount / props.itemsCountPerPage);
 
 	const handlePageDecrement = () => {
+		console.log("currPage:", currPage);
 		if (currPage === 1) return;
 		inputRef.current.value = currPage - 1;
-		setCurrPage(currPage - 1);
+		setCurrPage((prevCurrPage) => prevCurrPage - 1);
 		props.onPageChange(currPage - 2);
 	};
 
 	const handlePageIncrement = () => {
 		if (currPage === maxPages) return;
 		inputRef.current.value = currPage + 1;
-		setCurrPage(currPage + 1);
+		setCurrPage((prevCurrPage) => prevCurrPage + 1);
 		props.onPageChange(currPage);
 	};
 
