@@ -7,7 +7,7 @@ const axios = require("axios");
 
 // MongoDB connection URL
 const MONGODB_URI = "mongodb://0.0.0.0:27017/everythingai";
-const screenshot_api_url = "http://ec2-52-66-235-37.ap-south-1.compute.amazonaws.com:8080/screenshot";
+const screenshot_api_url = "http://ec2-13-126-48-229.ap-south-1.compute.amazonaws.com:8080/screenshot";
 
 // Tool schema
 const toolSchema = new mongoose.Schema(
@@ -51,9 +51,8 @@ const toolSchema = new mongoose.Schema(
 		},
 		oneLiner: {
 			type: String,
-			required: [true, "Please enter a one liner"],
 			trim: true,
-			maxLength: [250, "One liner cannot exceed 250 characters"],
+			maxLength: [500, "One liner cannot exceed 500 characters"],
 		},
 		youtubeDemoVideoLink: {
 			type: String,

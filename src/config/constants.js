@@ -12,7 +12,7 @@ export const twitter_url = "https://twitter.com/every_thing_AI";
 export const twitter_handle = "@everythingai";
 export const linkedin_url = "https://www.linkedin.com/company/everything-ai-club";
 
-export const screenshot_api_url = "http://ec2-52-66-235-37.ap-south-1.compute.amazonaws.com:8080/screenshot";
+export const screenshot_api_url = "http://ec2-13-126-48-229.ap-south-1.compute.amazonaws.com:8080/screenshot";
 
 /**************************************************************************/
 /**********************    SEO Meta Descriptions   ************************/

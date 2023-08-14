@@ -68,11 +68,11 @@ export default function ToolsWithPagination({ options, resultsPerPage, totalCoun
 				)}
 			</div>
 
-			<div className="mt-12">
+			{/* <div className="mt-12">
 				{resultsPerPage < count && (
 					<Pager activePage={page} onPageChange={handlePagination} itemsCountPerPage={resultsPerPage} totalPagesCount={count} />
 				)}
-			</div>
+			</div> */}
 		</>
 	);
 }
