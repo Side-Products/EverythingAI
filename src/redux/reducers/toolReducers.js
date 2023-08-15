@@ -5,6 +5,12 @@ import {
 	GET_TOOLS_REQUEST,
 	GET_TOOLS_SUCCESS,
 	GET_TOOLS_FAIL,
+	GET_VERIFIED_TOOLS_REQUEST,
+	GET_VERIFIED_TOOLS_SUCCESS,
+	GET_VERIFIED_TOOLS_FAIL,
+	GET_UNVERIFIED_TOOLS_REQUEST,
+	GET_UNVERIFIED_TOOLS_SUCCESS,
+	GET_UNVERIFIED_TOOLS_FAIL,
 	GET_TOOLS_FOR_HOMEPAGE_REQUEST,
 	GET_TOOLS_FOR_HOMEPAGE_SUCCESS,
 	GET_TOOLS_FOR_HOMEPAGE_FAIL,
@@ -69,11 +75,75 @@ export const getAllToolsReducer = (state = { tools: [] }, action) => {
 			return {
 				loading: false,
 				tools: action.payload.tools,
-				verifiedTools: action.payload.verifiedTools ?? [],
-				unverifiedTools: action.payload.unverifiedTools ?? [],
 				toolsCount: action.payload.toolsCount ?? null,
+				resultsPerPage: action.payload.resultsPerPage,
+				filteredToolsCount: action.payload.filteredToolsCount,
 			};
 		case GET_TOOLS_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			};
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				loading: false,
+				error: null,
+			};
+		default:
+			return state;
+	}
+};
+
+// get all verified tools reducer
+export const getAllVerifiedToolsReducer = (state = { verifiedTools: [] }, action) => {
+	switch (action.type) {
+		case GET_VERIFIED_TOOLS_REQUEST:
+			return {
+				loading: true,
+			};
+		case GET_VERIFIED_TOOLS_SUCCESS:
+			return {
+				loading: false,
+				tools: action.payload.tools && action.payload.tools.length > 0 ? action.payload.tools : [],
+				verifiedTools: action.payload.verifiedTools ?? [],
+				verifiedToolsCount: action.payload.verifiedToolsCount ?? null,
+				resultsPerPage: action.payload.resultsPerPage,
+				filteredToolsCount: action.payload.filteredToolsCount,
+			};
+		case GET_VERIFIED_TOOLS_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			};
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				loading: false,
+				error: null,
+			};
+		default:
+			return state;
+	}
+};
+
+// get all unverified tools reducer
+export const getAllUnverifiedToolsReducer = (state = { unverifiedTools: [] }, action) => {
+	switch (action.type) {
+		case GET_UNVERIFIED_TOOLS_REQUEST:
+			return {
+				loading: true,
+			};
+		case GET_UNVERIFIED_TOOLS_SUCCESS:
+			return {
+				loading: false,
+				tools: action.payload.tools && action.payload.tools.length > 0 ? action.payload.tools : [],
+				unverifiedTools: action.payload.unverifiedTools ?? [],
+				unverifiedToolsCount: action.payload.unverifiedToolsCount ?? null,
+				resultsPerPage: action.payload.resultsPerPage,
+				filteredToolsCount: action.payload.filteredToolsCount,
+			};
+		case GET_UNVERIFIED_TOOLS_FAIL:
 			return {
 				loading: false,
 				error: action.payload,

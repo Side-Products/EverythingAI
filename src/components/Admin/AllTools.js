@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { clearErrors } from "@/redux/actions/toolActions";
 import { StatusContext } from "@/store/StatusContextProvider";
 import Loader from "@/components/ui/Loader";
@@ -12,13 +12,12 @@ import DeleteToolConfirmModal from "./Modals/Tool/DeleteToolConfirmModal";
 import VerifyToolConfirmModal from "./Modals/Tool/VerifyToolConfirmModal";
 import UnverifyToolConfirmModal from "./Modals/Tool/UnverifyToolConfirmModal";
 import verified_tick from "/public/verified_tick.svg";
+import Pager from "@/components/ui/Pagination/Pager";
+import { adminGetAllTools, adminGetAllVerifiedTools, adminGetAllUnverifiedTools } from "@/redux/actions/toolActions";
 
-export default function AllTools() {
+export default function AllTools({ tools, verifiedTools, unverifiedTools, toolsCount, error, loading, resultsPerPage, filteredToolsCount }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const { tools, verifiedTools, unverifiedTools, toolsCount, error, loading } = useSelector((state) => state.allTools);
-
-	const { setError } = useContext(StatusContext);
 
 	const [activeTable, setActiveTable] = useState("allToolsTable");
 	const [isDeleteToolModalOpen, setDeleteToolModalOpen] = useState(false);
@@ -28,6 +27,17 @@ export default function AllTools() {
 	const [toolToVerify, setToolToVerify] = useState("");
 	const [toolToUnverify, setToolToUnverify] = useState("");
 
+	useEffect(() => {
+		if (router.pathname.includes("admin/tools/unverified")) {
+			setActiveTable("unverifiedTable");
+		} else if (router.pathname.includes("admin/tools/verified")) {
+			setActiveTable("verifiedTable");
+		} else {
+			setActiveTable("allToolsTable");
+		}
+	}, [router.pathname]);
+
+	const { setError } = useContext(StatusContext);
 	useEffect(() => {
 		if (error) {
 			setError({
@@ -39,13 +49,69 @@ export default function AllTools() {
 		}
 	}, [error]);
 
+	// Pagination
+	let { search, page = 1 } = router.query;
+	page = Number(page);
+
+	useEffect(() => {
+		if (router.pathname && page) {
+			if (router.pathname.includes("admin/tools/unverified")) {
+				dispatch(adminGetAllUnverifiedTools(router.query.page || 1));
+			} else if (router.pathname.includes("admin/tools/verified")) {
+				dispatch(adminGetAllVerifiedTools(router.query.page || 1));
+			} else {
+				dispatch(adminGetAllTools(router.query.page || 1));
+			}
+		}
+	}, [dispatch, page]);
+
+	let queryParams;
+	if (typeof window !== "undefined") {
+		queryParams = new URLSearchParams(window.location.search);
+	}
+
+	const handlePagination = (pageNumber) => {
+		if (queryParams.has("page")) {
+			queryParams.set("page", pageNumber + 1);
+		} else {
+			queryParams.append("page", pageNumber + 1);
+		}
+
+		if (router.pathname.includes("admin/tools/unverified")) {
+			router.replace({
+				search: queryParams.toString(),
+				pathname: `/admin/tools/unverified`,
+			});
+		} else if (router.pathname.includes("admin/tools/verified")) {
+			router.replace({
+				search: queryParams.toString(),
+				pathname: `/admin/tools/verified`,
+			});
+		} else {
+			router.replace({
+				search: queryParams.toString(),
+				pathname: `/admin/tools`,
+			});
+		}
+	};
+
+	let count = toolsCount;
+	if (search) {
+		count = filteredToolsCount;
+	}
+
 	return loading ? (
 		<Loader />
 	) : (
 		<div className="grid w-full mt-10 overflow-scroll">
 			<div className="flex justify-between w-full">
 				<ul className="items-start nav nav-tabs flex flex-row flex-wrap list-none border-b-0 pl-0 mb-4" id="tabs-tables" role="tablist">
-					<li className="nav-item" role="presentation" onClick={() => setActiveTable("allToolsTable")}>
+					<li
+						className="nav-item"
+						role="presentation"
+						// onClick={() => setActiveTable("allToolsTable")}
+						onClick={() => router.push("/admin/tools")}
+					>
 						<span
 							className={
 								"cursor-pointer nav-link w-full block font-medium text-xs leading-tight border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 parent hover:bg-primary-200 transition duration-300 rounded-t " +
@@ -61,7 +127,12 @@ export default function AllTools() {
 							All Tools
 						</span>
 					</li>
-					<li className="nav-item" role="presentation" onClick={() => setActiveTable("unverifiedTable")}>
+					<li
+						className="nav-item"
+						role="presentation"
+						// onClick={() => setActiveTable("unverifiedTable")}
+						onClick={() => router.push("/admin/tools/unverified")}
+					>
 						<span
 							className={
 								"cursor-pointer nav-link w-full block font-medium text-xs leading-tight border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:bg-primary-200 transition duration-300 rounded-t " +
@@ -77,7 +148,12 @@ export default function AllTools() {
 							Unverified
 						</span>
 					</li>
-					<li className="nav-item" role="presentation" onClick={() => setActiveTable("verifiedTable")}>
+					<li
+						className="nav-item"
+						role="presentation"
+						// onClick={() => setActiveTable("verifiedTable")}
+						onClick={() => router.push("/admin/tools/verified")}
+					>
 						<span
 							className={
 								"cursor-pointer nav-link w-full block font-medium text-xs leading-tight border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:bg-primary-200 transition duration-300 rounded-t " +
@@ -98,11 +174,17 @@ export default function AllTools() {
 				<div className="font-semibold text-base text-dark-700">Total Count: {toolsCount}</div>
 			</div>
 
+			<div className="w-full flex justify-end">
+				{resultsPerPage < toolsCount && (
+					<Pager activePage={page} onPageChange={handlePagination} itemsCountPerPage={resultsPerPage} totalPagesCount={count} />
+				)}
+			</div>
+
 			<div className="tab-content" id="tabs-tabContent3">
 				{/* All Tools Table */}
 				{activeTable == "allToolsTable" && (
 					<div className="tab-pane fade show active" id="tabs-all-tools" role="tabpanel" aria-labelledby="tabs-all-tools-details">
-						{tools.length !== 0 ? (
+						{tools && tools.length !== 0 ? (
 							<table className="w-full table allTools-table table-auto text-gray-400 border-separate space-y-6 text-sm">
 								<thead className="bg-dark-800">
 									<tr>
@@ -143,9 +225,9 @@ export default function AllTools() {
 												</a>
 											</td>
 											<td className="p-3">{tool.oneLiner}</td>
-											<td className="p-3">{tool.category.name}</td>
-											<td className="p-3">{tool.subCategory ? tool.subCategory.name : "-"}</td>
-											<td className="p-3">{tool.pricing.name}</td>
+											<td className="p-3">{tool.category?.name}</td>
+											<td className="p-3">{tool.subCategory ? tool.subCategory?.name : "-"}</td>
+											<td className="p-3">{tool.pricing?.name}</td>
 											<td className="p-3">
 												<div className="flex gap-x-2">
 													{tool.twitter && (
@@ -284,9 +366,9 @@ export default function AllTools() {
 												</a>
 											</td>
 											<td className="p-3">{tool.oneLiner}</td>
-											<td className="p-3">{tool.category.name}</td>
-											<td className="p-3">{tool.subCategory ? tool.subCategory.name : "-"}</td>
-											<td className="p-3">{tool.pricing.name}</td>
+											<td className="p-3">{tool.category?.name}</td>
+											<td className="p-3">{tool.subCategory ? tool.subCategory?.name : "-"}</td>
+											<td className="p-3">{tool.pricing?.name}</td>
 											<td className="p-3">
 												<div className="flex gap-x-2">
 													{tool.twitter && (
@@ -437,9 +519,9 @@ export default function AllTools() {
 												</a>
 											</td>
 											<td className="p-3">{tool.oneLiner}</td>
-											<td className="p-3">{tool.category.name}</td>
-											<td className="p-3">{tool.subCategory ? tool.subCategory.name : "-"}</td>
-											<td className="p-3">{tool.pricing.name}</td>
+											<td className="p-3">{tool.category?.name}</td>
+											<td className="p-3">{tool.subCategory ? tool.subCategory?.name : "-"}</td>
+											<td className="p-3">{tool.pricing?.name}</td>
 											<td className="p-3">
 												<div className="flex gap-x-2">
 													{tool.twitter && (

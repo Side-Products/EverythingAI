@@ -502,49 +502,113 @@ const getTool = catchAsyncErrors(async (req, res, next) => {
 
 // get all tools => /api/admin/tools
 const adminGetAllTools = catchAsyncErrors(async (req, res) => {
-	const tools = await Tool.find({})
-		.populate({
-			path: "category",
-		})
-		.populate({
-			path: "subCategory",
-		})
-		.populate({
-			path: "pricing",
-		})
-		.sort({ createdAt: "desc" });
+	const resultsPerPage = 10;
 	const toolsCount = await Tool.countDocuments();
 
-	const verifiedTools = await Tool.find({ verified: true })
-		.populate({
-			path: "category",
-		})
-		.populate({
-			path: "subCategory",
-		})
-		.populate({
-			path: "pricing",
-		})
-		.sort({ createdAt: "desc" });
+	const apiFeatures = new APIFeatures(
+		Tool.find({})
+			.populate({
+				path: "category",
+			})
+			.populate({
+				path: "subCategory",
+			})
+			.populate({
+				path: "pricing",
+			})
+			.sort({ createdAt: "desc" }),
+		req.query
+	)
+		.search()
+		.filter();
+	let tools = await apiFeatures.query;
+	let filteredToolsCount = tools.length;
 
-	const unverifiedTools = await Tool.find({ verified: false })
-		.populate({
-			path: "category",
-		})
-		.populate({
-			path: "subCategory",
-		})
-		.populate({
-			path: "pricing",
-		})
-		.sort({ createdAt: "desc" });
+	apiFeatures.pagination(resultsPerPage);
+	tools = await apiFeatures.query.clone();
 
 	res.status(200).json({
 		success: true,
 		tools,
-		verifiedTools,
-		unverifiedTools,
 		toolsCount,
+		filteredToolsCount,
+		resultsPerPage,
+	});
+});
+
+// get all verified tools => /api/admin/tools/verified
+const adminGetAllVerifiedTools = catchAsyncErrors(async (req, res) => {
+	const resultsPerPage = 10;
+	const toolsCount = await Tool.countDocuments({ verified: true });
+
+	const apiFeatures = new APIFeatures(
+		Tool.find({ verified: true })
+			.populate({
+				path: "category",
+			})
+			.populate({
+				path: "subCategory",
+			})
+			.populate({
+				path: "pricing",
+			})
+			.sort({ createdAt: "desc" }),
+		req.query
+	)
+		.search()
+		.filter();
+	let tools = await apiFeatures.query;
+	let filteredToolsCount = tools.length;
+
+	apiFeatures.pagination(resultsPerPage);
+	tools = await apiFeatures.query.clone();
+
+	res.status(200).json({
+		success: true,
+		verifiedTools: tools,
+		verifiedToolsCount: toolsCount,
+		filteredToolsCount,
+		resultsPerPage,
+	});
+});
+
+// get all unverified tools => /api/admin/tools/unverified
+const adminGetAllUnverifiedTools = catchAsyncErrors(async (req, res) => {
+	const resultsPerPage = 10;
+	const toolsCount = await Tool.countDocuments({
+		$or: [{ verified: false }, { verified: { $exists: false } }],
+	});
+
+	const apiFeatures = new APIFeatures(
+		Tool.find({
+			$or: [{ verified: false }, { verified: { $exists: false } }],
+		})
+			.populate({
+				path: "category",
+			})
+			.populate({
+				path: "subCategory",
+			})
+			.populate({
+				path: "pricing",
+			})
+			.sort({ createdAt: "desc" }),
+		req.query
+	)
+		.search()
+		.filter();
+	let tools = await apiFeatures.query;
+	let filteredToolsCount = tools.length;
+
+	apiFeatures.pagination(resultsPerPage);
+	tools = await apiFeatures.query.clone();
+
+	res.status(200).json({
+		success: true,
+		unverifiedTools: tools,
+		unverifiedToolsCount: toolsCount,
+		filteredToolsCount,
+		resultsPerPage,
 	});
 });
 
@@ -918,6 +982,8 @@ export {
 	deleteTool,
 	getTool,
 	adminGetAllTools,
+	adminGetAllVerifiedTools,
+	adminGetAllUnverifiedTools,
 	verifyTool,
 	unverifyTool,
 	getMyLikedTools,

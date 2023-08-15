@@ -12,6 +12,8 @@ import {
 	deleteToolReducer,
 	verifyToolReducer,
 	unverifyToolReducer,
+	getAllVerifiedToolsReducer,
+	getAllUnverifiedToolsReducer,
 } from "./toolReducers";
 import { createLikedToolReducer, deleteLikedToolReducer, myLikedToolsReducer } from "./likedToolReducers";
 import { getAllSubCategoriesReducer } from "./subCategoryReducers";
@@ -51,6 +53,8 @@ const reducer = combineReducers({
 	// tool
 	createTool: createToolReducer,
 	allTools: getAllToolsReducer,
+	allVerifiedTools: getAllVerifiedToolsReducer,
+	allUnverifiedTools: getAllUnverifiedToolsReducer,
 	toolsForHomepage: getToolsForHomepageReducer,
 	tool: getToolReducer,
 	updateTool: updateToolReducer,

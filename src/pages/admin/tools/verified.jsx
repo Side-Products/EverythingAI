@@ -1,6 +1,6 @@
 import { wrapper } from "@/redux/redux-store";
 import { getSession } from "next-auth/react";
-import { adminGetAllToolsServerSide } from "@/redux/actions/toolActions";
+import { adminGetAllVerifiedToolsServerSide } from "@/redux/actions/toolActions";
 import PageWrapper from "@/layout/PageWrapper";
 import AllTools from "@/components/Admin/AllTools";
 import { useSelector } from "react-redux";
@@ -17,7 +17,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 		};
 	}
 
-	await store.dispatch(adminGetAllToolsServerSide(req));
+	await store.dispatch(adminGetAllVerifiedToolsServerSide(req));
 
 	return {
 		props: { session },
@@ -25,15 +25,15 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 });
 
 export default function Tools() {
-	const { tools, toolsCount, error, loading, resultsPerPage, filteredToolsCount } = useSelector((state) => state.allTools);
+	const { verifiedTools, verifiedToolsCount, error, loading, resultsPerPage, filteredToolsCount } = useSelector((state) => state.allVerifiedTools);
 
 	return (
 		<PageWrapper>
 			<div className="w-full flex flex-col items-center justify-center">
-				<h1 className="text-6xl font-bold text-center tracking-[-1px] text-gradient-primary-tr">All Tools</h1>
+				<h1 className="text-6xl font-bold text-center tracking-[-1px] text-gradient-primary-tr">Verified Tools</h1>
 				<AllTools
-					tools={tools}
-					toolsCount={toolsCount}
+					verifiedTools={verifiedTools}
+					toolsCount={verifiedToolsCount}
 					error={error}
 					loading={loading}
 					resultsPerPage={resultsPerPage}
