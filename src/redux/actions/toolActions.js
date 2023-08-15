@@ -7,6 +7,12 @@ import {
 	GET_TOOLS_REQUEST,
 	GET_TOOLS_SUCCESS,
 	GET_TOOLS_FAIL,
+	GET_VERIFIED_TOOLS_REQUEST,
+	GET_VERIFIED_TOOLS_SUCCESS,
+	GET_VERIFIED_TOOLS_FAIL,
+	GET_UNVERIFIED_TOOLS_REQUEST,
+	GET_UNVERIFIED_TOOLS_SUCCESS,
+	GET_UNVERIFIED_TOOLS_FAIL,
 	GET_TOOLS_FOR_HOMEPAGE_REQUEST,
 	GET_TOOLS_FOR_HOMEPAGE_SUCCESS,
 	GET_TOOLS_FOR_HOMEPAGE_FAIL,
@@ -189,7 +195,7 @@ export const getTool = (req, id) => async (dispatch) => {
 	}
 };
 
-export const adminGetAllTools = (req) => async (dispatch) => {
+export const adminGetAllToolsServerSide = (req) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_TOOLS_REQUEST });
 
@@ -205,6 +211,94 @@ export const adminGetAllTools = (req) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: GET_TOOLS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+export const adminGetAllTools = (currentPage) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_TOOLS_REQUEST });
+
+		const { data } = await axios.get(`/api/admin/tools?page=${currentPage}`);
+
+		dispatch({ type: GET_TOOLS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: GET_TOOLS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+export const adminGetAllVerifiedToolsServerSide = (req) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_VERIFIED_TOOLS_REQUEST });
+
+		const { origin } = absoluteUrl(req);
+		const config = {
+			headers: {
+				cookie: req.headers.cookie,
+			},
+		};
+		const { data } = await axios.get(`${origin}/api/admin/tools/verified`, config);
+
+		dispatch({ type: GET_VERIFIED_TOOLS_SUCCESS, payload: data });
+	} catch (error) {
+		console.log(error);
+		dispatch({
+			type: GET_VERIFIED_TOOLS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+export const adminGetAllVerifiedTools = (currentPage) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_VERIFIED_TOOLS_REQUEST });
+
+		const { data } = await axios.get(`/api/admin/tools/verified?page=${currentPage}`);
+
+		dispatch({ type: GET_VERIFIED_TOOLS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: GET_VERIFIED_TOOLS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+export const adminGetAllUnverifiedToolsServerSide = (req) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_UNVERIFIED_TOOLS_REQUEST });
+
+		const { origin } = absoluteUrl(req);
+		const config = {
+			headers: {
+				cookie: req.headers.cookie,
+			},
+		};
+		const { data } = await axios.get(`${origin}/api/admin/tools/unverified`, config);
+
+		dispatch({ type: GET_UNVERIFIED_TOOLS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: GET_UNVERIFIED_TOOLS_FAIL,
+			payload: error.response.data.message,
+		});
+	}
+};
+
+export const adminGetAllUnverifiedTools = (currentPage) => async (dispatch) => {
+	try {
+		dispatch({ type: GET_UNVERIFIED_TOOLS_REQUEST });
+
+		const { data } = await axios.get(`/api/admin/tools/unverified?page=${currentPage}`);
+
+		dispatch({ type: GET_UNVERIFIED_TOOLS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({
+			type: GET_UNVERIFIED_TOOLS_FAIL,
 			payload: error.response.data.message,
 		});
 	}
