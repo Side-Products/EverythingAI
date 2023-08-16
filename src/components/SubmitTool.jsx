@@ -26,6 +26,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 
 	const [toolData, setToolData] = useState({
 		name: "",
+		slug: "",
 		url: "",
 		utmLink: "",
 		oneLiner: "",
@@ -100,6 +101,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
 		if (toolToEdit) {
 			setToolData({
 				name: toolToEdit.name,
+				slug: toolToEdit.slug,
 				url: toolToEdit.url,
 				utmLink: toolToEdit.utmLink,
 				oneLiner: toolToEdit.oneLiner,
@@ -155,6 +157,9 @@ const SubmitTool = ({ toolToEdit = null }) => {
 				};
 				if (!tool.featured || tool.featured == undefined || tool.featured == "undefined") {
 					delete tool.featured;
+				}
+				if (!tool.slug || tool.slug == undefined || tool.slug == "undefined") {
+					delete tool.slug;
 				}
 				if (!tool.trendingSponsored || tool.trendingSponsored == undefined || tool.trendingSponsored == "undefined") {
 					delete tool.trendingSponsored;
@@ -430,6 +435,19 @@ const SubmitTool = ({ toolToEdit = null }) => {
 							placeholder="Eg. EverythingAI"
 							required={true}
 						/>
+
+						{toolToEdit && (
+							<TextInput
+								variant="secondary"
+								label={"Tool URL Slug"}
+								type={"text"}
+								value={toolData.slug}
+								name={"slug"}
+								onFieldChange={onToolDataChange}
+								placeholder="Eg. everything-ai"
+								required={true}
+							/>
+						)}
 
 						<TextInput
 							variant="secondary"
