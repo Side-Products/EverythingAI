@@ -18,6 +18,7 @@ import { uploadImage } from "@/utils/Helpers";
 const UpdateCollectionModal = ({ isOpen, setOpen, collectionToUpdate }) => {
 	const [collectionData, setCollectionData] = useState({
 		name: "",
+		slug: "",
 		description: "",
 		metaDescription: "",
 	});
@@ -32,6 +33,7 @@ const UpdateCollectionModal = ({ isOpen, setOpen, collectionToUpdate }) => {
 		if (collectionToUpdate) {
 			setCollectionData({
 				name: collectionToUpdate.name,
+				slug: collectionToUpdate.slug,
 				description: collectionToUpdate.description,
 				metaDescription: collectionToUpdate.metaDescription,
 			});
@@ -143,6 +145,15 @@ const UpdateCollectionModal = ({ isOpen, setOpen, collectionToUpdate }) => {
 							id={"name_field"}
 							value={collectionData.name}
 							name={"name"}
+							onFieldChange={onCollectionDataChange}
+							required={true}
+						/>
+
+						<TextInput
+							label={"URL Slug"}
+							id={"slug_field"}
+							value={collectionData.slug}
+							name={"slug"}
 							onFieldChange={onCollectionDataChange}
 							required={true}
 						/>
