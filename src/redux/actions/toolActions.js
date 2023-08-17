@@ -7,6 +7,9 @@ import {
 	GET_TOOLS_REQUEST,
 	GET_TOOLS_SUCCESS,
 	GET_TOOLS_FAIL,
+	GET_ADMIN_TOOLS_REQUEST,
+	GET_ADMIN_TOOLS_SUCCESS,
+	GET_ADMIN_TOOLS_FAIL,
 	GET_VERIFIED_TOOLS_REQUEST,
 	GET_VERIFIED_TOOLS_SUCCESS,
 	GET_VERIFIED_TOOLS_FAIL,
@@ -104,7 +107,7 @@ export const getAllToolsServerSide = (req, type, query) => async (dispatch) => {
 				delete params[key];
 			}
 		});
-		const { data } = await axios.get(`${origin}/api/tools`, {
+		const { data } = await axios.get(`${origin}/api/tools?page=${query.page}`, {
 			params: params,
 			headers: config.headers,
 		});
@@ -197,7 +200,7 @@ export const getTool = (req, id) => async (dispatch) => {
 
 export const adminGetAllToolsServerSide = (req) => async (dispatch) => {
 	try {
-		dispatch({ type: GET_TOOLS_REQUEST });
+		dispatch({ type: GET_ADMIN_TOOLS_REQUEST });
 
 		const { origin } = absoluteUrl(req);
 		const config = {
@@ -207,10 +210,10 @@ export const adminGetAllToolsServerSide = (req) => async (dispatch) => {
 		};
 		const { data } = await axios.get(`${origin}/api/admin/tools`, config);
 
-		dispatch({ type: GET_TOOLS_SUCCESS, payload: data });
+		dispatch({ type: GET_ADMIN_TOOLS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({
-			type: GET_TOOLS_FAIL,
+			type: GET_ADMIN_TOOLS_FAIL,
 			payload: error.response.data.message,
 		});
 	}
@@ -218,14 +221,14 @@ export const adminGetAllToolsServerSide = (req) => async (dispatch) => {
 
 export const adminGetAllTools = (currentPage) => async (dispatch) => {
 	try {
-		dispatch({ type: GET_TOOLS_REQUEST });
+		dispatch({ type: GET_ADMIN_TOOLS_REQUEST });
 
 		const { data } = await axios.get(`/api/admin/tools?page=${currentPage}`);
 
-		dispatch({ type: GET_TOOLS_SUCCESS, payload: data });
+		dispatch({ type: GET_ADMIN_TOOLS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({
-			type: GET_TOOLS_FAIL,
+			type: GET_ADMIN_TOOLS_FAIL,
 			payload: error.response.data.message,
 		});
 	}

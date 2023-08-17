@@ -25,7 +25,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 });
 
 export default function Tools() {
-	const { tools, toolsCount, error, loading, resultsPerPage, filteredToolsCount } = useSelector((state) => state.allTools);
+	const { tools, toolsCount, error, loading, resultsPerPage, filteredToolsCount } = useSelector((state) => state.adminAllTools);
 
 	return (
 		<PageWrapper>

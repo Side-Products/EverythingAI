@@ -5,6 +5,9 @@ import {
 	GET_TOOLS_REQUEST,
 	GET_TOOLS_SUCCESS,
 	GET_TOOLS_FAIL,
+	GET_ADMIN_TOOLS_REQUEST,
+	GET_ADMIN_TOOLS_SUCCESS,
+	GET_ADMIN_TOOLS_FAIL,
 	GET_VERIFIED_TOOLS_REQUEST,
 	GET_VERIFIED_TOOLS_SUCCESS,
 	GET_VERIFIED_TOOLS_FAIL,
@@ -76,10 +79,41 @@ export const getAllToolsReducer = (state = { tools: [] }, action) => {
 				loading: false,
 				tools: action.payload.tools,
 				toolsCount: action.payload.toolsCount ?? null,
+				resultsPerPage: action.payload.resultsPerPage ?? 100,
+				filteredToolsCount: action.payload.filteredToolsCount ?? null,
+			};
+		case GET_TOOLS_FAIL:
+			return {
+				loading: false,
+				error: action.payload,
+			};
+		case CLEAR_ERRORS:
+			return {
+				...state,
+				loading: false,
+				error: null,
+			};
+		default:
+			return state;
+	}
+};
+
+// get admin all tools reducer
+export const getAdminAllToolsReducer = (state = { tools: [] }, action) => {
+	switch (action.type) {
+		case GET_ADMIN_TOOLS_REQUEST:
+			return {
+				loading: true,
+			};
+		case GET_ADMIN_TOOLS_SUCCESS:
+			return {
+				loading: false,
+				tools: action.payload.tools,
+				toolsCount: action.payload.toolsCount ?? null,
 				resultsPerPage: action.payload.resultsPerPage,
 				filteredToolsCount: action.payload.filteredToolsCount,
 			};
-		case GET_TOOLS_FAIL:
+		case GET_ADMIN_TOOLS_FAIL:
 			return {
 				loading: false,
 				error: action.payload,

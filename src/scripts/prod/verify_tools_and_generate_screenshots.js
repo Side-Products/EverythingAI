@@ -147,7 +147,7 @@ async function verifyToolsAndGenerateScreenshots() {
 				continue;
 			} else {
 				try {
-					console.log(`Verifying "${tool.name}"...`);
+					console.log(`Verifying "${tool.name}"... ${tool.url}`);
 					tool.verified = true;
 					const result = await axios.post(
 						`${screenshot_api_url}`,
