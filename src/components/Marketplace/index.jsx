@@ -1,6 +1,9 @@
 import { useReducer, useState } from "react";
+import { useRouter } from "next/router";
 import MarketplaceNav from "./MarketplaceNav";
 import MarketplaceBody from "./MarketplaceBody";
+import Pager from "@/components/ui/Pagination/Pager";
+import { useSelector } from "react-redux";
 
 const initFilterState = {
 	subcategories: [],
@@ -55,10 +58,44 @@ export default function Marketplace({ tools }) {
 	const [currentSelection, setCurrentSelection] = useState(1);
 	const [filter, setFilter] = useReducer(reducerFn, initFilterState);
 
+	const { toolsCount, resultsPerPage, filteredToolsCount } = useSelector((state) => state.allTools);
+
+	const router = useRouter();
+	// Pagination
+	let { sortby, pricing, category, subcategories, page = 1 } = router.query;
+	page = Number(page);
+
+	let queryParams;
+	if (typeof window !== "undefined") {
+		queryParams = new URLSearchParams(window.location.search);
+	}
+
+	const handlePagination = (pageNumber) => {
+		if (queryParams.has("page")) {
+			queryParams.set("page", pageNumber + 1);
+		} else {
+			queryParams.append("page", pageNumber + 1);
+		}
+
+		router.replace({
+			search: queryParams.toString(),
+		});
+	};
+
+	let count = toolsCount;
+	if (pricing || category || subcategories) {
+		count = filteredToolsCount;
+	}
+
 	return (
 		<>
 			<MarketplaceNav {...{ currentSelection, setCurrentSelection }} />
 			<MarketplaceBody currentSelection={currentSelection} filter={filter} setFilter={setFilter} tools={tools} />
+			<div className="w-full flex justify-center pb-20 -mt-6">
+				{resultsPerPage < count && (
+					<Pager activePage={page} onPageChange={handlePagination} itemsCountPerPage={resultsPerPage} totalPagesCount={count} />
+				)}
+			</div>
 		</>
 	);
 }

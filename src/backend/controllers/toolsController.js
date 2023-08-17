@@ -90,6 +90,12 @@ const maybeAddLikedTools = async (req, tools) => {
 
 // get all tools => /api/tools
 const allTools = catchAsyncErrors(async (req, res) => {
+	const resultsPerPage = 100;
+	const toolsCount = await Tool.countDocuments({ verified: true });
+
+	const currentPage = Number(req.query.page) || 1;
+	const skip = resultsPerPage * (currentPage - 1);
+
 	const { category, subcategories, sortby, pricing, meta, search } = req.query;
 	let subcategoriesArray = [];
 	if (subcategories) subcategoriesArray = subcategories.split(",");
@@ -214,6 +220,10 @@ const allTools = catchAsyncErrors(async (req, res) => {
 
 	pipeline.push({ $sort: sorting_condition });
 
+	// Add pagination stages
+	pipeline.push({ $skip: skip });
+	pipeline.push({ $limit: resultsPerPage });
+
 	pipeline.push({
 		$project: {
 			name: 1,
@@ -239,6 +249,9 @@ const allTools = catchAsyncErrors(async (req, res) => {
 	res.status(200).json({
 		success: true,
 		tools: toolsWithLike,
+		toolsCount,
+		resultsPerPage,
+		filteredToolsCount: toolsWithLike.length,
 	});
 });
 

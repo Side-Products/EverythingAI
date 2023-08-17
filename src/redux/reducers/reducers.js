@@ -12,6 +12,7 @@ import {
 	deleteToolReducer,
 	verifyToolReducer,
 	unverifyToolReducer,
+	getAdminAllToolsReducer,
 	getAllVerifiedToolsReducer,
 	getAllUnverifiedToolsReducer,
 } from "./toolReducers";
@@ -53,6 +54,7 @@ const reducer = combineReducers({
 	// tool
 	createTool: createToolReducer,
 	allTools: getAllToolsReducer,
+	adminAllTools: getAdminAllToolsReducer,
 	allVerifiedTools: getAllVerifiedToolsReducer,
 	allUnverifiedTools: getAllUnverifiedToolsReducer,
 	toolsForHomepage: getToolsForHomepageReducer,
