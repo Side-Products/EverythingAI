@@ -12,7 +12,7 @@ export default function CommentCard({ comment, rating, authorName, handleReadCom
 	const starRate = [];
 
 	for (let i = 0; i < rating; i++) {
-		starRate.push(<span className={"star material-symbols-outlined text-yellow-500 cursor-default"}>grade</span>);
+		starRate.push(<i className="fa-solid fa-star text-[18px] text-yellow-500 cursor-default"></i>);
 	}
 	const commentStr = useMemo(() => {
 		if (comment.length > 100) return `${comment.substring(0, 101)}... `;
@@ -54,7 +54,7 @@ export default function CommentCard({ comment, rating, authorName, handleReadCom
 						</span>
 					)}
 				</div>
-				<div className="flex">{starRate}</div>
+				<div className="flex gap-x-[2px] mt-[2px]">{starRate}</div>
 			</div>
 			<p className="mt-3 text-sm">
 				{commentStr}

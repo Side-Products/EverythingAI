@@ -1,13 +1,11 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import MarqueeText from "@/components/ui/MarqueeText";
 
 export default function CategoryCard({ category }) {
-	const router = useRouter();
-
 	return (
 		<div className="group transition duration-300 cursor-pointer max-w-fit bg-light-100 rounded-xl shadow-md hover:shadow-2xl">
-			<div onClick={() => router.push(`/categories/${category.name.toLowerCase()}`)}>
+			<Link href={`/categories/${category.name.toLowerCase()}`} target="_blank" rel="noopener noreferrer">
 				<div className="relative w-full h-44 overflow-hidden rounded-t-xl">
 					<Image
 						src={category.image}
@@ -25,7 +23,7 @@ export default function CategoryCard({ category }) {
 						<MarqueeText text={category.name} classes={"text-lg font-semibold"} marqueeWidth={"w-[250px]"} />
 					)}
 				</div>
-			</div>
+			</Link>
 		</div>
 	);
 }

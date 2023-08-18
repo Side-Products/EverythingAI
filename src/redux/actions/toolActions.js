@@ -107,13 +107,14 @@ export const getAllToolsServerSide = (req, type, query) => async (dispatch) => {
 				delete params[key];
 			}
 		});
-		const { data } = await axios.get(`${origin}/api/tools?page=${query.page}`, {
+		const { data } = await axios.get(`${origin}/api/tools?page=${query?.page}`, {
 			params: params,
 			headers: config.headers,
 		});
 
 		dispatch({ type: GET_TOOLS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log(error);
 		dispatch({
 			type: GET_TOOLS_FAIL,
 			payload: error.response.data.message,

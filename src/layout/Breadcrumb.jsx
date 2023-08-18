@@ -11,10 +11,11 @@ export const Breadcrumb = ({ crumb, isVisible = true }) => {
 			urlPath += `/${item.substring(0, queryIdx)}`;
 			currCrumb = item.substring(0, queryIdx);
 		}
+
 		return (
 			<div key={`${currCrumb}${idx}`} className="flex font-medium capitalize cursor-pointer hover:text-primary-500 font-secondary">
 				<Link href={`${urlPath}`} passHref>
-					<p>{idx === 0 ? "Home" : currCrumb}</p>
+					<p>{idx === 0 ? "Home" : currCrumb.replace(/%20/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}</p>
 				</Link>
 				{idx !== crumb.length - 1 && <span className="material-symbols-outlined">chevron_right</span>}
 			</div>
