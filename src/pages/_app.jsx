@@ -41,6 +41,16 @@ function App({ Component, pageProps, session, router }) {
 					`,
 				}}
 			/>
+			<Script
+				id="arsturn-base"
+				strategy="afterInteractive"
+				dangerouslySetInnerHTML={{
+					__html: `
+							window.username="undefined"; window.widgetButtonBackgroundColor="undefined"; var s = document.createElement("script"); s.type =
+							"text/javascript"; s.async = true; s.src = "https://www.arsturn.com/widget.js"; document.head.appendChild(s);
+					`,
+				}}
+			/>
 			{/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
 			{/* <Script
 				src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}

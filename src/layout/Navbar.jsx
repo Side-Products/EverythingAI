@@ -100,7 +100,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
+											"font-medium hidden xl:block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
 											(router.pathname == "/categories" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
@@ -118,7 +118,7 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 									<li
 										className={
-											"font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
+											"font-medium hidden xl:block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
 											(router.pathname == "/get-featured" ? "text-dark-800 bg-gray-200" : "")
 										}
 									>
@@ -141,18 +141,23 @@ const Navbar = ({ setAuthModalOpen }) => {
 							</div>
 
 							<div className="relative flex gap-x-4">
-								<div
-									onClick={() => {
-										if (session && session.user && session.user.email) {
-											router.push("/submit-tool");
-										} else {
+								{session && session.user && session.user.email ? (
+									<Link
+										href="/submit-tool"
+										className="items-center justify-center hidden px-10 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer sm:flex bg-primary-500 hover:bg-primary-600 text-light-100 hover:text-light-100"
+									>
+										Submit Tool
+									</Link>
+								) : (
+									<div
+										onClick={() => {
 											setAuthModalOpen(true);
-										}
-									}}
-									className="items-center justify-center hidden px-10 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer sm:flex bg-primary-500 hover:bg-primary-600 text-light-100"
-								>
-									Submit Tool
-								</div>
+										}}
+										className="items-center justify-center hidden px-10 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer sm:flex bg-primary-500 hover:bg-primary-600 text-light-100"
+									>
+										Submit Tool
+									</div>
+								)}
 
 								<div className="hidden md:block">
 									<ul className="flex flex-row items-center text-sm font-medium md:space-x-8 lg:space-x-3 xl:space-x-6 md:mt-0 sm:text-sm">
