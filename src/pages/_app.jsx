@@ -46,7 +46,7 @@ function App({ Component, pageProps, session, router }) {
 				strategy="afterInteractive"
 				dangerouslySetInnerHTML={{
 					__html: `
-							window.username="undefined"; window.widgetButtonBackgroundColor="undefined"; var s = document.createElement("script"); s.type =
+							window.username="everything-ai"; window.widgetButtonBackgroundColor="undefined"; var s = document.createElement("script"); s.type =
 							"text/javascript"; s.async = true; s.src = "https://www.arsturn.com/widget.js"; document.head.appendChild(s);
 					`,
 				}}
