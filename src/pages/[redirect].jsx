@@ -132,8 +132,50 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 		"https://everythingai.club/your-own-story-book",
 		"https://everythingai.club/zmo-ai",
 	];
-
 	const link = "https://everythingai.club" + req.url;
+
+	const blogUrl = "https://blog.everythingai.club";
+	const redirectToBlogUrls = [
+		"https://everythingai.club/author/root",
+		"https://everythingai.club/category/uncategorized",
+		"https://www.everythingai.club/ai-tools-for-cxos",
+		"https://www.everythingai.club/category/marketing",
+		"https://www.everythingai.club/ai-tools-for-social-media-managers",
+		"https://www.everythingai.club/tag/cheap-ai-tools",
+		"https://www.everythingai.club/ai-tools-for-productivity",
+		"https://www.everythingai.club/tag/free-ai-tools",
+		"https://www.everythingai.club/ai-tools-for-healthcare",
+		"https://everythingai.club/ai-tools-for-writing",
+		"https://www.everythingai.club/tag/twitter",
+		"https://www.everythingai.club/ai-tools-ui-ux",
+		"https://www.everythingai.club/category/video",
+		"https://www.everythingai.club/tag/work-productivity",
+		"https://www.everythingai.club/tag/podcasts",
+		"https://www.everythingai.club/category/audio",
+		"https://www.everythingai.club/category/hr",
+		"https://www.everythingai.club/ai-tools-for-twitter",
+		"https://everythingai.club/tag/authors",
+		"https://www.everythingai.club/tag/healthcare",
+		"https://everythingai.club/tag/content-writing",
+		"https://everythingai.club/tag/podcasts",
+		"https://everythingai.club/category/operations",
+		"https://everythingai.club/tag/dating",
+		"https://everythingai.club/ai-tools-for-authors",
+		"https://everythingai.club/how-to-release-a-podcast-using-ai",
+		"https://everythingai.club/tag/podcasts/feed",
+		"https://everythingai.club/category/productivity/feed",
+		"https://everythingai.club/tag/video-generator",
+		"https://www.everythingai.club/smarten-up-your-saas-game-10-ai-tools-every-entrepreneur-needs",
+		"https://everythingai.club/tag/ai-tools-for-authors",
+	];
+	if (redirectToBlogUrls.some((url) => url.includes(req.url))) {
+		return {
+			redirect: {
+				destination: blogUrl, // The URL to redirect to
+				permanent: true, // Set to true for permanent redirect, false for temporary
+			},
+		};
+	}
 
 	if (links.includes(link)) {
 		return {
