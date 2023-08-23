@@ -1,6 +1,49 @@
 import { wrapper } from "@/redux/redux-store";
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+	const blogUrl = "https://blog.everythingai.club";
+	const redirectToBlogUrls = [
+		"https://everythingai.club/author/root",
+		"https://everythingai.club/category/uncategorized",
+		"https://www.everythingai.club/ai-tools-for-cxos",
+		"https://www.everythingai.club/category/marketing",
+		"https://www.everythingai.club/ai-tools-for-social-media-managers",
+		"https://www.everythingai.club/tag/cheap-ai-tools",
+		"https://www.everythingai.club/ai-tools-for-productivity",
+		"https://www.everythingai.club/tag/free-ai-tools",
+		"https://www.everythingai.club/ai-tools-for-healthcare",
+		"https://everythingai.club/ai-tools-for-writing",
+		"https://www.everythingai.club/tag/twitter",
+		"https://www.everythingai.club/ai-tools-ui-ux",
+		"https://www.everythingai.club/category/video",
+		"https://www.everythingai.club/tag/work-productivity",
+		"https://www.everythingai.club/tag/podcasts",
+		"https://www.everythingai.club/category/audio",
+		"https://www.everythingai.club/category/hr",
+		"https://www.everythingai.club/ai-tools-for-twitter",
+		"https://everythingai.club/tag/authors",
+		"https://www.everythingai.club/tag/healthcare",
+		"https://everythingai.club/tag/content-writing",
+		"https://everythingai.club/tag/podcasts",
+		"https://everythingai.club/category/operations",
+		"https://everythingai.club/tag/dating",
+		"https://everythingai.club/ai-tools-for-authors",
+		"https://everythingai.club/how-to-release-a-podcast-using-ai",
+		"https://everythingai.club/tag/podcasts/feed",
+		"https://everythingai.club/category/productivity/feed",
+		"https://everythingai.club/tag/video-generator",
+		"https://www.everythingai.club/smarten-up-your-saas-game-10-ai-tools-every-entrepreneur-needs",
+		"https://everythingai.club/tag/ai-tools-for-authors",
+	];
+	if (redirectToBlogUrls.some((url) => url.includes(req.url))) {
+		return {
+			redirect: {
+				destination: blogUrl, // The URL to redirect to
+				permanent: true, // Set to true for permanent redirect, false for temporary
+			},
+		};
+	}
+
 	const links = [
 		"https://everythingai.club/abney-ai",
 		"https://everythingai.club/2shortai",
@@ -47,6 +90,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 		"https://everythingai.club/chat-shape",
 		"https://everythingai.club/chatfuel",
 		"https://everythingai.club/chatgpt4youtube",
+		"https://everythingai.club/aixstock",
 		"https://everythingai.club/clickable-so",
 		"https://everythingai.club/clips-ai",
 		"https://everythingai.club/coach-vox",
@@ -59,6 +103,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 		"https://everythingai.club/dalle-2",
 		"https://everythingai.club/darrow-ai",
 		"https://everythingai.club/deep-agency",
+		"https://everythingai.club/elementor-1863",
 		"https://everythingai.club/delve-ai",
 		"https://everythingai.club/detangle-ai",
 		"https://everythingai.club/donotpay",
@@ -73,6 +118,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 		"https://everythingai.club/fliki",
 		"https://everythingai.club/formula-generator",
 		"https://everythingai.club/genius-review",
+		"https://everythingai.club/auto-responder",
 		"https://everythingai.club/get-munch",
 		"https://everythingai.club/get-it-out",
 		"https://everythingai.club/git-hub-co-pilot",
@@ -133,54 +179,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 		"https://everythingai.club/zmo-ai",
 	];
 	const link = "https://everythingai.club" + req.url;
-
-	const blogUrl = "https://blog.everythingai.club";
-	const redirectToBlogUrls = [
-		"https://everythingai.club/author/root",
-		"https://everythingai.club/category/uncategorized",
-		"https://www.everythingai.club/ai-tools-for-cxos",
-		"https://www.everythingai.club/category/marketing",
-		"https://www.everythingai.club/ai-tools-for-social-media-managers",
-		"https://www.everythingai.club/tag/cheap-ai-tools",
-		"https://www.everythingai.club/ai-tools-for-productivity",
-		"https://www.everythingai.club/tag/free-ai-tools",
-		"https://www.everythingai.club/ai-tools-for-healthcare",
-		"https://everythingai.club/ai-tools-for-writing",
-		"https://www.everythingai.club/tag/twitter",
-		"https://www.everythingai.club/ai-tools-ui-ux",
-		"https://www.everythingai.club/category/video",
-		"https://www.everythingai.club/tag/work-productivity",
-		"https://www.everythingai.club/tag/podcasts",
-		"https://www.everythingai.club/category/audio",
-		"https://www.everythingai.club/category/hr",
-		"https://www.everythingai.club/ai-tools-for-twitter",
-		"https://everythingai.club/tag/authors",
-		"https://www.everythingai.club/tag/healthcare",
-		"https://everythingai.club/tag/content-writing",
-		"https://everythingai.club/tag/podcasts",
-		"https://everythingai.club/category/operations",
-		"https://everythingai.club/tag/dating",
-		"https://everythingai.club/ai-tools-for-authors",
-		"https://everythingai.club/how-to-release-a-podcast-using-ai",
-		"https://everythingai.club/tag/podcasts/feed",
-		"https://everythingai.club/category/productivity/feed",
-		"https://everythingai.club/tag/video-generator",
-		"https://www.everythingai.club/smarten-up-your-saas-game-10-ai-tools-every-entrepreneur-needs",
-		"https://everythingai.club/tag/ai-tools-for-authors",
-	];
-	if (redirectToBlogUrls.some((url) => url.includes(req.url))) {
-		return {
-			redirect: {
-				destination: blogUrl, // The URL to redirect to
-				permanent: true, // Set to true for permanent redirect, false for temporary
-			},
-		};
-	}
-
 	if (links.includes(link)) {
 		return {
 			redirect: {
-				destination: "/", // The URL to redirect to
+				destination: "https://everythingai.club/tools" + req.url, // The URL to redirect to
 				permanent: true, // Set to true for permanent redirect, false for temporary
 			},
 		};
