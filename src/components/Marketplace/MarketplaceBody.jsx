@@ -39,7 +39,7 @@ export default function MarketplaceBody({ currentSelection, filter, setFilter, t
 								{loading.status ? (
 									<LoadingToolCards />
 								) : currentSelection === 1 ? (
-									<ExploreTools tools={filteredTools} setTools={setFilteredTools} filter={filter} />
+									<ExploreTools tools={filteredTools} />
 								) : currentSelection === 2 ? (
 									<TrendingTools tools={filteredTools} setTools={setFilteredTools} filter={filter} />
 								) : currentSelection === 3 ? (

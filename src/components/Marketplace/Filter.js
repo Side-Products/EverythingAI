@@ -48,7 +48,7 @@ export default function Filter({ filter, setFilter }) {
 	];
 
 	const [subcategoriesFilterOptions, setSubcategoriesFilterOptions] = useState([]);
-	const [showMobileFilter,setShowMobileFilter] = useState(false);
+	const [showMobileFilter, setShowMobileFilter] = useState(false);
 	const getIndustrySubcategories = async () => {
 		const { data } = await axios.get(`/api/categories/find/industries`);
 		const subcategories = data?.category?.subcategories;
@@ -71,7 +71,7 @@ export default function Filter({ filter, setFilter }) {
 							setSelectedValue={setFilter}
 							options={categories}
 						/>
-					</div>	
+					</div>
 
 					<div className="flex items-center px-5 py-2 mb-3 bg-white border border-gray-300 rounded-lg lg:mb-0 lg:mx-5 hover:border-primary-600">
 						<span className="text-sm cursor-default">Pricing: </span>
@@ -81,7 +81,7 @@ export default function Filter({ filter, setFilter }) {
 							type={"PRICING"}
 							setSelectedValue={setFilter}
 							options={pricings}
-						/>	
+						/>
 					</div>
 
 					<div className="flex items-center px-5 py-0 pr-2 bg-white border border-gray-300 rounded-lg lg:mt-3 xl:mt-0 hover:border-primary-600">
@@ -127,7 +127,7 @@ export default function Filter({ filter, setFilter }) {
 			>
 				<p className="ml-3 font-semibold font-primary">Filters</p>
 			</div>
-			<MobileFilterModal {...{showMobileFilter, setShowMobileFilter}}>
+			<MobileFilterModal {...{ showMobileFilter, setShowMobileFilter }}>
 				<div className="flex flex-col w-full space-y-2">
 					<p className="font-semibold text-[#000] font-secondary">Category</p>
 					<Dropdown
@@ -149,7 +149,7 @@ export default function Filter({ filter, setFilter }) {
 						setSelectedValue={setFilter}
 						options={pricings}
 						styledButton={true}
-					/>	
+					/>
 				</div>
 				<div className="flex flex-col w-full mt-5 space-y-2">
 					<p className="font-semibold text-[#000] font-secondary">Subcategory</p>
@@ -172,7 +172,7 @@ export default function Filter({ filter, setFilter }) {
 						setSelectedValue={setFilter}
 						options={sortingOptions}
 						styledButton={true}
-					/>	
+					/>
 				</div>
 
 				<button
