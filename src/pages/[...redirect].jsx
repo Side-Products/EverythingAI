@@ -38,7 +38,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 		};
 	}
 
-	const redirectCategoryUrl = "https://everythingai.club/categories";
+	const redirectCategoryUrl = "https://everythingai.club";
 	const redirectCategoryUrls = [
 		"https://www.everythingai.club/category/marketing",
 		"https://www.everythingai.club/category/audio",
@@ -48,9 +48,11 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 		"https://everythingai.club/category/productivity/feed",
 	];
 	if (redirectCategoryUrls.some((url) => url.includes(req.url))) {
+		let destinationUrl = req.url.replace(/\/category\//, "/categories/");
+		destinationUrl = destinationUrl.replace(/\/feed$/, "");
 		return {
 			redirect: {
-				destination: redirectCategoryUrl + req.url.replace(/\/feed$/, ""), // The URL to redirect to
+				destination: redirectCategoryUrl + destinationUrl, // The URL to redirect to
 				permanent: true, // Set to true for permanent redirect, false for temporary
 			},
 		};
