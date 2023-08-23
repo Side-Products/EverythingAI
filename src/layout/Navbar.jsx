@@ -7,6 +7,7 @@ import axios from "axios";
 import logo from "../../public/logo.png";
 import HamburgerMenu from "./HamburgerMenu";
 import { ToolContext } from "@/store/ToolContextProvider";
+import { motion } from "framer-motion";
 
 const Navbar = ({ setAuthModalOpen }) => {
 	const { data: session, status } = useSession();
@@ -33,8 +34,51 @@ const Navbar = ({ setAuthModalOpen }) => {
 
 	return (
 		<div className="flex justify-center w-screen">
-			<div className={"w-full fixed z-40 max-w-[1920px]"}>
-				<nav className={"navbar min-h-[60px] sm:block flex py-2 duration-500 ease-in mx-auto border-[0.5px] border-gray-300"}>
+			<div className={"w-full fixed z-40 max-w-[1920px] bg-gradient-tertiary-r"}>
+				<motion.div
+					className="sm:p-[18px] p-[28px] group w-full flex items-center justify-center text-center text-sm text-light-400 bg-gradient-tertiary-r"
+					initial={{ opacity: 0, scale: 0.6 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.1 }}
+					exit={{ opacity: 0 }}
+					whileHover={{
+						scale: 1.02,
+						transition: { duration: 0.2 },
+					}}
+				>
+					<motion.div className="absolute w-full">
+						Featured on 🔥{" "}
+						<Link
+							className="underline"
+							href="https://markets.financialcontent.com/wss/article/zexprwire-2023-8-11-empowering-businesses-and-individuals-alike-everything-ai-is-the-ultimate-solution-for-ai-tool-discovery"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Wall Street Select
+						</Link>
+						,{" "}
+						<Link
+							className="underline"
+							href="https://dailytribune.us/empowering-businesses-and-individuals-alike-everything-ai-is-the-ultimate-solution-for-ai-tool-discovery"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Daily Tribune
+						</Link>
+						,{" "}
+						<Link
+							className="underline"
+							href="https://www.thedailynewsjournal.us/empowering-businesses-and-individuals-alike-everything-ai-is-the-ultimate-solution-for-ai-tool-discovery"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							the Daily News Journal
+						</Link>{" "}
+						and 150+ Publications
+					</motion.div>
+				</motion.div>
+
+				<nav className={"navbar min-h-[60px] sm:block flex py-2 duration-500 ease-in mx-auto border-[0.5px] border-gray-300 rounded-t-3xl"}>
 					<div className="flex flex-wrap items-center justify-between w-full py-2 pr-16 pl-7 sm:pl-9 lg:px-16">
 						<Link href="/">
 							<span className="flex">

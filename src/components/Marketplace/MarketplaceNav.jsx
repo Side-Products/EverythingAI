@@ -21,8 +21,8 @@ export default function MarketplaceNav({ currentSelection, setCurrentSelection }
 	const { setFilteredTools } = useContext(ToolContext);
 
 	return (
-		<div className="flex flex-col items-center justify-center w-full h-[360px] bg-dark-900 text-light-100">
-			<h3 className="lg:block hidden mt-16 text-3xl font-medium text-light-100 md:text-5xl">
+		<div className="flex flex-col items-center justify-center w-full h-[400px] bg-dark-900 text-light-100">
+			<h3 className="lg:block hidden mt-24 text-3xl font-medium text-light-100 md:text-5xl">
 				<span className="font-semibold text-primary-400">Tools Marketplace</span>
 			</h3>
 			<div className="lg:hidden block flex justify-center w-full mt-10 mb-4">

@@ -22,5 +22,5 @@ export const Breadcrumb = ({ crumb, isVisible = true }) => {
 		);
 	});
 
-	return <div className={"flex absolute py-2 pr-16 mt-20 lg:mt-24 pb-4 text-black pl-7 sm:pl-9 lg:px-20 " + (isVisible ? "" : "hidden")}>{crumbs}</div>;
+	return <div className={"flex absolute py-2 pr-16 mt-28 lg:mt-32 pb-4 text-black pl-7 sm:pl-9 lg:px-20 " + (isVisible ? "" : "hidden")}>{crumbs}</div>;
 };
