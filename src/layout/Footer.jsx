@@ -76,7 +76,9 @@ const Footer = () => {
 								</Link>
 							</li>
 							<li className="text-dark-200 hover:text-primary-500">
-								<Link href="/offerings.pdf">Our Offerings</Link>
+								<Link href="/offerings.pdf" target="blank" rel="noopener noreferrer">
+									Our Offerings
+								</Link>
 							</li>
 						</ul>
 					</div>
