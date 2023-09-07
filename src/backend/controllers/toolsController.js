@@ -155,6 +155,9 @@ const allTools = catchAsyncErrors(async (req, res) => {
 			$match: {
 				$or: [
 					{ name: { $regex: `^${search}`, $options: "i" } },
+					{ name: { $regex: `^${search.slice(2)}`, $options: "i" } },
+					{ name: { $regex: `^${search.substring(0, search.length - 2)}`, $options: "i" } },
+					{ oneLiner: { $regex: `^${search}`, $options: "i" } },
 					{ "category.name": { $regex: `^${search}`, $options: "i" } },
 					{ "subCategory.name": { $regex: `^${search}`, $options: "i" } },
 				],
@@ -323,9 +326,9 @@ const getToolsByCategory = async (categoryName) => {
 	return tools;
 };
 
-const getTrendingTools = async (timeframe) => {
+const getTrendingTools = async (timeframe, trendingSponsoredTools) => {
 	const tools = await Tool.aggregate([
-		{ $match: { verified: true } },
+		{ $match: { verified: true, name: { $ne: trendingSponsoredTools.name } } },
 		{
 			$lookup: {
 				from: "likedtools",
@@ -953,14 +956,17 @@ const getTrendingSponsoredTools = async () => {
 
 // get leaderboard tools => /api/tools/leaderboard
 const getLeaderboardTools = catchAsyncErrors(async (req, res, next) => {
-	const promises = [getTrendingTools(7 * 24 * 60 * 60 * 1000), getTrendingTools(30 * 24 * 60 * 60 * 1000), getTrendingSponsoredTools()].map(
-		async (typePromise) => {
-			const tools = await maybeAddLikedTools(req, await typePromise);
-			return tools;
-		}
-	);
+	const trendingSponsoredTools = await getTrendingSponsoredTools();
 
-	const [trendingToolsOfTheWeek, topToolsOfTheMonth, trendingSponsoredTools] = await Promise.all(promises);
+	const promises = [
+		getTrendingTools(7 * 24 * 60 * 60 * 1000, trendingSponsoredTools),
+		getTrendingTools(30 * 24 * 60 * 60 * 1000, trendingSponsoredTools),
+	].map(async (typePromise) => {
+		const tools = await maybeAddLikedTools(req, await typePromise);
+		return tools;
+	});
+
+	const [trendingToolsOfTheWeek, topToolsOfTheMonth] = await Promise.all(promises);
 
 	trendingSponsoredTools.map((tool, idx) => {
 		for (let i = 0; i < trendingToolsOfTheWeek.length; i++) {
