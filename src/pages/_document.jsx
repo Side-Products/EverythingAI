@@ -31,6 +31,8 @@ export default function Document() {
 				<link rel="icon" type="image/png" sizes="16x16" href="/icon.png" />
 				<link rel="mask-icon" href="/icon.png" color="#000000" />
 
+				<meta name="robots" content="index, follow" />
+
 				{/* Tailwind Elements */}
 				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
 
