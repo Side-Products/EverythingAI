@@ -5,18 +5,14 @@
     "name": "Pushpit Bhardwaj",
     "email": "pushpit07@gmail.com"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
+
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next build && next start",
     "prodStart": "next start",
-    "format": "npx prettier --write .",
+    "format": "prettier --write .",
     "lint": "next lint",
     "postbuild": "next-sitemap",
     "populate-test": "node src/scripts/test/populate_db.js",
@@ -78,6 +74,7 @@
     "openai": "^3.3.0",
     "playwright": "^1.36.2",
     "postcss": "^8.4.20",
+    "prettier": "^3.0.3",
     "pretty-quick": "^3.1.3",
     "tailwindcss": "^3.2.4",
     "xlsx": "^0.18.5"
