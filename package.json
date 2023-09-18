@@ -5,7 +5,6 @@
     "name": "Pushpit Bhardwaj",
     "email": "pushpit07@gmail.com"
   },
-
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -23,6 +22,11 @@
     "scrape": "node src/scripts/prod/scrape_data.js",
     "write": "node src/scripts/prod/write_excel.js",
     "add-tools": "node src/scripts/prod/add_tools.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn format && yarn lint"
+    }
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
