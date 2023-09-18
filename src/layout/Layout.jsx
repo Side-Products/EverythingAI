@@ -14,56 +14,68 @@ import { Breadcrumb } from "./Breadcrumb";
 import { useState } from "react";
 
 const Layout = ({ children }) => {
-	const { setLoading } = useContext(LoadingContext);
-	const { authModalOpen, setAuthModalOpen } = useContext(AuthModalContext);
+  const { setLoading } = useContext(LoadingContext);
+  const { authModalOpen, setAuthModalOpen } = useContext(AuthModalContext);
 
-	const router = useRouter();
-	const { asPath } = router;
-	const [crumb, setCrumb] = useState([""]);
+  const router = useRouter();
+  const { asPath } = router;
+  const [crumb, setCrumb] = useState([""]);
 
-	// Loading on page change
-	useEffect(() => {
-		if (router && router.events) {
-			router.events.on("routeChangeStart", () => setLoading((prevState) => ({ ...prevState, status: true })));
-			router.events.on("routeChangeComplete", () => setLoading((prevState) => ({ ...prevState, status: false })));
-			router.events.on("routeChangeError", () => setLoading((prevState) => ({ ...prevState, status: false })));
-		}
-	}, [router.events, setLoading]);
+  // Loading on page change
+  useEffect(() => {
+    if (router && router.events) {
+      router.events.on("routeChangeStart", () =>
+        setLoading((prevState) => ({ ...prevState, status: true }))
+      );
+      router.events.on("routeChangeComplete", () =>
+        setLoading((prevState) => ({ ...prevState, status: false }))
+      );
+      router.events.on("routeChangeError", () =>
+        setLoading((prevState) => ({ ...prevState, status: false }))
+      );
+    }
+  }, [router.events, setLoading]);
 
-	const { data: session, status } = useSession();
-	// Identify authenticated user
-	const isAuthenticated = session && status == "authenticated" && session.user;
-	useEffect(() => {
-		if (router.query && "login" in router.query) {
-			if (isAuthenticated) setAuthModalOpen(false);
-			else setAuthModalOpen(true);
-		} else if (router.query && "signup" in router.query) {
-			if (isAuthenticated) setAuthModalOpen(false);
-			else setAuthModalOpen(true);
-		} else {
-			setAuthModalOpen(false);
-		}
-	}, [router.query, isAuthenticated]);
+  const { data: session, status } = useSession();
+  // Identify authenticated user
+  const isAuthenticated = session && status == "authenticated" && session.user;
+  useEffect(() => {
+    if (router.query && "login" in router.query) {
+      if (isAuthenticated) setAuthModalOpen(false);
+      else setAuthModalOpen(true);
+    } else if (router.query && "signup" in router.query) {
+      if (isAuthenticated) setAuthModalOpen(false);
+      else setAuthModalOpen(true);
+    } else {
+      setAuthModalOpen(false);
+    }
+  }, [router.query, isAuthenticated]);
 
-	useEffect(() => {
-		//If on home do not render
-		if (asPath.length === 1) setCrumb(null);
-		else setCrumb(asPath.split("/"));
-	}, [asPath]);
+  useEffect(() => {
+    //If on home do not render
+    if (asPath.length === 1) setCrumb(null);
+    else setCrumb(asPath.split("/"));
+  }, [asPath]);
 
-	return (
-		<>
-			<Navbar setAuthModalOpen={setAuthModalOpen} />
-			{router.pathname !== "/tools" && crumb && !router.pathname.startsWith("/admin") && <Breadcrumb crumb={crumb} />}
-			<AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
-			{children}
-			<Loading />
-			<ErrorBox style={3} />
-			<SuccessBox style={3} />
-			<BackToTopButton />
-			{router.pathname !== "/404" && router.pathname !== "/_offline" && <Footer />}
-		</>
-	);
+  return (
+    <>
+      <Navbar setAuthModalOpen={setAuthModalOpen} />
+      {router.pathname !== "/tools" &&
+        crumb &&
+        !router.pathname.startsWith("/admin") && <Breadcrumb crumb={crumb} />}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
+      {children}
+      <Loading />
+      <ErrorBox style={3} />
+      <SuccessBox style={3} />
+      {router.pathname !== "/404" && router.pathname !== "/_offline" && (
+        <Footer />
+      )}
+    </>
+  );
 };
 
 export default Layout;
