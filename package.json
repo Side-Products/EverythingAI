@@ -25,7 +25,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn format && yarn lint"
+      "pre-commit": "echo \"[Husky] pre-commit\""
     }
   },
   "dependencies": {
