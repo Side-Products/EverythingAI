@@ -183,23 +183,9 @@ const Navbar = ({ setAuthModalOpen }) => {
                   >
                     <Link href="/collections">Collections</Link>
                   </li>
-
                   <li
                     className={
-                      "font-medium hidden xl:block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
-                      (router.pathname == "/get-featured"
-                        ? "text-dark-800 bg-gray-200"
-                        : "")
-                    }
-                  >
-                    <Link href="https://everything-ai.notion.site/everything-ai/Everything-AI-Sponsorship-and-Promotions-e20dededcfc94f70b3b9a791a19406ad">
-                      Get Featured
-                    </Link>
-                  </li>
-
-                  <li
-                    className={
-                      "font-medium hidden py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
+                      "font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
                       (router.pathname == "/blog"
                         ? "text-dark-800 bg-gray-200"
                         : "")
@@ -211,6 +197,19 @@ const Navbar = ({ setAuthModalOpen }) => {
                       rel="noopener noreferrer"
                     >
                       Blog
+                    </Link>
+                  </li>
+
+                  <li
+                    className={
+                      "font-medium hidden xl:block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
+                      (router.pathname == "/get-featured"
+                        ? "text-dark-800 bg-gray-200"
+                        : "")
+                    }
+                  >
+                    <Link href="https://everything-ai.notion.site/everything-ai/Everything-AI-Sponsorship-and-Promotions-e20dededcfc94f70b3b9a791a19406ad">
+                      Get Featured
                     </Link>
                   </li>
                 </ul>
