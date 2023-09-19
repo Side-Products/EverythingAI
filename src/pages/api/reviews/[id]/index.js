@@ -1,7 +1,13 @@
 import nc from "next-connect";
 import dbConnect from "@/lib/dbConnect";
-import { updateReview, deleteReview } from "@/backend/controllers/reviewsController";
-import { isAuthenticatedUser, authorizeRoles } from "@/backend/middlewares/auth";
+import {
+  updateReview,
+  deleteReview,
+} from "@/backend/controllers/reviewsController";
+import {
+  isAuthenticatedUser,
+  authorizeRoles,
+} from "@/backend/middlewares/auth";
 import onError from "@/backend/middlewares/errors";
 
 const handler = nc({ onError });
