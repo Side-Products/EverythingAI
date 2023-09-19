@@ -801,6 +801,7 @@ const getToolBySlug = catchAsyncErrors(async (req, res, next) => {
         likeCount: 1,
         ad: 1,
         timesVisited: 1,
+        reviews: 1,
       },
     },
   ]);
