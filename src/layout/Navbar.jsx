@@ -35,7 +35,7 @@ const Navbar = ({ setAuthModalOpen }) => {
   return (
     <div className="flex justify-center w-screen">
       <div
-        className={"w-full fixed z-40 max-w-[1920px] bg-gradient-tertiary-r"}
+        className={"w-full fixed z-40 max-w-[2440px] bg-gradient-tertiary-r"}
       >
         <motion.div
           className="sm:p-[18px] p-[28px] group w-full flex items-center justify-center text-center text-sm text-light-400 bg-gradient-tertiary-r"
@@ -200,16 +200,13 @@ const Navbar = ({ setAuthModalOpen }) => {
                     </Link>
                   </li>
 
-                  <li
-                    className={
-                      "font-medium hidden xl:block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
-                      (router.pathname == "/get-featured"
-                        ? "text-dark-800 bg-gray-200"
-                        : "")
-                    }
-                  >
-                    <Link href="https://everything-ai.notion.site/everything-ai/Everything-AI-Sponsorship-and-Promotions-e20dededcfc94f70b3b9a791a19406ad">
-                      Get Featured
+                  <li className="items-center justify-center hidden px-10 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer sm:flex bg-dark-500 hover:bg-dark-600 text-light-100 hover:text-light-100">
+                    <Link
+                      href="https://everythingai.substack.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Join Newsletter
                     </Link>
                   </li>
                 </ul>
