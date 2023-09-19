@@ -72,6 +72,66 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col space-y-4">
+            <p className="font-semibold text">Blogs</p>
+            <ul className="space-y-2">
+              <li className="text-dark-200 hover:text-primary-500">
+                <Link
+                  href="https://everythingai.club/collections/for-creators-influencers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Tools for Creators
+                </Link>
+              </li>
+              <li className="text-dark-200 hover:text-primary-500">
+                <Link
+                  href="https://everythingai.club/collections/for-saas-entrepreneurs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  SAAS Tools
+                </Link>
+              </li>
+              <li className="text-dark-200 hover:text-primary-500">
+                <Link
+                  href="https://blog.everythingai.club/ai-in-marketing-definitive-guide/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  AI In Marketing
+                </Link>
+              </li>
+              <li className="text-dark-200 hover:text-primary-500">
+                <Link
+                  href="https://blog.everythingai.club/top-free-ai-tools/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Top Free Tools
+                </Link>
+              </li>
+              <li className="text-dark-200 hover:text-primary-500">
+                <Link
+                  href="https://blog.everythingai.club/ai-tools-for-productivity/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Tools For Productivity
+                </Link>
+              </li>
+              <li className="text-dark-200 hover:text-primary-500">
+                <Link
+                  href="https://everythingai.club/collections/auto-generating-social-media-ads-with-ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Tools For Creating Ads
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="flex flex-col space-y-4">
             <p className="font-semibold text">Support</p>
             <ul className="space-y-2">
               <li className="text-dark-200 hover:text-primary-500">
