@@ -96,13 +96,15 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
                 >
                   {tool?.name}
                 </a>
-                <Image
-                  className="md:w-[22px] aspect-square w-[16px]"
-                  src={"/verified_tick.svg"}
-                  width={22}
-                  height={22}
-                  alt="verified tick"
-                />
+                {tool?.reviews && (
+                  <Image
+                    className="md:w-[22px] aspect-square w-[16px]"
+                    src={"/verified_tick.svg"}
+                    width={22}
+                    height={22}
+                    alt="verified tick"
+                  />
+                )}
               </div>
             </div>
 
