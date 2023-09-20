@@ -156,6 +156,12 @@ const toolSchema = new mongoose.Schema(
           require_protocol: true,
         }),
     },
+
+    reviews: {
+      type: Object,
+      default: false,
+    },
+
     verified: {
       type: Boolean,
       default: false,

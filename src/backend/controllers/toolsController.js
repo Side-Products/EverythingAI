@@ -497,19 +497,34 @@ const updateTool = catchAsyncErrors(async (req, res, next) => {
     }
   }
 
+  const {
+    productHuntLink,
+    productHuntStars,
+    G2Link,
+    G2Stars,
+    trustPilotLink,
+    trustPilotStars,
+  } = req.body;
+  const updatedReviews = {
+    productHunt: { link: productHuntLink, stars: productHuntStars },
+    G2: { link: G2Link, stars: G2Stars },
+    trustPilot: { link: trustPilotLink, stars: trustPilotStars },
+  };
+  console.log({ updatedReviews });
   const sanitizedUseCases = useCases.filter(
     (useCase) => useCase.heading !== "" && useCase.content !== ""
   );
 
   tool = await Tool.findByIdAndUpdate(
     req.query.id,
-    { ...req.body, useCases: sanitizedUseCases },
+    { ...req.body, useCases: sanitizedUseCases, reviews: updatedReviews },
     {
       new: true,
       runValidators: true,
       useFindAndModify: false,
     }
   );
+  console.log({ tool });
   res.status(200).json({ success: true, tool });
 });
 
