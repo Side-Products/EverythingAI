@@ -21,6 +21,7 @@ import ImageUploadInput from "@/components/ui/Input/ImageUploadInput";
 import { getObjectByName, uploadImage } from "@/utils/Helpers";
 import { sleep } from "@/utils/Sleep";
 import UseCasesInput from "@/components/Submit/UseCasesInput";
+import NumberInput from "./ui/Input/NumberInput";
 
 const SubmitTool = ({ toolToEdit = null }) => {
   const { setLoading } = useContext(LoadingContext);
@@ -46,6 +47,12 @@ const SubmitTool = ({ toolToEdit = null }) => {
     youtube: "",
     featured: "",
     trendingSponsored: "",
+    productHuntLink: "",
+    G2Link: "",
+    trustPilotLink: "",
+    productHuntStars: 0,
+    G2Stars: 0,
+    trustPilotStars: 0,
     ad: "",
   });
   const [image, setImage] = useState("");
@@ -134,6 +141,12 @@ const SubmitTool = ({ toolToEdit = null }) => {
         featured: toolToEdit.featured,
         trendingSponsored: toolToEdit.trendingSponsored,
         ad: toolToEdit.ad,
+        productHuntLink: toolToEdit?.reviews?.productHunt?.link,
+        productHuntStars: toolToEdit?.reviews?.productHunt?.stars,
+        G2Link: toolToEdit?.reviews?.G2?.link,
+        G2Stars: toolToEdit?.reviews?.G2?.stars,
+        trustPilotLink: toolToEdit?.reviews?.trustPilot?.link,
+        trustPilotStars: toolToEdit?.reviews?.trustPilot?.stars,
       });
       setImage(toolToEdit.image);
       setLogo(toolToEdit.logo);
@@ -668,6 +681,78 @@ const SubmitTool = ({ toolToEdit = null }) => {
                 placeholder="Eg. https://youtube.com/{username}"
                 required={false}
               />
+            </div>
+          </div>
+
+          <div className="flex flex-col p-10 bg-light-100 rounded-2xl">
+            <div className="mb-6 font-semibold">Reviews</div>
+
+            <div className="flex flex-col gap-y-8">
+              <div className="border px-2 py-4 rounded-md  border-solid">
+                <TextInput
+                  variant="secondary"
+                  label={"Product Hunt"}
+                  type={"text"}
+                  value={toolData.productHuntLink}
+                  name={"productHuntLink"}
+                  onFieldChange={onToolDataChange}
+                  placeholder="Eg. https://producthunt.com/{tool}"
+                  required={false}
+                />
+                <NumberInput
+                  name={"productHuntStars"}
+                  placeholder={"Product Hunt Stars (Out of 5)"}
+                  value={toolData.productHuntStars}
+                  onFieldChange={onToolDataChange}
+                  required={false}
+                  min={0}
+                  max={5}
+                />
+              </div>
+
+              <div className="border px-2 py-4 rounded-md  border-solid">
+                <TextInput
+                  variant="secondary"
+                  label={"G2"}
+                  type={"text"}
+                  value={toolData.G2Link}
+                  name={"G2Link"}
+                  onFieldChange={onToolDataChange}
+                  placeholder="Eg. https://G2.com/{tool}"
+                  required={false}
+                />
+                <NumberInput
+                  name={"G2Stars"}
+                  placeholder={"G2 Stars (Out of 5)"}
+                  value={toolData.G2Stars}
+                  onFieldChange={onToolDataChange}
+                  required={false}
+                  min={0}
+                  max={5}
+                />
+              </div>
+
+              <div className="border px-2 py-4 rounded-md  border-solid">
+                <TextInput
+                  variant="secondary"
+                  label={"Trust Pilot"}
+                  type={"text"}
+                  value={toolData.trustPilotLink}
+                  name={"trustPilotLink"}
+                  onFieldChange={onToolDataChange}
+                  placeholder="Eg. https://trustpilot.com/{tool}"
+                  required={false}
+                />
+                <NumberInput
+                  name={"trustPilotStars"}
+                  placeholder={"TrustPilot Stars (Out of 5)"}
+                  value={toolData.trustPilotStars}
+                  onFieldChange={onToolDataChange}
+                  required={false}
+                  min={0}
+                  max={5}
+                />
+              </div>
             </div>
           </div>
 
