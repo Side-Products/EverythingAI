@@ -23,7 +23,7 @@ const Footer = () => {
         </div>
 
         <div className="grid flex-wrap justify-between w-full grid-cols-1 py-8 mt-5 border-t-2 border-gray-100 sm:grid-cols-2 gap-y-10 md:gap-y-0 md:flex font-primary">
-          <div className="justify-center items-center flex flex-col space-y-2">
+          <div className=" items-center flex flex-col space-y-2">
             <p className="font-semibold text">Need help with your AI Stack?</p>
             <Link href="/contact">
               <Button
@@ -32,22 +32,6 @@ const Footer = () => {
                 classes="font-semibold w-fit text-sm md:text-lg px-8 py-2 md:px-12 md:py-3"
               >
                 Contact Us
-              </Button>
-            </Link>
-
-            <Link
-              href="https://everythingai.substack.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button
-                rounded={true}
-                btnClasses="mt-4"
-                hasWFull={false}
-                variant="classic-dark"
-                classes="font-semibold w-fit text-sm md:text-lg px-8 py-2 md:px-12 md:py-3"
-              >
-                Join Newsletter
               </Button>
             </Link>
           </div>
@@ -136,6 +120,11 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="text-dark-200 hover:text-primary-500">
                 <Link href="/contact">Contact Us</Link>
+              </li>
+              <li className="text-dark-400 font-bold hover:text-primary-500">
+                <Link href="https://everythingai.substack.com/" target="_blank">
+                  Join The Newsletter
+                </Link>
               </li>
               <li className="text-dark-200 hover:text-primary-500">
                 <Tooltip

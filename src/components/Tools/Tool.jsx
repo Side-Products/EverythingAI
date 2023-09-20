@@ -12,6 +12,7 @@ import EmbedTag from "@/components/Tools/EmbedTag";
 import Collections from "@/components/Tools/Collections";
 import Rate from "./Rate";
 import Comments from "./Comments";
+import Review from "./Review";
 
 export default function Tool() {
   const { tool } = useSelector((state) => state.tool);
@@ -25,6 +26,7 @@ export default function Tool() {
     <>
       <div className="flex flex-col space-y-20">
         <ToolIntro tool={tool} setShareModalOpen={setShareModalOpen} />
+        {tool?.reviews && <Review reviews={tool?.reviews} />}
         <EmbedTag toolSlug={query.tool} />
 
         <div className="grid w-full h-full md:grid-cols-2 gap-x-10 gap-y-16">
