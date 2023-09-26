@@ -27,7 +27,7 @@ export default function Review({ reviews }) {
             )}
           </div>
         )}
-        {reviews?.G2.stars && (
+        {reviews?.G2?.stars && (
           <div className="flex flex-col md:p-3 items-center  w-1/3">
             <div className="flex justify-center object-contain relative top-2 h-20 items-center w-20">
               <Image src="/ui/g2.png" height={100} width={50} loading="lazy" />
@@ -45,7 +45,7 @@ export default function Review({ reviews }) {
             )}
           </div>
         )}
-        {reviews?.trustPilot.stars && (
+        {reviews?.trustPilot?.stars && (
           <div className="flex flex-col md:p-3 items-center w-1/3">
             <div className="flex justify-center object-contain relative top-2 h-20 items-center w-30">
               <Image
@@ -68,7 +68,7 @@ export default function Review({ reviews }) {
             )}
           </div>
         )}
-        {reviews?.everythingAI.stars && (
+        {reviews?.everythingAI?.stars && (
           <div className="flex flex-col p-3 items-center w-1/3">
             <div className="flex justify-center object-contain h-20 items-center w-30">
               <Image src="/logo.png" height={200} width={200} loading="lazy" />
