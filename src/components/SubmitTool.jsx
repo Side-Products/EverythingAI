@@ -53,6 +53,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
     productHuntStars: 0,
     G2Stars: 0,
     trustPilotStars: 0,
+    everythingAIStars: 0,
     ad: "",
   });
   const [image, setImage] = useState("");
@@ -147,6 +148,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
         G2Stars: toolToEdit?.reviews?.G2?.stars,
         trustPilotLink: toolToEdit?.reviews?.trustPilot?.link,
         trustPilotStars: toolToEdit?.reviews?.trustPilot?.stars,
+        everythingAIStars: toolToEdit?.reviews?.everythingAI?.stars,
       });
       setImage(toolToEdit.image);
       setLogo(toolToEdit.logo);
@@ -685,7 +687,7 @@ const SubmitTool = ({ toolToEdit = null }) => {
           </div>
 
           <div className="flex flex-col p-10 bg-light-100 rounded-2xl">
-            <div className="mb-6 font-semibold">Reviews</div>
+            <div className="mb-6 font-semibold">Ratings</div>
 
             <div className="flex flex-col gap-y-8">
               <div className="border px-2 py-4 rounded-md  border-solid">
@@ -747,6 +749,19 @@ const SubmitTool = ({ toolToEdit = null }) => {
                   name={"trustPilotStars"}
                   placeholder={"TrustPilot Stars (Out of 5)"}
                   value={toolData.trustPilotStars}
+                  onFieldChange={onToolDataChange}
+                  required={false}
+                  min={0}
+                  max={5}
+                />
+              </div>
+
+              <div className="border px-2 py-4 rounded-md  border-solid">
+                <NumberInput
+                  label={"EverythingAI "}
+                  name={"everythingAIStars"}
+                  placeholder={"Everything AI Stars (Out of 5)"}
+                  value={toolData.everythingAIStars}
                   onFieldChange={onToolDataChange}
                   required={false}
                   min={0}

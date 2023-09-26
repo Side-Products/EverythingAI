@@ -502,6 +502,7 @@ const updateTool = catchAsyncErrors(async (req, res, next) => {
     productHuntStars,
     G2Link,
     G2Stars,
+    everythingAIStars,
     trustPilotLink,
     trustPilotStars,
   } = req.body;
@@ -509,6 +510,7 @@ const updateTool = catchAsyncErrors(async (req, res, next) => {
     productHunt: { link: productHuntLink, stars: productHuntStars },
     G2: { link: G2Link, stars: G2Stars },
     trustPilot: { link: trustPilotLink, stars: trustPilotStars },
+    everythingAI: { stars: everythingAIStars },
   };
   console.log({ updatedReviews });
   const sanitizedUseCases = useCases.filter(
