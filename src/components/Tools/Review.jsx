@@ -9,7 +9,7 @@ export default function Review({ reviews }) {
     <div className="flex flex-col w-full space-y-4">
       <div className="text-2xl font-semibold text-center">Ratings</div>
       <div className="flex flex-col md:flex-row w-full  justify-content items-center">
-        {reviews?.productHunt && (
+        {reviews?.productHunt?.stars && (
           <div className="flex flex-col md:p-3 items-center w-1/3">
             <div className="object-contain h-20 w-60 ">
               <Image src="/ui/product_hunt.png" width={300} height={300} />
@@ -17,15 +17,17 @@ export default function Review({ reviews }) {
             <StarRating rating={reviews?.productHunt?.stars} />
             {/* Single review */}
             {reviews?.productHunt?.stars}/5
-            <Link href={reviews?.productHunt?.link} target="_blank">
-              <div className="font-bold underline line-clamp-1">
-                Product Hunt
-                <i class="ml-2 fas fa-external-link-alt" />
-              </div>
-            </Link>
+            {reviews?.productHunt?.link && (
+              <Link href={reviews?.productHunt?.link} target="_blank">
+                <div className="font-bold underline line-clamp-1">
+                  Product Hunt
+                  <i class="ml-2 fas fa-external-link-alt" />
+                </div>
+              </Link>
+            )}
           </div>
         )}
-        {reviews?.G2 && (
+        {reviews?.G2.stars && (
           <div className="flex flex-col md:p-3 items-center  w-1/3">
             <div className="flex justify-center object-contain relative top-2 h-20 items-center w-20">
               <Image src="/ui/g2.png" height={100} width={50} loading="lazy" />
@@ -33,15 +35,17 @@ export default function Review({ reviews }) {
             <StarRating rating={reviews?.G2?.stars} />
             {/* Single review */}
             {reviews?.G2?.stars}/5
-            <Link href={reviews?.G2?.link} target="_blank">
-              <div className="font-bold underline">
-                G2
-                <i class="ml-2 fas fa-external-link-alt" />
-              </div>
-            </Link>
+            {reviews?.G2?.link && (
+              <Link href={reviews?.G2?.link} target="_blank">
+                <div className="font-bold underline">
+                  G2
+                  <i class="ml-2 fas fa-external-link-alt" />
+                </div>
+              </Link>
+            )}
           </div>
         )}
-        {reviews?.trustPilot && (
+        {reviews?.trustPilot.stars && (
           <div className="flex flex-col md:p-3 items-center w-1/3">
             <div className="flex justify-center object-contain relative top-2 h-20 items-center w-30">
               <Image
@@ -54,15 +58,17 @@ export default function Review({ reviews }) {
             <StarRating rating={reviews?.trustPilot?.stars} />
             {/* Single review */}
             {reviews?.trustPilot?.stars}/5
-            <Link href={reviews?.trustPilot?.link} target="_blank">
-              <div className="font-bold underline ">
-                Trustpilot
-                <i class="ml-2 fas fa-external-link-alt" />
-              </div>
-            </Link>
+            {reviews?.trustPilot?.link && (
+              <Link href={reviews?.trustPilot?.link} target="_blank">
+                <div className="font-bold underline ">
+                  Trustpilot
+                  <i class="ml-2 fas fa-external-link-alt" />
+                </div>
+              </Link>
+            )}
           </div>
         )}
-        {reviews?.everythingAI && (
+        {reviews?.everythingAI.stars && (
           <div className="flex flex-col p-3 items-center w-1/3">
             <div className="flex justify-center object-contain h-20 items-center w-30">
               <Image src="/logo.png" height={200} width={200} loading="lazy" />
