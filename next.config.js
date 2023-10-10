@@ -13,6 +13,7 @@ module.exports = withPWA({
       "miro.medium.com",
       "everythingai.s3.amazonaws.com",
       "everythingai.s3.ap-south-1.amazonaws.com",
+      "blog.everythingai.club",
     ],
   },
   webpack: (config, { isServer }) => {
