@@ -50,6 +50,7 @@
     "fetch": "^1.1.0",
     "framer-motion": "^10.0.1",
     "graphql": "^16.8.1",
+    "html-react-parser": "^4.2.2",
     "mongodb": "4.13.0",
     "mongoose": "6.9.1",
     "motion": "^10.15.5",

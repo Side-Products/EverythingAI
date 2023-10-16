@@ -7,7 +7,6 @@ import { gql } from "@apollo/client";
 import Link from "node_modules/next/link";
 
 const Blogs = ({ posts }) => {
-  console.log("posts", posts);
   return (
     <PageWrapper
       title={"Blogs| Everything AI"}
