@@ -34,7 +34,7 @@ export default function Post({ post }) {
             <div className=" flex flex-row">
               <h1
                 className="text-lg my-3 text-gray-500  font-normal
-               text-left mr-4"
+               text-left mr-4 capitalize"
               >
                 {post.author.node.firstName} {post.author.node.lastName}
               </h1>

@@ -186,13 +186,13 @@ const Navbar = ({ setAuthModalOpen }) => {
                   <li
                     className={
                       "font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
-                      (router.pathname == "/blog"
+                      (router.pathname == "/blogs"
                         ? "text-dark-800 bg-gray-200"
                         : "")
                     }
                   >
                     <Link
-                      href="https://blog.everythingai.club"
+                      href="https://everythingai.club/blogs"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
