@@ -3,7 +3,7 @@ import { wrapper } from "@/redux/redux-store";
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }) => {
-      const blogUrl = "https://blog.everythingai.club";
+      const blogUrl = "https://everythingai.club/blogs";
       const redirectToBlogUrls = [
         "https://everythingai.club/author/root",
         "https://www.everythingai.club/ai-tools-for-cxos",

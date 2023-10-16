@@ -78,7 +78,7 @@ const Footer = () => {
               </li>
               <li className="text-dark-200 hover:text-primary-500">
                 <Link
-                  href="https://blog.everythingai.club/ai-in-marketing-definitive-guide/"
+                  href="https://everythingai.club/blogs/ai-in-marketing-definitive-guide/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -87,7 +87,7 @@ const Footer = () => {
               </li>
               <li className="text-dark-200 hover:text-primary-500">
                 <Link
-                  href="https://blog.everythingai.club/top-free-ai-tools/"
+                  href="https://everythingai.club/blogs/top-free-ai-tools/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -96,7 +96,7 @@ const Footer = () => {
               </li>
               <li className="text-dark-200 hover:text-primary-500">
                 <Link
-                  href="https://blog.everythingai.club/ai-tools-for-productivity/"
+                  href="https://everythingai.club/blogs/ai-tools-for-productivity/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -143,7 +143,7 @@ const Footer = () => {
 								<Link href="/#faq">FAQ</Link>
 							</li> */}
               <li className="text-dark-200 hover:text-primary-500">
-                <Link href="https://blog.everythingai.club">Top blogs</Link>
+                <Link href="https://everythingai.club/blogs">Top blogs</Link>
               </li>
               <li className="text-dark-200 hover:text-primary-500">
                 <Link href="https://everything-ai.notion.site/everything-ai/Everything-AI-Sponsorship-and-Promotions-e20dededcfc94f70b3b9a791a19406ad">
