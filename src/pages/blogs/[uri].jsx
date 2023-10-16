@@ -1,8 +1,7 @@
-import { gql } from "node_modules/@apollo/client/index";
+import { GET_POST } from "src/queries/getPosts";
 import { client } from "@/lib/apollo";
 import Head from "next/head";
 import PageWrapper from "@/layout/PageWrapper";
-import Parser from "html-react-parser";
 import styles from "./uri.module.css";
 import Image from "node_modules/next/image";
 
@@ -11,17 +10,16 @@ export default function Post({ post }) {
 
   return (
     <>
-      <div className="mt-10 mb-1 mx-10">
-        <Image
-          loading="lazy"
-          className="w-full  "
-          src={post?.featuredImage?.node?.mediaItemUrl}
-          width={1920}
-          height={1080}
-        />
-      </div>
-
       <PageWrapper title={post.title} blog={true} description={post.title}>
+        <div className="mt-10 mb-1  ">
+          <Image
+            loading="lazy"
+            className="w-full rounded-md "
+            src={post?.featuredImage?.node?.mediaItemUrl}
+            width={1920}
+            height={1080}
+          />
+        </div>
         <div>
           <Head>
             <title>{post.title}</title>
@@ -83,36 +81,7 @@ export default function Post({ post }) {
   );
 }
 
-const GET_POST = gql`
-  query GetPostByURI($id: ID!) {
-    post(id: $id, idType: URI) {
-      title
-      categories {
-        nodes {
-          name
-        }
-      }
-      content
-      date
-      featuredImage {
-        node {
-          mediaItemUrl
-        }
-      }
-      author {
-        node {
-          firstName
-          lastName
-        }
-      }
-    }
-  }
-`;
-
 export async function getStaticProps({ params }) {
-  //  the params argument for this function corresponds to the dynamic URL segments
-  //  we included in our page-based route. So, in this case, the `params` object will have
-  //  a property named `uri` that contains that route segment when a user hits the page
   const response = await client.query({
     query: GET_POST,
     variables: {

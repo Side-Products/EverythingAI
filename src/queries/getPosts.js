@@ -5,35 +5,43 @@ import { client } from "@/lib/apollo";
 export async function getPosts() {}
 
 export const GET_POSTS = gql`
-  query AllPosts {
-    posts(first: 20) {
-      edges {
+  query AllPostsQuery {
+    posts {
+      nodes {
+        title
+        content
+        date
+        uri
+        featuredImage {
+          node {
+            mediaItemUrl
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_POST = gql`
+  query GetPostByURI($id: ID!) {
+    post(id: $id, idType: URI) {
+      title
+      categories {
+        nodes {
+          name
+        }
+      }
+      content
+      date
+      featuredImage {
         node {
-          title
-          id
-          categories {
-            edges {
-              node {
-                name
-              }
-            }
-          }
-          excerpt
-          slug
-          author {
-            node {
-              name
-              firstName
-              lastName
-            }
-          }
-          featuredImage {
-            node {
-              mediaItemUrl
-              link
-              sizes
-            }
-          }
+          mediaItemUrl
+        }
+      }
+      author {
+        node {
+          firstName
+          lastName
         }
       }
     }
