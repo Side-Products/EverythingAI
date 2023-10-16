@@ -18,7 +18,7 @@ const Blogs = ({ posts }) => {
       <h1 className="text-4xl my-7  font-semibold text-center">Blogs</h1>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
         {posts.map((post) => (
-          <BlogTile post={post} />
+          <BlogTile key={post.uri} post={post} />
         ))}
       </div>
     </PageWrapper>
