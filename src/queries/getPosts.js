@@ -6,7 +6,7 @@ export async function getPosts() {}
 
 export const GET_POSTS = gql`
   query AllPostsQuery {
-    posts {
+    posts(first: 100) {
       nodes {
         title
         content
