@@ -191,13 +191,7 @@ const Navbar = ({ setAuthModalOpen }) => {
                         : "")
                     }
                   >
-                    <Link
-                      href="https://everythingai.club/blogs"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Blog
-                    </Link>
+                    <Link href="/blogs">Blog</Link>
                   </li>
                 </ul>
               </div>

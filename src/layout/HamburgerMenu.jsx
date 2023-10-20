@@ -139,7 +139,7 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
                         </div>
                         <div className="flex flex-wrap justify-center ham_menu_hover_effect_row md:mt-8">
                           <Link
-                            href={"https://blog.everythingai.club"}
+                            href={"/blogs"}
                             className="text-center ham_menu_link ham_menu_hover_effect"
                             passHref={true}
                           >
