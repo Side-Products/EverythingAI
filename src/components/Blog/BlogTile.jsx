@@ -3,7 +3,7 @@ import Link from "node_modules/next/link";
 
 const BlogTile = ({ post }) => {
   return (
-    <Link href={`/blogs/${post.uri}`}>
+    <Link href={`/blogs${post.uri}`}>
       <div className="border-solid border-2   flex flex-col justify-center items-center rounded-sm bg-slate-50 shadow-lg my-5">
         <Image
           className="w-full h-full object-fit"

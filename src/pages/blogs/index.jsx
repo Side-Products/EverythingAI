@@ -8,6 +8,8 @@ import { gql } from "@apollo/client";
 import Link from "node_modules/next/link";
 
 const Blogs = ({ posts }) => {
+  console.log("length", posts.length);
+
   return (
     <PageWrapper
       title={"Blogs| Everything AI"}
@@ -35,6 +37,7 @@ export async function getStaticProps() {
     props: {
       posts,
     },
+    revalidate: 60,
   };
 }
 
