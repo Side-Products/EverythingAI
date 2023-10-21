@@ -12,6 +12,8 @@ import StatusContextProvider from "@/store/StatusContextProvider";
 import LoadingContextProvider from "@/store/LoadingContextProvider";
 import AuthModalContextProvider from "@/store/AuthModalContextProvider";
 import ToolContextProvider from "@/store/ToolContextProvider";
+import { ApolloProvider } from "@apollo/client/react";
+import { client } from "@/lib/apollo";
 
 function App({ Component, pageProps, session, router }) {
   // Google Analytics
@@ -79,15 +81,17 @@ function App({ Component, pageProps, session, router }) {
       <SessionProvider session={session}>
         <LoadingContextProvider>
           <AuthModalContextProvider>
-            <StatusContextProvider>
-              <ToolContextProvider>
-                <Layout>
-                  <ScrollToPageTop />
-                  <DefaultSeo {...SEO} />
-                  <Component {...pageProps} />
-                </Layout>
-              </ToolContextProvider>
-            </StatusContextProvider>
+            <ApolloProvider client={client}>
+              <StatusContextProvider>
+                <ToolContextProvider>
+                  <Layout>
+                    <ScrollToPageTop />
+                    <DefaultSeo {...SEO} />
+                    <Component {...pageProps} />
+                  </Layout>
+                </ToolContextProvider>
+              </StatusContextProvider>
+            </ApolloProvider>
           </AuthModalContextProvider>
         </LoadingContextProvider>
       </SessionProvider>

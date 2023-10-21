@@ -1,0 +1,81 @@
+.prose {
+  /* background-color: #d15b5b; */
+  padding: 20px;
+}
+
+.prose h2 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+.prose h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.prose th,
+.prose td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.prose tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.prose strong {
+  font-size: 1rem;
+  color: #342f2f;
+}
+
+.prose link {
+  color: #d15b5b;
+}
+
+.prose a {
+  color: #007bff; /* Set the link color */
+  text-decoration: none; /* Remove the default underline */
+}
+
+/* Apply styles when hovering over a link */
+.prose a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+/* Styling for the unordered list */
+.prose ul {
+  list-style-type: disc; /* Sets the bullet style */
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
+}
+
+/* Styling for the list items */
+.prose li {
+  margin-bottom: 8px; /* Adds some space between list items */
+}
+
+.prose ol {
+  list-style-type: decimal; /* Type of numbering (e.g., decimal, lower-alpha, upper-roman, etc.) */
+  margin-left: 20px; /* Adjust the left margin as needed */
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  display: block;
+}

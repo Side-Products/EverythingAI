@@ -5,9 +5,9 @@ import { isAuthenticatedUser } from "@/backend/middlewares/auth";
 import onError from "@/backend/middlewares/errors";
 
 export const config = {
-	api: {
-		bodyParser: false,
-	},
+  api: {
+    bodyParser: false,
+  },
 };
 
 const handler = nc({ onError });
