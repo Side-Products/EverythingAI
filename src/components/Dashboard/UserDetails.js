@@ -8,6 +8,7 @@ import { UPDATE_PROFILE_RESET } from "@/redux/constants/userConstants";
 import { StatusContext } from "@/store/StatusContextProvider";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import UpdateUserProfileModal from "./UpdateUserProfileModal";
+import { getFirstName } from "@/utils/Helpers";
 
 export default function UserDetails({ count, shareableDashboardUser }) {
   const { data: session } = useSession();
@@ -64,14 +65,6 @@ export default function UserDetails({ count, shareableDashboardUser }) {
     dispatch(updateUserProfile(userData));
     setUpdateUserProfileModalOpen(false);
   };
-
-  function getFirstName(fullName) {
-    // Split the full name into an array of words
-    const nameParts = fullName.split(" ");
-    // The first element of the array is the first name
-    const firstName = nameParts[0];
-    return firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-  }
 
   return (
     <>

@@ -45,7 +45,7 @@ export default function Dashboard() {
           resultsPerPage={resultsPerPage}
           totalCount={likedToolsCount}
           filteredTotalCount={filteredToolsCount}
-          shareableDashboard={true}
+          shareableDashboardUser={user}
         />
       </div>
     </PageWrapper>
