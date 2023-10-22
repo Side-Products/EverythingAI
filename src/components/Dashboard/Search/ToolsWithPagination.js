@@ -9,6 +9,7 @@ export default function ToolsWithPagination({
   resultsPerPage,
   totalCount,
   filteredTotalCount,
+  shareableDashboard = false,
 }) {
   const router = useRouter();
   let { search, page = 1 } = router.query;
@@ -39,7 +40,7 @@ export default function ToolsWithPagination({
   return (
     <>
       <div className="flex flex-col xl:w-1/3 lg:w-9/12 md:w-1/2 mt-10">
-        <Search />
+        {!shareableDashboard && <Search />}
         {search && (
           <div className="text-sm mt-2 ml-2">Showing results for: {search}</div>
         )}
