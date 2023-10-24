@@ -193,6 +193,16 @@ const Navbar = ({ setAuthModalOpen }) => {
                   >
                     <Link href="/blogs">Blog</Link>
                   </li>
+                  <li
+                    className={
+                      "font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
+                      (router.pathname == "/ai-recommender"
+                        ? "text-dark-800 bg-gray-200"
+                        : "")
+                    }
+                  >
+                    <Link href="/ai-recommender">AI Recommender</Link>
+                  </li>
                 </ul>
               </div>
 
