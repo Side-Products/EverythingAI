@@ -62,7 +62,10 @@ const Layout = ({ children }) => {
       <Navbar setAuthModalOpen={setAuthModalOpen} />
       {router.pathname !== "/tools" &&
         crumb &&
-        !router.pathname.startsWith("/admin") && <Breadcrumb crumb={crumb} />}
+        !router.pathname.startsWith("/admin") &&
+        !router.pathname.startsWith("/ai-recommender/results") && (
+          <Breadcrumb crumb={crumb} />
+        )}
       <AuthModal
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}

@@ -380,6 +380,17 @@ const Navbar = ({ setAuthModalOpen }) => {
                                       </div>
                                     </Link>
                                   </li>
+
+                                  <li>
+                                    <Link
+                                      href={`/admin/ai-recommender`}
+                                      passHref={true}
+                                    >
+                                      <div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
+                                        AI Recommender Responses
+                                      </div>
+                                    </Link>
+                                  </li>
                                 </>
                               )}
 
