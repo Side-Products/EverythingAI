@@ -1,6 +1,6 @@
 // Image Shimmer
 {
-	/* <Image
+  /* <Image
 	src={assetImage}
 	alt="asset image"
 	width="800"
@@ -47,8 +47,16 @@ const shimmerDark = (w, h) => `
   <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
 </svg>`;
 
-const toBase64 = (str) => (typeof window === "undefined" ? Buffer.from(str).toString("base64") : window.btoa(str));
+const toBase64 = (str) =>
+  typeof window === "undefined"
+    ? Buffer.from(str).toString("base64")
+    : window.btoa(str);
 
 export const shimmer = (w, h, theme) => {
-	return "data:image/svg+xml;base64," + (theme === "dark" ? toBase64(shimmerDark(w, h)) : toBase64(shimmerLight(w, h)));
+  return (
+    "data:image/svg+xml;base64," +
+    (theme === "dark"
+      ? toBase64(shimmerDark(w, h))
+      : toBase64(shimmerLight(w, h)))
+  );
 };

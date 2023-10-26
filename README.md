@@ -27,23 +27,27 @@ Environment variables load order- https://nextjs.org/docs/basic-features/environ
 Change env variables on Vercel from CLI- https://vercel.com/docs/cli/env
 
 To turn on dev server-
+
 ```sh
 npm run dev
 ```
 
 ### Using Docker
 
-Build a docker container- 
+Build a docker container-
+
 ```sh
 docker-compose up -d --build
 ```
 
 To turn off dev server-
+
 ```sh
 docker-compose down
 ```
 
 Turn on dev server-
+
 ```sh
 docker-compose up
 ```
@@ -54,11 +58,9 @@ Dev:
 
 Prod:
 
-
 ### ReCAPTCHA
 
 https://www.google.com/u/7/recaptcha/admin/site/628283073
-
 
 ### Google Analytics
 
