@@ -7,6 +7,11 @@ const purchaseTermSchema = new mongoose.Schema({
     ref: "Tool",
     required: true,
   },
+  isActive: {
+    type: Boolean,
+    required: true,
+  },
+
   terms: [
     {
       termLength: {

@@ -17,12 +17,13 @@ const createPurchaseTerm = catchAsyncErrors(async (req, res) => {
   if (!tool) {
     return next(new ErrorHandler("No tool found with this id", 404));
   }
-  const { terms, toolOwnerEmail, description } = req.body;
+  const { terms, toolOwnerEmail, description, isActive } = req.body;
   const purchase_term = await PurchaseTerm.create({
     tool: toolId,
     terms,
     toolOwnerEmail,
     description,
+    isActive,
   });
 
   res.status(200).json({

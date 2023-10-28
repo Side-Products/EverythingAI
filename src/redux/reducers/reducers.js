@@ -7,6 +7,13 @@ import {
   adminGetAllUsersReducer,
   adminGetUserDetailsReducer,
 } from "./userReducers";
+
+import {
+  getPurchaseTermsReducer,
+  createPurchaseTermsReducer,
+  updatePurchaseTermsReducer,
+} from "./purchaseTermsReducers";
+
 import {
   createCategoryReducer,
   getAllCategoriesReducer,
@@ -113,6 +120,10 @@ const reducer = combineReducers({
   allReviews: getAllReviewsReducer,
   updateReview: updateReviewReducer,
   deleteReview: deleteReviewReducer,
+  // purchase terms
+  getPurchaseTerms: getPurchaseTermsReducer,
+  createPurchaseTerms: createPurchaseTermsReducer,
+  updatePurchaseTerms: updatePurchaseTermsReducer,
 });
 
 export default reducer;

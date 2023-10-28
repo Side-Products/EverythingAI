@@ -22,13 +22,17 @@ import { getObjectByName, uploadImage } from "@/utils/Helpers";
 import { sleep } from "@/utils/Sleep";
 import UseCasesInput from "@/components/Submit/UseCasesInput";
 import NumberInput from "./ui/Input/NumberInput";
+import ToggleInput from "./ui/Input/ToggleInput";
+import PurchaseTermInput from "./Submit/PurchaseTermInput";
 
-const SubmitTool = ({ toolToEdit = null }) => {
+const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
   const { setLoading } = useContext(LoadingContext);
   const { setError, setSuccess } = useContext(StatusContext);
   const { data: session } = useSession();
+
   const { setAuthModalOpen } = useContext(AuthModalContext);
 
+  const [toggle, setToggle] = useState(false);
   const [toolData, setToolData] = useState({
     name: "",
     slug: "",
@@ -56,6 +60,44 @@ const SubmitTool = ({ toolToEdit = null }) => {
     everythingAIStars: 0,
     ad: "",
   });
+
+  const [purchaseTerms, setPurchaseTerms] = useState({
+    toolId: "",
+    toolOwnerEmail: [],
+    description: "",
+    isActive: true,
+    terms: [
+      {
+        termLength: "",
+        couponCode: "",
+        actualPrice: "",
+        discountedPrice: "",
+        termsAndConditions: "",
+        limit: "",
+      },
+    ],
+  });
+
+  const onPurchaseTermsChange = (e) => {
+    if (e.target.name === "toolOwnerEmail") {
+      setPurchaseTerms({
+        ...purchaseTerms,
+        [e.target.name]: e.target.value.split(","),
+      });
+      return;
+    }
+
+    if (e.target.name === "isActive") {
+      setPurchaseTerms({
+        ...purchaseTerms,
+        [e.target.name]: purchaseTerms.isActive ? false : true,
+      });
+      return;
+    }
+
+    setPurchaseTerms({ ...purchaseTerms, [e.target.name]: e.target.value });
+  };
+
   const [image, setImage] = useState("");
   const [imageName, setImageName] = useState("");
 
@@ -122,6 +164,18 @@ const SubmitTool = ({ toolToEdit = null }) => {
   const { category } = useSelector((state) => state.category);
 
   useEffect(() => {
+    if (purchaseTermsToEdit) {
+      console.log("purchaseTermsToEdit", purchaseTermsToEdit);
+      const purchaseTermData = purchaseTermsToEdit[0];
+      setPurchaseTerms({
+        toolId: purchaseTermData.tool,
+        toolOwnerEmail: purchaseTermData.toolOwnerEmail,
+        description: purchaseTermData.description,
+        isActive: purchaseTermData.isActive,
+        terms: purchaseTermData.terms,
+      });
+    }
+
     if (toolToEdit) {
       setToolData({
         name: toolToEdit.name,
@@ -772,6 +826,63 @@ const SubmitTool = ({ toolToEdit = null }) => {
           </div>
 
           <UseCasesInput toolData={toolData} setToolData={setToolData} />
+
+          {/* Pricing Plan Input box */}
+
+          {toolToEdit && session?.user?.role === "admin" && (
+            <div className="flex flex-col p-10 bg-light-100 rounded-2xl">
+              <div className="mb-6 font-semibold">Purchase Option</div>
+
+              <div className="flex flex-col gap-y-8">
+                <div className="border px-2 py-4 rounded-md  border-solid">
+                  <TextInput
+                    variant="secondary"
+                    label={"Tool Owner Email"}
+                    type={"email"}
+                    value={purchaseTerms.toolOwnerEmail}
+                    name={"toolOwnerEmail"}
+                    onFieldChange={onPurchaseTermsChange}
+                    placeholder="Eg. musk@xyz.ai"
+                    required={false}
+                  />
+                </div>
+                <Textarea
+                  variant="secondary"
+                  label={"Plan Details"}
+                  value={purchaseTerms.description}
+                  name={"description"}
+                  onFieldChange={onPurchaseTermsChange}
+                  placeholder="Your product features"
+                  required={false}
+                />
+                {/* Term Details */}
+                <PurchaseTermInput
+                  purchaseTerms={purchaseTerms}
+                  setPurchaseTerms={setPurchaseTerms}
+                />
+
+                <ToggleInput
+                  label="Active"
+                  checked={purchaseTerms.isActive}
+                  id="isActive"
+                  name="isActive"
+                  onToggleChange={(e) => onPurchaseTermsChange(e)}
+                  required={true}
+                  variant="primary"
+                />
+              </div>
+            </div>
+          )}
+
+          {!toolToEdit && (
+            <div className="flex flex-col p-10 bg-light-100 rounded-2xl">
+              <div className="mb-4 font-semibold">Purchase Options</div>
+
+              <div className="mb-6 text-md font-light ">
+                *Create and submit a tool first in order to add Ecommerce{" "}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
