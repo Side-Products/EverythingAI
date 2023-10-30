@@ -118,7 +118,6 @@ const AiRecommender = () => {
       sleep(2000).then(() => {
         router.push(`/ai-recommender/results/${recommendation._id}`);
       });
-      setLoading({ status: false });
       return;
     }
     if (error) {

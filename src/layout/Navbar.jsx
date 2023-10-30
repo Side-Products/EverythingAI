@@ -195,13 +195,16 @@ const Navbar = ({ setAuthModalOpen }) => {
                   </li>
                   <li
                     className={
-                      "font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 hover:bg-gray-200 rounded-lg transition duration-300 " +
+                      "font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 bg-secondary-100/60 hover:bg-gray-200 rounded-lg transition duration-300 " +
                       (router.pathname == "/ai-recommender"
                         ? "text-dark-800 bg-gray-200"
                         : "")
                     }
                   >
-                    <Link href="/ai-recommender">AI Recommender</Link>
+                    <Link href="/ai-recommender">
+                      <i className="fa-solid fa-fire-flame-curved mr-1 text-secondary-400"></i>{" "}
+                      AI Recommender
+                    </Link>
                   </li>
                 </ul>
               </div>
