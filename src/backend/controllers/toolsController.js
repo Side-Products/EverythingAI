@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Tool from "@/backend/models/tool";
 import Category from "@/backend/models/category";
 import SubCategory from "@/backend/models/subCategory";
+import User from "@/backend/models/user";
 import Pricing from "@/backend/models/pricing";
 import LikedTool from "@/backend/models/likedTool";
 import ErrorHandler from "@/backend/utils/errorHandler";
@@ -701,7 +702,7 @@ const unverifyTool = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({ success: true, tool });
 });
 
-// get liked tools => /api/tools/liked
+// get my liked tools => /api/tools/liked
 const getMyLikedTools = catchAsyncErrors(async (req, res, next) => {
   const userId = req.user._id || req.user.id;
   const likedToolsCount = await LikedTool.countDocuments({ user: userId });
@@ -751,6 +752,67 @@ const getMyLikedTools = catchAsyncErrors(async (req, res, next) => {
     resultsPerPage,
     filteredToolsCount,
     likedTools: tools,
+  });
+});
+
+// get liked tools => /api/tools/get-liked
+const getLikedTools = catchAsyncErrors(async (req, res, next) => {
+  const { userId } = req.query;
+  const user = await User.findById(userId);
+  if (!user) {
+    return next(new ErrorHandler("User not found with this ID", 400));
+  }
+
+  const likedToolsCount = await LikedTool.countDocuments({ user: userId });
+  // const resultsPerPage = 4;
+  const resultsPerPage = likedToolsCount;
+
+  delete req.query.userId;
+
+  const apiFeatures = new APIFeatures(
+    LikedTool.find({ user: userId }).sort({ createdAt: "desc" }),
+    req.query
+  )
+    .search()
+    .filter();
+  let likedTools = await apiFeatures.query;
+  let filteredToolsCount = likedTools.length;
+
+  apiFeatures.pagination(resultsPerPage);
+  likedTools = await apiFeatures.query.clone();
+
+  likedTools = await Tool.populate(likedTools, [
+    {
+      path: "tool",
+      populate: [
+        {
+          path: "category",
+          select: "name",
+        },
+        {
+          path: "subCategory",
+          select: "name",
+        },
+        {
+          path: "pricing",
+          select: "name meta",
+        },
+      ],
+    },
+  ]);
+
+  const _tools = likedTools.map((item) => ({
+    ...item.tool._doc,
+  }));
+  const tools = await maybeAddLikedTools(req, _tools);
+
+  res.status(200).json({
+    success: true,
+    likedToolsCount,
+    resultsPerPage,
+    filteredToolsCount,
+    likedTools: tools,
+    user,
   });
 });
 
@@ -1073,6 +1135,7 @@ export {
   verifyTool,
   unverifyTool,
   getMyLikedTools,
+  getLikedTools,
   getToolBySlug,
   getLikeCountBySlug,
   maybeAddLikedTools,

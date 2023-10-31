@@ -23,7 +23,7 @@ export default function HeroSection({ featuredTools }) {
       <div className="mb-6 z-[2] backdrop-blur-2xl">
         <TopGradient />
 
-        <div className="mt-6 leading-normal space-y-5 px-2 sm:px-8 md:px-16 text-[30px] sm:text-[40px] md:text-[70px] lg:text-[90px] leading-[120px] text-center font-extrabold tracking-[-2.5px] text-black">
+        <div className="mt-10 space-y-5 px-2 sm:px-8 md:px-16 text-[30px] sm:text-[40px] md:text-[70px] lg:text-[90px] leading-[100px] text-center font-extrabold tracking-[-2.5px] text-black">
           <h1>The Easiest Way to Search, </h1>
           <h1> Compare & Buy AI Tools.</h1>
         </div>

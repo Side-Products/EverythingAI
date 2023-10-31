@@ -8,12 +8,15 @@ import { UPDATE_PROFILE_RESET } from "@/redux/constants/userConstants";
 import { StatusContext } from "@/store/StatusContextProvider";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import UpdateUserProfileModal from "./UpdateUserProfileModal";
+import { getFirstName } from "@/utils/Helpers";
 
-export default function UserDetails({ count }) {
+export default function UserDetails({ count, shareableDashboardUser }) {
   const { data: session } = useSession();
   const { setError } = useContext(StatusContext);
   const { setLoading } = useContext(LoadingContext);
-  const avatarUrl = session && session.user && session.user.image;
+  const avatarUrl = shareableDashboardUser
+    ? shareableDashboardUser.image
+    : session && session.user && session.user.image;
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -68,7 +71,9 @@ export default function UserDetails({ count }) {
       <div>
         <div className="w-full grid lg:grid-flow-col lg:auto-cols-auto grid-cols-1 gap-4">
           <div
-            onClick={() => setUpdateUserProfileModalOpen(true)}
+            onClick={() => {
+              if (!shareableDashboardUser) setUpdateUserProfileModalOpen(true);
+            }}
             className="group w-full flex justify-between items-start px-8 pt-6 pb-8 rounded-2xl cursor-pointer bg-light-100 shadow-md shadow-black/[.05]"
           >
             <div className="flex sm:flex-row flex-col gap-x-8">
@@ -92,22 +97,40 @@ export default function UserDetails({ count }) {
                 )}
               </div>
               <div className="flex flex-col items-start justify-start text-start sm:mt-0 mt-4">
-                <div className="text-[40px] font-bold text-primary-700">
-                  {session && session.user && session.user.name}
+                <div
+                  className={
+                    "font-bold text-primary-700 " +
+                    (shareableDashboardUser
+                      ? "mt-1 text-[48px] "
+                      : "text-[40px] ")
+                  }
+                >
+                  {shareableDashboardUser ? (
+                    <>
+                      {getFirstName(shareableDashboardUser.name)}&apos;s
+                      Favourite Tools
+                    </>
+                  ) : (
+                    session && session.user && session.user.name
+                  )}
                 </div>
                 <div className="-mt-1 text-sm text-primary-600">
-                  {session && session.user && session.user.email}
+                  {shareableDashboardUser
+                    ? ""
+                    : session && session.user && session.user.email}
                 </div>
               </div>
             </div>
-            <i className="fa-regular fa-pen-to-square text-xl text-primary-200 transition duration-300 text-gradient-primary-tr-group"></i>
+            {!shareableDashboardUser && (
+              <i className="fa-regular fa-pen-to-square text-xl text-primary-200 transition duration-300 text-gradient-primary-tr-group"></i>
+            )}
           </div>
 
           <div className="w-full grid sm:grid-cols-2 gap-x-8 bg-gradient-to-br from-primary-100 to-primary-200 px-8 pt-6 pb-8 rounded-2xl">
             <div className="flex flex-col items-end"></div>
             <div className="flex flex-col items-end">
               <p className="text-[32px] font-semibold text-primary-700 leading-[70px]">
-                My Tools
+                {shareableDashboardUser ? "Tools" : "My Tools"}
               </p>
               <p className="mt-[2px] text-3xl font-bold text-gradient-primary-tr">
                 {count || 0}
