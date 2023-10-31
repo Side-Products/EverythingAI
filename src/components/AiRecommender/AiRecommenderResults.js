@@ -68,7 +68,7 @@ const AiRecommenderResults = ({ recommendation }) => {
             </div>
           ))}
       </div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-10 bg-lime-100 rounded-lg py-3">
+      {/* <div className="w-full grid grid-cols-11 gap-10 items-start mt-10 bg-lime-100 rounded-lg py-3">
         <div className="col-span-2 font-bold ml-5">Popularity</div>
         {recommendation?.tools?.map((tool, i) => (
           <div key={i} className="col-span-3"></div>
@@ -85,7 +85,7 @@ const AiRecommenderResults = ({ recommendation }) => {
               {tool.timesVisited ? tool.timesVisited : <>-</>}
             </div>
           ))}
-      </div>
+      </div> */}
       <div className="w-full grid grid-cols-11 gap-10 items-start mt-12 bg-indigo-100 rounded-lg py-3">
         <div className="col-span-2 font-bold ml-5">Trust</div>
         {recommendation?.tools?.map((tool, i) => (
