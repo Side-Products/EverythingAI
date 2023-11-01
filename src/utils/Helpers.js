@@ -130,3 +130,11 @@ export const getPricingChipClass = (pricingName) => {
 
 export const generateSlug = (name) =>
   name.replace(/[^a-zA-Z0-9]+/g, "-").toLowerCase();
+
+export const getFirstName = (fullName) => {
+  // Split the full name into an array of words
+  const nameParts = fullName.split(" ");
+  // The first element of the array is the first name
+  const firstName = nameParts[0];
+  return firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+};

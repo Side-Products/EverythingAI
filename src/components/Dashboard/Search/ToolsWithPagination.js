@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Pager from "@/components/ui/Pagination/Pager";
 import Button from "@/components/ui/Button";
 import ToolCard from "@/components/Cards/ToolCard";
 import Search from "./Search";
+import ShareModal from "@/components/ui/ShareModal";
 
 export default function ToolsWithPagination({
   options,
   resultsPerPage,
   totalCount,
   filteredTotalCount,
+  shareableDashboardUser,
+  shareMyFavouriteTools,
 }) {
   const router = useRouter();
   let { search, page = 1 } = router.query;
@@ -36,13 +40,31 @@ export default function ToolsWithPagination({
     count = filteredTotalCount;
   }
 
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
+
   return (
     <>
-      <div className="flex flex-col xl:w-1/3 lg:w-9/12 md:w-1/2 mt-10">
-        <Search />
-        {search && (
-          <div className="text-sm mt-2 ml-2">Showing results for: {search}</div>
-        )}
+      <div className="w-full flex justify-between mt-10">
+        <div className="flex flex-col xl:w-1/3 lg:w-9/12 md:w-1/2">
+          {!shareableDashboardUser && <Search />}
+          {search && (
+            <div className="text-sm mt-2 ml-2">
+              Showing results for: {search}
+            </div>
+          )}
+        </div>
+        <div>
+          <Button
+            type="button"
+            variant="classic-100"
+            onClick={() => setShareModalOpen(true)}
+          >
+            <div className="flex items-center justify-center space-x-2">
+              <i className="text-xs sm:text-sm md:text-lg fa-solid fa-share-nodes"></i>
+              <span className="text-xs sm:text-sm md:text-base">Share</span>
+            </div>
+          </Button>
+        </div>
       </div>
 
       <div className="w-full flex flex-col items-center justify-center mt-14">
@@ -79,6 +101,13 @@ export default function ToolsWithPagination({
           </div>
         )}
       </div>
+
+      <ShareModal
+        isOpen={isShareModalOpen}
+        setOpen={setShareModalOpen}
+        shareableDashboardUser={shareableDashboardUser}
+        shareMyFavouriteTools={shareMyFavouriteTools}
+      />
 
       {/* <div className="mt-12">
 				{resultsPerPage < count && (
