@@ -39,36 +39,37 @@ const AiRecommenderResults = ({ recommendation }) => {
         The results here are unbiased and created based on your use case.
       </div>
       <div className="mt-8 text-2xl font-semibold">Compare</div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-8 font-bold">
-        <div className="col-span-2"></div>
-        <div className="col-span-3 text-center">
-          Tool 1{" "}
-          <span className="text-gradient-secondary-tr">(Recommended)</span>
-        </div>
-        <div className="col-span-3 text-center">Tool 2</div>
-        <div className="col-span-3 text-center">Tool 3</div>
-      </div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-6 bg-primary-100 rounded-lg py-3">
-        <div className="col-span-2 font-bold ml-5">Tool Name</div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3 text-center">
-            {tool.name}
+      <div className="w-full border-2 rounded-xl p-2 mt-8 pb-8">
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-8 font-bold">
+          <div className="col-span-2"></div>
+          <div className="col-span-3 text-center">
+            Tool 1{" "}
+            <span className="text-gradient-secondary-tr">(Recommended)</span>
           </div>
-        ))}
-      </div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-6">
-        <div className="col-span-2"></div>
-        {recommendation.tools &&
-          recommendation.tools.length > 0 &&
-          recommendation.tools.map((tool) => (
-            <div className="col-span-3" key={tool._id}>
-              <div className="w-11/12">
-                <ToolCard tool={tool} />
-              </div>
+          <div className="col-span-3 text-center">Tool 2</div>
+          <div className="col-span-3 text-center">Tool 3</div>
+        </div>
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-6 bg-primary-100 rounded-lg py-3">
+          <div className="col-span-2 font-bold ml-5">Tool Name</div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3 text-center">
+              {tool.name}
             </div>
           ))}
-      </div>
-      {/* <div className="w-full grid grid-cols-11 gap-10 items-start mt-10 bg-lime-100 rounded-lg py-3">
+        </div>
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-6">
+          <div className="col-span-2"></div>
+          {recommendation.tools &&
+            recommendation.tools.length > 0 &&
+            recommendation.tools.map((tool) => (
+              <div className="col-span-3 flex justify-center" key={tool._id}>
+                <div className="w-11/12">
+                  <ToolCard tool={tool} />
+                </div>
+              </div>
+            ))}
+        </div>
+        {/* <div className="w-full grid grid-cols-11 gap-10 items-start mt-10 bg-lime-100 rounded-lg py-3">
         <div className="col-span-2 font-bold ml-5">Popularity</div>
         {recommendation?.tools?.map((tool, i) => (
           <div key={i} className="col-span-3"></div>
@@ -86,291 +87,306 @@ const AiRecommenderResults = ({ recommendation }) => {
             </div>
           ))}
       </div> */}
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-12 bg-indigo-100 rounded-lg py-3">
-        <div className="col-span-2 font-bold ml-5">Trust</div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3"></div>
-        ))}
-      </div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-6">
-        <div className="col-span-2 flex items-end gap-2 font-medium">
-          <Image src="/ui/g2.png" height={100} width={30} loading="lazy" />
-          G2 Reviews
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-12 bg-indigo-100 rounded-lg py-3">
+          <div className="col-span-2 font-bold ml-5">Trust</div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3"></div>
+          ))}
         </div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3">
-            {tool.reviews?.G2?.stars ? (
-              <>
-                <StarRating rating={tool.reviews?.G2?.stars} size={"small"} />
-                <div className="flex gap-x-8 mt-2">
-                  {tool.reviews?.G2?.stars}/5
-                  {tool.reviews?.G2?.link && (
-                    <Link href={tool.reviews?.G2?.link} target="_blank">
-                      <div className="font-bold underline">
-                        G2
-                        <i className="ml-2 fas fa-external-link-alt" />
-                      </div>
-                    </Link>
-                  )}
-                </div>
-              </>
-            ) : (
-              <>-</>
-            )}
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-6 ml-5">
+          <div className="col-span-2 flex items-end gap-2 font-medium">
+            <Image src="/ui/g2.png" height={100} width={30} loading="lazy" />
+            G2 Reviews
           </div>
-        ))}
-      </div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-6">
-        <div className="col-span-2 flex items-end gap-2">
-          <Image
-            src="/ui/trustpilot.png"
-            height={100}
-            width={120}
-            loading="lazy"
-          />
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3">
+              {tool.reviews?.G2?.stars ? (
+                <>
+                  <StarRating rating={tool.reviews?.G2?.stars} size={"small"} />
+                  <div className="flex gap-x-8 mt-2">
+                    {tool.reviews?.G2?.stars}/5
+                    {tool.reviews?.G2?.link && (
+                      <Link href={tool.reviews?.G2?.link} target="_blank">
+                        <div className="font-bold underline">
+                          G2
+                          <i className="ml-2 fas fa-external-link-alt" />
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <span className="text-center w-full flex justify-center">
+                  -
+                </span>
+              )}
+            </div>
+          ))}
         </div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3">
-            {tool.reviews?.trustPilot?.stars ? (
-              <>
-                <StarRating
-                  rating={tool.reviews?.trustPilot?.stars}
-                  size={"small"}
-                />
-                <div className="flex gap-x-8 mt-2">
-                  {tool.reviews?.trustPilot?.stars}/5
-                  {tool.reviews?.trustPilot?.link && (
-                    <Link href={tool.reviews?.trustPilot?.link} target="_blank">
-                      <div className="font-bold underline">
-                        Trustpilot
-                        <i className="ml-2 fas fa-external-link-alt" />
-                      </div>
-                    </Link>
-                  )}
-                </div>
-              </>
-            ) : (
-              <>-</>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-6">
-        <div className="col-span-2 flex items-end gap-2">
-          <Image src="/logo.png" height={100} width={120} loading="lazy" />
-        </div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3">
-            {tool.reviews?.everythingAI?.stars ? (
-              <>
-                <StarRating
-                  rating={tool.reviews?.everythingAI?.stars}
-                  size={"small"}
-                />
-                <div className="flex gap-x-8 mt-2">
-                  {tool.reviews?.everythingAI?.stars}/5
-                </div>
-              </>
-            ) : (
-              <>-</>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-6">
-        <div className="col-span-2 flex items-end gap-2 font-medium">
-          Product Hunt Reviews
-        </div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3">
-            {tool.reviews?.productHunt?.stars ? (
-              <>
-                <StarRating
-                  rating={tool.reviews?.productHunt?.stars}
-                  size={"small"}
-                />
-                <div className="flex gap-x-8 mt-2">
-                  {tool.reviews?.productHunt?.stars}/5
-                  {tool.reviews?.productHunt?.link && (
-                    <Link
-                      href={tool.reviews?.productHunt?.link}
-                      target="_blank"
-                    >
-                      <div className="font-bold underline">
-                        Product Hunt
-                        <i className="ml-2 fas fa-external-link-alt" />
-                      </div>
-                    </Link>
-                  )}
-                </div>
-              </>
-            ) : (
-              <>-</>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-12">
-        <div className="col-span-2 font-bold pl-5 bg-orange-100 rounded-lg py-3">
-          Social
-        </div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3 flex h-full gap-x-4 items-center">
-            {tool.linkedin ? (
-              <Link
-                href={tool.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
-              >
-                <i className="text-xl fa-brands fa-linkedin"></i>
-              </Link>
-            ) : (
-              <></>
-            )}
-            {tool.twitter ? (
-              <Link
-                href={tool.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
-              >
-                <i className="text-xl fa-brands fa-twitter"></i>
-              </Link>
-            ) : (
-              <></>
-            )}
-            {tool.instagram ? (
-              <Link
-                href={tool.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
-              >
-                <i className="text-xl fa-brands fa-instagram"></i>
-              </Link>
-            ) : (
-              <></>
-            )}
-            {tool.youtube ? (
-              <Link
-                href={tool.youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
-              >
-                <i className="text-xl fa-brands fa-youtube"></i>
-              </Link>
-            ) : (
-              <></>
-            )}
-            {!tool.linkedin &&
-              !tool.twitter &&
-              !tool.instagram &&
-              !tool.youtube && <>-</>}
-          </div>
-        ))}
-      </div>
-
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-12 bg-amber-100 rounded-lg py-3">
-        <div className="col-span-2 font-bold ml-5">Usability</div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3"></div>
-        ))}
-      </div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-6">
-        <div className="col-span-2 font-bold">Features</div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div
-            key={i}
-            className="col-span-3 text-base whitespace-pre-line features-list pl-4"
-          >
-            <ContentToList content={tool.features} />
-          </div>
-        ))}
-      </div>
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-10">
-        <div className="col-span-2 font-bold">Use Cases</div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div
-            key={i}
-            className="col-span-3 text-base whitespace-pre-line features-list pl-4"
-          >
-            <Accordion useCases={tool.useCases} size={"small"} />
-          </div>
-        ))}
-      </div>
-
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-10">
-        <div className="col-span-2 font-bold">Pricing</div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3 flex justify-center">
-            <ToolPill
-              pillText={tool?.pricing?.name}
-              chipStyle={getPricingChipClass(tool?.pricing?.name)}
-              tooltip={tool?.pricing?.meta}
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-6 ml-5">
+          <div className="col-span-2 flex items-end gap-2">
+            <Image
+              src="/ui/trustpilot.png"
+              height={100}
+              width={120}
+              loading="lazy"
             />
           </div>
-        ))}
-      </div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3">
+              {tool.reviews?.trustPilot?.stars ? (
+                <>
+                  <StarRating
+                    rating={tool.reviews?.trustPilot?.stars}
+                    size={"small"}
+                  />
+                  <div className="flex gap-x-8 mt-2">
+                    {tool.reviews?.trustPilot?.stars}/5
+                    {tool.reviews?.trustPilot?.link && (
+                      <Link
+                        href={tool.reviews?.trustPilot?.link}
+                        target="_blank"
+                      >
+                        <div className="font-bold underline">
+                          Trustpilot
+                          <i className="ml-2 fas fa-external-link-alt" />
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <span className="text-center w-full flex justify-center">
+                  -
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-6 ml-5">
+          <div className="col-span-2 flex items-end gap-2">
+            <Image src="/logo.png" height={100} width={120} loading="lazy" />
+          </div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3">
+              {tool.reviews?.everythingAI?.stars ? (
+                <>
+                  <StarRating
+                    rating={tool.reviews?.everythingAI?.stars}
+                    size={"small"}
+                  />
+                  <div className="flex gap-x-8 mt-2">
+                    {tool.reviews?.everythingAI?.stars}/5
+                  </div>
+                </>
+              ) : (
+                <span className="text-center w-full flex justify-center">
+                  -
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-6 ml-5">
+          <div className="col-span-2 flex items-end gap-2 font-medium">
+            Product Hunt Reviews
+          </div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3">
+              {tool.reviews?.productHunt?.stars ? (
+                <>
+                  <StarRating
+                    rating={tool.reviews?.productHunt?.stars}
+                    size={"small"}
+                  />
+                  <div className="flex gap-x-8 mt-2">
+                    {tool.reviews?.productHunt?.stars}/5
+                    {tool.reviews?.productHunt?.link && (
+                      <Link
+                        href={tool.reviews?.productHunt?.link}
+                        target="_blank"
+                      >
+                        <div className="font-bold underline">
+                          Product Hunt
+                          <i className="ml-2 fas fa-external-link-alt" />
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <span className="text-center w-full flex justify-center">
+                  -
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
 
-      <div className="w-full grid grid-cols-11 gap-10 mt-10 items-center">
-        <div className="col-span-2 font-bold">Add to collection?</div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3 flex justify-center">
-            <Button
-              variant={"classic"}
-              type={"button"}
-              onClick={() => {
-                if (session && session.user) {
-                  if (tool?.liked) {
-                    dispatch(deleteLikedTool(tool?._id));
-                    tool.liked = false;
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-12">
+          <div className="col-span-2 font-bold pl-5 bg-orange-100 rounded-lg py-3">
+            Social
+          </div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div
+              key={i}
+              className="col-span-3 h-full gap-x-4 items-center w-full flex justify-center"
+            >
+              {tool.linkedin ? (
+                <Link
+                  href={tool.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
+                >
+                  <i className="text-xl fa-brands fa-linkedin"></i>
+                </Link>
+              ) : (
+                <></>
+              )}
+              {tool.twitter ? (
+                <Link
+                  href={tool.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
+                >
+                  <i className="text-xl fa-brands fa-twitter"></i>
+                </Link>
+              ) : (
+                <></>
+              )}
+              {tool.instagram ? (
+                <Link
+                  href={tool.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
+                >
+                  <i className="text-xl fa-brands fa-instagram"></i>
+                </Link>
+              ) : (
+                <></>
+              )}
+              {tool.youtube ? (
+                <Link
+                  href={tool.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
+                >
+                  <i className="text-xl fa-brands fa-youtube"></i>
+                </Link>
+              ) : (
+                <></>
+              )}
+              {!tool.linkedin &&
+                !tool.twitter &&
+                !tool.instagram &&
+                !tool.youtube && <>-</>}
+            </div>
+          ))}
+        </div>
+
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-12 bg-amber-100 rounded-lg py-3">
+          <div className="col-span-2 font-bold ml-5">Usability</div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3"></div>
+          ))}
+        </div>
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-6 ml-5">
+          <div className="col-span-2 font-bold">Features</div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div
+              key={i}
+              className="col-span-3 text-base whitespace-pre-line features-list pl-4"
+            >
+              <ContentToList content={tool.features} />
+            </div>
+          ))}
+        </div>
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-10">
+          <div className="col-span-2 font-bold ml-5">Use Cases</div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div
+              key={i}
+              className="col-span-3 text-base whitespace-pre-line features-list pl-4"
+            >
+              <Accordion useCases={tool.useCases} size={"small"} />
+            </div>
+          ))}
+        </div>
+
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-10">
+          <div className="col-span-2 font-bold ml-5">Pricing</div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3 flex justify-center">
+              <ToolPill
+                pillText={tool?.pricing?.name}
+                chipStyle={getPricingChipClass(tool?.pricing?.name)}
+                tooltip={tool?.pricing?.meta}
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="w-full grid grid-cols-11 gap-10 mt-10 items-center">
+          <div className="col-span-2 font-bold ml-5">Add to collection?</div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3 flex justify-center">
+              <Button
+                variant={"classic"}
+                type={"button"}
+                onClick={() => {
+                  if (session && session.user) {
+                    if (tool?.liked) {
+                      dispatch(deleteLikedTool(tool?._id));
+                      tool.liked = false;
+                    } else {
+                      dispatch(likeTool(tool?._id));
+                      tool.liked = true;
+                    }
                   } else {
-                    dispatch(likeTool(tool?._id));
-                    tool.liked = true;
+                    setAuthModalOpen(true);
                   }
-                } else {
-                  setAuthModalOpen(true);
-                }
-              }}
-              active={tool?.liked}
-              classes="relative group/like-btn"
-            >
-              <i
-                className={
-                  "fa-solid fa-circle-plus text-lg " +
-                  (tool?.liked
-                    ? "text-light-100"
-                    : "text-dark-200 group-hover/like-btn:text-primary-400")
-                }
-              ></i>
-            </Button>
-          </div>
-        ))}
-      </div>
-
-      <div className="w-full grid grid-cols-11 gap-10 items-start mt-10">
-        <div className="col-span-2"></div>
-        {recommendation?.tools?.map((tool, i) => (
-          <div key={i} className="col-span-3 flex justify-center">
-            <Link
-              href={`/tools/${tool?.slug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full"
-            >
-              <Button type={"button"}>
-                Check out tool{" "}
-                <i className="ml-2 text-xs fas fa-external-link-alt" />
+                }}
+                active={tool?.liked}
+                classes="relative group/like-btn"
+              >
+                <i
+                  className={
+                    "fa-solid fa-circle-plus text-lg " +
+                    (tool?.liked
+                      ? "text-light-100"
+                      : "text-dark-200 group-hover/like-btn:text-primary-400")
+                  }
+                ></i>
               </Button>
-            </Link>
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
+
+        <div className="w-full grid grid-cols-11 gap-10 items-start mt-10">
+          <div className="col-span-2"></div>
+          {recommendation?.tools?.map((tool, i) => (
+            <div key={i} className="col-span-3 flex justify-center">
+              <Link
+                href={`/tools/${tool?.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full"
+              >
+                <Button type={"button"}>
+                  Check out tool{" "}
+                  <i className="ml-2 text-xs fas fa-external-link-alt" />
+                </Button>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="w-full flex justify-center mt-20 gap-8">
+      <div className="w-full flex justify-center mt-12 gap-8">
         {session?.user?.email && (
           <div>
             <a
