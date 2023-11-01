@@ -827,6 +827,11 @@ tr th:nth-child(1) {
   border-radius: 0 0.625rem 0.625rem 0;
 }
 
+.allAiRecommendations-table tr td:nth-child(n + 11),
+.allAiRecommendations-table tr th:nth-child(n + 11) {
+  border-radius: 0 0.625rem 0.625rem 0;
+}
+
 /**************************************************************************/
 /***************************    Scrollbar   *******************************/
 /**************************************************************************/

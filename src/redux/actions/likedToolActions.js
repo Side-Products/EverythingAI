@@ -73,6 +73,34 @@ export const getMyLikedTools =
     }
   };
 
+// Get liked tools
+export const getLikedTools =
+  (req, userId = "") =>
+  async (dispatch) => {
+    try {
+      const { origin } = absoluteUrl(req);
+      const config = {
+        headers: {
+          cookie: req.headers.cookie,
+        },
+      };
+      const { data } = await axios.get(
+        `${origin}/api/tools/get-liked?userId=${userId}`,
+        config
+      );
+
+      dispatch({
+        type: MY_LIKED_TOOLS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: MY_LIKED_TOOLS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
 // Clear errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({

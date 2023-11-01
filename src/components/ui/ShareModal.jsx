@@ -5,8 +5,17 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import successLogo from "/public/ui/success.svg";
 import { StatusContext } from "@/store/StatusContextProvider";
+import { getFirstName } from "@/utils/Helpers";
+import { useSession } from "next-auth/react";
 
-const ShareModal = ({ isOpen, setOpen, tool }) => {
+const ShareModal = ({
+  isOpen,
+  setOpen,
+  tool,
+  shareableDashboardUser,
+  shareMyFavouriteTools,
+}) => {
+  const { data: session } = useSession();
   /*******************************
    *******  SHARE BUTTONS  *******
    *******************************/
@@ -16,20 +25,37 @@ const ShareModal = ({ isOpen, setOpen, tool }) => {
   const [currentPageLink, setCurrentPageLink] = useState("");
 
   useEffect(() => {
-    setCurrentPageLink(window.location.origin + asPath);
-  }, []);
+    if (shareMyFavouriteTools) {
+      if (session && session.user) {
+        setCurrentPageLink(
+          window.location.origin + asPath + "/" + session.user._id
+        );
+      }
+    } else {
+      setCurrentPageLink(window.location.origin + asPath);
+    }
+  }, [session]);
 
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(currentPageLink);
     setSuccess((prevState) => ({
       ...prevState,
       title: "Sharing Link Copied",
-      message: "Tool link has been copied to clipboard",
+      message:
+        shareableDashboardUser || shareMyFavouriteTools
+          ? "Link has been copied to clipboard"
+          : "Tool link has been copied to clipboard",
       showSuccessBox: true,
     }));
   };
 
-  const sharableMessage = `Check out ${tool?.name} on EverythingAI!\nSupercharge your workflows and save time to do things that matter.\n\nCheck out this tool on @everythingai- ${currentPageLink}`;
+  const sharableMessage = shareableDashboardUser
+    ? `Check out ${getFirstName(
+        shareableDashboardUser?.name
+      )}'s favourite tools on EverythingAI! \nSupercharge your workflows and save time to do things that matter.\n\nCheck out this collection on @everythingai- ${currentPageLink}`
+    : shareMyFavouriteTools
+    ? `I just created my favourite AI tools on Everything AI. Here are my favorites: ${currentPageLink}. Go create yours as well at https://everythingai.club`
+    : `Check out ${tool?.name} on EverythingAI!\nSupercharge your workflows and save time to do things that matter.\n\nCheck out this tool on @everythingai- ${currentPageLink}`;
   const uriEncodedSharableText = encodeURI(sharableMessage);
 
   return (
@@ -50,7 +76,11 @@ const ShareModal = ({ isOpen, setOpen, tool }) => {
             and spread the <span className="text-primary-500">magic</span>
           </p>
           <p className="text-xs mt-3">
-            Share this incredible tool with your friends and
+            Share this incredible{" "}
+            {shareableDashboardUser || shareMyFavouriteTools
+              ? "collection"
+              : "tool"}{" "}
+            with your friends and
           </p>
           <p className="text-xs">
             colleagues to level up your productivity together!
