@@ -58,7 +58,7 @@ export default function Carousel({
           observer={true}
           observeParents={true}
           observeSlideChildren={true}
-          watchSlidesVisibility={true}
+          watchslidesvisibility={true}
           watchSlidesProgress={true}
           centeredSlides={false}
           centerInsufficientSlides={true}

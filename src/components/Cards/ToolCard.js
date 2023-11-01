@@ -143,8 +143,8 @@ export default function ToolCard({
 
         <div className="relative flex justify-between px-5 pb-5 mt-3">
           <p className={"text-sm " + styles["oneLiner"]}>
-            {tool?.oneLiner.length > 35
-              ? tool?.oneLiner.substring(0, 35) + "..."
+            {tool?.oneLiner.length > 30
+              ? tool?.oneLiner.substring(0, 30) + "..."
               : tool?.oneLiner}
           </p>
           {adminRemoveFromCollectionView &&

@@ -80,6 +80,7 @@ export const myLikedToolsReducer = (state = { ideas: [] }, action) => {
         resultsPerPage: action.payload.resultsPerPage,
         filteredToolsCount: action.payload.filteredToolsCount,
         likedTools: action.payload.likedTools,
+        user: action.payload.user || null,
       };
     case MY_LIKED_TOOLS_FAIL:
       return {

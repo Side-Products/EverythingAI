@@ -59,6 +59,12 @@ import {
   updateReviewReducer,
   deleteReviewReducer,
 } from "./reviewReducers";
+import {
+  createAiRecommendationReducer,
+  getAllAiRecommendationsReducer,
+  deleteAiRecommendationReducer,
+  getAiRecommendationReducer,
+} from "./aiRecommenderReducers";
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -113,6 +119,11 @@ const reducer = combineReducers({
   allReviews: getAllReviewsReducer,
   updateReview: updateReviewReducer,
   deleteReview: deleteReviewReducer,
+  // recommendation
+  createAiRecommendation: createAiRecommendationReducer,
+  allAiRecommendations: getAllAiRecommendationsReducer,
+  deleteAiRecommendation: deleteAiRecommendationReducer,
+  getAiRecommendation: getAiRecommendationReducer,
 });
 
 export default reducer;

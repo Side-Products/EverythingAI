@@ -193,6 +193,19 @@ const Navbar = ({ setAuthModalOpen }) => {
                   >
                     <Link href="/blogs">Blog</Link>
                   </li>
+                  <li
+                    className={
+                      "font-medium block py-2 px-4 text-dark-100 hover:text-dark-200 bg-secondary-100/60 hover:bg-gray-200 rounded-lg transition duration-300 " +
+                      (router.pathname == "/ai-recommender"
+                        ? "text-dark-800 bg-gray-200"
+                        : "")
+                    }
+                  >
+                    <Link href="/ai-recommender">
+                      <i className="fa-solid fa-fire-flame-curved mr-1 text-secondary-400"></i>{" "}
+                      AI Recommender
+                    </Link>
+                  </li>
                 </ul>
               </div>
 
@@ -367,6 +380,17 @@ const Navbar = ({ setAuthModalOpen }) => {
                                     >
                                       <div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
                                         All Contact Messages
+                                      </div>
+                                    </Link>
+                                  </li>
+
+                                  <li>
+                                    <Link
+                                      href={`/admin/ai-recommender`}
+                                      passHref={true}
+                                    >
+                                      <div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
+                                        AI Recommender Responses
                                       </div>
                                     </Link>
                                   </li>
