@@ -3,7 +3,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons";
 
-const StarRating = ({ rating }) => {
+const StarRating = ({ rating, size = "large" }) => {
   const stars = [];
   let remaining = Math.floor(rating);
   let hasHalfStar = rating % 1 !== 0;
@@ -26,9 +26,10 @@ const StarRating = ({ rating }) => {
         <FontAwesomeIcon
           key={index}
           icon={type === "full" ? faStar : type === "half" ? faStarHalf : null}
-          className={`w-10 h-8 py-1 text-sm text-${
-            type === "empty" ? "gray" : "yellow"
-          }-500`}
+          className={
+            `py-1 text-sm text-${type === "empty" ? "gray" : "yellow"}-500` +
+            (size == "small" ? ` w-8 h-6` : ` w-10 h-8`)
+          }
         />
       ))}
     </div>

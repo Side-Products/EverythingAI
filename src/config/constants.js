@@ -40,3 +40,12 @@ export const pricingOptions = [
   "Subscription",
   "Custom",
 ];
+
+export const whatsImportantOptions = [
+  "Security",
+  "Ease of implementation",
+  "Support",
+  "Affordability",
+  "Good reviews",
+  "Has Discounts",
+];

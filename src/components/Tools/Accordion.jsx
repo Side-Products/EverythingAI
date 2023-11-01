@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Accordion({ useCases }) {
+export default function Accordion({ useCases, size = "large" }) {
   const [currentlyExpanded, setCurrentlyExpanded] = useState(0);
 
   const accordion = useCases.map((elem, idx) => {
@@ -20,7 +20,12 @@ export default function Accordion({ useCases }) {
         <h2 className="mb-0" id={elem.heading}>
           <button
             type="button"
-            className="group relative flex w-full items-center rounded-t-[15px] py-4 px-5 text-left text-xl font-medium text-dark-600 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none [&:not([data-te-collapse-collapsed])]:text-primary-500 [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(210,210,210)]"
+            className={
+              "group relative flex w-full items-center rounded-t-[15px] text-left font-medium text-dark-600 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none [&:not([data-te-collapse-collapsed])]:text-primary-500 [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(210,210,210)] " +
+              (size == "small"
+                ? " py-1 pb-3 px-2 text-md"
+                : " py-4 px-5 text-xl")
+            }
             onClick={() => {
               setCurrentlyExpanded(idx);
             }}
@@ -60,7 +65,13 @@ export default function Accordion({ useCases }) {
           aria-labelledby={elem.heading}
           // data-te-parent="#accordionExample"
         >
-          <div className="py-4 px-5">{elem.content}</div>
+          <div
+            className={
+              size == "small" ? " py-1 px-2 text-sm" : " py-4 px-5 text-xl"
+            }
+          >
+            {elem.content}
+          </div>
         </div>
       </div>
     );

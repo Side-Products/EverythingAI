@@ -63,8 +63,11 @@ const Layout = ({ children }) => {
       {router.pathname !== "/tools" &&
         crumb &&
         !router.pathname.startsWith("/admin") &&
+        !router.pathname.startsWith("/ai-recommender/results") && 
         !router.pathname.startsWith("/dashboard/") &&
-        !router.pathname == "/" && <Breadcrumb crumb={crumb} />}
+        !router.pathname == "/" && (
+          <Breadcrumb crumb={crumb} />
+        )}
       <AuthModal
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}
