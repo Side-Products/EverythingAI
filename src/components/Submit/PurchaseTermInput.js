@@ -4,28 +4,8 @@ import NumberInput from "../ui/Input/NumberInput";
 
 import React from "react";
 import Dropdown from "../ui/Input/Dropdown";
-import { useState } from "react";
 
 const PurchaseTermInput = ({ purchaseTerms, setPurchaseTerms }) => {
-  const [tempTerms, setTempTerms] = useState([
-    {
-      termLength: "1 year",
-      couponCode: "BIGSALE2023",
-      actualPrice: 200,
-      discountedPrice: 150,
-      termsAndConditions: "Terms and conditions for the purchase.",
-      limit: 20,
-    },
-    {
-      termLength: "3 months",
-      couponCode: "BIGSALE2023",
-      actualPrice: 200,
-      discountedPrice: 150,
-      termsAndConditions: "Terms and conditions for the purchase.",
-      limit: 20,
-    },
-  ]);
-
   const onTermDetailsChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...purchaseTerms.terms];
@@ -88,9 +68,7 @@ const PurchaseTermInput = ({ purchaseTerms, setPurchaseTerms }) => {
               classes={"w-full"}
               options={["1 month", "3 months", "6 months", "1 year"]}
               value={term.termLength}
-              onChange={(e) => {
-                onTermDetailsChange(e, index);
-              }}
+              setChoice={(e) => onTermDetailsChange(e, index)}
             />
 
             <div className="my-3 flex flex-row justify-start  items-center ">
@@ -140,6 +118,7 @@ const PurchaseTermInput = ({ purchaseTerms, setPurchaseTerms }) => {
                   onFieldChange={(e) => onTermDetailsChange(e, index)}
                   required={false}
                   min={0}
+                  max={1000}
                 />
               </div>
             </div>
@@ -149,7 +128,7 @@ const PurchaseTermInput = ({ purchaseTerms, setPurchaseTerms }) => {
               label={"Terms and Conditions"}
               value={term.termsAndConditions}
               name={"termsAndConditions"}
-              // onFieldChange={(e) => onUseCasesChange(e, i)}
+              onFieldChange={(e) => onTermDetailsChange(e, index)}
               placeholder="Eg. Maximize Marketing ROI with high-converting AI content, grow social media presence, improve search engine rankings, and create ad copies driving digital growth."
               required={false}
               rows={4}

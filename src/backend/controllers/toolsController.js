@@ -513,7 +513,7 @@ const updateTool = catchAsyncErrors(async (req, res, next) => {
     trustPilot: { link: trustPilotLink, stars: trustPilotStars },
     everythingAI: { stars: everythingAIStars },
   };
-  console.log({ updatedReviews });
+
   const sanitizedUseCases = useCases.filter(
     (useCase) => useCase.heading !== "" && useCase.content !== ""
   );

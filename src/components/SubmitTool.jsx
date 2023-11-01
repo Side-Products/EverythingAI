@@ -9,6 +9,10 @@ import {
   updateTool,
   clearErrors,
 } from "@/redux/actions/toolActions";
+import {
+  updatePurchaseTerms,
+  createPurchaseTerms,
+} from "@/redux/actions/purchaseTermsActions";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import { StatusContext } from "@/store/StatusContextProvider";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
@@ -164,8 +168,8 @@ const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
   const { category } = useSelector((state) => state.category);
 
   useEffect(() => {
-    if (purchaseTermsToEdit) {
-      console.log("purchaseTermsToEdit", purchaseTermsToEdit);
+    if (purchaseTermsToEdit.length > 0) {
+      // console.log("purchaseTermsToEdit", purchaseTermsToEdit);
       const purchaseTermData = purchaseTermsToEdit[0];
       setPurchaseTerms({
         toolId: purchaseTermData.tool,
@@ -318,9 +322,20 @@ const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
           }
 
           dispatch(updateTool(toolToEdit._id, tool));
-          return;
         } else {
           dispatch(createTool(tool));
+        }
+      } catch (error) {
+        return;
+      }
+
+      try {
+        if (session?.user?.role === "admin") {
+          if (purchaseTermsToEdit.length > 0) {
+            dispatch(updatePurchaseTerms(purchaseTerms, toolToEdit._id));
+          } else if (purchaseTerms.toolOwnerEmail.length > 0) {
+            dispatch(createPurchaseTerms(purchaseTerms, toolToEdit._id));
+          }
         }
       } catch (error) {
         return;

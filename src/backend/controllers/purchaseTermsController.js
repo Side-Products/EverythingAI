@@ -8,12 +8,10 @@ import PurchaseTerm from "../models/purchaseTerm";
 
 const createPurchaseTerm = catchAsyncErrors(async (req, res) => {
   // save to db
-
-  console.log(req.body);
-
   // find by id
   const toolId = req.query.id;
   const tool = await Tool.findById(toolId);
+
   if (!tool) {
     return next(new ErrorHandler("No tool found with this id", 404));
   }
@@ -45,4 +43,36 @@ const getPurchaseTermsByToolId = catchAsyncErrors(async (req, res) => {
   });
 });
 
-export { createPurchaseTerm, getPurchaseTermsByToolId };
+// edit purchase terms => /api/purchase-terms/:id
+
+const updatePurchaseTerms = catchAsyncErrors(async (req, res) => {
+  const toolId = req.query.id;
+  console.log("updateToolId", toolId);
+  const purchaseTerm = await PurchaseTerm.findOne({ tool: toolId });
+
+  if (!purchaseTerm) {
+    return next(new ErrorHandler("No purchaseTerm found with this id", 404));
+  }
+  const { terms, toolOwnerEmail, description, isActive } = req.body;
+  const editedPurchaseTerm = await PurchaseTerm.findByIdAndUpdate(
+    purchaseTerm._id,
+    {
+      terms,
+      toolOwnerEmail,
+      description,
+      isActive,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    editedPurchaseTerm,
+  });
+});
+
+export { createPurchaseTerm, getPurchaseTermsByToolId, updatePurchaseTerms };

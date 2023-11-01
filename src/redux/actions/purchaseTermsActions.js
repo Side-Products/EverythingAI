@@ -46,6 +46,7 @@ export const createPurchaseTerms =
   (purchaseTermsData, id) => async (dispatch) => {
     try {
       dispatch({ type: CREATE_PURCHASE_TERMS_REQUEST });
+
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +64,7 @@ export const createPurchaseTerms =
     } catch (error) {
       dispatch({
         type: CREATE_PURCHASE_TERMS_FAIL,
-        payload: error.response.data.message,
+        payload: error,
       });
     }
   };
@@ -71,7 +72,7 @@ export const createPurchaseTerms =
 // update purchase terms
 
 export const updatePurchaseTerms =
-  (id, purchaseTermsData) => async (dispatch) => {
+  (purchaseTermsData, id) => async (dispatch) => {
     try {
       dispatch({ type: UPDATE_PURCHASE_TERMS_REQUEST });
 
