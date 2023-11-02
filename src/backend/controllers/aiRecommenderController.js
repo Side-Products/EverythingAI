@@ -71,7 +71,35 @@ const getAiRecommendation = catchAsyncErrors(async (req, res, next) => {
       },
     },
     {
-      $sort: { ad: -1, likeCount: -1, timesVisited: -1, createdAt: -1 },
+      $addFields: {
+        reviewsArray: {
+          $cond: {
+            if: {
+              $or: [
+                { $eq: ["$reviews", null] }, // Check if "reviews" is null
+                { $eq: ["$reviews", false] }, // Check if "reviews" is false
+              ],
+            },
+            then: [], // Replace with an empty array
+            else: { $objectToArray: "$reviews" }, // Convert to array if not null
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        reviewCount: { $size: { $ifNull: ["$reviewsArray", []] } }, // Calculate the length of the "reviews" array
+      },
+    },
+    {
+      $sort: {
+        ad: -1,
+        featured: -1,
+        reviewCount: -1,
+        // likeCount: -1,
+        // timesVisited: -1,
+        // createdAt: -1,
+      },
     },
     {
       $limit: 3,
@@ -127,6 +155,7 @@ const getAiRecommendation = catchAsyncErrors(async (req, res, next) => {
       },
     },
   ]);
+
   const toolsWithLike = await maybeAddLikedTools(req, tools);
 
   const toolIdsToExclude = tools.map((tool) => tool._id); // Extract _id values from tools
