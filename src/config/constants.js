@@ -49,3 +49,17 @@ export const whatsImportantOptions = [
   "Good reviews",
   "Has Discounts",
 ];
+
+export const iAmInOptions = [
+  { name: "Marketing", category: "Marketing" },
+  { name: "Sales", category: "Sales" },
+  { name: "Product", category: "Product" },
+  { name: "Dev", category: "Developer" },
+  { name: "Data", category: "Data" },
+  { name: "Design", category: "Design" },
+  { name: "Human Resources", category: "HR" },
+  { name: "Legal", category: "Legal" },
+  { name: "Ops", category: "Operations" },
+  { name: "Customer Success", category: "Customer Success" },
+  { name: "Other", category: "Industries" },
+];
