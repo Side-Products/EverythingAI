@@ -7,6 +7,14 @@ import {
   adminGetAllUsersReducer,
   adminGetUserDetailsReducer,
 } from "./userReducers";
+
+import {
+  getPurchaseTermsReducer,
+  createPurchaseTermsReducer,
+  updatePurchaseTermsReducer,
+  getPurchaseTermsByToolSlugReducer,
+} from "./purchaseTermsReducers";
+
 import {
   createCategoryReducer,
   getAllCategoriesReducer,
@@ -124,6 +132,11 @@ const reducer = combineReducers({
   allAiRecommendations: getAllAiRecommendationsReducer,
   deleteAiRecommendation: deleteAiRecommendationReducer,
   getAiRecommendation: getAiRecommendationReducer,
+  // purchase terms
+  allPurchaseTerms: getPurchaseTermsReducer,
+  createPurchaseTerms: createPurchaseTermsReducer,
+  updatePurchaseTerms: updatePurchaseTermsReducer,
+  getPurchaseTermsByToolSlug: getPurchaseTermsByToolSlugReducer,
 });
 
 export default reducer;

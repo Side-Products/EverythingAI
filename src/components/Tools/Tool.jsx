@@ -13,10 +13,14 @@ import Collections from "@/components/Tools/Collections";
 import Rate from "./Rate";
 import Comments from "./Comments";
 import Review from "./Review";
+import PurchasePlans from "./PurchasePlans";
+import { useDispatch } from "react-redux";
 
 export default function Tool() {
   const { tool } = useSelector((state) => state.tool);
   const { query } = useRouter();
+  const { purchaseTerms } = useSelector((state) => state.allPurchaseTerms);
+  const dispatch = useDispatch();
   /*******************************
    *******  SHARE BUTTON  ********
    *******************************/
@@ -28,7 +32,11 @@ export default function Tool() {
         <ToolIntro tool={tool} setShareModalOpen={setShareModalOpen} />
         {tool?.reviews && <Review reviews={tool?.reviews} />}
         <EmbedTag toolSlug={query.tool} />
-
+        <div className="w-full h-full flex p-2 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
+          {purchaseTerms && purchaseTerms?.terms?.length > 0 && (
+            <PurchasePlans terms={purchaseTerms.terms} />
+          )}
+        </div>
         <div className="grid w-full h-full md:grid-cols-2 gap-x-10 gap-y-16">
           <div className="flex flex-col w-full h-full space-y-4">
             <div className="text-xl font-semibold md:text-2xl">Features</div>
