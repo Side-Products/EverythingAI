@@ -66,7 +66,7 @@ const PurchaseTermInput = ({ purchaseTerms, setPurchaseTerms }) => {
               name="termLength"
               label="Term Length"
               classes={"w-full"}
-              options={["1 month", "3 months", "6 months", "1 year"]}
+              options={["1 Month", "3 Months", "6 Months", "1 Year"]}
               value={term.termLength}
               setChoice={(e) => onTermDetailsChange(e, index)}
             />

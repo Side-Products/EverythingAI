@@ -15,7 +15,36 @@ import {
 } from "../constants/purchaseTermsConstants";
 
 // get purchase terms by id
-export const getPurchaseTermsById = (req, id) => async (dispatch) => {
+export const getPurchaseTermsById =
+  (req = "", id) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: GET_PURCHASE_TERMS_REQUEST });
+      const { origin } = absoluteUrl(req);
+      const config = {
+        headers: {
+          cookie: req.headers.cookie,
+        },
+      };
+      const { data } = await axios.get(
+        `${origin}/api/purchase-terms/${id}`,
+        config
+      );
+
+      dispatch({
+        type: GET_PURCHASE_TERMS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_PURCHASE_TERMS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+// getPurchaseTermsByToolSlug
+export const getPurchaseTermsByToolSlug = (req, slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_PURCHASE_TERMS_REQUEST });
     const { origin } = absoluteUrl(req);
@@ -25,10 +54,8 @@ export const getPurchaseTermsById = (req, id) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `${origin}/api/purchase-terms/${id}`,
-      config
+      `${origin}/api/purchase-terms/slug/${slug}`
     );
-
     dispatch({
       type: GET_PURCHASE_TERMS_SUCCESS,
       payload: data,

@@ -5,6 +5,7 @@ import { wrapper } from "@/redux/redux-store";
 import { getToolBySlug } from "@/redux/actions/toolActions";
 import { getAllCollectionsServerSide } from "@/redux/actions/collectionActions";
 import { useSelector } from "react-redux";
+import { getPurchaseTermsByToolSlug } from "@/redux/actions/purchaseTermsActions";
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
@@ -12,7 +13,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const session = await getSession({ req: req });
       await store.dispatch(getToolBySlug(req, params.tool));
       await store.dispatch(getAllCollectionsServerSide(req, 10));
-
+      await store.dispatch(getPurchaseTermsByToolSlug(req, params.tool));
       return {
         props: { session },
       };

@@ -16,7 +16,7 @@ const purchaseTermSchema = new mongoose.Schema({
     {
       termLength: {
         type: String,
-        enum: ["1 month", "3 months", "6 months", "1 year"],
+        enum: ["1 Month", "3 Months", "6 Months", "1 Year"],
         required: true,
       },
       couponCode: {

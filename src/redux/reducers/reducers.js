@@ -12,6 +12,7 @@ import {
   getPurchaseTermsReducer,
   createPurchaseTermsReducer,
   updatePurchaseTermsReducer,
+  getPurchaseTermsByToolSlugReducer,
 } from "./purchaseTermsReducers";
 
 import {
@@ -132,9 +133,10 @@ const reducer = combineReducers({
   deleteAiRecommendation: deleteAiRecommendationReducer,
   getAiRecommendation: getAiRecommendationReducer,
   // purchase terms
-  getPurchaseTerms: getPurchaseTermsReducer,
+  allPurchaseTerms: getPurchaseTermsReducer,
   createPurchaseTerms: createPurchaseTermsReducer,
   updatePurchaseTerms: updatePurchaseTermsReducer,
+  getPurchaseTermsByToolSlug: getPurchaseTermsByToolSlugReducer,
 });
 
 export default reducer;

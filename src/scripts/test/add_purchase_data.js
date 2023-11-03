@@ -7,7 +7,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 
 // Create a new purchase object
 const newPurchaseTerm = {
-  termLength: "1 year",
+  termLength: "1 Year",
   couponCode: "BIGSALE2023",
   actualPrice: 200,
   discountedPrice: 150,
@@ -15,7 +15,7 @@ const newPurchaseTerm = {
   limit: 20,
 };
 const newPurchaseTerm2 = {
-  termLength: "3 months",
+  termLength: "3 Months",
   couponCode: "BIGSALE2023",
   actualPrice: 200,
   discountedPrice: 150,

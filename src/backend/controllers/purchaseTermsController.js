@@ -30,6 +30,23 @@ const createPurchaseTerm = catchAsyncErrors(async (req, res) => {
   });
 });
 
+const getPurchaseTermsByToolSlug = catchAsyncErrors(async (req, res) => {
+  const toolSlug = req.query.slug;
+  console.log(toolSlug);
+  const tool = await Tool.findOne({ slug: toolSlug });
+  if (!tool) {
+    return next(new ErrorHandler("No tool found with this id", 404));
+  }
+  const purchaseTerms = await PurchaseTerm.findOne({ tool: tool._id });
+  if (!purchaseTerms) {
+    return next(new ErrorHandler("No purchase terms found with this id", 404));
+  }
+  res.status(200).json({
+    success: true,
+    purchaseTerms,
+  });
+});
+
 const getPurchaseTermsByToolId = catchAsyncErrors(async (req, res) => {
   const toolId = req.query.id;
   console.log(toolId);
@@ -75,4 +92,9 @@ const updatePurchaseTerms = catchAsyncErrors(async (req, res) => {
   });
 });
 
-export { createPurchaseTerm, getPurchaseTermsByToolId, updatePurchaseTerms };
+export {
+  createPurchaseTerm,
+  getPurchaseTermsByToolId,
+  getPurchaseTermsByToolSlug,
+  updatePurchaseTerms,
+};

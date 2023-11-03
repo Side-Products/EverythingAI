@@ -38,6 +38,33 @@ export const getPurchaseTermsReducer = (state = {}, action) => {
   }
 };
 
+export const getPurchaseTermsByToolSlugReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_PURCHASE_TERMS_REQUEST:
+      return {
+        loading: true,
+      };
+    case GET_PURCHASE_TERMS_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        purchaseTerms: action.payload.purchaseTerms,
+      };
+    case GET_PURCHASE_TERMS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
 export const createPurchaseTermsReducer = (state = {}, action) => {
   switch (action.type) {
     case CREATE_PURCHASE_TERMS_REQUEST:

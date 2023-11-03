@@ -34,7 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
 export default function Tools() {
   const { tool } = useSelector((state) => state.tool);
-  const { purchaseTerms } = useSelector((state) => state.getPurchaseTerms);
+  const { purchaseTerms } = useSelector((state) => state.allPurchaseTerms);
 
   const router = useRouter();
   const { query } = router;
