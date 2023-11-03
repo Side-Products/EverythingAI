@@ -151,6 +151,20 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
                             </span>
                           </Link>
                         </div>
+                        <div className="flex flex-wrap justify-center ham_menu_hover_effect_row md:mt-8">
+                          <Link
+                            href={"/ai-recommender"}
+                            className="text-center ham_menu_link ham_menu_hover_effect"
+                            passHref={true}
+                          >
+                            <span
+                              className="text-white hover:text-primary-400"
+                              onClick={closeNavbar}
+                            >
+                              AI Recommender
+                            </span>
+                          </Link>
+                        </div>
                       </div>
 
                       <div className="w-1/2 px-4 text-center md:w-1/4">

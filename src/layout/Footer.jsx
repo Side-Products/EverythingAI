@@ -52,6 +52,12 @@ const Footer = () => {
                   <span onClick={() => setAuthModalOpen(true)}>Dashboard</span>
                 )}
               </li>
+              <li className="text-dark-200 hover:text-primary-500">
+                <Link href="/ai-recommender">
+                  <i className="fa-solid fa-fire-flame-curved mr-1 text-secondary-400"></i>{" "}
+                  AI Recommender
+                </Link>
+              </li>
             </ul>
           </div>
 

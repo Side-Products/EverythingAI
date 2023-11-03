@@ -8,7 +8,7 @@ import { getCategory } from "@/redux/actions/categoryActions";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import { StatusContext } from "@/store/StatusContextProvider";
-import { whatsImportantOptions } from "@/config/constants";
+import { whatsImportantOptions, iAmInOptions } from "@/config/constants";
 import { getObjectByName } from "@/utils/Helpers";
 import Dropdown from "@/components/ui/Input/Dropdown";
 import Textarea from "@/components/ui/Input/Textarea";
@@ -50,8 +50,13 @@ const AiRecommender = () => {
   });
 
   useEffect(() => {
-    if (categories && categories.length > 0 && selectedCategory) {
-      if (selectedCategory?._id) dispatch(getCategory(selectedCategory?._id));
+    if (categories && categories.length > 0) {
+      if (selectedCategory) {
+        if (selectedCategory?._id) dispatch(getCategory(selectedCategory?._id));
+      } else {
+        const cat = getObjectByName("Marketing", categories);
+        dispatch(getCategory(cat?._id));
+      }
     }
   }, [categories, selectedCategory]);
   const { category } = useSelector((state) => state.category);
@@ -84,20 +89,26 @@ const AiRecommender = () => {
   );
 
   const submitForm = () => {
-    if (selectedValues.length !== 3) {
+    if (selectedValues.length == 0) {
       setError({
         title: "Insufficient data",
-        message: "Please pick any 3 of the given options",
+        message: "Please pick at max any 3 of the given options",
         showErrorBox: true,
       });
       return;
     }
     if (session && session.user) {
       setLoading({ title: "Analyzing data...", status: true });
+      const cat = iAmInOptions.find(
+        (category) =>
+          category.name.toLowerCase() ===
+          document.getElementById("category").value.toLowerCase()
+      );
+      const realCat = getObjectByName(cat.category, uniqueCategories);
       const data = {
         whatAreYouHereFor: document.getElementById("whatAreYouHereFor").value,
         workFor: document.getElementById("workFor").value,
-        category: document.getElementById("category").value,
+        category: realCat.name,
         subCategory: document.getElementById("subCategory").value,
         helpsMeWith: helpsMeWithText,
         whatsImportant: selectedValues,
@@ -116,7 +127,18 @@ const AiRecommender = () => {
   useEffect(() => {
     if (success && recommendation) {
       sleep(2000).then(() => {
-        router.push(`/ai-recommender/results/${recommendation._id}`);
+        if (recommendation.whatAreYouHereFor == "Explore how I can use AI") {
+          router.push(`/blogs`);
+          return;
+        } else if (
+          recommendation.whatAreYouHereFor == "Want to list my AI tool here"
+        ) {
+          router.push(`/submit-tool`);
+          return;
+        } else {
+          router.push(`/ai-recommender/results/${recommendation._id}`);
+          return;
+        }
       });
       return;
     }
@@ -139,7 +161,7 @@ const AiRecommender = () => {
       }}
       className="w-full flex justify-center"
     >
-      <div className="w-2/3 grid grid-cols-2 mt-10 py-16 px-32 bg-white rounded-2xl gap-8 items-end">
+      <div className="w-full lg:w-2/3 md:grid md:grid-cols-2 flex flex-col mt-10 py-16 md:px-32 sm:px-16 px-8 bg-white rounded-2xl md:gap-8 gap-2 md:items-end">
         <div>Hello! What are you here for?</div>
         <div>
           <Dropdown
@@ -155,7 +177,7 @@ const AiRecommender = () => {
           />
         </div>
 
-        <div>I work for a</div>
+        <div className="md:mt-0 mt-6">I work for a</div>
         <div>
           <Dropdown
             variant="secondary"
@@ -166,23 +188,28 @@ const AiRecommender = () => {
           />
         </div>
 
-        <div>I am in</div>
+        <div className="md:mt-0 mt-6">I am in</div>
         <div>
           <Dropdown
             variant="secondary"
             id={"category"}
             name="category"
             required={true}
-            options={uniqueCategories}
+            // options={uniqueCategories}
+            options={iAmInOptions}
             objKey={"name"}
             setChoice={(e) => {
-              const cat = getObjectByName(e.target.value, uniqueCategories);
-              setSelectedCategory(cat);
+              const cat = iAmInOptions.find(
+                (category) =>
+                  category.name.toLowerCase() === e.target.value.toLowerCase()
+              );
+              const realCat = getObjectByName(cat.category, uniqueCategories);
+              setSelectedCategory(realCat);
             }}
           />
         </div>
 
-        <div>I am looking for an AI Tool in</div>
+        <div className="md:mt-0 mt-6">I am looking for an AI Tool in</div>
         <div>
           <Dropdown
             variant="secondary"
@@ -197,7 +224,7 @@ const AiRecommender = () => {
           />
         </div>
 
-        <div className="flex h-full items-start text-start">
+        <div className="flex h-full items-start text-start md:mt-0 mt-6">
           That helps me with
         </div>
         <div>
@@ -213,7 +240,7 @@ const AiRecommender = () => {
           />
         </div>
 
-        <div>
+        <div className="md:mt-0 mt-6">
           What&apos;s important to me?
           <br />
           (Pick any 3)
@@ -234,7 +261,7 @@ const AiRecommender = () => {
             ))}
         </div>
 
-        <div>My company size is</div>
+        <div className="md:mt-0 mt-6">My company size is</div>
         <div>
           <Dropdown
             variant="secondary"

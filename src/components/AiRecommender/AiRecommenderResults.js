@@ -10,9 +10,10 @@ import { getPricingChipClass } from "@/utils/Helpers";
 import ToolPill from "../Tools/ToolUtils/ToolPill";
 import ToolsCarousel from "@/components/Tools/ToolsCarousel";
 import Button from "@/components/ui/Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { likeTool, deleteLikedTool } from "@/redux/actions/likedToolActions";
 import { AuthModalContext } from "@/store/AuthModalContextProvider";
+import MobileViewTool from "./MobileViewTool";
 
 const AiRecommenderResults = ({ recommendation }) => {
   const { asPath } = useRouter();
@@ -38,8 +39,16 @@ const AiRecommenderResults = ({ recommendation }) => {
       <div>
         The results here are unbiased and created based on your use case.
       </div>
-      <div className="mt-8 text-2xl font-semibold">Compare</div>
-      <div className="w-full border-2 rounded-xl p-2 mt-8 pb-8">
+      <div className="w-full flex justify-between items-end">
+        <div className="mt-8 text-2xl font-semibold">Compare</div>
+        <div className="text-dark-200 hover:text-primary-500">
+          <Link href="https://everything-ai.notion.site/everything-ai/Everything-AI-Sponsorship-and-Promotions-e20dededcfc94f70b3b9a791a19406ad">
+            <Button type={"button"}>Advertise Here</Button>
+          </Link>
+        </div>
+      </div>
+
+      <div className="hidden lg:block w-full border-2 rounded-xl p-2 mt-8 pb-8">
         <div className="w-full grid grid-cols-11 gap-10 items-start mt-8 font-bold">
           <div className="col-span-2"></div>
           <div className="col-span-3 text-center">
@@ -310,7 +319,7 @@ const AiRecommenderResults = ({ recommendation }) => {
           {recommendation?.tools?.map((tool, i) => (
             <div
               key={i}
-              className="col-span-3 text-base whitespace-pre-line features-list pl-4"
+              className="col-span-3 text-base whitespace-pre-line features-list"
             >
               <Accordion useCases={tool.useCases} size={"small"} />
             </div>
@@ -386,6 +395,12 @@ const AiRecommenderResults = ({ recommendation }) => {
         </div>
       </div>
 
+      <div className="lg:hidden block w-full border-2 rounded-xl p-2 px-6 mt-8 pb-8">
+        <MobileViewTool tool={recommendation?.tools[0]} position={1} />
+        <MobileViewTool tool={recommendation?.tools[1]} position={2} />
+        <MobileViewTool tool={recommendation?.tools[2]} position={3} />
+      </div>
+
       <div className="w-full flex justify-center mt-12 gap-8">
         {session?.user?.email && (
           <div>
@@ -416,39 +431,6 @@ const AiRecommenderResults = ({ recommendation }) => {
           heading={"Similar Tools"}
         />
       </div>
-
-      {/* <div className="w-full grid grid-cols-4 gap-12 mt-8">
-        <div className="w-full flex flex-col gap-y-6 font-bold">
-          <div className="opacity-0">.</div>
-          <div className="">Tool Name</div>
-          <div className="opacity-0">.</div>
-          <div className="">Trust</div>
-        </div>
-
-        <div className="w-full flex flex-col gap-y-6">
-          <div className="font-bold">Tool 1 (Recommended)</div>
-          <div>{recommendation?.tools[0]?.name}</div>
-          <div>
-            <ToolCard tool={recommendation?.tools[0]} />
-          </div>
-        </div>
-
-        <div className="w-full flex flex-col gap-y-6">
-          <div className="font-bold">Tool 2</div>
-          <div>{recommendation?.tools[1]?.name}</div>
-          <div>
-            <ToolCard tool={recommendation?.tools[1]} />
-          </div>
-        </div>
-
-        <div className="w-full flex flex-col gap-y-6">
-          <div className="font-bold">Tool 3</div>
-          <div>{recommendation?.tools[2]?.name}</div>
-          <div>
-            <ToolCard tool={recommendation?.tools[2]} />
-          </div>
-        </div>
-      </div> */}
     </>
   );
 };
