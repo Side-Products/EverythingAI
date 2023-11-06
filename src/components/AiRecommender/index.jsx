@@ -25,6 +25,7 @@ const AiRecommender = () => {
   const { setLoading } = useContext(LoadingContext);
   const { setError } = useContext(StatusContext);
 
+  const [whatAreYouHereFor, setWhatAreYouHereFor] = useState("Find AI tools");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [helpsMeWithText, setHelpsMeWithText] = useState("");
   const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
@@ -89,34 +90,42 @@ const AiRecommender = () => {
   );
 
   const submitForm = () => {
-    if (selectedValues.length == 0) {
-      setError({
-        title: "Insufficient data",
-        message: "Please pick at max any 3 of the given options",
-        showErrorBox: true,
-      });
+    if (whatAreYouHereFor == "Explore how I can use AI") {
+      router.push(`/blogs`);
       return;
-    }
-    if (session && session.user) {
-      setLoading({ title: "Analyzing data...", status: true });
-      const cat = iAmInOptions.find(
-        (category) =>
-          category.name.toLowerCase() ===
-          document.getElementById("category").value.toLowerCase()
-      );
-      const realCat = getObjectByName(cat.category, uniqueCategories);
-      const data = {
-        whatAreYouHereFor: document.getElementById("whatAreYouHereFor").value,
-        workFor: document.getElementById("workFor").value,
-        category: realCat.name,
-        subCategory: document.getElementById("subCategory").value,
-        helpsMeWith: helpsMeWithText,
-        whatsImportant: selectedValues,
-        companySize: document.getElementById("companySize").value,
-      };
-      dispatch(createAiRecommendation(data));
+    } else if (whatAreYouHereFor == "Want to list my AI tool here") {
+      router.push(`/submit-tool`);
+      return;
     } else {
-      setAuthModalOpen(true);
+      if (selectedValues.length == 0) {
+        setError({
+          title: "Insufficient data",
+          message: "Please pick at max any 3 of the given options",
+          showErrorBox: true,
+        });
+        return;
+      }
+      if (session && session.user) {
+        setLoading({ title: "Analyzing data...", status: true });
+        const cat = iAmInOptions.find(
+          (category) =>
+            category.name.toLowerCase() ===
+            document.getElementById("category").value.toLowerCase()
+        );
+        const realCat = getObjectByName(cat.category, uniqueCategories);
+        const data = {
+          whatAreYouHereFor: document.getElementById("whatAreYouHereFor").value,
+          workFor: document.getElementById("workFor").value,
+          category: realCat.name,
+          subCategory: document.getElementById("subCategory").value,
+          helpsMeWith: helpsMeWithText,
+          whatsImportant: selectedValues,
+          companySize: document.getElementById("companySize").value,
+        };
+        dispatch(createAiRecommendation(data));
+      } else {
+        setAuthModalOpen(true);
+      }
     }
   };
 
@@ -127,18 +136,8 @@ const AiRecommender = () => {
   useEffect(() => {
     if (success && recommendation) {
       sleep(2000).then(() => {
-        if (recommendation.whatAreYouHereFor == "Explore how I can use AI") {
-          router.push(`/blogs`);
-          return;
-        } else if (
-          recommendation.whatAreYouHereFor == "Want to list my AI tool here"
-        ) {
-          router.push(`/submit-tool`);
-          return;
-        } else {
-          router.push(`/ai-recommender/results/${recommendation._id}`);
-          return;
-        }
+        router.push(`/ai-recommender/results/${recommendation._id}`);
+        return;
       });
       return;
     }
@@ -174,116 +173,127 @@ const AiRecommender = () => {
               "Want to list my AI tool here",
             ]}
             required={true}
+            setChoice={(e) => setWhatAreYouHereFor(e.target.value)}
           />
         </div>
 
-        <div className="md:mt-0 mt-6">I work for a</div>
-        <div>
-          <Dropdown
-            variant="secondary"
-            id={"workFor"}
-            name="workFor"
-            options={["Startup", "SMB", "Enterprise"]}
-            required={true}
-          />
-        </div>
+        {whatAreYouHereFor == "Find AI tools" && (
+          <>
+            <div className="md:mt-0 mt-6">I work for a</div>
+            <div>
+              <Dropdown
+                variant="secondary"
+                id={"workFor"}
+                name="workFor"
+                options={["Startup", "SMB", "Enterprise"]}
+                required={true}
+              />
+            </div>
 
-        <div className="md:mt-0 mt-6">I am in</div>
-        <div>
-          <Dropdown
-            variant="secondary"
-            id={"category"}
-            name="category"
-            required={true}
-            // options={uniqueCategories}
-            options={iAmInOptions}
-            objKey={"name"}
-            setChoice={(e) => {
-              const cat = iAmInOptions.find(
-                (category) =>
-                  category.name.toLowerCase() === e.target.value.toLowerCase()
-              );
-              const realCat = getObjectByName(cat.category, uniqueCategories);
-              setSelectedCategory(realCat);
-            }}
-          />
-        </div>
+            <div className="md:mt-0 mt-6">I am in</div>
+            <div>
+              <Dropdown
+                variant="secondary"
+                id={"category"}
+                name="category"
+                required={true}
+                // options={uniqueCategories}
+                options={iAmInOptions}
+                objKey={"name"}
+                setChoice={(e) => {
+                  const cat = iAmInOptions.find(
+                    (category) =>
+                      category.name.toLowerCase() ===
+                      e.target.value.toLowerCase()
+                  );
+                  const realCat = getObjectByName(
+                    cat.category,
+                    uniqueCategories
+                  );
+                  setSelectedCategory(realCat);
+                }}
+              />
+            </div>
 
-        <div className="md:mt-0 mt-6">I am looking for an AI Tool in</div>
-        <div>
-          <Dropdown
-            variant="secondary"
-            id={"subCategory"}
-            name="subCategory"
-            required={true}
-            options={
-              subcategoriesOptions?.length > 0
-                ? subcategoriesOptions
-                : defaultSubcategories
-            }
-          />
-        </div>
+            <div className="md:mt-0 mt-6">I am looking for an AI Tool in</div>
+            <div>
+              <Dropdown
+                variant="secondary"
+                id={"subCategory"}
+                name="subCategory"
+                required={true}
+                options={
+                  subcategoriesOptions?.length > 0
+                    ? subcategoriesOptions
+                    : defaultSubcategories
+                }
+              />
+            </div>
 
-        <div className="flex h-full items-start text-start md:mt-0 mt-6">
-          That helps me with
-        </div>
-        <div>
-          <Textarea
-            variant="secondary"
-            id={"helpsMeWith"}
-            name={"helpsMeWith"}
-            value={helpsMeWithText}
-            onFieldChange={(e) => setHelpsMeWithText(e.target.value)}
-            placeholder="write briefly what you want the tool to do"
-            required={false}
-            rows={"4"}
-          />
-        </div>
+            <div className="flex h-full items-start text-start md:mt-0 mt-6">
+              That helps me with
+            </div>
+            <div>
+              <Textarea
+                variant="secondary"
+                id={"helpsMeWith"}
+                name={"helpsMeWith"}
+                value={helpsMeWithText}
+                onFieldChange={(e) => setHelpsMeWithText(e.target.value)}
+                placeholder="write briefly what you want the tool to do"
+                required={false}
+                rows={"4"}
+              />
+            </div>
 
-        <div className="md:mt-0 mt-6">
-          What&apos;s important to me?
-          <br />
-          (Pick any 3)
-        </div>
-        <div className="grid grid-cols-2 text-sm whitespace-nowrap">
-          {whatsImportantOptions &&
-            whatsImportantOptions.map((option) => (
-              <label key={option} className="flex gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="whatsImportant"
-                  value={option}
-                  checked={selectedCheckboxes[option] || false}
-                  onChange={handleCheckboxChange}
-                />
-                {option}
-              </label>
-            ))}
-        </div>
+            <div className="md:mt-0 mt-6">
+              What&apos;s important to me?
+              <br />
+              (Pick any 3)
+            </div>
+            <div className="grid grid-cols-2 text-sm whitespace-nowrap">
+              {whatsImportantOptions &&
+                whatsImportantOptions.map((option) => (
+                  <label key={option} className="flex gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="whatsImportant"
+                      value={option}
+                      checked={selectedCheckboxes[option] || false}
+                      onChange={handleCheckboxChange}
+                    />
+                    {option}
+                  </label>
+                ))}
+            </div>
 
-        <div className="md:mt-0 mt-6">My company size is</div>
-        <div>
-          <Dropdown
-            variant="secondary"
-            id={"companySize"}
-            name="companySize"
-            options={[
-              "1-10",
-              "11-50",
-              "51-200",
-              "201-500",
-              "501-1000",
-              "1000+",
-            ]}
-            required={true}
-          />
-        </div>
+            <div className="md:mt-0 mt-6">My company size is</div>
+            <div>
+              <Dropdown
+                variant="secondary"
+                id={"companySize"}
+                name="companySize"
+                options={[
+                  "1-10",
+                  "11-50",
+                  "51-200",
+                  "201-500",
+                  "501-1000",
+                  "1000+",
+                ]}
+                required={true}
+              />
+            </div>
+          </>
+        )}
 
         <div className="col-span-2">
           <div>
             <Button variant={"primary"} classes="text-md px-4 py-3 group mt-4">
               <span className="transition-all duration-500 group-hover:pr-6">
-                Give me the Top 3 Tools
+                {whatAreYouHereFor == "Find AI tools"
+                  ? "Give me the Top 3 Tools"
+                  : "Submit"}
                 <i className="absolute pl-2 mt-1 font-bold transition-all duration-500 opacity-0 fas fa-angle-double-right group-hover:opacity-100"></i>
               </span>
             </Button>
