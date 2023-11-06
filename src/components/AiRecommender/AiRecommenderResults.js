@@ -239,7 +239,7 @@ const AiRecommenderResults = ({ recommendation }) => {
           {recommendation?.tools?.map((tool, i) => (
             <div
               key={i}
-              className="col-span-3 h-full gap-x-4 items-center w-full flex justify-center"
+              className="col-span-3 h-full gap-x-4 items-center w-full flex justify-start"
             >
               {tool.linkedin ? (
                 <Link
