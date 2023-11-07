@@ -19,11 +19,11 @@ const MobileViewTool = ({ tool, position }) => {
 
   const ContentToList = ({ content }) => {
     // Split the content into separate lines
-    const lines = content.split("\n").filter((line) => line.trim() !== "");
+    const lines = content?.split("\n").filter((line) => line.trim() !== "");
 
     return (
       <ul className="list-disc flex flex-col space-y-4">
-        {lines.map((line, index) => (
+        {lines?.map((line, index) => (
           <li key={index}>{line}</li>
         ))}
       </ul>
@@ -67,13 +67,13 @@ const MobileViewTool = ({ tool, position }) => {
           G2 Reviews
         </div>
         <div className="flex flex-col items-end">
-          {tool.reviews?.G2?.stars ? (
+          {tool?.reviews?.G2?.stars ? (
             <>
-              <StarRating rating={tool.reviews?.G2?.stars} size={"small"} />
+              <StarRating rating={tool?.reviews?.G2?.stars} size={"small"} />
               <div className="flex gap-x-8 mt-2">
-                {tool.reviews?.G2?.stars}/5
-                {tool.reviews?.G2?.link && (
-                  <Link href={tool.reviews?.G2?.link} target="_blank">
+                {tool?.reviews?.G2?.stars}/5
+                {tool?.reviews?.G2?.link && (
+                  <Link href={tool?.reviews?.G2?.link} target="_blank">
                     <div className="font-bold underline">
                       G2
                       <i className="ml-2 fas fa-external-link-alt" />
@@ -97,16 +97,16 @@ const MobileViewTool = ({ tool, position }) => {
           />
         </div>
         <div className="flex flex-col items-end">
-          {tool.reviews?.trustPilot?.stars ? (
+          {tool?.reviews?.trustPilot?.stars ? (
             <>
               <StarRating
-                rating={tool.reviews?.trustPilot?.stars}
+                rating={tool?.reviews?.trustPilot?.stars}
                 size={"small"}
               />
               <div className="flex gap-x-8 mt-2">
-                {tool.reviews?.trustPilot?.stars}/5
-                {tool.reviews?.trustPilot?.link && (
-                  <Link href={tool.reviews?.trustPilot?.link} target="_blank">
+                {tool?.reviews?.trustPilot?.stars}/5
+                {tool?.reviews?.trustPilot?.link && (
+                  <Link href={tool?.reviews?.trustPilot?.link} target="_blank">
                     <div className="font-bold underline">
                       G2
                       <i className="ml-2 fas fa-external-link-alt" />
@@ -125,14 +125,14 @@ const MobileViewTool = ({ tool, position }) => {
           <Image src="/logo.png" height={100} width={130} loading="lazy" />
         </div>
         <div className="flex flex-col items-end">
-          {tool.reviews?.everythingAI?.stars ? (
+          {tool?.reviews?.everythingAI?.stars ? (
             <>
               <StarRating
-                rating={tool.reviews?.everythingAI?.stars}
+                rating={tool?.reviews?.everythingAI?.stars}
                 size={"small"}
               />
               <div className="flex gap-x-8 mt-2">
-                {tool.reviews?.everythingAI?.stars}/5
+                {tool?.reviews?.everythingAI?.stars}/5
               </div>
             </>
           ) : (
@@ -145,16 +145,16 @@ const MobileViewTool = ({ tool, position }) => {
           Product Hunt Reviews
         </div>
         <div className="flex flex-col items-end">
-          {tool.reviews?.productHunt?.stars ? (
+          {tool?.reviews?.productHunt?.stars ? (
             <>
               <StarRating
-                rating={tool.reviews?.productHunt?.stars}
+                rating={tool?.reviews?.productHunt?.stars}
                 size={"small"}
               />
               <div className="flex gap-x-8 mt-2">
-                {tool.reviews?.productHunt?.stars}/5
-                {tool.reviews?.productHunt?.link && (
-                  <Link href={tool.reviews?.productHunt?.link} target="_blank">
+                {tool?.reviews?.productHunt?.stars}/5
+                {tool?.reviews?.productHunt?.link && (
+                  <Link href={tool?.reviews?.productHunt?.link} target="_blank">
                     <div className="font-bold underline">
                       G2
                       <i className="ml-2 fas fa-external-link-alt" />
@@ -172,9 +172,9 @@ const MobileViewTool = ({ tool, position }) => {
       <div className="w-full flex justify-between items-center bg-orange-100 rounded-lg py-3 mt-2">
         <div className="font-bold ml-5">Social</div>
         <div className="flex gap-2 mr-2">
-          {tool.linkedin ? (
+          {tool?.linkedin ? (
             <Link
-              href={tool.linkedin}
+              href={tool?.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
@@ -184,9 +184,9 @@ const MobileViewTool = ({ tool, position }) => {
           ) : (
             <></>
           )}
-          {tool.twitter ? (
+          {tool?.twitter ? (
             <Link
-              href={tool.twitter}
+              href={tool?.twitter}
               target="_blank"
               rel="noopener noreferrer"
               className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
@@ -196,9 +196,9 @@ const MobileViewTool = ({ tool, position }) => {
           ) : (
             <></>
           )}
-          {tool.instagram ? (
+          {tool?.instagram ? (
             <Link
-              href={tool.instagram}
+              href={tool?.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
@@ -208,9 +208,9 @@ const MobileViewTool = ({ tool, position }) => {
           ) : (
             <></>
           )}
-          {tool.youtube ? (
+          {tool?.youtube ? (
             <Link
-              href={tool.youtube}
+              href={tool?.youtube}
               target="_blank"
               rel="noopener noreferrer"
               className="w-fit flex items-center rounded-lg p-3 cursor-pointer whitespace-nowrap bg-gray-200/60 hover:bg-primary-100"
@@ -220,10 +220,10 @@ const MobileViewTool = ({ tool, position }) => {
           ) : (
             <></>
           )}
-          {!tool.linkedin &&
-            !tool.twitter &&
-            !tool.instagram &&
-            !tool.youtube && <>-</>}
+          {!tool?.linkedin &&
+            !tool?.twitter &&
+            !tool?.instagram &&
+            !tool?.youtube && <>-</>}
         </div>
       </div>
 
@@ -233,13 +233,13 @@ const MobileViewTool = ({ tool, position }) => {
       <div className="w-full flex flex-col">
         <div className="font-bold">Features</div>
         <div className="text-base whitespace-pre-line features-list pl-4 mt-4">
-          <ContentToList content={tool.features} />
+          <ContentToList content={tool?.features} />
         </div>
       </div>
       <div className="w-full flex flex-col mt-4">
         <div className="font-bold">Use Cases</div>
         <div className="flex items-start text-base whitespace-pre-line features-list mt-4">
-          <Accordion useCases={tool.useCases} size={"small"} />
+          <Accordion useCases={tool?.useCases} size={"small"} />
         </div>
       </div>
 
@@ -247,9 +247,9 @@ const MobileViewTool = ({ tool, position }) => {
         <div className="font-bold">Pricing</div>
         <div className="flex justify-center">
           <ToolPill
-            pillText={tool.pricing?.name}
-            chipStyle={getPricingChipClass(tool.pricing?.name)}
-            tooltip={tool.pricing?.meta}
+            pillText={tool?.pricing?.name}
+            chipStyle={getPricingChipClass(tool?.pricing?.name)}
+            tooltip={tool?.pricing?.meta}
           />
         </div>
       </div>
@@ -261,21 +261,21 @@ const MobileViewTool = ({ tool, position }) => {
             type={"button"}
             onClick={() => {
               if (session && session.user) {
-                if (tool.liked) {
-                  dispatch(deleteLikedTool(tool._id));
+                if (tool?.liked) {
+                  dispatch(deleteLikedTool(tool?._id));
                   tool.liked = false;
                 } else {
-                  dispatch(likeTool(tool._id));
+                  dispatch(likeTool(tool?._id));
                   tool.liked = true;
                 }
               } else {
                 setAuthModalOpen(true);
               }
             }}
-            active={tool.liked}
+            active={tool?.liked}
             classes="relative group/like-btn"
           >
-            {tool.liked ? (
+            {tool?.liked ? (
               <span className="text-white">Remove from collection</span>
             ) : (
               <>

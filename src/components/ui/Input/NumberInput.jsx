@@ -11,12 +11,13 @@ export default function NumberInput({
   min = 0,
   max = 5,
   variant = "primary",
+  className = "",
 }) {
   return (
     <div className="w-full flex flex-col justify-end">
       <label
         htmlFor={id}
-        className="text-dark-400 text-sm font-medium mb-1 text-start"
+        className={`text-dark-400 text-sm font-medium mb-1 text-start ${className}`}
       >
         {label} {required && <RequiredAsterisk />}
       </label>

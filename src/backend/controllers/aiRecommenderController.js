@@ -163,6 +163,7 @@ const getAiRecommendation = catchAsyncErrors(async (req, res, next) => {
     {
       $match: {
         category: category._id,
+        subCategory: subCategory._id,
         verified: true,
         _id: { $nin: toolIdsToExclude }, // Exclude the tool IDs
       },

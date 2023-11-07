@@ -32,6 +32,7 @@ export default function Document() {
         <link rel="mask-icon" href="/icon.png" color="#000000" />
 
         <meta name="robots" content="index, follow" />
+        <meta name="robots" content="all" />
 
         {/* Tailwind Elements */}
         <link
