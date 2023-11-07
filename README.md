@@ -4,8 +4,6 @@
 
 Production: https://everythingai.club
 
-Latest Dev Updates: https://everythingai.club
-
 ### Instructions
 
 ### Start MongoDB locally
