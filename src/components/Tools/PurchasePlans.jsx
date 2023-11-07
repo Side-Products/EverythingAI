@@ -1,7 +1,8 @@
 import Button from "../ui/Button";
 import Tooltip from "../ui/Tooltip";
+import CheckoutButton from "./StripeCheckoutButton";
 
-function PurchasePlans({ terms }) {
+function PurchasePlans({ terms, name, image }) {
   const onLiner = (termLength) => {
     switch (termLength) {
       case "1 Months":
@@ -34,7 +35,7 @@ function PurchasePlans({ terms }) {
                 <div className="text-2xl font-bold mb-4">
                   ${term?.discountedPrice}
                 </div>
-                <Button>Buy Now</Button>{" "}
+                <CheckoutButton term={term} name={name} image={image} />
                 <div className="mt-2">
                   <Tooltip
                     labelText="Terms & Conditions*"

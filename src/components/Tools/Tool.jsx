@@ -34,7 +34,11 @@ export default function Tool() {
         <EmbedTag toolSlug={query.tool} />
         <div className="w-full h-full flex p-2 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
           {purchaseTerms && purchaseTerms?.terms?.length > 0 && (
-            <PurchasePlans terms={purchaseTerms.terms} />
+            <PurchasePlans
+              terms={purchaseTerms.terms}
+              image={tool?.image}
+              name={tool?.name}
+            />
           )}
         </div>
         <div className="grid w-full h-full md:grid-cols-2 gap-x-10 gap-y-16">
