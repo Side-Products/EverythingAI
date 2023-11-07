@@ -42,7 +42,7 @@ const AiRecommenderResults = ({ recommendation }) => {
       <div className="w-full flex justify-between items-end">
         <div className="mt-8 text-2xl font-semibold">Compare</div>
         <div className="text-dark-200 hover:text-primary-500">
-          <Link href="https://everything-ai.notion.site/everything-ai/Everything-AI-Sponsorship-and-Promotions-e20dededcfc94f70b3b9a791a19406ad">
+          <Link href="/contact">
             <Button type={"button"}>Advertise Here</Button>
           </Link>
         </div>
@@ -396,9 +396,18 @@ const AiRecommenderResults = ({ recommendation }) => {
       </div>
 
       <div className="lg:hidden block w-full border-2 rounded-xl p-2 px-6 mt-8 pb-8">
-        <MobileViewTool tool={recommendation?.tools[0]} position={1} />
-        <MobileViewTool tool={recommendation?.tools[1]} position={2} />
-        <MobileViewTool tool={recommendation?.tools[2]} position={3} />
+        <MobileViewTool
+          tool={recommendation?.tools && recommendation?.tools[0]}
+          position={1}
+        />
+        <MobileViewTool
+          tool={recommendation?.tools && recommendation?.tools[1]}
+          position={2}
+        />
+        <MobileViewTool
+          tool={recommendation?.tools && recommendation?.tools[2]}
+          position={3}
+        />
       </div>
 
       <div className="w-full flex justify-center mt-12 gap-8">
