@@ -8,8 +8,10 @@ import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
 const createCheckoutSession = catchAsyncErrors(async (req, res) => {
   try {
     console.log(req.body);
-    const { name, price, toolImageURL } = req.body;
+    const originURL = req.headers.origin;
+    const { name, price, toolImageURL, userEmail } = req.body;
     const session = await stripe.checkout.sessions.create({
+      customer_email: userEmail,
       line_items: [
         {
           price_data: {
@@ -23,10 +25,11 @@ const createCheckoutSession = catchAsyncErrors(async (req, res) => {
           quantity: 1,
         },
       ],
+
       mode: "payment",
       payment_method_types: ["card"],
-      success_url: `http://localhost:3000/?success=true`,
-      cancel_url: `http://localhost:3000/?canceled=true`,
+      success_url: `${originURL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${originURL}/?canceled=true`,
     });
     res.status(200).json(session);
   } catch (error) {
@@ -34,4 +37,20 @@ const createCheckoutSession = catchAsyncErrors(async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
-export { createCheckoutSession };
+
+const getCheckoutSession = catchAsyncErrors(async (req, res) => {
+  try {
+    const { sessionId } = req.query;
+
+    // Retrieve the session from Stripe
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ["payment_intent", "line_items.data.price.product"], // Optionally expand the payment_intent to include additional information
+    });
+
+    res.status(200).json({ session });
+  } catch (error) {
+    res.status(500).json({ statusCode: 500, message: error.message });
+  }
+});
+
+export { createCheckoutSession, getCheckoutSession };

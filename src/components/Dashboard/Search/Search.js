@@ -17,7 +17,7 @@ export default function Search() {
 
   return (
     <form className="w-full flex gap-x-2" onSubmit={submitHandler}>
-      <div className="w-2/3 h-[40px] bg-light-100 rounded-full p-1.5 group shadow-md">
+      <div className=" w-1/2 md:w-2/3 h-[40px] bg-light-100 rounded-full p-1.5 group shadow-md">
         <input
           className="p-0 pl-3 border-0 bg-transparent outline-0 text-sm transition duration-300 leading-[28px]"
           id="search-input"

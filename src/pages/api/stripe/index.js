@@ -1,5 +1,8 @@
 import nc from "next-connect";
-import { createCheckoutSession } from "@/backend/controllers/stripeController";
+import {
+  createCheckoutSession,
+  getCheckoutSession,
+} from "@/backend/controllers/stripeController";
 import {
   isAuthenticatedUser,
   maybeAuthenticatedUser,
@@ -8,6 +11,8 @@ import onError from "@/backend/middlewares/errors";
 
 const handler = nc({ onError });
 
-handler.use(maybeAuthenticatedUser).post(createCheckoutSession);
+handler.use(isAuthenticatedUser).post(createCheckoutSession);
+
+handler.use(isAuthenticatedUser).get(getCheckoutSession);
 
 export default handler;

@@ -124,7 +124,7 @@ a {
 }
 
 .search-li:hover .search-text {
-  @apply w-[275px] px-4;
+  @apply md:w-[100px] 2xl:w-[200px] px-4;
 }
 
 .search-box:hover > .search-btn {
