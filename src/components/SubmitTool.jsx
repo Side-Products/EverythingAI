@@ -168,7 +168,7 @@ const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
   const { category } = useSelector((state) => state.category);
 
   useEffect(() => {
-    if (purchaseTermsToEdit.length > 0) {
+    if (purchaseTermsToEdit?.length > 0) {
       // console.log("purchaseTermsToEdit", purchaseTermsToEdit);
       const purchaseTermData = purchaseTermsToEdit[0];
       setPurchaseTerms({
