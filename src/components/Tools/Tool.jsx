@@ -32,11 +32,11 @@ export default function Tool() {
         <ToolIntro tool={tool} setShareModalOpen={setShareModalOpen} />
         {tool?.reviews && <Review reviews={tool?.reviews} />}
         <EmbedTag toolSlug={query.tool} />
-        <div className="w-full h-full flex p-2 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
-          {purchaseTerms && purchaseTerms?.terms?.length > 0 && (
+        {purchaseTerms && purchaseTerms?.terms?.length > 0 && (
+          <div className="w-full h-full flex p-2 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
             <PurchasePlans terms={purchaseTerms.terms} />
-          )}
-        </div>
+          </div>
+        )}
         <div className="grid w-full h-full md:grid-cols-2 gap-x-10 gap-y-16">
           <div className="flex flex-col w-full h-full space-y-4">
             <div className="text-xl font-semibold md:text-2xl">Features</div>
