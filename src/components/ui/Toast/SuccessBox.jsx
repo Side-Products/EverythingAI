@@ -40,10 +40,10 @@ const SuccessBox = ({ style }) => {
             (style == 1
               ? "xl:w-4/12 bg-success-500 border-2 border-success-500 backdrop-brightness-200 bg-opacity-50 backdrop-blur-[24px]"
               : style == 2
-              ? "xl:w-3/12 bg-dark-900 border-success-500 border-[0.5px]"
-              : style == 3
-              ? "xl:w-3/12 bg-light-100 border-success-500 border-[0.5px]"
-              : "")
+                ? "xl:w-3/12 bg-dark-900 border-success-500 border-[0.5px]"
+                : style == 3
+                  ? "xl:w-3/12 bg-light-100 border-success-500 border-[0.5px]"
+                  : "")
           }
           role="alert"
         >
@@ -53,10 +53,10 @@ const SuccessBox = ({ style }) => {
               (style == 1
                 ? "text-base"
                 : style == 2
-                ? "text-base text-success-500"
-                : style == 3
-                ? "text-base text-success-500"
-                : "")
+                  ? "text-base text-success-500"
+                  : style == 3
+                    ? "text-base text-success-500"
+                    : "")
             }
           >
             {success.title}
@@ -67,10 +67,10 @@ const SuccessBox = ({ style }) => {
               (style == 1
                 ? "text-base"
                 : style == 2
-                ? "text-sm"
-                : style == 3
-                ? "text-sm"
-                : "")
+                  ? "text-sm"
+                  : style == 3
+                    ? "text-sm"
+                    : "")
             }
           >
             {success.message}
@@ -82,10 +82,10 @@ const SuccessBox = ({ style }) => {
               (style == 1
                 ? "w-8 h-8 top-1 right-1"
                 : style == 2
-                ? "w-6 h-6 top-2 right-2"
-                : style == 3
-                ? "w-6 h-6 top-2 right-2 group"
-                : "")
+                  ? "w-6 h-6 top-2 right-2"
+                  : style == 3
+                    ? "w-6 h-6 top-2 right-2 group"
+                    : "")
             }
           >
             <i
@@ -94,10 +94,10 @@ const SuccessBox = ({ style }) => {
                 (style == 1
                   ? "text-base text-light-400"
                   : style == 2
-                  ? "text-sm text-light-400"
-                  : style == 3
-                  ? "text-sm text-dark-100 group-hover:text-light-100"
-                  : "")
+                    ? "text-sm text-light-400"
+                    : style == 3
+                      ? "text-sm text-dark-100 group-hover:text-light-100"
+                      : "")
               }
             ></i>
           </div>

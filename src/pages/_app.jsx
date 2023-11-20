@@ -44,34 +44,6 @@ function App({ Component, pageProps, session, router }) {
         }}
       />
 
-      {/* Remove Arsturn */}
-      {/* <Script
-				id="arsturn-base"
-				strategy="afterInteractive"
-				dangerouslySetInnerHTML={{
-					__html: `
-							window.username="everything-ai"; window.widgetButtonBackgroundColor="undefined"; var s = document.createElement("script"); s.type =
-							"text/javascript"; s.async = true; s.src = "https://www.arsturn.com/widget.js"; document.head.appendChild(s);
-					`,
-				}}
-			/> */}
-      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
-      {/* <Script
-				src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
-				strategy="afterInteractive"
-				onError={(err) => {}}
-			/>
-			<Script id="google-analytics" strategy="afterInteractive" onError={(err) => {}}>
-				{`
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}', {
-                    page_path: window.location.pathname,
-                    });
-                `}
-			</Script> */}
-
       <Script
         src="https://kit.fontawesome.com/8f4546bba1.js"
         crossOrigin="anonymous"
