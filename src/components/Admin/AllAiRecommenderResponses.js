@@ -30,7 +30,7 @@ export default function AllAiRecommendations() {
       });
       dispatch(clearErrors());
     }
-  }, [error]);
+  }, [dispatch, error, setError]);
 
   return loading ? (
     <Loader />
