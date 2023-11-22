@@ -1,7 +1,9 @@
+import { useRouter } from "next/router";
 import PageWrapper from "@/layout/PageWrapper";
 import SubmitTool from "@/components/SubmitTool";
 
 export default function Submit() {
+  const router = useRouter();
   return (
     <PageWrapper
       title={"Submit A Tool | Everything AI"}
