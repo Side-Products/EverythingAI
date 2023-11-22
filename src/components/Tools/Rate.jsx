@@ -56,7 +56,7 @@ export default function Rate({ toolName }) {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, router, setError, setLoading, setSuccess, success]);
 
   const handlePostClick = () => {
     const reviewDataToUpload = {

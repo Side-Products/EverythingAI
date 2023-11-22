@@ -18,7 +18,7 @@ export default function Filter({ filter, setFilter }) {
     if (categories && categories.length > 0 && filter.category) {
       if (filter.category?._id) dispatch(getCategory(filter.category._id));
     }
-  }, [categories, filter.category]);
+  }, [categories, dispatch, filter.category]);
   const { category } = useSelector((state) => state.category);
 
   const subcategoriesOptions = useMemo(() => {

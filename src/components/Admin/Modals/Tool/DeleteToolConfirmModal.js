@@ -41,7 +41,7 @@ const DeleteToolConfirmModal = ({ isOpen, setOpen, toolToDelete }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, toolToDelete, error, isDeleted]);
+  }, [dispatch, toolToDelete, error, isDeleted, setSuccess, router, setError]);
 
   const deleteToolHandler = () => {
     dispatch(deleteTool(toolToDelete._id));

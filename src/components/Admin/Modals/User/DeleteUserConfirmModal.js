@@ -38,7 +38,7 @@ const DeleteUserConfirmModal = ({ isOpen, setOpen, userToDelete }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, userToDelete, error, isDeleted]);
+  }, [dispatch, userToDelete, error, isDeleted, setSuccess, router, setError]);
 
   const deleteUserHandler = () => {
     dispatch(adminDeleteUser(userToDelete._id));

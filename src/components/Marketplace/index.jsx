@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { ToolContext } from "@/store/ToolContextProvider";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import axios from "axios";
+import { useCallback } from "react";
 
 const initFilterState = {
   subcategories: [],
@@ -94,7 +95,7 @@ export default function Marketplace({ tools }) {
 
   const { setLoading } = useContext(LoadingContext);
   const { setFilteredTools } = useContext(ToolContext);
-  const getAllTools = async () => {
+  const getAllTools = useCallback(async () => {
     const subcategoryNames = filter.subcategories.map(
       (subcategory) => subcategory.name
     );
@@ -141,7 +142,16 @@ export default function Marketplace({ tools }) {
     setLoading({
       status: false,
     });
-  };
+  }, [
+    filter.category.name,
+    filter.pricing.meta,
+    filter.pricing.name,
+    filter.sortingFilter,
+    filter.subcategories,
+    router,
+    setFilteredTools,
+    setLoading,
+  ]);
 
   const [hasLoadedOnce, setLoadedOnce] = useState(false);
   useEffect(() => {
@@ -154,7 +164,7 @@ export default function Marketplace({ tools }) {
     } else {
       setLoadedOnce(true);
     }
-  }, [filter]);
+  }, [filter, getAllTools, hasLoadedOnce, setLoading]);
 
   return (
     <>

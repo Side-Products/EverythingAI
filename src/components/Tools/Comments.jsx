@@ -48,7 +48,7 @@ export default function Comments({ toolName = "" }) {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, error, isDeleted]);
+  }, [dispatch, error, isDeleted, router, setError, setSuccess]);
 
   const handleDeleteReview = (reviewId) => {
     setLoading({
@@ -82,7 +82,16 @@ export default function Comments({ toolName = "" }) {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, updateReviewError, isUpdated]);
+  }, [
+    dispatch,
+    updateReviewError,
+    isUpdated,
+    setSuccess,
+    router,
+    setLoading,
+    setError,
+    error,
+  ]);
 
   const handlePostClick = (newRate, newReview, reviewToEditId) => {
     const updatedReviewData = {
@@ -100,7 +109,7 @@ export default function Comments({ toolName = "" }) {
 
   useEffect(() => {
     dispatch(getAllReviews(router.query.tool, router.query.page || 1));
-  }, [dispatch, page]);
+  }, [dispatch, page, router.query.page, router.query.tool]);
 
   let queryParams;
   if (typeof window !== "undefined") {

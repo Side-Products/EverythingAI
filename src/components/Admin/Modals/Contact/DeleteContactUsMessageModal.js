@@ -43,7 +43,15 @@ const DeleteContactUsMessageModal = ({ isOpen, setOpen, messageToDelete }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, messageToDelete, error, isDeleted]);
+  }, [
+    dispatch,
+    messageToDelete,
+    error,
+    isDeleted,
+    setSuccess,
+    router,
+    setError,
+  ]);
 
   const deleteMessageHandler = () => {
     dispatch(adminDeleteContactUsMessage(messageToDelete._id));

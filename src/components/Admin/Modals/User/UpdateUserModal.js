@@ -54,7 +54,7 @@ const UpdateUserModal = ({ isOpen, setOpen, userToUpdate }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, userToUpdate, error, isUpdated]);
+  }, [dispatch, userToUpdate, error, isUpdated, setSuccess, router, setError]);
 
   const submitHandler = () => {
     const userData = {

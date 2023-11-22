@@ -77,7 +77,7 @@ const UpdateCollectionModal = ({ isOpen, setOpen, collectionToUpdate }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, error, isUpdated]);
+  }, [dispatch, error, isUpdated, router, setError, setLoading, setSuccess]);
 
   const submitHandler = async () => {
     if (image && imageName) {

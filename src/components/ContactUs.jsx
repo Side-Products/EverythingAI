@@ -136,7 +136,7 @@ export default function ContactUs() {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, setError, setLoading, setSuccess, success]);
 
   return (
     <div className="w-full flex flex-col justify-center items-center mt-16">

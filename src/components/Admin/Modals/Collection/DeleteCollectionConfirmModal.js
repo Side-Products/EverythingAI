@@ -47,7 +47,15 @@ const DeleteCollectionConfirmModal = ({
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, collectionToDelete, error, isDeleted]);
+  }, [
+    dispatch,
+    collectionToDelete,
+    error,
+    isDeleted,
+    setSuccess,
+    router,
+    setError,
+  ]);
 
   const deleteCollectionHandler = () => {
     dispatch(deleteCollection(collectionToDelete._id));

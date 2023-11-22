@@ -49,7 +49,16 @@ const RemoveFromCollectionModal = ({ isOpen, setOpen, tool, collection }) => {
       dispatch(clearErrors());
       dispatch({ type: REMOVE_TOOL_FROM_COLLECTION_RESET });
     }
-  }, [dispatch, tool, error, isDeleted]);
+  }, [
+    dispatch,
+    tool,
+    error,
+    isDeleted,
+    setLoading,
+    setSuccess,
+    router,
+    setError,
+  ]);
 
   const removeToolHandler = () => {
     setLoading({ status: true });

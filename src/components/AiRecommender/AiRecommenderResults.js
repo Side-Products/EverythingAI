@@ -104,7 +104,13 @@ const AiRecommenderResults = ({ recommendation }) => {
         </div>
         <div className="w-full grid grid-cols-11 gap-10 items-start mt-6 ml-5">
           <div className="col-span-2 flex items-end gap-2 font-medium">
-            <Image src="/ui/g2.png" height={100} width={30} loading="lazy" />
+            <Image
+              src="/ui/g2.png"
+              height={100}
+              width={30}
+              loading="lazy"
+              alt="G2 logo"
+            />
             G2 Reviews
           </div>
           {recommendation?.tools?.map((tool, i) => (
@@ -139,6 +145,7 @@ const AiRecommenderResults = ({ recommendation }) => {
               height={100}
               width={120}
               loading="lazy"
+              alt="Trustpilot logo"
             />
           </div>
           {recommendation?.tools?.map((tool, i) => (
@@ -174,7 +181,13 @@ const AiRecommenderResults = ({ recommendation }) => {
         </div>
         <div className="w-full grid grid-cols-11 gap-10 items-start mt-6 ml-5">
           <div className="col-span-2 flex items-end gap-2">
-            <Image src="/logo.png" height={100} width={120} loading="lazy" />
+            <Image
+              src="/logo.png"
+              height={100}
+              width={120}
+              loading="lazy"
+              alt="logo png"
+            />
           </div>
           {recommendation?.tools?.map((tool, i) => (
             <div key={i} className="col-span-3">

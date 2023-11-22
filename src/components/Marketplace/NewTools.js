@@ -7,7 +7,7 @@ const NewTools = ({ filter, tools, setTools }) => {
   const { setLoading } = useContext(LoadingContext);
   const [hasLoadedOnce, setLoadedOnce] = useState(false);
 
-  const getAllTools = async () => {
+  const getAllTools = usecallback(async () => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +18,7 @@ const NewTools = ({ filter, tools, setTools }) => {
     setLoading({
       status: false,
     });
-  };
+  }, [filter, setTools, setLoading]);
 
   useEffect(() => {
     if (hasLoadedOnce) {
@@ -30,7 +30,7 @@ const NewTools = ({ filter, tools, setTools }) => {
     } else {
       setLoadedOnce(true);
     }
-  }, [filter]);
+  }, [filter, getAllTools, hasLoadedOnce, setLoading]);
 
   return (
     tools &&

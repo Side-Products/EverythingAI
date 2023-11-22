@@ -59,7 +59,7 @@ const AiRecommender = () => {
         dispatch(getCategory(cat?._id));
       }
     }
-  }, [categories, selectedCategory]);
+  }, [categories, dispatch, selectedCategory]);
   const { category } = useSelector((state) => state.category);
 
   const subcategoriesOptions = useMemo(() => {
@@ -150,7 +150,7 @@ const AiRecommender = () => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, recommendation, router, setError, setLoading, success]);
 
   return (
     <form

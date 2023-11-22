@@ -10,6 +10,7 @@ const BlogTile = ({ post }) => {
           src={post?.featuredImage?.node?.mediaItemUrl}
           width={300}
           height={300}
+          alt="blog image"
         />
         <h1 className="text-lg font-semibold my-4 text-center">{post.title}</h1>
       </div>

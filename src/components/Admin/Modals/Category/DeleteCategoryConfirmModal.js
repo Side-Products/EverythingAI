@@ -40,7 +40,15 @@ const DeleteCategoryConfirmModal = ({ isOpen, setOpen, categoryToDelete }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, categoryToDelete, error, isDeleted]);
+  }, [
+    dispatch,
+    categoryToDelete,
+    error,
+    isDeleted,
+    setSuccess,
+    router,
+    setError,
+  ]);
 
   const deleteCategoryHandler = () => {
     dispatch(deleteCategory(categoryToDelete._id));

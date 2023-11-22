@@ -38,7 +38,7 @@ const NewPassword = () => {
         router.push("/?login");
       });
     }
-  }, [dispatch, success, error]);
+  }, [dispatch, success, error, setError, setSuccess, router]);
 
   const submitHandler = () => {
     const passwords = {
