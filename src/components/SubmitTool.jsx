@@ -29,7 +29,7 @@ import NumberInput from "./ui/Input/NumberInput";
 import ToggleInput from "./ui/Input/ToggleInput";
 import PurchaseTermInput from "./Submit/PurchaseTermInput";
 
-const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
+const SubmitTool = ({ toolToEdit, purchaseTermsToEdit }) => {
   const { setLoading } = useContext(LoadingContext);
   const { setError, setSuccess } = useContext(StatusContext);
   const { data: session } = useSession();
