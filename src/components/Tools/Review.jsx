@@ -12,7 +12,12 @@ export default function Review({ reviews }) {
         {reviews?.productHunt?.stars && (
           <div className="flex flex-col md:p-3 items-center w-1/3">
             <div className="object-contain h-20 w-60 ">
-              <Image src="/ui/product_hunt.png" width={300} height={300} />
+              <Image
+                src="/ui/product_hunt.png"
+                width={300}
+                height={300}
+                alt="producthunt"
+              />
             </div>
             <StarRating rating={reviews?.productHunt?.stars} />
             {/* Single review */}
@@ -30,7 +35,13 @@ export default function Review({ reviews }) {
         {reviews?.G2?.stars && (
           <div className="flex flex-col md:p-3 items-center  w-1/3">
             <div className="flex justify-center object-contain relative top-2 h-20 items-center w-20">
-              <Image src="/ui/g2.png" height={100} width={50} loading="lazy" />
+              <Image
+                src="/ui/g2.png"
+                height={100}
+                width={50}
+                loading="lazy"
+                alt="g2 logo"
+              />
             </div>
             <StarRating rating={reviews?.G2?.stars} />
             {/* Single review */}
@@ -53,6 +64,7 @@ export default function Review({ reviews }) {
                 height={200}
                 width={200}
                 loading="lazy"
+                alt="trustpilot"
               />
             </div>
             <StarRating rating={reviews?.trustPilot?.stars} />
@@ -71,7 +83,13 @@ export default function Review({ reviews }) {
         {reviews?.everythingAI?.stars && (
           <div className="flex flex-col p-3 items-center w-1/3">
             <div className="flex justify-center object-contain h-20 items-center w-30">
-              <Image src="/logo.png" height={200} width={200} loading="lazy" />
+              <Image
+                src="/logo.png"
+                height={200}
+                width={200}
+                loading="lazy"
+                alt="logo"
+              />
             </div>
             <div className="relative flex flex-col justify-center items-center bottom-4">
               <StarRating rating={reviews?.everythingAI?.stars} />
