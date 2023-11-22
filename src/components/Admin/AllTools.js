@@ -60,7 +60,7 @@ export default function AllTools({
       });
       dispatch(clearErrors());
     }
-  }, [error]);
+  }, [dispatch, error, setError]);
 
   // Pagination
   let { search, page = 1 } = router.query;
@@ -76,7 +76,7 @@ export default function AllTools({
         dispatch(adminGetAllTools(router.query.page || 1));
       }
     }
-  }, [dispatch, page]);
+  }, [dispatch, page, router.pathname, router.query.page]);
 
   let queryParams;
   if (typeof window !== "undefined") {
