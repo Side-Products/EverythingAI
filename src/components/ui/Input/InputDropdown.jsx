@@ -18,7 +18,7 @@ export default function InputDropdown({
 
   useEffect(() => {
     setChoice(currentFilter);
-  }, []);
+  }, [currentFilter, setChoice]);
 
   const handleOptionSelect = (e) => {
     //Currently, I have attached the idx with the selcted item

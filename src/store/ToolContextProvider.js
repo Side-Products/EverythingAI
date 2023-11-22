@@ -31,7 +31,7 @@ function ToolContextProvider({ children }) {
       });
       dispatch(clearErrors());
     }
-  }, [success, likedTool]);
+  }, [success, likedTool, setLoading, setSuccess, dispatch]);
 
   useEffect(() => {
     if (isDeleted) {
@@ -43,7 +43,7 @@ function ToolContextProvider({ children }) {
       });
       dispatch(clearErrors());
     }
-  }, [isDeleted]);
+  }, [dispatch, isDeleted, setLoading, setSuccess]);
 
   useEffect(() => {
     if (createLikedToolError) {
@@ -64,7 +64,13 @@ function ToolContextProvider({ children }) {
       });
       dispatch(clearErrors());
     }
-  }, [createLikedToolError, deleteLikedToolError]);
+  }, [
+    createLikedToolError,
+    deleteLikedToolError,
+    dispatch,
+    setError,
+    setLoading,
+  ]);
 
   // Filtering on marketplace
   const [filteredTools, setFilteredTools] = useState([]);

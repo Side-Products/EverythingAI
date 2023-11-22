@@ -34,7 +34,7 @@ const ShareModal = ({
     } else {
       setCurrentPageLink(window.location.origin + asPath);
     }
-  }, [session]);
+  }, [asPath, session, shareMyFavouriteTools]);
 
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(currentPageLink);
