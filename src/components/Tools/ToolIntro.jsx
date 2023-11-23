@@ -27,7 +27,7 @@ export default function ToolIntro({ tool, setShareModalOpen }) {
         tool.liked = true;
       }
     }
-  }, [likedTool]);
+  }, [likedTool, tool]);
 
   useEffect(() => {
     if (session && session.user && session.user.role == "admin") {

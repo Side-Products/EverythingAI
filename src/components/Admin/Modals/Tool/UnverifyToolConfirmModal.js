@@ -41,7 +41,15 @@ const UnverifyToolConfirmModal = ({ isOpen, setOpen, toolToUnverify }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, toolToUnverify, error, isUnverified]);
+  }, [
+    dispatch,
+    toolToUnverify,
+    error,
+    isUnverified,
+    setSuccess,
+    router,
+    setError,
+  ]);
 
   const verifyToolHandler = () => {
     dispatch(unverifyTool(toolToUnverify._id));

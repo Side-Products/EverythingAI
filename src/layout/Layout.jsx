@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
         setLoading((prevState) => ({ ...prevState, status: false }))
       );
     }
-  }, [router.events, setLoading]);
+  }, [router, router.events, setLoading]);
 
   const { data: session, status } = useSession();
   // Identify authenticated user
@@ -49,7 +49,7 @@ const Layout = ({ children }) => {
     } else {
       setAuthModalOpen(false);
     }
-  }, [router.query, isAuthenticated]);
+  }, [router.query, isAuthenticated, setAuthModalOpen]);
 
   useEffect(() => {
     //If on home do not render

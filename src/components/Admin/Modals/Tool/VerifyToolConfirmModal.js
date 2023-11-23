@@ -46,7 +46,16 @@ const VerifyToolConfirmModal = ({ isOpen, setOpen, toolToVerify }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, toolToVerify, error, isVerified]);
+  }, [
+    dispatch,
+    toolToVerify,
+    error,
+    isVerified,
+    setLoading,
+    setSuccess,
+    router,
+    setError,
+  ]);
 
   const verifyToolHandler = () => {
     dispatch(verifyTool(toolToVerify._id));

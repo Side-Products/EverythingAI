@@ -44,7 +44,7 @@ export default function CollectionsCarousel({ collections }) {
         observer={true}
         observeParents={true}
         observeSlideChildren={true}
-        watchslidesvisibility={true}
+        watchslidesvisibility={"true"}
         watchSlidesProgress={true}
         centeredSlides={false}
         centerInsufficientSlides={true}

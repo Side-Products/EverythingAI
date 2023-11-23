@@ -28,7 +28,7 @@ const ForgotPassword = ({ email, onFieldChange }) => {
         showSuccessBox: true,
       });
     }
-  }, [dispatch, message, error]);
+  }, [dispatch, message, error, setError, setSuccess]);
 
   const submitHandler = () => {
     const userData = {

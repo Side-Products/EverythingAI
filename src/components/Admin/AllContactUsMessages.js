@@ -31,7 +31,7 @@ export default function AllContactUsMessages() {
       });
       dispatch(clearErrors());
     }
-  }, [error]);
+  }, [dispatch, error, setError]);
 
   const copyToClipboard = async (event) => {
     const reqStr = event.target.parentNode.querySelector("span").dataset.info;

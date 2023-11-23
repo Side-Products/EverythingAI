@@ -1,4 +1,5 @@
 import { ImageResponse } from "@vercel/og";
+import Image from "next/image";
 
 export const config = {
   runtime: "experimental-edge",
@@ -40,7 +41,7 @@ export default async function handler(req) {
           paddingLeft: "4.5rem",
         }}
       >
-        <img src={iconData} width="150" height="150" />
+        <Image src={iconData} width="150" height="150" alt="icodata" />
         <div
           style={{
             display: "flex",
@@ -49,7 +50,7 @@ export default async function handler(req) {
           }}
         >
           <h3 style={{ margin: "0px", color: "white" }}>Featured On</h3>
-          <img src={logoData} height="125" />
+          <Image src={logoData} height="125" alt="icodata" />
         </div>
         <div
           style={{

@@ -62,7 +62,7 @@ export default function ImageUpload({
       }
     }
     setCroppedImageToSave();
-  }, [croppedImage, setImage, setLoading]);
+  }, [croppedImage, loading, setImage, setLoading]);
 
   const handleImageUpload = async (event) => {
     // If file size is > 10 MB show error box

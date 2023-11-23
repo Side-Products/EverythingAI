@@ -54,7 +54,16 @@ export default function UserDetails({ count, shareableDashboardUser }) {
       setLoading({ status: false });
       dispatch({ type: UPDATE_PROFILE_RESET });
     }
-  }, [dispatch, isUpdated, error, loadedUser, session]);
+  }, [
+    dispatch,
+    isUpdated,
+    error,
+    loadedUser,
+    session,
+    setError,
+    router,
+    setLoading,
+  ]);
 
   const submitHandler = () => {
     const userData = {

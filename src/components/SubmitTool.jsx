@@ -29,7 +29,7 @@ import NumberInput from "./ui/Input/NumberInput";
 import ToggleInput from "./ui/Input/ToggleInput";
 import PurchaseTermInput from "./Submit/PurchaseTermInput";
 
-const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
+const SubmitTool = ({ toolToEdit, purchaseTermsToEdit }) => {
   const { setLoading } = useContext(LoadingContext);
   const { setError, setSuccess } = useContext(StatusContext);
   const { data: session } = useSession();
@@ -164,7 +164,7 @@ const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
     if (categories && categories.length > 0 && toolData.category !== "") {
       dispatch(getCategory(toolData.category?._id));
     }
-  }, [categories, toolData.category]);
+  }, [categories, dispatch, toolData.category]);
   const { category } = useSelector((state) => state.category);
 
   useEffect(() => {
@@ -211,7 +211,7 @@ const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
       setImage(toolToEdit.image);
       setLogo(toolToEdit.logo);
     }
-  }, []);
+  }, [purchaseTermsToEdit, toolToEdit]);
 
   const submitForm = async () => {
     if (session && session.user) {
@@ -371,7 +371,15 @@ const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, updateError, isUpdated]);
+  }, [
+    dispatch,
+    updateError,
+    isUpdated,
+    setLoading,
+    setSuccess,
+    router,
+    setError,
+  ]);
 
   const { success, tool, error } = useSelector((state) => state.createTool);
   const router = useRouter();
@@ -400,7 +408,16 @@ const SubmitTool = ({ toolToEdit = null, purchaseTermsToEdit = null }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, error, success]);
+  }, [
+    dispatch,
+    error,
+    router,
+    setError,
+    setLoading,
+    setSuccess,
+    success,
+    tool,
+  ]);
 
   const [isBrowser, setBrowser] = useState(false);
   useEffect(() => {

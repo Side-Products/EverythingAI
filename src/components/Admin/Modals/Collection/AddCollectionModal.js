@@ -62,7 +62,7 @@ const AddCollectionModal = ({ isOpen, setOpen }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, router, setError, setLoading, setSuccess, success]);
 
   const submitHandler = async () => {
     if (!image) {

@@ -31,7 +31,7 @@ export default function ToolCard({
         tool.liked = true;
       }
     }
-  }, [likedTool]);
+  }, [likedTool, tool]);
 
   const getPricingChipClass = (pricingName) => {
     if (pricingName) {

@@ -36,7 +36,7 @@ const AddToCollectionModal = ({ isOpen, setOpen, toolId }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, getAllCollectionsError]);
+  }, [dispatch, getAllCollectionsError, setError]);
 
   useEffect(() => {
     if (success) {
@@ -59,7 +59,7 @@ const AddToCollectionModal = ({ isOpen, setOpen, toolId }) => {
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, router, setError, setSuccess, success]);
 
   const submitHandler = () => {
     if (!chosenCollection) {

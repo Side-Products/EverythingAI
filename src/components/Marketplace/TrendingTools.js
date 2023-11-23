@@ -2,12 +2,13 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { LoadingContext } from "@/store/LoadingContextProvider";
 import ToolCard from "@/components/Cards/ToolCard";
+import { useCallback } from "react";
 
 const TrendingTools = ({ filter, tools, setTools }) => {
   const { setLoading } = useContext(LoadingContext);
   const [hasLoadedOnce, setLoadedOnce] = useState(false);
 
-  const getAllTools = async () => {
+  const getAllTools = useCallback(async () => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +19,7 @@ const TrendingTools = ({ filter, tools, setTools }) => {
     setLoading({
       status: false,
     });
-  };
+  }, [filter, setLoading, setTools]);
 
   useEffect(() => {
     if (hasLoadedOnce) {
@@ -30,7 +31,7 @@ const TrendingTools = ({ filter, tools, setTools }) => {
     } else {
       setLoadedOnce(true);
     }
-  }, [filter]);
+  }, [filter, getAllTools, hasLoadedOnce, setLoading]);
 
   return (
     tools &&

@@ -10,6 +10,7 @@ import { LoadingContext } from "@/store/LoadingContextProvider";
 import { StatusContext } from "@/store/StatusContextProvider";
 import Button from "@/components/ui/Button";
 import ForgotPassword from "@/components/ForgotPassword";
+import { useCallback } from "react";
 
 export default function AuthModal({ isOpen = "", onClose = "" }) {
   const router = useRouter();
@@ -34,11 +35,11 @@ export default function AuthModal({ isOpen = "", onClose = "" }) {
     setIsModalOpen(isOpen);
   }, [isOpen]);
 
-  const handleChange = () => {
+  const handleChange = useCallback(() => {
     setIsModalOpen(!isModalOpen);
-  };
+  }, [isModalOpen]);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     if (forgotPassword) {
       setForgotPassword(false);
       return;
@@ -47,7 +48,7 @@ export default function AuthModal({ isOpen = "", onClose = "" }) {
     if (router.pathname == "/")
       router.replace("/", undefined, { shallow: true });
     onClose();
-  };
+  }, [forgotPassword, handleChange, router, onClose]);
 
   // Register
   const dispatch = useDispatch();
@@ -74,7 +75,16 @@ export default function AuthModal({ isOpen = "", onClose = "" }) {
       setLoading({ status: false });
       dispatch(clearErrors());
     }
-  }, [dispatch, success, error]);
+  }, [
+    dispatch,
+    success,
+    error,
+    setLoading,
+    session,
+    router,
+    closeModal,
+    setError,
+  ]);
 
   const registerHandler = () => {
     setLoading({ status: true });

@@ -24,8 +24,8 @@ export default function Step({
           (isComplete
             ? "bg-primary-500 border-2 border-primary-600"
             : isActive
-            ? "border-2 border-primary-600 bg-light-100"
-            : "border-2 border-gray-300 bg-light-100")
+              ? "border-2 border-primary-600 bg-light-100"
+              : "border-2 border-gray-300 bg-light-100")
         }
       >
         {isComplete ? (

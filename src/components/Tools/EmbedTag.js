@@ -1,6 +1,7 @@
 import Button from "@/components/ui/Button";
 import { useContext } from "react";
 import { StatusContext } from "@/store/StatusContextProvider";
+import Image from "next/image";
 
 export default function EmbedTag({
   toolSlug,
@@ -26,11 +27,11 @@ export default function EmbedTag({
     <div>
       <h1 className="text-xl font-semibold md:text-2xl">Promote your tool</h1>
       <div className="flex items-center justify-between p-4 mt-3 border-2 border-gray-200 md:mt-6 rounded-xl">
-        <img
+        <Image
           src={`/api/tools/image/${toolSlug}`}
           className="md:w-[200px] w-[125px] md:h-[50px] h-[32px] "
           alt="sometign"
-        ></img>
+        />
         <Button
           variant="classic"
           onClick={copyToClipboard}

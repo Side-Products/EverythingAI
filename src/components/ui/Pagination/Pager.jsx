@@ -78,8 +78,8 @@ export default function Pager(props) {
             (props.activePage == maxPages
               ? "pr-16"
               : props.activePage == 1
-              ? "pl-16"
-              : "")
+                ? "pl-16"
+                : "")
           }
         >
           Page

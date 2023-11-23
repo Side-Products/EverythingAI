@@ -22,7 +22,7 @@ export default function MarketplaceBody({
   const { filteredTools, setFilteredTools } = useContext(ToolContext);
   useEffect(() => {
     setFilteredTools(tools);
-  }, [tools]);
+  }, [setFilteredTools, tools]);
 
   const { loading } = useContext(LoadingContext);
 

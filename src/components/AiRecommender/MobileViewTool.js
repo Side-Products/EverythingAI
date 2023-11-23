@@ -63,7 +63,13 @@ const MobileViewTool = ({ tool, position }) => {
       </div>
       <div className="w-full flex justify-between">
         <div className="col-span-2 flex items-end gap-2 font-medium">
-          <Image src="/ui/g2.png" height={100} width={30} loading="lazy" />
+          <Image
+            src="/ui/g2.png"
+            height={100}
+            width={30}
+            loading="lazy"
+            alt="g2 logo"
+          />
           G2 Reviews
         </div>
         <div className="flex flex-col items-end">
@@ -94,6 +100,7 @@ const MobileViewTool = ({ tool, position }) => {
             height={100}
             width={120}
             loading="lazy"
+            alt="trustpilot logo"
           />
         </div>
         <div className="flex flex-col items-end">
@@ -122,7 +129,13 @@ const MobileViewTool = ({ tool, position }) => {
       </div>
       <div className="w-full flex justify-between">
         <div className="col-span-2 flex items-end gap-2 font-medium">
-          <Image src="/logo.png" height={100} width={130} loading="lazy" />
+          <Image
+            src="/logo.png"
+            height={100}
+            width={130}
+            loading="lazy"
+            alt="logo png"
+          />
         </div>
         <div className="flex flex-col items-end">
           {tool?.reviews?.everythingAI?.stars ? (
