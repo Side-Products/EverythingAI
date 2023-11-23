@@ -54,8 +54,8 @@ const ShareModal = ({
         shareableDashboardUser?.name
       )}'s favourite tools on EverythingAI! \nSupercharge your workflows and save time to do things that matter.\n\nCheck out this collection on @everythingai- ${currentPageLink}`
     : shareMyFavouriteTools
-    ? `I just created my favourite AI tools on Everything AI. Here are my favorites: ${currentPageLink}. Go create yours as well at https://everythingai.club`
-    : `Check out ${tool?.name} on EverythingAI!\nSupercharge your workflows and save time to do things that matter.\n\nCheck out this tool on @everythingai- ${currentPageLink}`;
+      ? `I just created my favourite AI tools on Everything AI. Here are my favorites: ${currentPageLink}. Go create yours as well at https://everythingai.club`
+      : `Check out ${tool?.name} on EverythingAI!\nSupercharge your workflows and save time to do things that matter.\n\nCheck out this tool on @everythingai- ${currentPageLink}`;
   const uriEncodedSharableText = encodeURI(sharableMessage);
 
   return (

@@ -11,8 +11,8 @@ export default function Accordion({ useCases, size = "large" }) {
           (idx == 0
             ? "rounded-t-xl border-[2px]"
             : idx == useCases.length - 1
-            ? "rounded-b-xl border-[2px] border-t-0"
-            : "border-[2px] border-t-0") +
+              ? "rounded-b-xl border-[2px] border-t-0"
+              : "border-[2px] border-t-0") +
           (useCases.length == 1 ? " rounded-b-xl border-[2px]" : "") +
           " p-4 border-gray-300"
         }

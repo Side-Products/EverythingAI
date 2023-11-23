@@ -40,10 +40,10 @@ const ErrorBox = ({ style }) => {
             (style == 1
               ? "xl:w-4/12 text-light-200 bg-error-600/80 border-error-700 border-2 backdrop-blur-[40px] backdrop-brightness-200"
               : style == 2
-              ? "xl:w-3/12 text-light-200 bg-dark-900 border-error-700 border-[0.5px] backdrop-blur-[40px] backdrop-brightness-200"
-              : style == 3
-              ? "xl:w-3/12 text-dark-500 bg-light-100 border-error-700 border-[0.5px] backdrop-blur-[40px] backdrop-brightness-200"
-              : "")
+                ? "xl:w-3/12 text-light-200 bg-dark-900 border-error-700 border-[0.5px] backdrop-blur-[40px] backdrop-brightness-200"
+                : style == 3
+                  ? "xl:w-3/12 text-dark-500 bg-light-100 border-error-700 border-[0.5px] backdrop-blur-[40px] backdrop-brightness-200"
+                  : "")
           }
           role="alert"
         >
@@ -53,10 +53,10 @@ const ErrorBox = ({ style }) => {
               (style == 1
                 ? "text-base"
                 : style == 2
-                ? "text-base text-error-500"
-                : style == 3
-                ? "text-base text-error-500"
-                : "")
+                  ? "text-base text-error-500"
+                  : style == 3
+                    ? "text-base text-error-500"
+                    : "")
             }
           >
             {error.title}
@@ -67,10 +67,10 @@ const ErrorBox = ({ style }) => {
               (style == 1
                 ? "text-base"
                 : style == 2
-                ? "text-sm"
-                : style == 3
-                ? "text-sm"
-                : "")
+                  ? "text-sm"
+                  : style == 3
+                    ? "text-sm"
+                    : "")
             }
           >
             {error.message}
@@ -82,10 +82,10 @@ const ErrorBox = ({ style }) => {
               (style == 1
                 ? "w-8 h-8 top-1 right-1"
                 : style == 2
-                ? "w-6 h-6 top-2 right-2"
-                : style == 3
-                ? "w-6 h-6 top-2 right-2 group"
-                : "")
+                  ? "w-6 h-6 top-2 right-2"
+                  : style == 3
+                    ? "w-6 h-6 top-2 right-2 group"
+                    : "")
             }
           >
             <i
@@ -94,10 +94,10 @@ const ErrorBox = ({ style }) => {
                 (style == 1
                   ? "text-base text-light-400"
                   : style == 2
-                  ? "text-sm text-light-400"
-                  : style == 3
-                  ? "text-sm text-dark-100 group-hover:text-light-100"
-                  : "")
+                    ? "text-sm text-light-400"
+                    : style == 3
+                      ? "text-sm text-dark-100 group-hover:text-light-100"
+                      : "")
               }
             ></i>
           </div>

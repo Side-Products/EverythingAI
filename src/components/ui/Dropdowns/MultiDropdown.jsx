@@ -71,8 +71,8 @@ export default function MultiDropdown({
       boxShadow: styledButton
         ? "0px 1px 3px #8f57ff"
         : state.isFocused
-        ? null
-        : null,
+          ? null
+          : null,
     }),
     //Dropdown Indicators
     dropdownIndicator: (base) => ({

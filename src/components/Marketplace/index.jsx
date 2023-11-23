@@ -57,7 +57,7 @@ const reducerFn = (state, action) => {
 
 export default function Marketplace({ tools }) {
   // Will be maintaining a state here for the type of marketplace (currentSelection (Integer))
-  // Initially set to load the newly released nfts first
+  // Initially set to load the newly released nfts first (currentSelection = 1)
   const [currentSelection, setCurrentSelection] = useState(1);
   const [filter, setFilter] = useReducer(reducerFn, initFilterState);
 
