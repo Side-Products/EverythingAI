@@ -158,7 +158,7 @@ export default function Marketplace({ tools }) {
     if (hasLoadedOnce) {
       setLoading({
         status: true,
-        title: "Applying Filter...",
+        title: "Applying Filt...",
       });
       getAllTools();
     } else {

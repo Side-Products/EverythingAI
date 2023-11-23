@@ -24,7 +24,7 @@ const NewTools = ({ filter, tools, setTools }) => {
     if (hasLoadedOnce) {
       setLoading({
         status: true,
-        title: "Applying Filterrrrr...",
+        title: "Applying Filter...",
       });
       getAllTools();
     } else {
