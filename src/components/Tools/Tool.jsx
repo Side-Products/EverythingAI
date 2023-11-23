@@ -59,7 +59,7 @@ export default function Tool() {
 
           <div
             className={
-              "md:block hidden flex flex-col w-full space-y-4 " +
+              "md:block hidden flex-col w-full space-y-4 " +
               (!tool?.youtubeDemoVideoLink ? " col-span-2" : "")
             }
           >
@@ -70,7 +70,7 @@ export default function Tool() {
           </div>
         </div>
 
-        <div className={"md:hidden block flex flex-col w-full space-y-4"}>
+        <div className={"md:hidden block flex-col w-full space-y-4"}>
           <div className="text-2xl font-semibold">Explore our collections</div>
           <Collections />
         </div>
