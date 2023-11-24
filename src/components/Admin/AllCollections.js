@@ -36,7 +36,7 @@ export default function AllCollections() {
       });
       dispatch(clearErrors());
     }
-  }, [error]);
+  }, [dispatch, error, setError]);
 
   return loading ? (
     <Loader />
