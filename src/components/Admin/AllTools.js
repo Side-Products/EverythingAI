@@ -60,7 +60,7 @@ export default function AllTools({
       });
       dispatch(clearErrors());
     }
-  }, [error]);
+  }, [dispatch, error, setError]);
 
   // Pagination
   let { search, page = 1 } = router.query;
