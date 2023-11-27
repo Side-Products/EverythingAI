@@ -1,5 +1,4 @@
 const product_url = "https://everythingai.club";
-// const product_url = "http://localhost:3000";
 
 module.exports = {
   siteUrl: product_url,
@@ -14,6 +13,7 @@ module.exports = {
       `${product_url}/sitemap.xml`,
       `${product_url}/sitemap-0.xml`,
       `${product_url}/server-sitemap.xml`,
+      `https://blog.everythingai.club/sitemap.xml`,
     ],
   },
 };
