@@ -3,12 +3,11 @@ import mongoose from "mongoose";
 import Category from "@/backend/models/category";
 import Collection from "@/backend/models/collection";
 import Tool from "@/backend/models/tool";
+import { GET_POSTS } from "src/queries/getPosts"; // Import the GET_POSTS query
 
 export async function getServerSideProps(context) {
   try {
-    // MongoDB connection URL
     const MONGODB_URI = process.env.MONGODB_URI;
-    // const BASE_URL = "https://localhost:3000";
     const BASE_URL = "https://everythingai.club";
 
     // Connect to MongoDB
@@ -21,6 +20,8 @@ export async function getServerSideProps(context) {
     const categories = await Category.find();
     const collections = await Collection.find();
     const tools = await Tool.find();
+    const response = await client.query({ query: GET_POSTS });
+    const posts = response?.data?.posts?.nodes;
 
     const fields = [];
 
@@ -41,6 +42,13 @@ export async function getServerSideProps(context) {
     tools.map((tool) =>
       fields.push({
         loc: `${BASE_URL}/tools/${tool.slug}`,
+        lastmod: new Date().toISOString(),
+      })
+    );
+
+    posts.map((post) =>
+      fields.push({
+        loc: `${BASE_URL}/blogs/${post.uri}`, // Add each blog post to the sitemap
         lastmod: new Date().toISOString(),
       })
     );

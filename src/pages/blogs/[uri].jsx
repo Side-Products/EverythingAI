@@ -18,6 +18,7 @@ export default function Post({ post }) {
             src={post?.featuredImage?.node?.mediaItemUrl}
             width={1920}
             height={1080}
+            alt=""
           />
         </div>
         <div>

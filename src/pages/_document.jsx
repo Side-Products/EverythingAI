@@ -34,7 +34,6 @@ export default function Document() {
         <meta name="robots" content="index, follow" />
         <meta name="robots" content="all" />
 
-        {/* Tailwind Elements */}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css"

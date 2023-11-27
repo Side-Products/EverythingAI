@@ -1,11 +1,7 @@
 import PageWrapper from "@/layout/PageWrapper";
-import { getPosts } from "src/queries/getPosts";
 import { GET_POSTS } from "src/queries/getPosts";
-import Image from "node_modules/next/image";
 import BlogTile from "@/components/Blog/BlogTile";
 import { client } from "@/lib/apollo";
-import { gql } from "@apollo/client";
-import Link from "node_modules/next/link";
 
 const Blogs = ({ posts }) => {
   console.log("length", posts.length);
