@@ -48,7 +48,7 @@ export async function getServerSideProps(context) {
 
     posts.map((post) =>
       fields.push({
-        loc: `${BASE_URL}/blogs/${post.uri}`, // Add each blog post to the sitemap
+        loc: `${BASE_URL}/blogs/${post.uri}`,
         lastmod: new Date().toISOString(),
       })
     );
