@@ -47,7 +47,15 @@ const DeleteRecommendationConfirmModal = ({
       });
       dispatch(clearErrors());
     }
-  }, [dispatch, recommendationToDelete, error, isDeleted]);
+  }, [
+    dispatch,
+    recommendationToDelete,
+    error,
+    isDeleted,
+    setSuccess,
+    router,
+    setError,
+  ]);
 
   const deleteAiRecommendationHandler = () => {
     dispatch(deleteAiRecommendation(recommendationToDelete._id));
