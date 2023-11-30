@@ -13,7 +13,6 @@ module.exports = {
       `${product_url}/sitemap.xml`,
       `${product_url}/sitemap-0.xml`,
       `${product_url}/server-sitemap.xml`,
-      `https://blog.everythingai.club/sitemap.xml`,
     ],
   },
 };
