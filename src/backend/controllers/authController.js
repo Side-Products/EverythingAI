@@ -10,9 +10,14 @@ const {
 import { product_name } from "@/config/constants";
 
 // register user => /api/auth/register
-const registerUser = catchAsyncErrors(async (req, res) => {
+const registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
-  const user = await User.create({ name, email, password, image: "" });
+  const user = await User.findOne({ email: email });
+  if (user) {
+    return next(new ErrorHandler("User already exists with this email", 404));
+  }
+
+  await User.create({ name, email, password, image: "" });
 
   res.status(200).json({
     success: true,

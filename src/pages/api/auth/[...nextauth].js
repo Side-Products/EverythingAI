@@ -25,6 +25,14 @@ export default NextAuth({
         await dbConnect();
         const { email, password } = credentials;
 
+        const _user = await User.findOne({ email: email });
+        if (!_user.password) {
+          throw new Error(
+            "You signed up using Google Auth. Please use the same authentication method to login.",
+            404
+          );
+        }
+
         // Checks
         if (!email || !password) {
           throw new Error("Please enter email and password");
