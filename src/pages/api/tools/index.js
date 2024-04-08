@@ -1,10 +1,7 @@
 import nc from "next-connect";
 import dbConnect from "@/lib/dbConnect";
 import { createTool, allTools } from "@/backend/controllers/toolsController";
-import {
-  isAuthenticatedUser,
-  maybeAuthenticatedUser,
-} from "@/backend/middlewares/auth";
+import { isAuthenticatedUser, maybeAuthenticatedUser } from "@/backend/middlewares/auth";
 import onError from "@/backend/middlewares/errors";
 
 const handler = nc({ onError });

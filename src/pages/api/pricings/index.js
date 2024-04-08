@@ -1,13 +1,7 @@
 import nc from "next-connect";
 import dbConnect from "@/lib/dbConnect";
-import {
-  createPricing,
-  allPricings,
-} from "@/backend/controllers/pricingController";
-import {
-  isAuthenticatedUser,
-  authorizeRoles,
-} from "@/backend/middlewares/auth";
+import { createPricing, allPricings } from "@/backend/controllers/pricingController";
+import { isAuthenticatedUser, authorizeRoles } from "@/backend/middlewares/auth";
 import onError from "@/backend/middlewares/errors";
 
 const handler = nc({ onError });
