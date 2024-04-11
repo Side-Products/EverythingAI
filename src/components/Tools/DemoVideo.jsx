@@ -1,6 +1,6 @@
 import YoutubeEmbed from "@/components/Tools/YoutubeEmbed";
 
-export default function DemoVideo({ link }) {
+export default function DemoVideo({ link, partner }) {
 	let embedId = "";
 	if (link?.startsWith("https://youtu.be/")) {
 		embedId = link.split("/")[3];
@@ -12,7 +12,7 @@ export default function DemoVideo({ link }) {
 		link &&
 		embedId && (
 			<div className="flex flex-col space-y-4">
-				<div className="text-2xl font-semibold">Demo Video</div>
+				<div className="text-2xl font-semibold">{partner ? "Video describing the Company" : "Demo Video"}</div>
 				<YoutubeEmbed embedId={embedId} />
 			</div>
 		)

@@ -1,10 +1,21 @@
 import RequiredAsterisk from "@/components/ui/RequiredAsterisk";
 
-export default function TextInput({ label, type = "text", value = "", id = "", name, onFieldChange, placeholder = "", required = true, variant = "primary" }) {
+export default function TextInput({
+	label,
+	type = "text",
+	value = "",
+	id = "",
+	name,
+	onFieldChange,
+	placeholder = "",
+	required = true,
+	variant = "primary",
+	displayAsterisk = true,
+}) {
 	return (
 		<div className="w-full flex flex-col justify-end">
 			<label htmlFor={id} className="text-dark-400 text-sm font-medium mb-1 text-start">
-				{label} {required && <RequiredAsterisk />}
+				{label} {required && displayAsterisk && <RequiredAsterisk />}
 			</label>
 			<input
 				type={type}

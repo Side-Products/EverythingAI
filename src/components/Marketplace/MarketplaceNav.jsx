@@ -21,9 +21,9 @@ export default function MarketplaceNav({ currentSelection, setCurrentSelection }
 	const { setFilteredTools } = useContext(ToolContext);
 
 	return (
-		<div className="flex flex-col items-center justify-center w-full h-[400px] bg-dark-900 text-light-100">
+		<div className="flex flex-col items-center justify-center w-full h-[400px] bg-gradient-tertiary-tr text-light-100">
 			<h3 className="lg:block hidden mt-24 text-3xl font-medium text-light-100 md:text-5xl">
-				<span className="font-semibold text-primary-400">Tools Marketplace</span>
+				<span className="font-semibold text-primary-200">Tools Marketplace</span>
 			</h3>
 			<div className="lg:hidden block flex justify-center w-full mt-10 mb-4">
 				<form
@@ -66,22 +66,25 @@ export default function MarketplaceNav({ currentSelection, setCurrentSelection }
 			</div>
 			<p className="px-8 mt-4 text-xs text-center sm:my-2 sm:text-sm">Discover AI tools that fit like a glove: handpicked for your industry and goals.</p>
 			<ul className="flex mt-8 space-x-6 text-sm font-semibold md:space-x-12 md:text-base">
-				<li className={(currentSelection === 1 ? "text-light-100" : "text-zinc-400 hover:text-gray-300 ") + " cursor-pointer"}>
-					<Link href="/tools" className={(currentSelection === 1 ? "bg-zinc-800" : "bg-zinc-900") + " md:px-5 py-2 px-4 md:py-3 rounded-lg"}>
+				<li className={(currentSelection === 1 ? "text-light-100" : "text-zinc-300 hover:text-gray-300 ") + " cursor-pointer"}>
+					<Link href="/tools" className={(currentSelection === 1 ? "bg-purple-600" : "bg-purple-700") + " md:px-5 py-2 px-4 md:py-3 rounded-lg"}>
 						Explore
 					</Link>
 				</li>
 
-				<li className={(currentSelection === 2 ? "text-light-100" : "text-zinc-400 hover:text-gray-300 ") + " cursor-pointer"}>
-					<Link href="/tools/trending" className={(currentSelection === 2 ? "bg-zinc-800" : "bg-zinc-900") + " md:px-5 md:py-3 py-2 px-4 rounded-lg"}>
+				<li className={(currentSelection === 2 ? "text-light-100" : "text-zinc-300 hover:text-gray-300 ") + " cursor-pointer"}>
+					<Link
+						href="/tools/trending"
+						className={(currentSelection === 2 ? "bg-purple-600" : "bg-purple-700") + " md:px-5 md:py-3 py-2 px-4 rounded-lg"}
+					>
 						Trending
 					</Link>
 				</li>
 
-				<li className={(currentSelection === 3 ? "text-light-100" : "text-zinc-400 hover:text-gray-300 ") + " cursor-pointer"}>
+				<li className={(currentSelection === 3 ? "text-light-100" : "text-zinc-300 hover:text-gray-300 ") + " cursor-pointer"}>
 					<Link
 						href="/tools/new-tools"
-						className={(currentSelection === 3 ? "bg-zinc-800" : "bg-zinc-900") + " md:px-5 md:py-3 py-2 px-4 rounded-lg"}
+						className={(currentSelection === 3 ? "bg-purple-600" : "bg-purple-700") + " md:px-5 md:py-3 py-2 px-4 rounded-lg"}
 					>
 						New Tools
 					</Link>

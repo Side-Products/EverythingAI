@@ -1,24 +1,24 @@
 import TextInput from "@/components/ui/Input/TextInput";
 import Textarea from "@/components/ui/Input/Textarea";
 
-export default function ReviewFromCompanies({ toolData, setToolData }) {
+export default function ReviewFromCompanies({ data, setData }) {
 	const onReviewChange = (e, index) => {
 		const { name, value } = e.target;
-		const list = [...toolData.reviewFromCompanies];
+		const list = [...data.reviewFromCompanies];
 		list[index][name] = value;
-		setToolData({ ...toolData, reviewFromCompanies: list });
+		setData({ ...data, reviewFromCompanies: list });
 	};
 
 	const addReview = () => {
-		const list = [...toolData.reviewFromCompanies];
+		const list = [...data.reviewFromCompanies];
 		list.push({ companyName: "", review: "" });
-		setToolData({ ...toolData, reviewFromCompanies: list });
+		setData({ ...data, reviewFromCompanies: list });
 	};
 
 	const removeReview = (index) => {
-		const list = [...toolData.reviewFromCompanies];
+		const list = [...data.reviewFromCompanies];
 		list.splice(index, 1);
-		setToolData({ ...toolData, reviewFromCompanies: list });
+		setData({ ...data, reviewFromCompanies: list });
 	};
 
 	return (
@@ -26,7 +26,7 @@ export default function ReviewFromCompanies({ toolData, setToolData }) {
 			<div className="mb-2 font-semibold">Review from Companies</div>
 
 			<div className="w-full flex flex-col space-y-7">
-				{toolData.reviewFromCompanies.map((useCase, i) => (
+				{data.reviewFromCompanies.map((useCase, i) => (
 					<div key={i} className={"relative w-full flex flex-col space-y-3 pt-4 " + (i != 0 && "border-t border-dashed border-gray-300")}>
 						{i != 0 && (
 							<div className="absolute top-2 w-full flex justify-end items-center">
@@ -43,7 +43,7 @@ export default function ReviewFromCompanies({ toolData, setToolData }) {
 							variant="secondary"
 							label={"Company Name"}
 							type={"text"}
-							value={toolData.reviewFromCompanies[i].companyName}
+							value={data.reviewFromCompanies[i].companyName}
 							name={"companyName"}
 							onFieldChange={(e) => onReviewChange(e, i)}
 							placeholder="Eg. XYZ Corp."
@@ -52,7 +52,7 @@ export default function ReviewFromCompanies({ toolData, setToolData }) {
 						<Textarea
 							variant="secondary"
 							label={"Review"}
-							value={toolData.reviewFromCompanies[i].review}
+							value={data.reviewFromCompanies[i].review}
 							name={"review"}
 							onFieldChange={(e) => onReviewChange(e, i)}
 							placeholder="Eg. EverythingAI is the best tool I have ever used."
@@ -63,7 +63,7 @@ export default function ReviewFromCompanies({ toolData, setToolData }) {
 				))}
 			</div>
 
-			{toolData.reviewFromCompanies && toolData.reviewFromCompanies.length < 6 && (
+			{data.reviewFromCompanies && data.reviewFromCompanies.length < 6 && (
 				<div className="flex items-center justify-start mt-6">
 					<button
 						id="add-review"

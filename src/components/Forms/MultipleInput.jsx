@@ -1,29 +1,29 @@
 import TextInput from "@/components/ui/Input/TextInput";
 
-export default function MultipleInput({ toolData, setToolData, dataKey, label, addMoreLabel, placeholder }) {
+export default function MultipleInput({ data, setData, dataKey, label, addMoreLabel, placeholder }) {
 	const onInputChange = (e, index) => {
 		const { name, value } = e.target;
-		const list = [...toolData[dataKey]];
+		const list = [...data[dataKey]];
 		list[index] = value;
-		setToolData({ ...toolData, [dataKey]: list });
+		setData({ ...data, [dataKey]: list });
 	};
 
 	const addInput = () => {
-		const list = [...toolData[dataKey]];
+		const list = [...data[dataKey]];
 		list.push("");
-		setToolData({ ...toolData, [dataKey]: list });
+		setData({ ...data, [dataKey]: list });
 	};
 
 	const removeInput = (index) => {
-		const list = [...toolData[dataKey]];
+		const list = [...data[dataKey]];
 		list.splice(index, 1);
-		setToolData({ ...toolData, [dataKey]: list });
+		setData({ ...data, [dataKey]: list });
 	};
 
 	return (
 		<div>
 			<div className="w-full flex flex-col space-y-7">
-				{toolData[dataKey].map((item, i) => (
+				{data[dataKey].map((item, i) => (
 					<div key={i} className={"relative w-full flex flex-col space-y-3 pt-4 " + (i != 0 && "border-t border-dashed border-gray-300")}>
 						{i != 0 && (
 							<div className="absolute top-2 w-full flex justify-end items-center">
@@ -40,7 +40,7 @@ export default function MultipleInput({ toolData, setToolData, dataKey, label, a
 							variant="secondary"
 							label={label + (i == 0 ? "" : " " + (i + 1))}
 							type={"text"}
-							value={toolData[dataKey] ? toolData[dataKey][i] : ""}
+							value={data[dataKey] ? data[dataKey][i] : ""}
 							name={dataKey}
 							onFieldChange={(e) => onInputChange(e, i)}
 							placeholder={placeholder}
@@ -50,7 +50,7 @@ export default function MultipleInput({ toolData, setToolData, dataKey, label, a
 				))}
 			</div>
 
-			{toolData[dataKey] && toolData[dataKey].length < 6 && (
+			{data[dataKey] && data[dataKey].length < 6 && (
 				<div className="flex items-center justify-start mt-6">
 					<button
 						id={"add-more-" + dataKey}
