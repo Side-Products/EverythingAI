@@ -8,7 +8,7 @@ import ReviewsAccordion from "@/components/Partners/ReviewsAccordion";
 import Collections from "@/components/Tools/Collections";
 
 export default function Tool() {
-	const { partner } = useSelector((state) => state.genAIPartner);
+	const { genAIPartner: partner } = useSelector((state) => state.genAIPartner);
 	const tool = partner;
 	/*******************************
 	 *******  SHARE BUTTON  ********
