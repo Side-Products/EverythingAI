@@ -255,7 +255,7 @@ export const deleteGenAIPartnerReducer = (state = {}, action) => {
 };
 
 // get partner reducer
-export const getGenAIPartnerReducer = (state = { partner: {} }, action) => {
+export const getGenAIPartnerReducer = (state = { genAIPartner: {} }, action) => {
 	switch (action.type) {
 		case GET_GEN_AI_PARTNER_REQUEST:
 			return {
@@ -264,7 +264,7 @@ export const getGenAIPartnerReducer = (state = { partner: {} }, action) => {
 		case GET_GEN_AI_PARTNER_SUCCESS:
 			return {
 				loading: false,
-				partner: action.payload.partner,
+				genAIPartner: action.payload.genAIPartner,
 			};
 		case GET_GEN_AI_PARTNER_FAIL:
 			return {
@@ -281,7 +281,7 @@ export const getGenAIPartnerReducer = (state = { partner: {} }, action) => {
 	}
 };
 
-// verify tool reducer
+// verify partner reducer
 export const verifyGenAIPartnerReducer = (state = {}, action) => {
 	switch (action.type) {
 		case VERIFY_GEN_AI_PARTNER_REQUEST:
@@ -313,7 +313,7 @@ export const verifyGenAIPartnerReducer = (state = {}, action) => {
 	}
 };
 
-// unverify tool reducer
+// unverify partner reducer
 export const unverifyGenAIPartnerReducer = (state = {}, action) => {
 	switch (action.type) {
 		case UNVERIFY_GEN_AI_PARTNER_REQUEST:

@@ -350,6 +350,14 @@ const Navbar = ({ setAuthModalOpen }) => {
 																		</div>
 																	</Link>
 																</li>
+
+																<li>
+																	<Link href={`/admin/gen-ai-partners`} passHref={true}>
+																		<div className="block w-full px-4 py-2 bg-transparent cursor-pointer dropdown-item whitespace-nowrap hover:bg-light-400">
+																			All Gen AI Partners
+																		</div>
+																	</Link>
+																</li>
 															</>
 														)}
 

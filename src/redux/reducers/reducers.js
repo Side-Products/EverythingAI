@@ -37,7 +37,18 @@ import {
 	deleteAiRecommendationReducer,
 	getAiRecommendationReducer,
 } from "./aiRecommenderReducers";
-import { createGenAIPartnerReducer, updateGenAIPartnerReducer, getAllGenAIPartnersReducer, getGenAIPartnerReducer } from "./genAIPartnerReducers";
+import {
+	createGenAIPartnerReducer,
+	updateGenAIPartnerReducer,
+	getAllGenAIPartnersReducer,
+	getGenAIPartnerReducer,
+	getAdminAllGenAIPartnersReducer,
+	getAllVerifiedGenAIPartnersReducer,
+	getAllUnverifiedGenAIPartnersReducer,
+	verifyGenAIPartnerReducer,
+	unverifyGenAIPartnerReducer,
+	deleteGenAIPartnerReducer,
+} from "./genAIPartnerReducers";
 
 const reducer = combineReducers({
 	auth: authReducer,
@@ -107,6 +118,12 @@ const reducer = combineReducers({
 	allGenAIPartners: getAllGenAIPartnersReducer,
 	updateGenAIPartner: updateGenAIPartnerReducer,
 	genAIPartner: getGenAIPartnerReducer,
+	adminAllGenAIPartners: getAdminAllGenAIPartnersReducer,
+	allVerifiedGenAIPartners: getAllVerifiedGenAIPartnersReducer,
+	allUnverifiedGenAIPartners: getAllUnverifiedGenAIPartnersReducer,
+	verifyPartner: verifyGenAIPartnerReducer,
+	unverifyPartner: unverifyGenAIPartnerReducer,
+	deletePartner: deleteGenAIPartnerReducer,
 });
 
 export default reducer;

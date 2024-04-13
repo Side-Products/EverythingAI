@@ -191,7 +191,7 @@ export const adminGetAllGenAIPartnersServerSide = (req) => async (dispatch) => {
 				cookie: req.headers.cookie,
 			},
 		};
-		const { data } = await axios.get(`${origin}/api/admin/tools`, config);
+		const { data } = await axios.get(`${origin}/api/admin/gen-ai-partners`, config);
 
 		dispatch({ type: GET_ADMIN_GEN_AI_PARTNERS_SUCCESS, payload: data });
 	} catch (error) {
@@ -202,11 +202,11 @@ export const adminGetAllGenAIPartnersServerSide = (req) => async (dispatch) => {
 	}
 };
 
-export const adminGetAllTools = (currentPage) => async (dispatch) => {
+export const adminGetAllGenAIPartners = (currentPage) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_ADMIN_GEN_AI_PARTNERS_REQUEST });
 
-		const { data } = await axios.get(`/api/admin/tools?page=${currentPage}`);
+		const { data } = await axios.get(`/api/admin/gen-ai-partners?page=${currentPage}`);
 
 		dispatch({ type: GET_ADMIN_GEN_AI_PARTNERS_SUCCESS, payload: data });
 	} catch (error) {
@@ -217,7 +217,7 @@ export const adminGetAllTools = (currentPage) => async (dispatch) => {
 	}
 };
 
-export const adminGetAllVerifiedToolsServerSide = (req) => async (dispatch) => {
+export const adminGetAllVerifiedGenAIPartnersServerSide = (req) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_VERIFIED_GEN_AI_PARTNERS_REQUEST });
 
@@ -227,7 +227,7 @@ export const adminGetAllVerifiedToolsServerSide = (req) => async (dispatch) => {
 				cookie: req.headers.cookie,
 			},
 		};
-		const { data } = await axios.get(`${origin}/api/admin/tools/verified`, config);
+		const { data } = await axios.get(`${origin}/api/admin/gen-ai-partners/verified`, config);
 
 		dispatch({ type: GET_VERIFIED_GEN_AI_PARTNERS_SUCCESS, payload: data });
 	} catch (error) {
@@ -239,11 +239,11 @@ export const adminGetAllVerifiedToolsServerSide = (req) => async (dispatch) => {
 	}
 };
 
-export const adminGetAllVerifiedTools = (currentPage) => async (dispatch) => {
+export const adminGetAllVerifiedGenAIPartners = (currentPage) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_VERIFIED_GEN_AI_PARTNERS_REQUEST });
 
-		const { data } = await axios.get(`/api/admin/tools/verified?page=${currentPage}`);
+		const { data } = await axios.get(`/api/admin/gen-ai-partners/verified?page=${currentPage}`);
 
 		dispatch({ type: GET_VERIFIED_GEN_AI_PARTNERS_SUCCESS, payload: data });
 	} catch (error) {
@@ -254,7 +254,7 @@ export const adminGetAllVerifiedTools = (currentPage) => async (dispatch) => {
 	}
 };
 
-export const adminGetAllUnverifiedToolsServerSide = (req) => async (dispatch) => {
+export const adminGetAllUnverifiedGenAIPartnersServerSide = (req) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_UNVERIFIED_GEN_AI_PARTNERS_REQUEST });
 
@@ -264,7 +264,7 @@ export const adminGetAllUnverifiedToolsServerSide = (req) => async (dispatch) =>
 				cookie: req.headers.cookie,
 			},
 		};
-		const { data } = await axios.get(`${origin}/api/admin/tools/unverified`, config);
+		const { data } = await axios.get(`${origin}/api/admin/gen-ai-partners/unverified`, config);
 
 		dispatch({ type: GET_UNVERIFIED_GEN_AI_PARTNERS_SUCCESS, payload: data });
 	} catch (error) {
@@ -275,11 +275,11 @@ export const adminGetAllUnverifiedToolsServerSide = (req) => async (dispatch) =>
 	}
 };
 
-export const adminGetAllUnverifiedTools = (currentPage) => async (dispatch) => {
+export const adminGetAllUnverifiedGenAIPartners = (currentPage) => async (dispatch) => {
 	try {
 		dispatch({ type: GET_UNVERIFIED_GEN_AI_PARTNERS_REQUEST });
 
-		const { data } = await axios.get(`/api/admin/tools/unverified?page=${currentPage}`);
+		const { data } = await axios.get(`/api/admin/gen-ai-partners/unverified?page=${currentPage}`);
 
 		dispatch({ type: GET_UNVERIFIED_GEN_AI_PARTNERS_SUCCESS, payload: data });
 	} catch (error) {
@@ -290,12 +290,12 @@ export const adminGetAllUnverifiedTools = (currentPage) => async (dispatch) => {
 	}
 };
 
-// verify tool
-export const verifyTool = (id) => async (dispatch) => {
+// verify partner
+export const verifyPartner = (id) => async (dispatch) => {
 	try {
 		dispatch({ type: VERIFY_GEN_AI_PARTNER_REQUEST });
 
-		const { data } = await axios.post(`/api/admin/tools/${id}/verify`);
+		const { data } = await axios.post(`/api/admin/gen-ai-partners/${id}/verify`);
 
 		dispatch({ type: VERIFY_GEN_AI_PARTNER_SUCCESS, payload: data.success });
 	} catch (error) {
@@ -306,12 +306,12 @@ export const verifyTool = (id) => async (dispatch) => {
 	}
 };
 
-// unverify tool
-export const unverifyTool = (id) => async (dispatch) => {
+// unverify partner
+export const unverifyPartner = (id) => async (dispatch) => {
 	try {
 		dispatch({ type: UNVERIFY_GEN_AI_PARTNER_REQUEST });
 
-		const { data } = await axios.post(`/api/admin/tools/${id}/unverify`);
+		const { data } = await axios.post(`/api/admin/gen-ai-partners/${id}/unverify`);
 
 		dispatch({ type: UNVERIFY_GEN_AI_PARTNER_SUCCESS, payload: data.success });
 	} catch (error) {

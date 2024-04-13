@@ -2,6 +2,7 @@ import GenAIPartner from "../models/genAiPartner";
 import ErrorHandler from "@/backend/utils/errorHandler";
 import catchAsyncErrors from "@/backend/middlewares/catchAsyncErrors";
 import { generateSlug } from "@/utils/Helpers";
+import APIFeatures from "@/backend/utils/apiFeatures";
 
 // add to db => /api/gen-ai-partners
 const newGenAIPartner = catchAsyncErrors(async (req, res) => {
@@ -63,7 +64,7 @@ const newGenAIPartner = catchAsyncErrors(async (req, res) => {
 
 // get all gen ai partners => /api/gen-ai-partners
 const allGenAIPartners = catchAsyncErrors(async (req, res) => {
-	const genAIPartners = await GenAIPartner.find().sort({ createdAt: "desc" });
+	const genAIPartners = await GenAIPartner.find({ verified: true }).sort({ createdAt: "desc" });
 
 	res.status(200).json({
 		success: true,
@@ -120,6 +121,7 @@ const getGenAIPartnerBySlug = catchAsyncErrors(async (req, res, next) => {
 const updateGenAIPartner = catchAsyncErrors(async (req, res) => {
 	const {
 		name,
+		slug,
 		logo,
 		oneLiner,
 		country,
@@ -158,6 +160,7 @@ const updateGenAIPartner = catchAsyncErrors(async (req, res) => {
 		req.query.id,
 		{
 			name,
+			slug,
 			logo,
 			oneLiner,
 			country,
@@ -189,4 +192,112 @@ const updateGenAIPartner = catchAsyncErrors(async (req, res) => {
 	});
 });
 
-export { newGenAIPartner, allGenAIPartners, deleteGenAIPartner, getGenAIPartner, updateGenAIPartner, getGenAIPartnerBySlug };
+// get all partners => /api/admin/gen-ai-partners
+const adminGetAllGenAIPartners = catchAsyncErrors(async (req, res) => {
+	const resultsPerPage = 10;
+	const genAIPartnersCount = await GenAIPartner.countDocuments();
+
+	const apiFeatures = new APIFeatures(GenAIPartner.find({}).sort({ createdAt: "desc" }), req.query).search().filter();
+	let partners = await apiFeatures.query;
+	let filteredGenAIPartnersCount = partners.length;
+
+	apiFeatures.pagination(resultsPerPage);
+	partners = await apiFeatures.query.clone();
+
+	res.status(200).json({
+		success: true,
+		genAIPartners: partners,
+		genAIPartnersCount,
+		filteredGenAIPartnersCount,
+		resultsPerPage,
+	});
+});
+
+// get all unverified gen ai partners => /api/admin/gen-ai-partners/unverified
+const adminGetAllUnverifiedGenAIPartners = catchAsyncErrors(async (req, res) => {
+	const resultsPerPage = 10;
+	const unverifiedGenAIPartnersCount = await GenAIPartner.countDocuments({
+		$or: [{ verified: false }, { verified: { $exists: false } }],
+	});
+
+	const apiFeatures = new APIFeatures(
+		GenAIPartner.find({
+			$or: [{ verified: false }, { verified: { $exists: false } }],
+		}).sort({ createdAt: "desc" }),
+		req.query
+	)
+		.search()
+		.filter();
+	let partners = await apiFeatures.query;
+	let filteredGenAIPartnersCount = partners.length;
+
+	apiFeatures.pagination(resultsPerPage);
+	partners = await apiFeatures.query.clone();
+
+	res.status(200).json({
+		success: true,
+		unverifiedGenAIPartners: partners,
+		unverifiedGenAIPartnersCount,
+		filteredGenAIPartnersCount,
+		resultsPerPage,
+	});
+});
+
+// get all verified gen ai partners => /api/admin/gen-ai-partners/verified
+const adminGetAllVerifiedGenAIPartners = catchAsyncErrors(async (req, res) => {
+	const resultsPerPage = 10;
+	const verifiedGenAIPartnersCount = await GenAIPartner.countDocuments({ verified: true });
+
+	const apiFeatures = new APIFeatures(GenAIPartner.find({ verified: true }).sort({ createdAt: "desc" }), req.query).search().filter();
+	let partners = await apiFeatures.query;
+	let filteredGenAIPartnersCount = partners.length;
+
+	apiFeatures.pagination(resultsPerPage);
+	partners = await apiFeatures.query.clone();
+
+	res.status(200).json({
+		success: true,
+		verifiedGenAIPartners: partners,
+		verifiedGenAIPartnersCount,
+		filteredGenAIPartnersCount,
+		resultsPerPage,
+	});
+});
+
+// verify partner => /api/admin/gen-ai-partners/:id/verify
+const verifyPartner = catchAsyncErrors(async (req, res, next) => {
+	let partner = await GenAIPartner.findById(req.query.id);
+	if (!partner) {
+		return next(new ErrorHandler("No partner found with this id", 404));
+	}
+
+	partner = await GenAIPartner.findByIdAndUpdate(req.query.id, {
+		verified: true,
+	});
+	res.status(200).json({ success: true, partner });
+});
+
+// unverify partner => /api/admin/gen-ai-partners/:id/unverify
+const unverifyPartner = catchAsyncErrors(async (req, res, next) => {
+	let partner = await GenAIPartner.findById(req.query.id);
+	if (!partner) {
+		return next(new ErrorHandler("No partner found with this id", 404));
+	}
+
+	partner = await GenAIPartner.findByIdAndUpdate(req.query.id, { verified: false });
+	res.status(200).json({ success: true, partner });
+});
+
+export {
+	newGenAIPartner,
+	allGenAIPartners,
+	deleteGenAIPartner,
+	getGenAIPartner,
+	updateGenAIPartner,
+	getGenAIPartnerBySlug,
+	adminGetAllGenAIPartners,
+	adminGetAllUnverifiedGenAIPartners,
+	adminGetAllVerifiedGenAIPartners,
+	verifyPartner,
+	unverifyPartner,
+};

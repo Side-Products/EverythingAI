@@ -780,6 +780,21 @@ tr th:nth-child(1) {
 	border-radius: 0 0.625rem 0.625rem 0;
 }
 
+.allGenAIPartners-table tr td:nth-child(n + 7),
+.allGenAIPartners-table tr th:nth-child(n + 7) {
+	border-radius: 0 0.625rem 0.625rem 0;
+}
+
+.verifiedGenAIPartners-table tr td:nth-child(n + 8),
+.verifiedGenAIPartners-table tr th:nth-child(n + 8) {
+	border-radius: 0 0.625rem 0.625rem 0;
+}
+
+.unverifiedGenAIPartners-table tr td:nth-child(n + 8),
+.unverifiedGenAIPartners-table tr th:nth-child(n + 8) {
+	border-radius: 0 0.625rem 0.625rem 0;
+}
+
 /**************************************************************************/
 /***************************    Scrollbar   *******************************/
 /**************************************************************************/

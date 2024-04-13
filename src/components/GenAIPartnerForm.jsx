@@ -68,6 +68,7 @@ const GenAIPartnerForm = ({ partnerDataToEdit = null }) => {
 	};
 
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
+	const [selectedValues, setSelectedValues] = useState({});
 	const handleCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
 		if (selectedValues.length == 3 && checked) {
@@ -83,9 +84,12 @@ const GenAIPartnerForm = ({ partnerDataToEdit = null }) => {
 			[value]: checked,
 		});
 	};
-	const selectedValues = Object.keys(selectedCheckboxes).filter((value) => selectedCheckboxes[value]);
+	useEffect(() => {
+		setSelectedValues(Object.keys(selectedCheckboxes).filter((value) => selectedCheckboxes[value]));
+	}, [selectedCheckboxes]);
 
 	const [selectedCapabilitiesCheckboxes, setSelectedCapabilitiesCheckboxes] = useState({});
+	const [selectedCapabilitiesValues, setSelectedCapabilitiesValues] = useState({});
 	const handleCapabilitiesCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
 		if (selectedCapabilitiesValues.length == 3 && checked) {
@@ -101,7 +105,10 @@ const GenAIPartnerForm = ({ partnerDataToEdit = null }) => {
 			[value]: checked,
 		});
 	};
-	const selectedCapabilitiesValues = Object.keys(selectedCapabilitiesCheckboxes).filter((value) => selectedCapabilitiesCheckboxes[value]);
+	useEffect(() => {
+		console.log("selectedCapabilitiesCheckboxes:", selectedCapabilitiesCheckboxes);
+		setSelectedCapabilitiesValues(Object.keys(selectedCapabilitiesCheckboxes).filter((value) => selectedCapabilitiesCheckboxes[value]));
+	}, [selectedCapabilitiesCheckboxes]);
 
 	useEffect(() => {
 		if (partnerDataToEdit) {
@@ -126,6 +133,20 @@ const GenAIPartnerForm = ({ partnerDataToEdit = null }) => {
 				cta: partnerDataToEdit.cta,
 			});
 			setLogo(partnerDataToEdit.logo);
+			setSelectedCheckboxes((prevState) => {
+				const updatedCheckboxes = { ...prevState };
+				partnerDataToEdit.industriesSpecializedIn.forEach((value) => {
+					updatedCheckboxes[value] = true;
+				});
+				return updatedCheckboxes;
+			});
+			setSelectedCapabilitiesCheckboxes((prevState) => {
+				const updatedCheckboxes = { ...prevState };
+				partnerDataToEdit.capabilities.forEach((value) => {
+					updatedCheckboxes[value] = true;
+				});
+				return updatedCheckboxes;
+			});
 		}
 	}, []);
 
@@ -441,6 +462,7 @@ const GenAIPartnerForm = ({ partnerDataToEdit = null }) => {
 							classes={"w-full"}
 							required={true}
 						/>
+						{partnerDataToEdit?.sizeOfCompany && <span className="text-sm">Existing value: {partnerDataToEdit.sizeOfCompany}</span>}
 					</div>
 
 					<div className="flex flex-col p-10 bg-light-100 rounded-2xl">

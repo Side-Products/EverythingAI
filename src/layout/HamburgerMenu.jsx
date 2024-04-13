@@ -256,6 +256,18 @@ export default function HamburgerMenu({ avatarUrl, truncatedName }) {
 														</Link>
 													</div>
 
+													<div className="flex flex-wrap justify-center ham_menu_hover_effect_row">
+														<Link
+															href={`/admin/gen-ai-partners`}
+															className="text-center ham_menu_link ham_menu_hover_effect"
+															passHref={true}
+														>
+															<span className="text-white hover:text-primary-400" onClick={closeNavbar}>
+																All Gen AI Partners
+															</span>
+														</Link>
+													</div>
+
 													{/* <div className="flex flex-wrap justify-center ham_menu_hover_effect_row">
 														<Link
 															href={`/admin/contact-us-messages`}
