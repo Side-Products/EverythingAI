@@ -1,9 +1,6 @@
 import nc from "next-connect";
 import dbConnect from "@/lib/dbConnect";
-import {
-  createLikedTool,
-  deleteLikedTool,
-} from "@/backend/controllers/likedToolsController";
+import { createLikedTool, deleteLikedTool } from "@/backend/controllers/likedToolsController";
 import { isAuthenticatedUser } from "@/backend/middlewares/auth";
 import onError from "@/backend/middlewares/errors";
 

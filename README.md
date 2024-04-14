@@ -4,7 +4,7 @@
 
 Production: https://everythingai.club
 
-### Instructions
+## Instructions
 
 ### Start MongoDB locally
 

@@ -11,142 +11,107 @@ import UpdateUserProfileModal from "./UpdateUserProfileModal";
 import { getFirstName } from "@/utils/Helpers";
 
 export default function UserDetails({ count, shareableDashboardUser }) {
-  const { data: session } = useSession();
-  const { setError } = useContext(StatusContext);
-  const { setLoading } = useContext(LoadingContext);
-  const avatarUrl = shareableDashboardUser
-    ? shareableDashboardUser.image
-    : session && session.user && session.user.image;
+	const { data: session } = useSession();
+	const { setError } = useContext(StatusContext);
+	const { setLoading } = useContext(LoadingContext);
+	const avatarUrl = shareableDashboardUser ? shareableDashboardUser.image : session && session.user && session.user.image;
 
-  const dispatch = useDispatch();
-  const router = useRouter();
+	const dispatch = useDispatch();
+	const router = useRouter();
 
-  const [user, setUser] = useState({ name: "", email: "" });
-  const { name, email } = user;
+	const [user, setUser] = useState({ name: "", email: "" });
+	const { name, email } = user;
 
-  const { user: loadedUser } = useSelector((state) => state.loadedUser);
-  const { error, isUpdated } = useSelector((state) => state.user);
+	const { user: loadedUser } = useSelector((state) => state.loadedUser);
+	const { error, isUpdated } = useSelector((state) => state.user);
 
-  const [isUpdateUserProfileModalOpen, setUpdateUserProfileModalOpen] =
-    useState(false);
+	const [isUpdateUserProfileModalOpen, setUpdateUserProfileModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (loadedUser || session) {
-      setUser({
-        name:
-          (loadedUser && loadedUser.name) ||
-          (session && session.user && session.user.name),
-        email:
-          (loadedUser && loadedUser.email) ||
-          (session && session.user && session.user.email),
-      });
-    }
-    if (error) {
-      setError({
-        title: "Something went wrong",
-        message: error,
-        showErrorBox: true,
-      });
-      dispatch(clearErrors());
-    }
-    if (isUpdated) {
-      router.reload();
-      setLoading({ status: false });
-      dispatch({ type: UPDATE_PROFILE_RESET });
-    }
-  }, [dispatch, isUpdated, error, loadedUser, session]);
+	useEffect(() => {
+		if (loadedUser || session) {
+			setUser({
+				name: (loadedUser && loadedUser.name) || (session && session.user && session.user.name),
+				email: (loadedUser && loadedUser.email) || (session && session.user && session.user.email),
+			});
+		}
+		if (error) {
+			setError({
+				title: "Something went wrong",
+				message: error,
+				showErrorBox: true,
+			});
+			dispatch(clearErrors());
+		}
+		if (isUpdated) {
+			router.reload();
+			setLoading({ status: false });
+			dispatch({ type: UPDATE_PROFILE_RESET });
+		}
+	}, [dispatch, isUpdated, error, loadedUser, session]);
 
-  const submitHandler = () => {
-    const userData = {
-      name,
-      email,
-    };
-    setLoading({ status: true });
-    dispatch(updateUserProfile(userData));
-    setUpdateUserProfileModalOpen(false);
-  };
+	const submitHandler = () => {
+		const userData = {
+			name,
+			email,
+		};
+		setLoading({ status: true });
+		dispatch(updateUserProfile(userData));
+		setUpdateUserProfileModalOpen(false);
+	};
 
-  return (
-    <>
-      <div>
-        <div className="w-full grid lg:grid-flow-col lg:auto-cols-auto grid-cols-1 gap-4">
-          <div
-            onClick={() => {
-              if (!shareableDashboardUser) setUpdateUserProfileModalOpen(true);
-            }}
-            className="group w-full flex justify-between items-start px-8 pt-6 pb-8 rounded-2xl cursor-pointer bg-light-100 shadow-md shadow-black/[.05]"
-          >
-            <div className="flex sm:flex-row flex-col gap-x-8">
-              <div className="mt-2">
-                {avatarUrl ? (
-                  <Image
-                    src={avatarUrl}
-                    alt="avatar"
-                    width="64"
-                    height="64"
-                    className="rounded-full"
-                  />
-                ) : (
-                  <Image
-                    src={"/default_avatar.jpg"}
-                    alt="avatar"
-                    width="64"
-                    height="64"
-                    className="rounded-full object-cover"
-                  />
-                )}
-              </div>
-              <div className="flex flex-col items-start justify-start text-start sm:mt-0 mt-4">
-                <div
-                  className={
-                    "font-bold text-primary-700 " +
-                    (shareableDashboardUser
-                      ? "mt-1 text-[48px] "
-                      : "text-[40px] ")
-                  }
-                >
-                  {shareableDashboardUser ? (
-                    <>
-                      {getFirstName(shareableDashboardUser.name)}&apos;s
-                      Favourite Tools
-                    </>
-                  ) : (
-                    session && session.user && session.user.name
-                  )}
-                </div>
-                <div className="-mt-1 text-sm text-primary-600">
-                  {shareableDashboardUser
-                    ? ""
-                    : session && session.user && session.user.email}
-                </div>
-              </div>
-            </div>
-            {!shareableDashboardUser && (
-              <i className="fa-regular fa-pen-to-square text-xl text-primary-200 transition duration-300 text-gradient-primary-tr-group"></i>
-            )}
-          </div>
+	return (
+		<>
+			<div>
+				<div className="w-full grid lg:grid-flow-col lg:auto-cols-auto grid-cols-1 gap-4">
+					<div
+						onClick={() => {
+							if (!shareableDashboardUser) setUpdateUserProfileModalOpen(true);
+						}}
+						className="group w-full flex justify-between items-start px-8 pt-6 pb-8 rounded-2xl cursor-pointer bg-light-100 shadow-md shadow-black/[.05]"
+					>
+						<div className="flex sm:flex-row flex-col gap-x-8">
+							<div className="mt-2">
+								{avatarUrl ? (
+									<Image src={avatarUrl} alt="avatar" width="64" height="64" className="rounded-full" />
+								) : (
+									<Image src={"/default_avatar.jpg"} alt="avatar" width="64" height="64" className="rounded-full object-cover" />
+								)}
+							</div>
+							<div className="flex flex-col items-start justify-start text-start sm:mt-0 mt-4">
+								<div className={"font-bold text-primary-700 " + (shareableDashboardUser ? "mt-1 text-[48px] " : "text-[40px] ")}>
+									{shareableDashboardUser ? (
+										<>{getFirstName(shareableDashboardUser.name)}&apos;s Favourite Tools</>
+									) : (
+										session && session.user && session.user.name
+									)}
+								</div>
+								<div className="-mt-1 text-sm text-primary-600">
+									{shareableDashboardUser ? "" : session && session.user && session.user.email}
+								</div>
+							</div>
+						</div>
+						{!shareableDashboardUser && (
+							<i className="fa-regular fa-pen-to-square text-xl text-primary-200 transition duration-300 text-gradient-primary-tr-group"></i>
+						)}
+					</div>
 
-          <div className="w-full grid sm:grid-cols-2 gap-x-8 bg-gradient-to-br from-primary-100 to-primary-200 px-8 pt-6 pb-8 rounded-2xl">
-            <div className="flex flex-col items-end"></div>
-            <div className="flex flex-col items-end">
-              <p className="text-[32px] font-semibold text-primary-700 leading-[70px]">
-                {shareableDashboardUser ? "Tools" : "My Tools"}
-              </p>
-              <p className="mt-[2px] text-3xl font-bold text-gradient-primary-tr">
-                {count || 0}
-              </p>
-            </div>
-          </div>
-        </div>
-        <UpdateUserProfileModal
-          isOpen={isUpdateUserProfileModalOpen}
-          setOpen={setUpdateUserProfileModalOpen}
-          submitHandler={submitHandler}
-          avatarUrl={avatarUrl}
-          user={user}
-          setUser={setUser}
-        />
-      </div>
-    </>
-  );
+					<div className="w-full grid sm:grid-cols-2 gap-x-8 bg-gradient-to-br from-primary-100 to-primary-200 px-8 pt-6 pb-8 rounded-2xl">
+						<div className="flex flex-col items-end"></div>
+						<div className="flex flex-col items-end">
+							<p className="text-[32px] font-semibold text-primary-700 leading-[70px]">{shareableDashboardUser ? "Tools" : "My Tools"}</p>
+							<p className="mt-[2px] text-3xl font-bold text-gradient-primary-tr">{count || 0}</p>
+						</div>
+					</div>
+				</div>
+				<UpdateUserProfileModal
+					isOpen={isUpdateUserProfileModalOpen}
+					setOpen={setUpdateUserProfileModalOpen}
+					submitHandler={submitHandler}
+					avatarUrl={avatarUrl}
+					user={user}
+					setUser={setUser}
+				/>
+			</div>
+		</>
+	);
 }
