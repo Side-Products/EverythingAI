@@ -55,7 +55,28 @@ export const iAmInOptions = [
 ];
 
 export const sizeOfCompanyOptions = ["1-10", "11-50", "51-200", "200-500", "500-1000", "1000+"];
-export const industriesSpecializedInOptions = ["Automobile", "Healthcare", "BFSI"];
+export const industriesSpecializedInOptions = [
+	"Automobile",
+	"Healthcare",
+	"BFSI",
+	"Technology",
+	"Finance",
+	"Manufacturing",
+	"Retail",
+	"Education",
+	"Real Estate",
+	"Entertainment",
+	"Hospitality",
+	"Transportation",
+	"Energy",
+	"Agriculture",
+	"Media",
+	"Construction",
+	"Telecommunications",
+	"Legal",
+	"Consulting",
+	"Aerospace",
+];
 export const capabilitiesOptions = [
 	"Generative AI application development",
 	"Chatbots",
