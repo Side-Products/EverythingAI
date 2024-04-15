@@ -52,6 +52,20 @@ const Footer = () => {
 								</Link>
 							</li>
 						</ul>
+
+						<div className="flex flex-col space-y-4">
+							<p className="font-semibold text mt-3">Gen AI Implementation Partners</p>
+							<ul className="space-y-2">
+								<li className="text-dark-200 hover:text-primary-500">
+									<Link href="/gen-ai-partners">Explore Partners</Link>
+								</li>
+								<li className="text-dark-200 hover:text-primary-500">
+									<Link href="/form/gen-ai-partner" target="_blank">
+										<i className="fa-solid fa-fire-flame-curved mr-1 text-secondary-400"></i> Enroll as Partner
+									</Link>
+								</li>
+							</ul>
+						</div>
 					</div>
 
 					<div className="flex flex-col space-y-4">
