@@ -53,7 +53,7 @@ const Layout = ({ children }) => {
 
 	return (
 		<>
-			<Navbar setAuthModalOpen={setAuthModalOpen} />
+			{router.pathname !== "/slick-editor-widget" && <Navbar setAuthModalOpen={setAuthModalOpen} />}
 			{router.pathname !== "/tools" &&
 				crumb &&
 				!router.pathname.startsWith("/admin") &&
@@ -65,7 +65,7 @@ const Layout = ({ children }) => {
 			<Loading />
 			<ErrorBox style={3} />
 			<SuccessBox style={3} />
-			{router.pathname !== "/404" && router.pathname !== "/_offline" && <Footer />}
+			{router.pathname !== "/404" && router.pathname !== "/_offline" && router.pathname !== "/slick-editor-widget" && <Footer />}
 		</>
 	);
 };
