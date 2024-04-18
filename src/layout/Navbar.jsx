@@ -186,14 +186,6 @@ const Navbar = ({ setAuthModalOpen }) => {
 							</div>
 
 							<div className="relative flex gap-x-4">
-								<Link
-									href="https://everythingai.substack.com/"
-									className="items-center justify-center hidden h-100% px-10 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer sm:flex bg-dark-500 hover:bg-dark-600 text-light-100 hover:text-light-100"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									Join Newsletter
-								</Link>
 								{session && session.user && session.user.email ? (
 									<Link
 										href="/submit-tool"

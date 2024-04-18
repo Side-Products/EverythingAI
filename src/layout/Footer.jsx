@@ -17,7 +17,18 @@ const Footer = () => {
 			<div className="w-full max-w-[1920px] pt-12 pb-12 px-6 md:px-8 lg:px-16 xl:px-20 2xl:px-20 bg-light-100 border-t border-t-light-400">
 				<div className="flex items-center justify-between w-full">
 					<Image src={logo} alt="logo" width="150" />
-					<p className="text-base font-medium font-primary sm:text-lg text-gradient-primary-tr">EverythingAI</p>
+					<div className="flex gap-6 justify-center items-center">
+						<Link
+							href="https://everythingai.substack.com/"
+							className="items-center justify-center h-100% px-10 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer sm:flex bg-dark-500 hover:bg-dark-600 text-light-100 hover:text-light-100"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Join Newsletter
+						</Link>
+
+						<p className="text-base font-medium font-primary sm:text-lg text-gradient-primary-tr hidden sm:flex">EverythingAI</p>
+					</div>
 				</div>
 
 				<div className="grid flex-wrap justify-between w-full grid-cols-1 py-8 mt-5 border-t-2 border-gray-100 sm:grid-cols-2 gap-y-10 md:gap-y-0 md:flex font-primary">
