@@ -71,9 +71,9 @@ const GenAIPartnerForm = ({ partnerDataToEdit = null }) => {
 	const [selectedValues, setSelectedValues] = useState({});
 	const handleCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
-		if (selectedValues.length == 3 && checked) {
+		if (selectedValues.length == 6 && checked) {
 			setError({
-				title: "Only 3 choices allowed",
+				title: "Only 6 choices allowed",
 				message: "Please unpick an option to choose something else",
 				showErrorBox: true,
 			});
@@ -92,9 +92,9 @@ const GenAIPartnerForm = ({ partnerDataToEdit = null }) => {
 	const [selectedCapabilitiesValues, setSelectedCapabilitiesValues] = useState({});
 	const handleCapabilitiesCheckboxChange = (event) => {
 		const { name, value, checked } = event.target;
-		if (selectedCapabilitiesValues.length == 3 && checked) {
+		if (selectedCapabilitiesValues.length == 6 && checked) {
 			setError({
-				title: "Only 3 choices allowed",
+				title: "Only 6 choices allowed",
 				message: "Please unpick an option to choose something else",
 				showErrorBox: true,
 			});
@@ -106,7 +106,6 @@ const GenAIPartnerForm = ({ partnerDataToEdit = null }) => {
 		});
 	};
 	useEffect(() => {
-		console.log("selectedCapabilitiesCheckboxes:", selectedCapabilitiesCheckboxes);
 		setSelectedCapabilitiesValues(Object.keys(selectedCapabilitiesCheckboxes).filter((value) => selectedCapabilitiesCheckboxes[value]));
 	}, [selectedCapabilitiesCheckboxes]);
 
