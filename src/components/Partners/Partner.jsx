@@ -21,6 +21,15 @@ export default function Tool() {
 				<PartnerIntro partner={partner} setShareModalOpen={setShareModalOpen} />
 
 				<div className="grid w-full h-full md:grid-cols-2 gap-x-10 gap-y-16">
+					{partner?.sizeOfCompany && (
+						<div className="flex flex-col w-full h-full space-y-4">
+							<div className="text-xl font-semibold md:text-2xl">Size of Company</div>
+							<div className="w-full h-full flex p-8 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
+								{partner?.sizeOfCompany} employees
+							</div>
+						</div>
+					)}
+
 					{(partner?.country || partner?.state) && (
 						<div className="flex flex-col w-full h-full space-y-4">
 							<div className="text-xl font-semibold md:text-2xl">Headquarters</div>
@@ -35,15 +44,6 @@ export default function Tool() {
 										<i>State:</i> {partner?.state}
 									</div>
 								)}
-							</div>
-						</div>
-					)}
-
-					{partner?.sizeOfCompany && (
-						<div className="flex flex-col w-full h-full space-y-4">
-							<div className="text-xl font-semibold md:text-2xl">Size of Company</div>
-							<div className="w-full h-full flex p-8 bg-gray-200 border-[2px] border-gray-300 rounded-2xl">
-								{partner?.sizeOfCompany} employees
 							</div>
 						</div>
 					)}
@@ -95,10 +95,10 @@ export default function Tool() {
 						</div>
 					)}
 
-					<div className={"block flex flex-col w-full space-y-4 col-span-2"}>
+					{/* <div className={"block flex flex-col w-full space-y-4 col-span-2"}>
 						<div className="text-2xl font-semibold">Explore our collections</div>
 						<Collections />
-					</div>
+					</div> */}
 				</div>
 
 				<Cta partner={partner} />
