@@ -1,51 +1,25 @@
-import Iframe from "react-iframe";
-import axios from "axios";
+import SlickEditorWidget, { createProject } from "slick-editor-widget";
 
 export default function EditorWidget() {
-	const projectId = "65f65807cfd53a1ccfa9b757";
+	const projectId = "66273c855a26d2378f8af237";
 	const apiKey = "0273df8c-6565-4ada-a9c5-1e1e4a8e03a6";
 	const projectName = "untitled video";
 	const language = "en";
-	const videoUrl = "";
+	const videoUrl = "https://nuw-io.s3-accelerate.amazonaws.com/bd0eb1a1-037d-4314-9183-36bfef2cb53d.mp4";
+	const videoLengthInSeconds = 75;
 
-	// Create project
-	const createProject = () => async () => {
-		try {
-			const config = {
-				headers: {
-					"Content-Type": "application/json",
-					"x-api-key": apiKey,
-				},
-			};
-
-			const body = {
-				name: projectName, // optional
-				videoUrl: videoUrl,
-				language: language,
-			};
-
-			const { data } = await axios.post(`http://localhost:3000/api/project/create`, body, config);
-		} catch (error) {
-			console.error(error);
-		}
+	const handleCreateProject = async () => {
+		const data = await createProject({ apiKey, videoUrl, videoLengthInSeconds, projectName, language });
+		console.log(data);
 	};
 
 	return (
 		<>
-			{/* <button className="p-2 rounded-lg bg-primary-400" onClick={() => createProject()}>
+			<button className="p-2 rounded-lg bg-primary-400" onClick={handleCreateProject}>
 				Create Project
-			</button> */}
+			</button>
 
-			<Iframe
-				url={`http://localhost:3000/editor-widget/${projectId}?apiKey=${apiKey}`}
-				width="100%"
-				height="100%"
-				styles={{ height: "100vh" }}
-				id=""
-				className=""
-				display="block"
-				position="relative"
-			/>
+			<SlickEditorWidget apiKey={apiKey} projectId={projectId} />
 		</>
 	);
 }
