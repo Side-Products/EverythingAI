@@ -78,19 +78,19 @@ const PurchaseTermInput = ({ purchaseTerms, setPurchaseTerms }) => {
 									onFieldChange={(e) => onTermDetailsChange(e, index)}
 									required={false}
 									min={0}
-									max={500}
+									max={10000}
 								/>
 							</div>
 							<div className="w-1/3">
 								<NumberInput
-									label={` Discounted Price`}
+									label={`Discounted Price`}
 									name={"discountedPrice"}
 									placeholder={`Discounted Price in $`}
 									value={term.discountedPrice}
 									onFieldChange={(e) => onTermDetailsChange(e, index)}
 									required={false}
 									min={0}
-									max={500}
+									max={10000}
 								/>
 							</div>
 						</div>
@@ -108,14 +108,14 @@ const PurchaseTermInput = ({ purchaseTerms, setPurchaseTerms }) => {
 							</div>
 							<div className="w-1/3">
 								<NumberInput
-									label={` Limit`}
+									label={`Limit`}
 									name={"limit"}
 									placeholder={`Limit`}
 									value={term.limit}
 									onFieldChange={(e) => onTermDetailsChange(e, index)}
 									required={false}
 									min={0}
-									max={1000}
+									max={10000}
 								/>
 							</div>
 						</div>

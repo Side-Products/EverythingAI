@@ -37,7 +37,7 @@ const purchaseTermSchema = new mongoose.Schema({
 			termsAndConditions: {
 				type: String,
 				required: false,
-				maxLength: [500, "Terms and conditions cannot exceed 500 characters"],
+				maxLength: [5000, "Terms and conditions cannot exceed 500 characters"],
 			},
 			limit: {
 				type: Number,
@@ -64,7 +64,7 @@ const purchaseTermSchema = new mongoose.Schema({
 	description: {
 		type: String,
 		required: true,
-		maxLength: [500, "Description cannot exceed 500 characters"],
+		maxLength: [5000, "Description cannot exceed 500 characters"],
 	},
 });
 
