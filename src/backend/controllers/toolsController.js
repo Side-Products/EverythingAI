@@ -557,11 +557,11 @@ const adminGetAllTools = catchAsyncErrors(async (req, res) => {
 	)
 		.search()
 		.filter();
-	let tools = await apiFeatures.query;
-	let filteredToolsCount = tools.length;
 
 	apiFeatures.pagination(resultsPerPage);
-	tools = await apiFeatures.query.clone();
+	let tools = await apiFeatures.query.clone();
+
+	let filteredToolsCount = tools.length;
 
 	res.status(200).json({
 		success: true,
